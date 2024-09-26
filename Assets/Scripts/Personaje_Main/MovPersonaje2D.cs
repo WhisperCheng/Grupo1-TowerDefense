@@ -32,6 +32,7 @@ public class MovPersonaje2D : MonoBehaviour
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");
+        float horizontalCamera = Input.GetAxis("Mouse X");
         float vertical = Input.GetAxis("Vertical");
 
         // Controlando si intenta correr
@@ -45,15 +46,28 @@ public class MovPersonaje2D : MonoBehaviour
 
         }
 
+        //TODO: https://www.youtube.com/watch?v=_J8RPIaO2Lc
+        /*
+          Reemplazar ChangeVelocity() y LockOrResetVelocity() por : 
+            velocityX = Mathf.Lerp(velocityX, input.x * currentMaxVelocity, Time.deltaTime * acceleration);
+            velocityZ = Mathf.Lerp(velocityZ, input.y * currentMaxVelocity, Time.deltaTime * acceleration);
+         */
+
+        // Rotamos en el eje Y
+        transform.Rotate(0, horizontalCamera * turnSpeed * Time.deltaTime, 0);
+
         // Calculamos el vector de movimiento -> ((0,0,1) * vertical + (1,0,0) * horizontal) * speed
         movCharacter = transform.forward * vertical + transform.right * horizontal;
         applyGravity();
 
         characterController.Move(movCharacter * speed * Time.deltaTime);
 
-        animatorController.SetFloat("VelX", movCharacter.x * speed);
-        Debug.Log(movCharacter.x);
-        animatorController.SetFloat("VelZ", movCharacter.z * speed);
+        animatorController.SetFloat("VelX", characterController.velocity.magnitude *
+            (Input.GetKey(KeyCode.D) ? -1 : 1));
+
+        //Debug.Log(characterController.velocity.magnitude *(Input.GetKey(KeyCode.S) ? -1 : 1));
+        animatorController.SetFloat("VelZ", characterController.velocity.magnitude *
+            (Input.GetKey(KeyCode.S) ? -1 : 1));
     }
 
     private void applyGravity()
