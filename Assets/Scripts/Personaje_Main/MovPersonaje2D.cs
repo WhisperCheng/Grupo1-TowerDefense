@@ -7,6 +7,7 @@ public class MovPersonaje2D : MonoBehaviour
 {
     //public float speed = 5.0f; // La velocidad a la que se va a mover el personaje
     private float speed; // La velocidad a la que se va a mover el personaje
+    private float maxSpeed = 10f; // TODO
     public float turnSpeed = 300.0f; // La velocidad de giro
     public float originalSpeed = 5.0f;
 
@@ -38,7 +39,7 @@ public class MovPersonaje2D : MonoBehaviour
         // Controlando si intenta correr
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed = originalSpeed + 20f;
+            speed = originalSpeed + 6f;
         }
         else
         {
@@ -61,7 +62,7 @@ public class MovPersonaje2D : MonoBehaviour
         applyGravity();
 
         characterController.Move(movCharacter * speed * Time.deltaTime);
-
+        float magnitudMov = Mathf.Clamp(characterController.velocity.magnitude, 0, 10f);
         animatorController.SetFloat("VelX", characterController.velocity.magnitude *
             (Input.GetKey(KeyCode.D) ? -1 : 1));
 
