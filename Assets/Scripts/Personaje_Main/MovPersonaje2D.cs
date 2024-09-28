@@ -6,28 +6,38 @@ using UnityEngine;
 public class MovPersonaje2D : MonoBehaviour
 {
     //public float speed = 5.0f; // La velocidad a la que se va a mover el personaje
-    private float speed; // La velocidad a la que se va a mover el personaje
-    private float maxSpeed = 10f; // TODO
+    //private float speed; // La velocidad a la que se va a mover el personaje
     public float turnSpeed = 300.0f; // La velocidad de giro
-    public float originalSpeed = 5.0f;
-
+    //public float originalSpeed = 5.0f;
 
     private CharacterController characterController;
     private Animator animatorController;
-    bool controlHabilitado;
+    //bool controlHabilitado;
 
     Vector3 movCharacter;
     private float velocidadGravedad = 1f;
     private float gravedadMagnitud = -9.81f;
     private float gravedadMultiplicador = 0.75f;
 
+    float velocityZ = 0.0f;
+    float velocityX = 0.0f;
+    public float acceleration = 2.0f;
+    //public float deceleration = 2.0f;
+    public float maximumWalkVelocity = 4f;
+    public float maximumRunVelocity = 10f;
+
+    int VelocityZHash;
+    int VelocityXHash;
+
     void Start()
     {
         // Get the Character Controller on the player
         characterController = GetComponent<CharacterController>();
         animatorController = GetComponent<Animator>();
-        speed = originalSpeed;
-        controlHabilitado = false;
+        //speed = maximumWalkVelocity;
+        //controlHabilitado = false;
+        VelocityZHash = Animator.StringToHash("VelZ");
+        VelocityXHash = Animator.StringToHash("VelX");
     }
 
     void Update()
@@ -36,24 +46,12 @@ public class MovPersonaje2D : MonoBehaviour
         float horizontalCamera = Input.GetAxis("Mouse X");
         float vertical = Input.GetAxis("Vertical");
 
-        // Controlando si intenta correr
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            speed = originalSpeed + 6f;
-        }
-        else
-        {
-            speed = originalSpeed;
-
-        }
-
+        bool runPressed = Input.GetKey(KeyCode.LeftShift);
+        bool leftPressed = Input.GetKeyDown(KeyCode.A);
+        bool backwardsPressed = Input.GetKeyDown(KeyCode.S);
+        
         //TODO: https://www.youtube.com/watch?v=_J8RPIaO2Lc
-        /*
-          Reemplazar ChangeVelocity() y LockOrResetVelocity() por : 
-            velocityX = Mathf.Lerp(velocityX, input.x * currentMaxVelocity, Time.deltaTime * acceleration);
-            velocityZ = Mathf.Lerp(velocityZ, input.y * currentMaxVelocity, Time.deltaTime * acceleration);
-         */
-
+        
         // Rotamos en el eje Y
         transform.Rotate(0, horizontalCamera * turnSpeed * Time.deltaTime, 0);
 
@@ -61,14 +59,32 @@ public class MovPersonaje2D : MonoBehaviour
         movCharacter = transform.forward * vertical + transform.right * horizontal;
         applyGravity();
 
-        characterController.Move(movCharacter * speed * Time.deltaTime);
-        float magnitudMov = Mathf.Clamp(characterController.velocity.magnitude, 0, 10f);
-        animatorController.SetFloat("VelX", characterController.velocity.magnitude *
-            (Input.GetKey(KeyCode.D) ? -1 : 1));
+        // Controlando si intenta correr
+        float currentMaxVelocity = runPressed ? maximumRunVelocity : maximumWalkVelocity;
+        // Mover personaje
+        characterController.Move(movCharacter * currentMaxVelocity * Time.deltaTime);
 
-        //Debug.Log(characterController.velocity.magnitude *(Input.GetKey(KeyCode.S) ? -1 : 1));
-        animatorController.SetFloat("VelZ", characterController.velocity.magnitude *
-            (Input.GetKey(KeyCode.S) ? -1 : 1));
+        //float magnitudMov = Mathf.Clamp(characterController.velocity.magnitude, 0, maximumRunVelocity);
+
+        //animatorController.SetFloat("VelX", magnitudMov * (Input.GetKey(KeyCode.D) ? -1 : 1));
+        //animatorController.SetFloat("VelZ", magnitudMov * (Input.GetKey(KeyCode.S) ? -1 : 1));
+        velocityX = Mathf.Lerp(velocityX,
+            horizontal * currentMaxVelocity, Time.deltaTime * acceleration);
+        velocityZ = Mathf.Lerp(velocityZ,
+            vertical * currentMaxVelocity, Time.deltaTime * acceleration);
+
+        if (velocityX < 0.001f && velocityX > -0.001f)
+        {
+            velocityX = 0f;
+        }
+
+        if (velocityZ < 0.001f && velocityZ > -0.001f)
+        {
+            velocityZ = 0f;
+        }
+
+        animatorController.SetFloat(VelocityZHash, velocityZ);
+        animatorController.SetFloat(VelocityXHash, velocityX);
     }
 
     private void applyGravity()
