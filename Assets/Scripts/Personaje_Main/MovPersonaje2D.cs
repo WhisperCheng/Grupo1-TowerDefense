@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class MovPersonaje2D : MonoBehaviour
@@ -29,6 +30,13 @@ public class MovPersonaje2D : MonoBehaviour
     int VelocityZHash;
     int VelocityXHash;
 
+    PlayerInput playerInput;
+    private Vector2 moveDirection;
+    private Vector2 smoothMoveDirection;
+    private Vector2 lookDirection;
+    private Vector2 smoothedMoveSpeed;
+    public float smoothingMoveSpeed = 0.2f;
+
     void Start()
     {
         // Get the Character Controller on the player
@@ -38,25 +46,39 @@ public class MovPersonaje2D : MonoBehaviour
         //controlHabilitado = false;
         VelocityZHash = Animator.StringToHash("VelZ");
         VelocityXHash = Animator.StringToHash("VelX");
+
+        playerInput = GetComponent<PlayerInput>();
     }
+    void FixedUpdate()
+    {
+        /*float horizontal = Input.GetAxis("Horizontal");
+        float horizontalCamera = Input.GetAxis("Mouse X");
+        float vertical = Input.GetAxis("Vertical");*/
+    }
+
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float horizontalCamera = Input.GetAxis("Mouse X");
-        float vertical = Input.GetAxis("Vertical");
+        moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
+        lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
-        bool runPressed = Input.GetKey(KeyCode.LeftShift);
+        //bool runPressed = Input.GetKey(KeyCode.LeftShift);
+        bool runPressed = playerInput.actions["Correr"].ReadValue<float>() > 0 ? true : false;
         bool leftPressed = Input.GetKeyDown(KeyCode.A);
         bool backwardsPressed = Input.GetKeyDown(KeyCode.S);
         
         //TODO: https://www.youtube.com/watch?v=_J8RPIaO2Lc
         
         // Rotamos en el eje Y
-        transform.Rotate(0, horizontalCamera * turnSpeed * Time.deltaTime, 0);
+        transform.Rotate(0, lookDirection.x * turnSpeed * Time.deltaTime, 0);
+
+        //Suavizar el movimiento del vector moveDirection
+        smoothMoveDirection = Vector2.SmoothDamp(smoothMoveDirection, moveDirection, 
+            ref smoothedMoveSpeed, smoothingMoveSpeed);
 
         // Calculamos el vector de movimiento -> ((0,0,1) * vertical + (1,0,0) * horizontal) * speed
-        movCharacter = transform.forward * vertical + transform.right * horizontal;
+        movCharacter = transform.forward * smoothMoveDirection.y + transform.right * 
+            smoothMoveDirection.x;
         applyGravity();
 
         // Controlando si intenta correr
@@ -64,14 +86,11 @@ public class MovPersonaje2D : MonoBehaviour
         // Mover personaje
         characterController.Move(movCharacter * currentMaxVelocity * Time.deltaTime);
 
-        //float magnitudMov = Mathf.Clamp(characterController.velocity.magnitude, 0, maximumRunVelocity);
-
-        //animatorController.SetFloat("VelX", magnitudMov * (Input.GetKey(KeyCode.D) ? -1 : 1));
-        //animatorController.SetFloat("VelZ", magnitudMov * (Input.GetKey(KeyCode.S) ? -1 : 1));
+        // Suavizar transiciones entre animaciones
         velocityX = Mathf.Lerp(velocityX,
-            horizontal * currentMaxVelocity, Time.deltaTime * acceleration);
+            moveDirection.x * currentMaxVelocity, Time.deltaTime * acceleration);
         velocityZ = Mathf.Lerp(velocityZ,
-            vertical * currentMaxVelocity, Time.deltaTime * acceleration);
+            moveDirection.y * currentMaxVelocity, Time.deltaTime * acceleration);
 
         if (velocityX < 0.001f && velocityX > -0.001f)
         {
@@ -83,15 +102,15 @@ public class MovPersonaje2D : MonoBehaviour
             velocityZ = 0f;
         }
 
-        animatorController.SetFloat(VelocityZHash, velocityZ);
-        animatorController.SetFloat(VelocityXHash, velocityX);
+        animatorController.SetFloat(VelocityZHash, velocityX);
+        animatorController.SetFloat(VelocityXHash, velocityZ);
     }
 
     private void applyGravity()
     {
         if (characterController.isGrounded)
         {
-            velocidadGravedad = -1f;
+            velocidadGravedad = 0f;
         }
         else
         {
