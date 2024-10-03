@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class MovPersonaje2D : MonoBehaviour
 {
-    //public float speed = 5.0f; // La velocidad a la que se va a mover el personaje
-    //private float speed; // La velocidad a la que se va a mover el personaje
-    public float turnSpeed = 300.0f; // La velocidad de giro
-    //public float originalSpeed = 5.0f;
+    public float turnSpeed = 40.0f; // La velocidad de giro
+    [Range(0f, 60f)]
+    public float smoothTurnSpeed = 4f;
 
     private CharacterController characterController;
     private Animator animatorController;
-    //bool controlHabilitado;
 
     Vector3 movCharacter;
     private float velocidadGravedad = 1f;
@@ -37,13 +35,14 @@ public class MovPersonaje2D : MonoBehaviour
     private Vector2 smoothedMoveSpeed;
     public float smoothingMoveSpeed = 0.2f;
 
+    float oldLookDirection = 0f;
+    //float rotateYAngle = 0f;
+
     void Start()
     {
         // Get the Character Controller on the player
         characterController = GetComponent<CharacterController>();
         animatorController = GetComponent<Animator>();
-        //speed = maximumWalkVelocity;
-        //controlHabilitado = false;
         VelocityZHash = Animator.StringToHash("VelZ");
         VelocityXHash = Animator.StringToHash("VelX");
 
@@ -51,9 +50,7 @@ public class MovPersonaje2D : MonoBehaviour
     }
     void FixedUpdate()
     {
-        /*float horizontal = Input.GetAxis("Horizontal");
-        float horizontalCamera = Input.GetAxis("Mouse X");
-        float vertical = Input.GetAxis("Vertical");*/
+
     }
 
 
@@ -66,17 +63,19 @@ public class MovPersonaje2D : MonoBehaviour
         bool runPressed = playerInput.actions["Correr"].ReadValue<float>() > 0 ? true : false;
         bool leftPressed = Input.GetKeyDown(KeyCode.A);
         bool backwardsPressed = Input.GetKeyDown(KeyCode.S);
-        
+
         //TODO: https://www.youtube.com/watch?v=_J8RPIaO2Lc
-        
-        // Rotamos en el eje Y
-        transform.Rotate(0, lookDirection.x * turnSpeed * Time.deltaTime, 0);
+
+        // Rotamos en el eje Y, se rota suavemente
+        lookDirection.x = Mathf.Lerp(oldLookDirection, lookDirection.x, (60.1f - smoothTurnSpeed) * Time.deltaTime); // suavizar rotación
+        float addRotation = lookDirection.x * turnSpeed * Time.deltaTime;
+        transform.Rotate(0, addRotation, 0); // rotación con suavizado
+        oldLookDirection = lookDirection.x;
 
         //Suavizar el movimiento del vector moveDirection
         smoothMoveDirection = Vector2.SmoothDamp(smoothMoveDirection, moveDirection, 
             ref smoothedMoveSpeed, smoothingMoveSpeed);
 
-        // Calculamos el vector de movimiento -> ((0,0,1) * vertical + (1,0,0) * horizontal) * speed
         movCharacter = transform.forward * smoothMoveDirection.y + transform.right * 
             smoothMoveDirection.x;
         applyGravity();
@@ -117,6 +116,5 @@ public class MovPersonaje2D : MonoBehaviour
             velocidadGravedad += gravedadMagnitud * gravedadMultiplicador * Time.deltaTime;
         }
         movCharacter.y = velocidadGravedad;
-        //characterController.Move(new Vector3(0f, velocidadGravedad, 0f));
     }
 }
