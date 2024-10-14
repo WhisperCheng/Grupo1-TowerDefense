@@ -10,6 +10,7 @@ public class PlaceManager : MonoBehaviour
 
     public Color selectedColor;
     public float maxPlaceDistance;
+    public GameObject marcador;
     private static GameObject objeto;
     private static GameObject objetoCopiado;
     Material[] materialesObjeto;
@@ -92,7 +93,9 @@ public class PlaceManager : MonoBehaviour
     {
         if (objetoSiendoArrastrado)
         {
+            //Vector3 point = Camera.main.WorldToScreenPoint(marcador.transform.position);
             Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Ray rayo = Camera.main.ScreenPointToRay(point);
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
             {
