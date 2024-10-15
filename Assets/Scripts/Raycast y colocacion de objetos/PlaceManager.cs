@@ -106,7 +106,18 @@ public class PlaceManager : MonoBehaviour
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
             {
+                if (!objetoCopiado.activeSelf)
+                {
+                    objetoCopiado.SetActive(true);
+                }
                 objetoCopiado.gameObject.transform.position = golpeRayo.point;
+            }
+            else
+            {
+                if (objetoCopiado.activeSelf)
+                {
+                    objetoCopiado.SetActive(false);
+                }
             }
             // onClickPlaceObj();
         }
