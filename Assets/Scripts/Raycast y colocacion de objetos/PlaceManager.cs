@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 public class PlaceManager : MonoBehaviour
@@ -17,6 +19,9 @@ public class PlaceManager : MonoBehaviour
     Material[] materialesOriginalesObjeto;
     //Color32 colorOriginalObjeto;
     private bool objetoSiendoArrastrado = false;
+    public PlayerInput playerInput;
+
+    public Button button1;
 
     private void Awake()
     {
@@ -33,7 +38,11 @@ public class PlaceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerInput.actions.FindActionMap("Player").Enable();
+        playerInput.actions.FindActionMap("UI").Enable(); // por defecto está desactivado ya que solo
+        // se puede por defecto tener un action map activado a la vez, pero se puede bypasear
+        // haciendo esto
+        //https://youtu.be/NZBAr_V7r0M?t=153
     }
 
     // Update is called once per frame
@@ -56,7 +65,8 @@ public class PlaceManager : MonoBehaviour
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
         {
-            Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance);
             objetoCopiado = Instantiate(objeto,
@@ -83,9 +93,7 @@ public class PlaceManager : MonoBehaviour
             materialesOriginalesObjeto[i] = new Material(mat);
             // Importante poner new y crear un nuevo material, de lo
             // contrario el material seguirá vinculado al anterior
-
             mat.color = selectedColor;
-            //mat.SetColor("_Color", newColor);
         }
     }
 
@@ -94,8 +102,7 @@ public class PlaceManager : MonoBehaviour
         if (objetoSiendoArrastrado)
         {
             //Vector3 point = Camera.main.WorldToScreenPoint(marcador.transform.position);
-            Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //Ray rayo = Camera.main.ScreenPointToRay(point);
+            Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
             {
@@ -111,6 +118,15 @@ public class PlaceManager : MonoBehaviour
                 //objetoCopiado = null;
             }
         }
+    }
+
+    public void onClickButton(InputAction.CallbackContext ctx) {
+        if (ctx.performed){
+            button1.onClick.Invoke();
+            Debug.Log("AD2");
+        }
+        
+        //bool btn1Click = playerInput.actions["Button1"].ReadValue<float>() > 0 ? true : false;
     }
 
     public void designMainObject(GameObject obj)
