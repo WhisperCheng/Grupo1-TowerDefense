@@ -1677,7 +1677,19 @@ MonoBehaviour:
     m_ActionId: 3636741f-17a4-4350-b534-0eb2ec57b166
     m_ActionName: UI/MiddleClick[/Mouse/middleButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 762121828}
+        m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
+        m_MethodName: onRightClickPlacingObj
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7fbf456e-35d7-4665-83e4-5812b518bd68
     m_ActionName: UI/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:

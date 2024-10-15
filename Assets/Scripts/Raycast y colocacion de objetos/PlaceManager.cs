@@ -127,7 +127,14 @@ public class PlaceManager : MonoBehaviour
     {
         if (ctx.performed)
         {
-            button1.onClick.Invoke();
+            if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
+            {
+                destroyInstanceCopy();
+            }
+            else
+            {
+                button1.onClick.Invoke();
+            }
         }
     }
 
@@ -147,8 +154,18 @@ public class PlaceManager : MonoBehaviour
             //}
         }
     }
+    public void onRightClickPlacingObj(InputAction.CallbackContext ctx)
+    {
+        destroyInstanceCopy();
+    }
 
-    public void designMainObject(GameObject obj)
+    void destroyInstanceCopy()
+    {
+        objetoSiendoArrastrado = false;
+        Destroy(objetoCopiado);
+    }
+
+        public void designMainObject(GameObject obj)
     {
         objeto = obj;
     }
