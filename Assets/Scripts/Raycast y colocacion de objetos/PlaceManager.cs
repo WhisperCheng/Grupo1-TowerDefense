@@ -108,29 +108,37 @@ public class PlaceManager : MonoBehaviour
             {
                 objetoCopiado.gameObject.transform.position = golpeRayo.point;
             }
-            if (Input.GetMouseButtonDown(0)/* && EventSystem.current.IsPointerOverGameObject()*/)
-            {
-                objetoCopiado.GetComponent<Renderer>().materials = materialesOriginalesObjeto;
-                objetoCopiado.GetComponent<BoxCollider>().enabled = true;
-                //NumObjetos.numObjetos++;
-                //NumObjetos.actualizarNumObjetos();
-                objetoSiendoArrastrado = false;
-                //objetoCopiado = null;
-            }
+            // onClickPlaceObj();
         }
     }
 
-    public void onClickButton(InputAction.CallbackContext ctx) {
-        if (ctx.performed){
+    public void onClickButton(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
             button1.onClick.Invoke();
-            Debug.Log("AD2");
         }
-        
-        //bool btn1Click = playerInput.actions["Button1"].ReadValue<float>() > 0 ? true : false;
+    }
+
+    public void onClickPlaceObj(InputAction.CallbackContext ctx)
+    {
+        if (objetoSiendoArrastrado && ctx.performed)
+        {
+            //bool btn1Click = playerInput.actions["Click"].ReadValue<float>() > 0 ? true : false;
+            //if (btn1Click)
+            //{
+            //playerInput.actions["Click"].performed += c => Debug.Log("s");
+            objetoCopiado.GetComponent<Renderer>().materials = materialesOriginalesObjeto;
+            objetoCopiado.GetComponent<BoxCollider>().enabled = true;
+            //NumObjetos.numObjetos++;
+            //NumObjetos.actualizarNumObjetos();
+            objetoSiendoArrastrado = false;
+            //}
+        }
     }
 
     public void designMainObject(GameObject obj)
     {
-        objeto = obj; 
+        objeto = obj;
     }
 }

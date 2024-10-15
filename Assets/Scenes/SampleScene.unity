@@ -1653,7 +1653,19 @@ MonoBehaviour:
     m_ActionId: 0a97f2bc-3a8a-45f6-9c70-19c78955114f
     m_ActionName: UI/Point[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 762121828}
+        m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
+        m_MethodName: onClickPlaceObj
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f97cfafc-5239-419e-a469-cf17c9f19c35
     m_ActionName: UI/Click[/Mouse/leftButton]
   - m_PersistentCalls:
