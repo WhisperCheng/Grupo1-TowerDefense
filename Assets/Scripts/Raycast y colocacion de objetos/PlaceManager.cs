@@ -148,6 +148,8 @@ public class PlaceManager : MonoBehaviour
             //playerInput.actions["Click"].performed += c => Debug.Log("s");
             objetoCopiado.GetComponent<Renderer>().materials = materialesOriginalesObjeto;
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
+            objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
+                                  // no se vuelva a eliminar
             //NumObjetos.numObjetos++;
             //NumObjetos.actualizarNumObjetos();
             objetoSiendoArrastrado = false;
