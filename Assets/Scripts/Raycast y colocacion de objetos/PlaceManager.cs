@@ -15,6 +15,7 @@ public class PlaceManager : MonoBehaviour
     public GameObject marcador;
     private static GameObject objeto;
     private static GameObject objetoCopiado;
+    Material[,] listaMaterialesObjeto;
     Material[] materialesObjeto;
     Material[] materialesOriginalesObjeto;
     //Color32 colorOriginalObjeto;
@@ -95,6 +96,10 @@ public class PlaceManager : MonoBehaviour
             // contrario el material seguirá vinculado al anterior
             mat.color = selectedColor;
         }
+
+        // Ajuste nuevo
+        Material[][] test = { objetoCopiado.GetComponent<Renderer>().materials };
+        //listaMaterialesObjeto = ;
     }
 
     private void manageObjectPlacement()
@@ -150,8 +155,8 @@ public class PlaceManager : MonoBehaviour
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
-            //NumObjetos.numObjetos++;
-            //NumObjetos.actualizarNumObjetos();
+                                  //NumObjetos.numObjetos++;
+                                  //NumObjetos.actualizarNumObjetos();
             objetoSiendoArrastrado = false;
             //}
         }
@@ -167,8 +172,29 @@ public class PlaceManager : MonoBehaviour
         Destroy(objetoCopiado);
     }
 
-        public void designMainObject(GameObject obj)
+    public void designMainObject(GameObject obj)
     {
         objeto = obj;
+    }
+
+    private Material[] findMaterials()
+    {
+        Material[] materials = objetoCopiado.GetComponent<Renderer>().materials;
+
+        if (materials == null)
+        {
+            //objetoCopiado.chi
+            foreach (Transform child in objetoCopiado.GetComponentsInChildren<Transform>())
+            {
+                materials = child.GetComponent<Renderer>().materials;
+                if (materials != null)
+                {
+
+                }
+            }
+
+
+        }
+        return materials;
     }
 }
