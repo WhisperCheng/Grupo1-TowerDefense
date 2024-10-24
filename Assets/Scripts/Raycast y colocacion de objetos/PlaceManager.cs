@@ -15,9 +15,8 @@ public class PlaceManager : MonoBehaviour
     public GameObject marcador;
     private static GameObject objeto;
     private static GameObject objetoCopiado;
-    Material[,] listaMaterialesObjeto;
-    Material[] materialesObjeto;
-    Material[] materialesOriginalesObjeto;
+    List<Material[]> materialesObjeto;
+    List<Material[]> materialesOriginalesObjeto;
     //Color32 colorOriginalObjeto;
     private bool objetoSiendoArrastrado = false;
     public PlayerInput playerInput;
@@ -44,6 +43,9 @@ public class PlaceManager : MonoBehaviour
         // se puede por defecto tener un action map activado a la vez, pero se puede bypasear
         // haciendo esto
         //https://youtu.be/NZBAr_V7r0M?t=153
+
+        materialesObjeto = new List<Material[]>();
+        materialesOriginalesObjeto = new List<Material[]>();
     }
 
     // Update is called once per frame
@@ -86,20 +88,35 @@ public class PlaceManager : MonoBehaviour
 
     void seleccionarObjeto()
     {
-        materialesObjeto = objetoCopiado.GetComponent<Renderer>().materials;
-        materialesOriginalesObjeto = new Material[materialesObjeto.Length];
-        for (int i = 0; i < materialesObjeto.Length; i++)
+        // Por cada gameObject se añade su array de materiales correspondiente a la lista y la copia
+        // de los materiales originales
+        foreach (Transform child in objetoCopiado.GetComponentsInChildren<Transform>())
         {
-            Material mat = materialesObjeto[i];
-            materialesOriginalesObjeto[i] = new Material(mat);
-            // Importante poner new y crear un nuevo material, de lo
-            // contrario el material seguirá vinculado al anterior
-            mat.color = selectedColor;
-        }
+            Material[] mats = child.gameObject.GetComponent<Renderer>().materials;
+            Material[] matsCopy = new Material[mats.Length];
+            for (int j = 0; j < mats.Length; j++)
+            {
+                Material m = mats[j];
+                matsCopy[j] = new Material(m);
+                // Importante poner new y crear un nuevo material, de lo
+                // contrario el material seguirá vinculado al anterior
 
-        // Ajuste nuevo
-        Material[][] test = { objetoCopiado.GetComponent<Renderer>().materials };
-        //listaMaterialesObjeto = ;
+                m.SetColor("_BaseColor", new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1));
+                m.SetColor("_Color", new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1));
+                // por si el material no tiene el toon shader
+                m.SetFloat("_Tweak_transparency", -(1 - selectedColor.a));
+
+                //sombras
+                if (m.HasColor("_1st_ShadeColor") && m.HasColor("_2nd_ShadeColor"))
+                {
+                    Color c = new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1);
+                    m.SetColor("_1st_ShadeColor", c);
+                    m.SetColor("_2nd_ShadeColor", c);
+                }
+            }
+            materialesObjeto.Add(mats);
+            materialesOriginalesObjeto.Add(matsCopy);
+        }
     }
 
     private void manageObjectPlacement()
@@ -147,11 +164,13 @@ public class PlaceManager : MonoBehaviour
     {
         if (objetoSiendoArrastrado && ctx.performed)
         {
-            //bool btn1Click = playerInput.actions["Click"].ReadValue<float>() > 0 ? true : false;
-            //if (btn1Click)
-            //{
-            //playerInput.actions["Click"].performed += c => Debug.Log("s");
-            objetoCopiado.GetComponent<Renderer>().materials = materialesOriginalesObjeto;
+            // reemplazar cada array de materiales de la lista original por los de la lista de copias
+            for (int i = 0; i < objetoCopiado.GetComponentsInChildren<Transform>().Length; i++)
+            {
+                Transform child = objetoCopiado.GetComponentsInChildren<Transform>()[i];
+                child.gameObject.GetComponent<Renderer>().materials = materialesOriginalesObjeto[i];
+            }
+
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
@@ -175,26 +194,5 @@ public class PlaceManager : MonoBehaviour
     public void designMainObject(GameObject obj)
     {
         objeto = obj;
-    }
-
-    private Material[] findMaterials()
-    {
-        Material[] materials = objetoCopiado.GetComponent<Renderer>().materials;
-
-        if (materials == null)
-        {
-            //objetoCopiado.chi
-            foreach (Transform child in objetoCopiado.GetComponentsInChildren<Transform>())
-            {
-                materials = child.GetComponent<Renderer>().materials;
-                if (materials != null)
-                {
-
-                }
-            }
-
-
-        }
-        return materials;
     }
 }
