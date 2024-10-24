@@ -35,6 +35,9 @@ public class MovPersonaje2D : MonoBehaviour
     private Vector2 smoothedMoveSpeed;
     public float smoothingMoveSpeed = 0.2f;
 
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
+
     float oldLookDirection = 0f;
     //float rotateYAngle = 0f;
 
@@ -83,7 +86,11 @@ public class MovPersonaje2D : MonoBehaviour
         // Controlando si intenta correr
         float currentMaxVelocity = runPressed ? maximumRunVelocity : maximumWalkVelocity;
         // Mover personaje
-        characterController.Move(movCharacter * currentMaxVelocity * Time.deltaTime);
+        Vector3 mov = new Vector3(movCharacter.x * currentMaxVelocity, movCharacter.y,
+            movCharacter.z * currentMaxVelocity);
+        Vector3 slopeFix = Vector3.down * characterController.height / 2 * slopeForce * Time.deltaTime;
+        characterController.Move((mov + slopeFix) * Time.deltaTime);
+        // https://www.youtube.com/watch?v=b7bmNDdYPzU
 
         // Suavizar transiciones entre animaciones
         velocityX = Mathf.Lerp(velocityX,
@@ -116,5 +123,18 @@ public class MovPersonaje2D : MonoBehaviour
             velocidadGravedad += gravedadMagnitud * gravedadMultiplicador * Time.deltaTime;
         }
         movCharacter.y = velocidadGravedad;
+    }
+
+    private bool OnSlope()
+    {
+        /*if (isJumping)
+            return false;*/
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterController.height / 2 * slopeForceRayLength))
+            if (hit.normal != Vector3.up)
+                return true;
+        return false;
     }
 }
