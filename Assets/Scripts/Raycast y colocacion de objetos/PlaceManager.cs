@@ -73,7 +73,7 @@ public class PlaceManager : MonoBehaviour
                     !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);
             // Se cambia el "tag" <<original>> del objeto a falso para posteriormente poder borrar todos
             // excepto el original
-            objetoCopiado.GetComponent<PlaceableObject>().setIsACopy(true);
+            //objetoCopiado.GetComponent<PlaceableObject>().setIsACopy(true);
             // TODO: Sin uso, pero se queda así por si hace falta luego eliminar todas las copias
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
