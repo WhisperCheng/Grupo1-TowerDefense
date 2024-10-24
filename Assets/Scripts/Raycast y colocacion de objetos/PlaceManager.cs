@@ -164,6 +164,12 @@ public class PlaceManager : MonoBehaviour
     {
         if (objetoSiendoArrastrado && ctx.performed)
         {
+            if (!objetoCopiado.activeSelf)
+            {
+                destroyInstanceCopy();
+                return;
+            }
+                
             // reemplazar cada array de materiales de la lista original por los de la lista de copias
             for (int i = 0; i < objetoCopiado.GetComponentsInChildren<Transform>().Length; i++)
             {
