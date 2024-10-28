@@ -402,9 +402,27 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Button3",
+                    "type": "Button",
+                    "id": "3f4cbcfd-ee41-4e58-b9eb-b7202d0eea9d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "ManageUI",
                     "type": "Button",
                     "id": "33e48578-c522-47b0-bff0-6c8d2384a85c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ShowObjects",
+                    "type": "Button",
+                    "id": "c4ede99f-fa50-4b63-b012-2ba84f0aa26c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -849,6 +867,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "ManageUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ab8d61b-c511-4721-b814-f1f777b188c4",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "ShowObjects",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6caaef40-1de1-452e-b68d-890f2f36358c",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Button3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

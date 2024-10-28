@@ -22,6 +22,9 @@ public class PlaceManager : MonoBehaviour
     public PlayerInput playerInput;
 
     public Button button1;
+    public Button button3;
+
+    Button currentButton;
 
     private void Awake()
     {
@@ -145,7 +148,17 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
-    public void onClickButton(InputAction.CallbackContext ctx)
+    public void onClickButton1()
+    {
+        currentButton = button1;
+    }
+
+    public void onClickButton3()
+    {
+        currentButton = button3;
+    }
+
+    public void onClickButtons(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
@@ -155,7 +168,12 @@ public class PlaceManager : MonoBehaviour
             }
             else
             {
-                button1.onClick.Invoke();
+                currentButton.onClick.Invoke();
+                currentButton.Select();
+                if (!GameUIManager.Instance.activeObjectUI) // si el menú está escondido, mostrarlo
+                {
+                    GameUIManager.Instance.showObjectMenu(GameUIManager.Instance.menusTransitionTime);
+                }
             }
         }
     }
@@ -180,10 +198,13 @@ public class PlaceManager : MonoBehaviour
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
-                                  //NumObjetos.numObjetos++;
-                                  //NumObjetos.actualizarNumObjetos();
             objetoSiendoArrastrado = false;
-            //}
+
+            if (!GameUIManager.Instance.activeObjectUI)
+            {
+                GameUIManager.Instance.crossHead.SetActive(false);
+            }
+            EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
         }
     }
     public void onRightClickPlacingObj(InputAction.CallbackContext ctx)
