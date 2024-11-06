@@ -20,6 +20,8 @@ public class PlaceManager : MonoBehaviour
     //Color32 colorOriginalObjeto;
     private bool objetoSiendoArrastrado = false;
     public PlayerInput playerInput;
+    public GameObject particulasConstruccion;
+    GameObject particulasCopia;
 
     public Button button1;
     public Button button3;
@@ -136,6 +138,7 @@ public class PlaceManager : MonoBehaviour
                     objetoCopiado.SetActive(true);
                 }
                 objetoCopiado.gameObject.transform.position = golpeRayo.point;
+
             }
             else
             {
@@ -194,12 +197,15 @@ public class PlaceManager : MonoBehaviour
                 Transform child = objetoCopiado.GetComponentsInChildren<Transform>()[i];
                 child.gameObject.GetComponent<Renderer>().materials = materialesOriginalesObjeto[i];
             }
+            particulasCopia = Instantiate(particulasConstruccion);
+            particulasCopia.transform.position = objetoCopiado.transform.position;
+            particulasCopia.GetComponent<ParticleSystem>().Play();
 
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
             objetoSiendoArrastrado = false;
-
+            
             if (!GameUIManager.Instance.activeObjectUI)
             {
                 GameUIManager.Instance.crossHead.SetActive(false);
