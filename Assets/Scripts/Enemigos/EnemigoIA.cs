@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public abstract class Enemigo : MonoBehaviour
+public abstract class EnemigoIA : MonoBehaviour
 {
 
     protected NavMeshAgent agent;
@@ -70,7 +70,7 @@ public abstract class Enemigo : MonoBehaviour
             if (Physics.Linecast(transform.position, closestObjetive.position, out hit))
             {
                 if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
-                    && hit.transform.tag != "Gnomo")
+                    && hit.transform.tag != "Aliado")
                 {
                     enemyIsVisible = false;
                 }
