@@ -18,7 +18,7 @@ public class PlaceManager : MonoBehaviour
     List<Material[]> materialesObjeto;
     List<Material[]> materialesOriginalesObjeto;
     //Color32 colorOriginalObjeto;
-    private bool objetoSiendoArrastrado = false;
+    public bool objetoSiendoArrastrado = false;
     public PlayerInput playerInput;
     public GameObject particulasConstruccion;
     GameObject particulasCopia;

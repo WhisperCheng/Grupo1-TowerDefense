@@ -8,6 +8,7 @@ public class Tower : MonoBehaviour
     public float cooldown = 1f;
     public GameObject currentTarget;
     public List<GameObject> currentTargets = new List<GameObject>();
+    public PlaceManager placeManager;
 
     public Transform rotationPart;
     public float rotationSpeed = 5f;
@@ -15,12 +16,16 @@ public class Tower : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Atacar());
+        placeManager = FindAnyObjectByType<PlaceManager>();
     }
 
     private void Update()
     {
         EnemyDetection();
-        LookRotation();
+        if (placeManager.objetoSiendoArrastrado == false)
+        {
+            LookRotation();
+        }
     }
 
     private void EnemyDetection()

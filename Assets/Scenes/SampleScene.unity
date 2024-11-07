@@ -2628,6 +2628,7 @@ MonoBehaviour:
   selectedColor: {r: 0.46059847, g: 1, b: 0, a: 0.6156863}
   maxPlaceDistance: 20
   marcador: {fileID: 961106802}
+  objetoSiendoArrastrado: 0
   playerInput: {fileID: 1534750421}
   particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
   button1: {fileID: 0}
@@ -2770,6 +2771,7 @@ MonoBehaviour:
   cooldown: 1
   currentTarget: {fileID: 0}
   currentTargets: []
+  placeManager: {fileID: 0}
   rotationPart: {fileID: 779370817}
   rotationSpeed: 5
 --- !u!1 &903385211 stripped
@@ -5908,7 +5910,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1962857144
 Transform:
   m_ObjectHideFlags: 0
