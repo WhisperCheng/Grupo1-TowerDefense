@@ -2553,6 +2553,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 45a73ec9562eed64a9780f106d90f696, type: 3}
       insertIndex: -1
       addedObject: {fileID: 779370819}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 45a73ec9562eed64a9780f106d90f696, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 779370820}
     - targetCorrespondingSourceObject: {fileID: -5097557480111196234, guid: 45a73ec9562eed64a9780f106d90f696, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1161379433}
@@ -2751,6 +2754,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &779370820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779370816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e872f524ada211d43b54e098c6f2cf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rango: 10
+  cooldown: 1
+  currentTarget: {fileID: 0}
+  currentTargets: []
+  rotationPart: {fileID: 779370817}
+  rotationSpeed: 5
 --- !u!1 &903385211 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
@@ -3182,6 +3203,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
       propertyPath: m_Name
       value: caballero
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420067691883901700, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7896359039916393171, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -5883,7 +5908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1962857144
 Transform:
   m_ObjectHideFlags: 0
