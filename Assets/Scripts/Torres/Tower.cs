@@ -58,9 +58,17 @@ public class Tower : MonoBehaviour
         if (currentTarget != null)
         {
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
-            directionToTarget.y = 0;
+            directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-            rotationPart.rotation = Quaternion.Lerp(rotationPart.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+
+            // Obtenemos solo la rotación en el eje Z
+            Vector3 currentEuler = rotationPart.rotation.eulerAngles;
+            float targetZRotation = targetRotation.eulerAngles.y; // Usamos el valor en Y para rotación en el plano XZ
+
+            // Invertimos el ángulo de rotación en el eje Z
+            float smoothZRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + 180f, Time.deltaTime * rotationSpeed);
+
+            rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothZRotation, currentEuler.z);
         }
     }
 
@@ -79,6 +87,7 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
+
     }
 
     private void OnDrawGizmosSelected()
