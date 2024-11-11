@@ -12,11 +12,13 @@ public class Tower : MonoBehaviour
 
     public Transform rotationPart;
     public float rotationSpeed = 5f;
+    Animator animator;
 
     private void Start()
     {
         StartCoroutine(Atacar());
         placeManager = FindAnyObjectByType<PlaceManager>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -76,12 +78,17 @@ public class Tower : MonoBehaviour
     {
         while (true)
         {
-            if (currentTarget != null)
+            if (currentTarget != null && placeManager.objetoSiendoArrastrado == false)
             {
                 Shoot();
+                animator.SetBool("ataque", true);
                 yield return new WaitForSeconds(cooldown);
             }
             yield return null;
+            if (currentTarget == null) 
+            {
+                animator.SetBool("ataque", false);
+            }
         }
     }
 
