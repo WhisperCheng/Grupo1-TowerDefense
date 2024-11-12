@@ -11,6 +11,7 @@ public class Tower : MonoBehaviour
     public PlaceManager placeManager;
 
     public Transform rotationPart;
+    public float rotationModel = 180f;
     public float rotationSpeed = 5f;
     Animator animator;
 
@@ -68,7 +69,7 @@ public class Tower : MonoBehaviour
             float targetZRotation = targetRotation.eulerAngles.y; // Usamos el valor en Y para rotación en el plano XZ
 
             // Invertimos el ángulo de rotación en el eje Z
-            float smoothZRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + 180f, Time.deltaTime * rotationSpeed);
+            float smoothZRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + rotationModel, Time.deltaTime * rotationSpeed);
 
             rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothZRotation, currentEuler.z);
         }
@@ -82,7 +83,6 @@ public class Tower : MonoBehaviour
             {
                 Shoot();
                 animator.SetBool("ataque", true);
-                yield return new WaitForSeconds(cooldown);
             }
             yield return null;
             if (currentTarget == null) 
@@ -94,7 +94,7 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-
+        Debug.Log("Dispara");
     }
 
     private void OnDrawGizmosSelected()
