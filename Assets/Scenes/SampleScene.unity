@@ -2721,7 +2721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marcador: {fileID: 961106802}
-  proyectilPrefab: {fileID: 5624030268271569163}
+  proyectilPrefab: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
   puntoDisparo: {fileID: 719486001}
   velocidadProyectil: 30
 --- !u!1 &903385211 stripped
@@ -7454,6 +7454,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicAttack
       objectReference: {fileID: 0}
+    - target: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5573224660252412662, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.797
@@ -7617,11 +7621,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
---- !u!1 &5624030268271569163 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
-  m_PrefabInstance: {fileID: 444883665836228944}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6346481841077614022
 PrefabInstance:
   m_ObjectHideFlags: 0
