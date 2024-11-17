@@ -94,7 +94,7 @@ public class Tower : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Dispara");
+
     }
 
     private void OnDrawGizmosSelected()
