@@ -10,6 +10,8 @@ public class Mov_Seta : MonoBehaviour
     int radio = 5;
     float vida = 10;
     float fuerza = 20;
+
+    //GAMEOBJECT
     public Transform enemigoMaza; //maza o el que sea que sigue la seta
 
     //CONTROLADORES
@@ -34,21 +36,31 @@ public class Mov_Seta : MonoBehaviour
     {
         Collider[] listaChoques;
         listaChoques = Physics.OverlapSphere(transform.position, radio);
+        transform.LookAt(enemigoMaza.transform.position);
+
         foreach (Collider enemigo in listaChoques)
         {
-            Debug.Log(enemigo);
             if (enemigo.CompareTag("Enemy"))
             {
+                animator.SetBool("Caminar", true);
                 NavAgent.SetDestination(enemigoMaza.position);
+            }
+            else
+            {
+                animator.SetBool("Caminar", false);
             }
         }
 
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            // cuando colisiones hacer animacion de atacar 
+            animator.SetBool("Atacar", true);
+        }
+        else
+        {
+            animator.SetBool("Atacar", false);
         }
     }
     private void OnDrawGizmos()
