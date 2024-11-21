@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Mov_Seta : MonoBehaviour
 {
     //VARIABLES
-    int radio = 5;
+    int radio = 15;
     float vida = 10;
     float fuerza = 20;
 
@@ -45,27 +45,19 @@ public class Mov_Seta : MonoBehaviour
                 animator.SetBool("Caminar", true);
                 NavAgent.SetDestination(enemigoMaza.position);
             }
-            else
-            {
-                animator.SetBool("Caminar", false);
-            }
         }
 
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("finish"))
         {
-            animator.SetBool("Atacar", true);
-        }
-        else
-        {
-            animator.SetBool("Atacar", false);
+            Debug.Log(collision);
         }
     }
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, radio);
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
     }
 }
