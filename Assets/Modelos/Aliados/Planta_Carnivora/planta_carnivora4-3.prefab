@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0035cdf4c9cdaf04b8e2358ec272af20, type: 3}
+      propertyPath: m_TagString
+      value: Tower
+      objectReference: {fileID: 0}
     - target: {fileID: 995601427838500975, guid: 0035cdf4c9cdaf04b8e2358ec272af20, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1617,8 +1621,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.61, y: 6.36, z: 3.61}
+  m_Center: {x: 0, y: 3.04, z: 0}
 --- !u!114 &23515996739696503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1637,6 +1641,7 @@ MonoBehaviour:
   currentTargets: []
   placeManager: {fileID: 0}
   rotationPart: {fileID: 3937147450398259770}
+  rotationModel: 180
   rotationSpeed: 5
 --- !u!95 &722245385698042041
 Animator:

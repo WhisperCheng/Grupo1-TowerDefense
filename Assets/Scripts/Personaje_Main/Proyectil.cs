@@ -7,11 +7,17 @@ public class Proyectil : MonoBehaviour
     public GameObject marcador; 
     public GameObject proyectilPrefab; 
     public Transform puntoDisparo; 
-    public float velocidadProyectil = 20f; 
+    public float velocidadProyectil = 20f;
+    public PlaceManager placeManager;
+    
+    private void Start()
+    {
+        placeManager = FindAnyObjectByType<PlaceManager>();
+    }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1")) 
+        if (Input.GetButtonDown("Fire1") && !placeManager.bloqueoDisparo) 
         {
             LanzarProyectil();
         }

@@ -14,7 +14,7 @@ public class PlaceManager : MonoBehaviour
     public float maxPlaceDistance;
     public GameObject marcador;
     private static GameObject objeto;
-    private static GameObject objetoCopiado;
+    public GameObject objetoCopiado;
     List<Material[]> materialesObjeto;
     List<Material[]> materialesOriginalesObjeto;
     //Color32 colorOriginalObjeto;
@@ -22,6 +22,7 @@ public class PlaceManager : MonoBehaviour
     public PlayerInput playerInput;
     public GameObject particulasConstruccion;
     GameObject particulasCopia;
+    public bool bloqueoDisparo = false;
 
     public Button button1;
     public Button button3;
@@ -86,9 +87,16 @@ public class PlaceManager : MonoBehaviour
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
             objetoCopiado.GetComponent<BoxCollider>().enabled = false;
-            seleccionarObjeto();
+            //seleccionarObjeto();
+            bloqueoDisparo = true;
             objetoSiendoArrastrado = true;
         }
+    }
+
+    private IEnumerator DesbloquearDisparo() //Para que no dispare cuando va a colocar
+    {
+        yield return null; 
+        bloqueoDisparo = false;
     }
 
     void seleccionarObjeto()
@@ -192,11 +200,11 @@ public class PlaceManager : MonoBehaviour
             }
                 
             // reemplazar cada array de materiales de la lista original por los de la lista de copias
-            for (int i = 0; i < objetoCopiado.GetComponentsInChildren<Transform>().Length; i++)
+            /*for (int i = 0; i < objetoCopiado.GetComponentsInChildren<Transform>().Length; i++)
             {
                 Transform child = objetoCopiado.GetComponentsInChildren<Transform>()[i];
                 child.gameObject.GetComponent<Renderer>().materials = materialesOriginalesObjeto[i];
-            }
+            }*/
             particulasCopia = Instantiate(particulasConstruccion);
             particulasCopia.transform.position = objetoCopiado.transform.position;
             particulasCopia.GetComponent<ParticleSystem>().Play();
@@ -205,7 +213,8 @@ public class PlaceManager : MonoBehaviour
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
             objetoSiendoArrastrado = false;
-            
+            StartCoroutine(DesbloquearDisparo());
+
             if (!GameUIManager.Instance.activeObjectUI)
             {
                 GameUIManager.Instance.crossHead.SetActive(false);
