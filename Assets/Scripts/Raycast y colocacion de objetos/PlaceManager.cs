@@ -16,7 +16,7 @@ public class PlaceManager : MonoBehaviour
     private static GameObject objeto;
     public GameObject objetoCopiado;
     List<Material[]> materialesObjeto;
-    List<Material[]> materialesOriginalesObjeto;
+    List<Color[]> coloresOriginalesObjeto;
     //Color32 colorOriginalObjeto;
     public bool objetoSiendoArrastrado = false;
     public PlayerInput playerInput;
@@ -51,7 +51,7 @@ public class PlaceManager : MonoBehaviour
         //https://youtu.be/NZBAr_V7r0M?t=153
         Cursor.lockState = CursorLockMode.Locked;
         materialesObjeto = new List<Material[]>();
-        materialesOriginalesObjeto = new List<Material[]>();
+        coloresOriginalesObjeto = new List<Color[]>();
     }
 
     // Update is called once per frame
@@ -87,7 +87,7 @@ public class PlaceManager : MonoBehaviour
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
             objetoCopiado.GetComponent<BoxCollider>().enabled = false;
-            //seleccionarObjeto();
+            SetObjectPreviewMode(true);
             bloqueoDisparo = true;
             objetoSiendoArrastrado = true;
         }
@@ -99,44 +99,85 @@ public class PlaceManager : MonoBehaviour
         bloqueoDisparo = false;
     }
 
-    void seleccionarObjeto()
+    void SetObjectPreviewMode(bool previewMode)
     {
         // Por cada gameObject se añade su array de materiales correspondiente a la lista y la copia
         // de los materiales originales
-        foreach (Transform child in objetoCopiado.GetComponentsInChildren<Transform>())
+        Transform[] childs = objetoCopiado.GetComponentsInChildren<Transform>();
+        for (int i = 0; i < childs.Length; i++)
         {
-            Material[] mats = child.gameObject.GetComponent<Renderer>().materials;
-            Material[] matsCopy = new Material[mats.Length];
+            Transform child = childs[i];
+            Material[] mats = null;
+            Color[] matsColorCopy = null;
+            // PREPARACIÓN: Si está en modo preview, se preparan los materiales del objeto y un array para los nuevos colores
+            if (previewMode)
+            {
+                mats = child.gameObject.GetComponent<Renderer>().materials;
+                matsColorCopy = new Color[mats.Length];
+            }
+            else
+            { // De lo contrario, se referencian los ya definidos materiales del objeto sin necesidad de volverlo a hacer
+                mats = materialesObjeto[i];
+            }
+
+            // Por cada material, se gestiona su color correspondiente según el modo preview
             for (int j = 0; j < mats.Length; j++)
             {
-                Material m = mats[j];
-                matsCopy[j] = new Material(m);
-                // Importante poner new y crear un nuevo material, de lo
-                // contrario el material seguirá vinculado al anterior
+                Color c;
+                float transparency;
+                if (previewMode)
+                {
+                    // ALMACENAMIENTO: Se escoge el color de cada material para sobre la marcha almacenarlo en la lista
+                    // de colores originales por cada array de materiales y cambiar el color del objeto
+                    c = new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1);
+                    matsColorCopy[j] = mats[j].color; // Almacenando el color original
+                }
+                else
+                {
+                    // RESUSTITUCIÓN: Se recupera el color original de cada material correspondiente para volverlo a aplicar
+                    // al objeto implicado
+                    c = coloresOriginalesObjeto[i][j];
+                }
+                Material m = mats[j]; // Referenciando el material actual
 
-                m.SetColor("_BaseColor", new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1));
-                m.SetColor("_Color", new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1));
-                // por si el material no tiene el toon shader
-                m.SetFloat("_Tweak_transparency", -(1 - selectedColor.a));
-
-                //sombras
+                // CAMBIO DE COLOR Y TRANSPARENCIA
+                m.SetColor("_BaseColor", c);
+                m.SetColor("_Color", c); // por si el material no tiene el toon shader
+                transparency = previewMode ? selectedColor.a : c.a;
+                m.SetFloat("_Tweak_transparency", -(1 - transparency));
+                // Sombras
                 if (m.HasColor("_1st_ShadeColor") && m.HasColor("_2nd_ShadeColor"))
                 {
-                    Color c = new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1);
                     m.SetColor("_1st_ShadeColor", c);
                     m.SetColor("_2nd_ShadeColor", c);
                 }
             }
-            materialesObjeto.Add(mats);
-            materialesOriginalesObjeto.Add(matsCopy);
+            if (previewMode) // Si está en preview se populan las listas para su futuro uso (previewMode == false)
+            {
+                materialesObjeto.Add(mats);
+                coloresOriginalesObjeto.Add(matsColorCopy);
+            }
         }
+        if (!previewMode) // Finalmente, si deja de estar en modo preview, se limpian las listas para un posterior nuevo uso
+        { // (al salir de todos los bucles)
+            ClearSelectedObjInfo();
+        }
+    }
+
+    /// <summary>
+    /// Vacía la información de las listas usadas para posteriormente usar correctamente las listas con nuevos objetos.
+    /// </summary>
+    // Se invoca al terminar de colocar un objeto o al cancelar la colocación de este (click derecho)
+    private void ClearSelectedObjInfo()
+    {
+        materialesObjeto = new List<Material[]>();
+        coloresOriginalesObjeto = new List<Color[]>();
     }
 
     private void manageObjectPlacement()
     {
         if (objetoSiendoArrastrado)
         {
-            //Vector3 point = Camera.main.WorldToScreenPoint(marcador.transform.position);
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
@@ -198,21 +239,15 @@ public class PlaceManager : MonoBehaviour
                 destroyInstanceCopy();
                 return;
             }
-                
-            // reemplazar cada array de materiales de la lista original por los de la lista de copias
-            /*for (int i = 0; i < objetoCopiado.GetComponentsInChildren<Transform>().Length; i++)
-            {
-                Transform child = objetoCopiado.GetComponentsInChildren<Transform>()[i];
-                child.gameObject.GetComponent<Renderer>().materials = materialesOriginalesObjeto[i];
-            }*/
             particulasCopia = Instantiate(particulasConstruccion);
             particulasCopia.transform.position = objetoCopiado.transform.position;
             particulasCopia.GetComponent<ParticleSystem>().Play();
 
             objetoCopiado.GetComponent<BoxCollider>().enabled = true;
+            objetoSiendoArrastrado = false;
+            SetObjectPreviewMode(false);
             objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
-            objetoSiendoArrastrado = false;
             StartCoroutine(DesbloquearDisparo());
 
             if (!GameUIManager.Instance.activeObjectUI)
@@ -225,6 +260,7 @@ public class PlaceManager : MonoBehaviour
     public void onRightClickPlacingObj(InputAction.CallbackContext ctx)
     {
         destroyInstanceCopy();
+        ClearSelectedObjInfo();
     }
 
     void destroyInstanceCopy()
