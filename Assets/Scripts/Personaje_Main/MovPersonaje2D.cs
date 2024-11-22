@@ -25,6 +25,7 @@ public class MovPersonaje2D : MonoBehaviour
     //public float deceleration = 2.0f;
     [SerializeField] private float _maximumWalkVelocity = 4f;
     [SerializeField] private float _maximumRunVelocity = 10f;
+    private float _currentMaxVelocity = 0;
 
     [Header("Suavizado y movimiento en pendientes")]
     [SerializeField] private float _smoothingMoveSpeed = 0.2f;
@@ -39,10 +40,11 @@ public class MovPersonaje2D : MonoBehaviour
 
     PlayerInput playerInput;
     private Vector2 _moveDirection;
-    private Vector2 _smoothMoveDirection;
+    private Vector2 _smoothedMoveDirection;
     private Vector2 _lookDirection;
     private float _oldLookDirection = 0f;
     private Vector2 _smoothedMoveSpeed;
+    private int sueloMask = 1 << 6;
     
     //float rotateYAngle = 0f;
 
@@ -53,6 +55,7 @@ public class MovPersonaje2D : MonoBehaviour
         _animatorController = GetComponent<Animator>();
         _velocityZHash = Animator.StringToHash("VelZ");
         _velocityXHash = Animator.StringToHash("VelX");
+        _currentMaxVelocity = _maximumWalkVelocity;
 
         playerInput = GetComponent<PlayerInput>();
     }
@@ -64,57 +67,74 @@ public class MovPersonaje2D : MonoBehaviour
 
     void Update()
     {
+        moveCharacter();
+    }
+
+    // Físicas y movimientos del personaje
+    private void moveCharacter()
+    {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
+        /*
+        // TODO (opcional/si da tiempo):
         /// Si el jugador no está tocando el suelo, se deshabilita temporalmente el control
-        /// del movimiento horizontal
-        /// // TODO
-        /*if (!_characterController.isGrounded)
+        ///del movimiento horizontal
+        
+        RaycastHit hit;
+        float radius = _characterController.radius / 2;
+        // Desde que el personaje en cierta medida se despegue del suelo, será considerado como que está en el aire
+        //bool onAir = !Physics.Raycast(transform.position, -transform.up, 1);
+        bool onAir = Physics.OverlapSphere(transform.position, _characterController.radius, sueloMask).Length == 0;
+        if (onAir)
         {
+            Debug.Log("sd " + transform.up);
             _moveDirection = Vector2.zero;
-            _lookDirection = Vector2.zero;
         }*/
 
-        //bool runPressed = Input.GetKey(KeyCode.LeftShift);
-        bool runPressed = playerInput.actions["Correr"].ReadValue<float>() > 0 ? true : false;
-
+        /// CÁMARA
         // Rotamos en el eje Y, se rota suavemente
         _lookDirection.x = Mathf.Lerp(_oldLookDirection, _lookDirection.x, (60.1f - _smoothTurnSpeed) * Time.deltaTime); // suavizar rotación
         float addRotation = _lookDirection.x * _turnSpeed * Time.deltaTime;
         transform.Rotate(0, addRotation, 0); // rotación con suavizado
         _oldLookDirection = _lookDirection.x;
 
-        //Suavizar el movimiento del vector moveDirection
-        _smoothMoveDirection = Vector2.SmoothDamp(_smoothMoveDirection, _moveDirection, 
-            ref _smoothedMoveSpeed, _smoothingMoveSpeed);
+        /// MOVIMIENTO
+        // Suavizar el movimiento del vector moveDirection
+        // Si empieza a correr el movimiento de suavizado será ligeramente menor
+        bool runPressed = playerInput.actions["Correr"].ReadValue<float>() > 0 ? true : false;
+        _smoothedMoveDirection = Vector2.SmoothDamp(_smoothedMoveDirection, _moveDirection,
+            ref _smoothedMoveSpeed, _smoothingMoveSpeed * (runPressed ? 1f : 1.4f));
 
-        _movCharacter = transform.forward * _smoothMoveDirection.y + transform.right * 
-            _smoothMoveDirection.x;
+        _movCharacter = transform.forward * _smoothedMoveDirection.y + transform.right *
+            _smoothedMoveDirection.x;
         applyGravity();
 
-        // Controlando si intenta correr
-        float currentMaxVelocity = runPressed ? _maximumRunVelocity : _maximumWalkVelocity;
+        // Controlando si intenta correr y suavizar el movimiento de correr
+        float currentRawMaxVelocity = runPressed ? _maximumRunVelocity : _maximumWalkVelocity;
+        _currentMaxVelocity = Mathf.Lerp(_currentMaxVelocity,
+            currentRawMaxVelocity, Time.deltaTime * _acceleration);
 
         // Mover personaje
-        Vector3 mov = new Vector3(_movCharacter.x * currentMaxVelocity, _movCharacter.y,
-            _movCharacter.z * currentMaxVelocity);
-
+        Vector3 mov = new Vector3(_movCharacter.x * _currentMaxVelocity, _movCharacter.y,
+            _movCharacter.z * _currentMaxVelocity);
         Vector3 slopeFix = Vector3.zero;
+        
         /// Si el jugador se está moviendo y está en una rampa, se aplica un movimiento correctivo para
         /// que pueda caminar o deslizarse por ella correctamente si está dentro del ángulo de poder caminar por rampas
         if ((_movCharacter.x != 0 || _movCharacter.z != 0) && OnSlope())
         {
-            slopeFix = Vector3.down * /*characterController.height / 2 * */ _slopeForce * Time.deltaTime;
+            slopeFix = Vector3.down * _slopeForce * Time.deltaTime;
         }
-        
+
         _characterController.Move((mov + slopeFix) * Time.deltaTime);
 
-        // Suavizar transiciones entre animaciones
+        /// SUAVIZADO DE TRANSICIONES
+        float smoothAmount = (runPressed ? 1.3f : 1f);
         _velocityX = Mathf.Lerp(_velocityX,
-            _moveDirection.x * currentMaxVelocity, Time.deltaTime * _acceleration);
+            _moveDirection.x * currentRawMaxVelocity, Time.deltaTime * _acceleration * smoothAmount);
         _velocityZ = Mathf.Lerp(_velocityZ,
-            _moveDirection.y * currentMaxVelocity, Time.deltaTime * _acceleration);
+            _moveDirection.y * currentRawMaxVelocity, Time.deltaTime * _acceleration * smoothAmount);
 
         /// Si la velocidad es menor que 0.001 pasarla directamente a 0 para no estar
         ///  suavizando números más pequeños
@@ -164,8 +184,7 @@ public class MovPersonaje2D : MonoBehaviour
         float maxDist = _slopeForceRayLength;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, maxDist)) { 
             //if (hit.normal != Vector3.up) {
-            if (hit.normal.y <= 0.9) {
-                Debug.Log(hit.normal);
+            if (hit.normal.y <= 0.97) {
                 return true;
             }
             
