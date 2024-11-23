@@ -6,14 +6,14 @@ using UnityEngine;
 
 public class MovPersonaje2D : MonoBehaviour
 {
-    [Header("Giro")]
+    /*[Header("Giro")]
     [SerializeField] private float _turnSpeed = 40.0f; // La velocidad de giro
     [Range(0f, 60f)]
-    [SerializeField] private float _smoothTurnSpeed = 4f;
+    [SerializeField] private float _smoothTurnSpeed = 4f;*/
 
     [Header("Animaciones")]
     [SerializeField] private CharacterController _characterController;
-    private Animator _animatorController;
+    [SerializeField] private Animator _animatorController;
 
     [Header("Gravedad")]
     [SerializeField] private float _velocidadGravedad = 1f;
@@ -31,6 +31,9 @@ public class MovPersonaje2D : MonoBehaviour
     [SerializeField] private float _smoothingMoveSpeed = 0.2f;
     [SerializeField] private float _slopeForce;
     [SerializeField] private float _slopeForceRayLength;
+    public Transform orientation;
+
+
 
     private Vector3 _movCharacter;
     private float _velocityZ = 0.0f;
@@ -52,7 +55,7 @@ public class MovPersonaje2D : MonoBehaviour
     {
         // Get the Character Controller on the player
         _characterController = GetComponent<CharacterController>();
-        _animatorController = GetComponent<Animator>();
+        //animatorController = GetComponent<Animator>();
         _velocityZHash = Animator.StringToHash("VelZ");
         _velocityXHash = Animator.StringToHash("VelX");
         _currentMaxVelocity = _maximumWalkVelocity;
@@ -67,11 +70,11 @@ public class MovPersonaje2D : MonoBehaviour
 
     void Update()
     {
-        moveCharacter();
+        MoveCharacter();
     }
 
     // Físicas y movimientos del personaje
-    private void moveCharacter()
+    private void MoveCharacter()
     {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
@@ -82,7 +85,7 @@ public class MovPersonaje2D : MonoBehaviour
         ///del movimiento horizontal
         
         RaycastHit hit;
-        float radius = _characterController.radius / 2;
+        float radius = _characterController.radius / 2;_smoothTurnSpeed
         // Desde que el personaje en cierta medida se despegue del suelo, será considerado como que está en el aire
         //bool onAir = !Physics.Raycast(transform.position, -transform.up, 1);
         bool onAir = Physics.OverlapSphere(transform.position, _characterController.radius, sueloMask).Length == 0;
@@ -92,13 +95,6 @@ public class MovPersonaje2D : MonoBehaviour
             _moveDirection = Vector2.zero;
         }*/
 
-        /// CÁMARA
-        // Rotamos en el eje Y, se rota suavemente
-        _lookDirection.x = Mathf.Lerp(_oldLookDirection, _lookDirection.x, (60.1f - _smoothTurnSpeed) * Time.deltaTime); // suavizar rotación
-        float addRotation = _lookDirection.x * _turnSpeed * Time.deltaTime;
-        transform.Rotate(0, addRotation, 0); // rotación con suavizado
-        _oldLookDirection = _lookDirection.x;
-
         /// MOVIMIENTO
         // Suavizar el movimiento del vector moveDirection
         // Si empieza a correr el movimiento de suavizado será ligeramente menor
@@ -106,9 +102,9 @@ public class MovPersonaje2D : MonoBehaviour
         _smoothedMoveDirection = Vector2.SmoothDamp(_smoothedMoveDirection, _moveDirection,
             ref _smoothedMoveSpeed, _smoothingMoveSpeed * (runPressed ? 1f : 1.4f));
 
-        _movCharacter = transform.forward * _smoothedMoveDirection.y + transform.right *
+        _movCharacter = orientation.forward * _smoothedMoveDirection.y + orientation.right * //
             _smoothedMoveDirection.x;
-        applyGravity();
+        ApplyGravity();
 
         // Controlando si intenta correr y suavizar el movimiento de correr
         float currentRawMaxVelocity = runPressed ? _maximumRunVelocity : _maximumWalkVelocity;
@@ -152,7 +148,7 @@ public class MovPersonaje2D : MonoBehaviour
     }
 
     // Aplicar gravedad al personaje
-    private void applyGravity()
+    private void ApplyGravity()
     {
         if (_characterController.isGrounded)
         {
