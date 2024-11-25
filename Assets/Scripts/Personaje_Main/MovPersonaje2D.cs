@@ -12,7 +12,7 @@ public class MovPersonaje2D : MonoBehaviour
     [SerializeField] private float _smoothTurnSpeed = 4f;*/
 
     [Header("Animaciones")]
-    [SerializeField] private CharacterController _characterController;
+    private CharacterController _characterController;
     [SerializeField] private Animator _animatorController;
 
     [Header("Gravedad")]
