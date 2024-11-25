@@ -266,6 +266,7 @@ public class PlaceManager : MonoBehaviour
     {
         ClearSelectedObjInfo();
         objetoSiendoArrastrado = false;
+        StartCoroutine(DesbloquearDisparo());
         Destroy(objetoCopiado);
     }
 
