@@ -27,7 +27,7 @@ public class PlaceManager : MonoBehaviour
     public Button button1;
     public Button button3;
 
-    Button currentButton;
+    private Button currentButton;
 
     private void Awake()
     {
@@ -199,15 +199,10 @@ public class PlaceManager : MonoBehaviour
             // onClickPlaceObj();
         }
     }
-
-    public void onClickButton1()
+    
+    public void onClickButton(Button btn)
     {
-        currentButton = button1;
-    }
-
-    public void onClickButton3()
-    {
-        currentButton = button3;
+        currentButton = btn;
     }
 
     public void onClickButtons(InputAction.CallbackContext ctx)

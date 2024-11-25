@@ -35,6 +35,7 @@ public class ThirdPersonCam : MonoBehaviour
     {
         RotateOrientation();
         RotatePlayerObj();
+        orientation = GameObject.Find("Orientation").transform;
     }
 
     private void RotateOrientation()
@@ -71,5 +72,13 @@ public class ThirdPersonCam : MonoBehaviour
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * _smoothTurnSpeed);
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0, 0, 0);
+        
+        Gizmos.DrawLine(orientation.transform.position, orientation.forward);
+        
     }
 }

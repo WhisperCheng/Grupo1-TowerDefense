@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPlacer : MonoBehaviour
+public class TowerButton : MonoBehaviour
 {
-    public GameObject objeto;
+    //public GameObject objeto;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +17,9 @@ public class ObjectPlacer : MonoBehaviour
         
     }
 
-    public void asignMainObject(GameObject obj)
+    public void StartButton(GameObject obj)
     {
         PlaceManager.Instance.designMainObject(obj);
         PlaceManager.Instance.generarObjeto(obj);
-
     }
 }
