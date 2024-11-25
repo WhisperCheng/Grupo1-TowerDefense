@@ -260,11 +260,11 @@ public class PlaceManager : MonoBehaviour
     public void onRightClickPlacingObj(InputAction.CallbackContext ctx)
     {
         destroyInstanceCopy();
-        ClearSelectedObjInfo();
     }
 
     void destroyInstanceCopy()
     {
+        ClearSelectedObjInfo();
         objetoSiendoArrastrado = false;
         Destroy(objetoCopiado);
     }
