@@ -39,7 +39,8 @@ public class Proyectil : MonoBehaviour
         }
 
         // Crea el proyectil 
-        GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
+        //GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
+        GameObject proyectil = MagicProjectilePool.Instance.GetMagicProjectile(puntoDisparo.position, Quaternion.identity);
         Vector3 direccion = (destino - puntoDisparo.position).normalized;
         proyectil.GetComponent<Rigidbody>().velocity = direccion * velocidadProyectil;
     }

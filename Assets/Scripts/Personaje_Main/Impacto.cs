@@ -8,8 +8,9 @@ public class Impacto : MonoBehaviour
     [SerializeField] GameObject particulasImpacto;
     void OnCollisionEnter(Collision collision)
     {
-        GameObject impacto = Instantiate(particulasImpacto);
+        GameObject impacto = MagicImpactPool.Instance.GetMagicImpact();
         impacto.transform.position = transform.position;
-        Destroy(gameObject); 
+        MagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
     }
+
 }

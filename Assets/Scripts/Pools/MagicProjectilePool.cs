@@ -49,14 +49,14 @@ public class MagicProjectilePool : MonoBehaviour
         }
     }
 
-    public GameObject GetMagicProjectile()
+    public GameObject GetMagicProjectile(Vector3 vector3, Quaternion quaternion)
     {
         // Si no hay proyectiles disponibles
         GameObject newProjectile = null;
 
         if (pool.Count == 0)
         {
-            GameObject createdProjectile = Instantiate(magicProjectilePrefab);
+            GameObject createdProjectile = Instantiate(magicProjectilePrefab, vector3, quaternion);
             return createdProjectile;
         }
         else // Tomar uno de los ya creados
