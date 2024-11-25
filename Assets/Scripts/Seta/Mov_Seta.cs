@@ -8,16 +8,19 @@ public class Mov_Seta : MonoBehaviour
 {
     //VARIABLES
     int radio = 15;
+    int longRayo = 1;
     float vida = 10;
     float fuerza = 20;
 
     //GAMEOBJECT
     public Transform enemigoMaza; //maza o el que sea que sigue la seta
+    public Transform baseAliada;
 
     //CONTROLADORES
     Animator animator;
     Rigidbody rb;
     NavMeshAgent NavAgent;
+    RaycastHit raycast;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +39,9 @@ public class Mov_Seta : MonoBehaviour
     {
         Collider[] listaChoques;
         listaChoques = Physics.OverlapSphere(transform.position, radio);
-        transform.LookAt(enemigoMaza.transform.position);
 
+        Vector3 origen = transform.position;
+        Vector3 direccion = transform.forward;
         foreach (Collider enemigo in listaChoques)
         {
             if (enemigo.CompareTag("Enemy"))
@@ -45,15 +49,23 @@ public class Mov_Seta : MonoBehaviour
                 animator.SetBool("Caminar", true);
                 NavAgent.SetDestination(enemigoMaza.position);
             }
+            else
+            {
+                radio = 15;
+                animator.SetBool("Caminar", false);
+                //NavAgent.SetDestination(baseAliada.position);
+            }
         }
-
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("finish"))
+        if (Physics.Raycast(origen, direccion, out raycast, longRayo))
         {
-            Debug.Log(collision);
+            radio = 0;
+            animator.SetBool("Ataca", true);
         }
+        /*else
+        {
+            radio = 15;
+            animator.SetBool("Ataca", false);
+        }*/
     }
     private void OnDrawGizmos()
     {
