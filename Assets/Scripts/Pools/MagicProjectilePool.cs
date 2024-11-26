@@ -8,7 +8,7 @@ public class MagicProjectilePool : MonoBehaviour
     public GameObject magicProjectilePrefab;
 
     // Número de proyectiles en la pool
-    public int poolSize = 50;
+    public int poolSize = 20;
 
     // Lista de proyectiles de la pool
     private Stack<GameObject> pool;
@@ -51,18 +51,29 @@ public class MagicProjectilePool : MonoBehaviour
 
     public GameObject GetMagicProjectile(Vector3 vector3, Quaternion quaternion)
     {
-        // Si no hay proyectiles disponibles
-        GameObject newProjectile = null;
+        GameObject newProjectile;
 
         if (pool.Count == 0)
         {
-            GameObject createdProjectile = Instantiate(magicProjectilePrefab, vector3, quaternion);
-            return createdProjectile;
+            // Si no hay proyectiles, instanciar uno nuevo
+            newProjectile = Instantiate(magicProjectilePrefab, vector3, quaternion);
         }
-        else // Tomar uno de los ya creados
+        else
         {
+            // Tomar uno de la pool
             newProjectile = pool.Pop();
             newProjectile.SetActive(true);
+        }
+
+        // Configurar posición y rotación
+        newProjectile.transform.position = vector3;
+        newProjectile.transform.rotation = quaternion;
+
+        // Limpiar Trail Renderers antes de activarlo
+        TrailRenderer trail = newProjectile.GetComponentInChildren<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.Clear();
         }
 
         return newProjectile;
@@ -70,11 +81,19 @@ public class MagicProjectilePool : MonoBehaviour
 
     public void ReturnMagicProjectile(GameObject returnedProjectile)
     {
+        TrailRenderer trail = returnedProjectile.GetComponentInChildren<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.Clear();
+            trail.enabled = false;
+            trail.enabled = true;
+        }
+
+        // Desactivar el proyectil
+        returnedProjectile.SetActive(false);
+
         // Volver a meterlo en la pool
         pool.Push(returnedProjectile);
-
-        // Hacer que no sea visible
-        returnedProjectile.SetActive(false);
     }
 }
 

@@ -24,4 +24,4 @@ public class LeanTweenIntro : MonoBehaviour
         introCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 }
-}
+

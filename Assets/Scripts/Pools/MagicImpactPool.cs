@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class MagicImpactPool : MonoBehaviour
 {
-    // Prefab del efecto de impacto mágico
     public GameObject magicImpactPrefab;
+    public int poolSize = 20;
 
-    // Número de impactos en la pool
-    public int poolSize = 30;
-
-    // Lista de impactos de la pool
     private Stack<GameObject> pool;
-
-    // Instancia singleton de la pool
     public static MagicImpactPool Instance;
 
     private void Awake()
     {
-        // Configurar Singleton
         if (Instance == null)
         {
             Instance = this;
@@ -36,14 +29,10 @@ public class MagicImpactPool : MonoBehaviour
 
     void SetupPool()
     {
-        // Inicializar la pool
         pool = new Stack<GameObject>();
-        GameObject impact = null;
-
-        // Instanciar y desactivar todos los impactos al inicio
         for (int i = 0; i < poolSize; i++)
         {
-            impact = Instantiate(magicImpactPrefab);
+            GameObject impact = Instantiate(magicImpactPrefab);
             impact.SetActive(false);
             pool.Push(impact);
         }
@@ -51,30 +40,38 @@ public class MagicImpactPool : MonoBehaviour
 
     public GameObject GetMagicImpact()
     {
-        // Si no hay impactos disponibles
-        GameObject newImpact = null;
-
         if (pool.Count == 0)
         {
-            GameObject createdImpact = Instantiate(magicImpactPrefab);
-            return createdImpact;
-        }
-        else // Tomar uno de los ya creados
-        {
-            newImpact = pool.Pop();
-            newImpact.SetActive(true);
+            Debug.LogWarning("Pool de impactos vacía.");
+            return null;
         }
 
-        return newImpact;
+        GameObject impact = pool.Pop();
+        impact.SetActive(true);
+
+        // Reiniciar sistema de partículas
+        ParticleSystem ps = impact.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            ps.Clear();
+            ps.Play();
+        }
+
+        return impact;
     }
 
     public void ReturnMagicImpact(GameObject returnedImpact)
     {
-        // Volver a meterlo en la pool
-        pool.Push(returnedImpact);
+        // Reiniciar Trail Renderer
+        TrailRenderer trail = returnedImpact.GetComponentInChildren<TrailRenderer>();
+        if (trail != null)
+        {
+            trail.Clear();
+        }
 
-        // Hacer que no sea visible
+        // Desactivar y devolver a la pool
         returnedImpact.SetActive(false);
+        pool.Push(returnedImpact);
     }
 }
 
