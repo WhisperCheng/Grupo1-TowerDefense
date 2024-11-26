@@ -69,18 +69,12 @@ public class MagicProjectilePool : MonoBehaviour
         newProjectile.transform.position = vector3;
         newProjectile.transform.rotation = quaternion;
 
-        // Limpiar Trail Renderers antes de activarlo
-        TrailRenderer trail = newProjectile.GetComponentInChildren<TrailRenderer>();
-        if (trail != null)
-        {
-            trail.Clear();
-        }
-
         return newProjectile;
     }
 
     public void ReturnMagicProjectile(GameObject returnedProjectile)
     {
+        //Limpiar los trails
         TrailRenderer trail = returnedProjectile.GetComponentInChildren<TrailRenderer>();
         if (trail != null)
         {

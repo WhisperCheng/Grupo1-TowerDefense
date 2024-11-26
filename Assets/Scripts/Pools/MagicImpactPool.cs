@@ -42,33 +42,18 @@ public class MagicImpactPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            Debug.LogWarning("Pool de impactos vacía.");
+            Debug.Log("Pool de impactos vacía.");
             return null;
         }
 
         GameObject impact = pool.Pop();
         impact.SetActive(true);
 
-        // Reiniciar sistema de partículas
-        ParticleSystem ps = impact.GetComponent<ParticleSystem>();
-        if (ps != null)
-        {
-            ps.Clear();
-            ps.Play();
-        }
-
         return impact;
     }
 
     public void ReturnMagicImpact(GameObject returnedImpact)
     {
-        // Reiniciar Trail Renderer
-        TrailRenderer trail = returnedImpact.GetComponentInChildren<TrailRenderer>();
-        if (trail != null)
-        {
-            trail.Clear();
-        }
-
         // Desactivar y devolver a la pool
         returnedImpact.SetActive(false);
         pool.Push(returnedImpact);
