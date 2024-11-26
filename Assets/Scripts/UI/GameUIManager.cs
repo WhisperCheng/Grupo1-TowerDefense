@@ -8,11 +8,11 @@ public class GameUIManager : MonoBehaviour
     public static GameUIManager Instance { get; private set; }
 
     public PlayerInput playerInput;
-    public GameObject objectUI;
-    public GameObject buttonsBar;
+    public GameObject buildUI;
+    public GameObject buildButtons;
     public GameObject crossHead;
 
-    public bool activeObjectUI;
+    public bool activeBuildUI;
     public float menusTransitionTime = 0.5f;
 
     public void Awake()
@@ -32,13 +32,13 @@ public class GameUIManager : MonoBehaviour
     {
         //activeObjectUI = true;
 
-        if (activeObjectUI)
+        if (activeBuildUI)
         {
-            showObjectMenu(0);
+            ShowBuildUI(0);
         }
         else
         {
-            hideObjectMenu(0);
+            HideBuildUI(0);
         }
     }
 
@@ -48,40 +48,40 @@ public class GameUIManager : MonoBehaviour
         
     }
 
-    public void onToggleObjectUI(InputAction.CallbackContext ctx)
+    public void OnToggleBuildUI(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
             //float transitionTime = 1f;
-            if (activeObjectUI)
+            if (activeBuildUI)
             {
-                showObjectMenu(menusTransitionTime);
+                ShowBuildUI(menusTransitionTime);
             }
             else
             {
-                hideObjectMenu(menusTransitionTime);
+                HideBuildUI(menusTransitionTime);
             }
         }
-        activeObjectUI = !activeObjectUI;
+        activeBuildUI = !activeBuildUI;
     }
 
-    public void hideObjectMenu(float time)
+    public void HideBuildUI(float time)
     {
-        activeObjectUI = false; // Ocultar crosshead
+        activeBuildUI = false; // Ocultar crosshead
         crossHead.SetActive(false); //
-        LeanTween.cancel(objectUI); // reset de las animaciones
-        LeanTween.cancel(buttonsBar); //
-        LeanTween.moveY(objectUI, -70f, time).setEaseInOutSine(); // Mostrar menú de botones
-        LeanTween.moveLocalY(buttonsBar, -74f, time).setEaseInOutSine(); // 
+        LeanTween.cancel(buildUI); // reset de las animaciones
+        LeanTween.cancel(buildButtons); //
+        LeanTween.moveY(buildUI, -70f, time).setEaseInOutSine(); // Mostrar menú de botones
+        LeanTween.moveLocalY(buildButtons, -74f, time).setEaseInOutSine(); // 
     }
 
-    public void showObjectMenu(float time)
+    public void ShowBuildUI(float time)
     {
-        activeObjectUI = true; // Ocultar crosshead
+        activeBuildUI = true; // Ocultar crosshead
         crossHead.SetActive(true); //
-        LeanTween.cancel(objectUI); // reset de las animaciones
-        LeanTween.cancel(buttonsBar); // 
-        LeanTween.moveY(objectUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
-        LeanTween.moveLocalY(buttonsBar, 0f, time).setEaseInOutSine(); //
+        LeanTween.cancel(buildUI); // reset de las animaciones
+        LeanTween.cancel(buildButtons); //
+        LeanTween.moveY(buildUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
+        LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
     }
 }

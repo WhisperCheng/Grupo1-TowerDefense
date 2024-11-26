@@ -22,14 +22,14 @@ public class RangoTorres : MonoBehaviour
 
         if (placeManager.objetoSiendoArrastrado)
         {
-            if (placeManager.objetoCopiado != null && placeManager.objetoCopiado.activeSelf)
+            if (placeManager.torreCopiada != null && placeManager.torreCopiada.activeSelf)
             {
-                Tower torreScript = placeManager.objetoCopiado.GetComponent<Tower>();
+                Tower torreScript = placeManager.torreCopiada.GetComponent<Tower>();
 
                 if (torreScript != null)
                 {
                     rangoTorre = 2 * torreScript.rango; 
-                    rangeIndicator.transform.position = placeManager.objetoCopiado.transform.position;
+                    rangeIndicator.transform.position = placeManager.torreCopiada.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     rangeIndicator.gameObject.SetActive(true); 
                     torreApuntada = true;

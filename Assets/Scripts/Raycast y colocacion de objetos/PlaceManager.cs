@@ -10,24 +10,24 @@ public class PlaceManager : MonoBehaviour
 {
     public static PlaceManager Instance { get; private set; }
 
+    public PlayerInput playerInput;
+
+    public GameObject marcador;
+    public GameObject particulasConstruccion;
+
+    private static GameObject torre;
+    private Button currentButton;
+    public GameObject torreCopiada;
+
+    public bool objetoSiendoArrastrado = false;
+    public bool bloqueoDisparo = false;
     public Color selectedColor;
     public float maxPlaceDistance;
-    public GameObject marcador;
-    private static GameObject objeto;
-    public GameObject objetoCopiado;
-    List<Material[]> materialesObjeto;
-    List<Color[]> coloresOriginalesObjeto;
-    //Color32 colorOriginalObjeto;
-    public bool objetoSiendoArrastrado = false;
-    public PlayerInput playerInput;
-    public GameObject particulasConstruccion;
+
     GameObject particulasCopia;
-    public bool bloqueoDisparo = false;
-
-    public Button button1;
-    public Button button3;
-
-    private Button currentButton;
+    
+    List<Material[]> materialesTorre;
+    List<Color[]> coloresOriginalesTorre;
 
     private void Awake()
     {
@@ -50,14 +50,14 @@ public class PlaceManager : MonoBehaviour
         // haciendo esto
         //https://youtu.be/NZBAr_V7r0M?t=153
         Cursor.lockState = CursorLockMode.Locked;
-        materialesObjeto = new List<Material[]>();
-        coloresOriginalesObjeto = new List<Color[]>();
+        materialesTorre = new List<Material[]>();
+        coloresOriginalesTorre = new List<Color[]>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        manageObjectPlacement();
+        ManageTowerPlacement();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -66,10 +66,10 @@ public class PlaceManager : MonoBehaviour
         {
             Destroy(objetoCopiado);
         }*/
-        generarObjeto(objeto);
+        GenerateTower(torre);
     }
 
-    public void generarObjeto(GameObject objeto)
+    public void GenerateTower(GameObject objeto)
     {
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
@@ -78,7 +78,7 @@ public class PlaceManager : MonoBehaviour
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance);
-            objetoCopiado = Instantiate(objeto,
+            torreCopiada = Instantiate(objeto,
                     !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);
             // Se cambia el "tag" <<original>> del objeto a falso para posteriormente poder borrar todos
             // excepto el original
@@ -86,8 +86,8 @@ public class PlaceManager : MonoBehaviour
             // TODO: Sin uso, pero se queda así por si hace falta luego eliminar todas las copias
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
-            objetoCopiado.GetComponent<BoxCollider>().enabled = false;
-            SetObjectPreviewMode(true);
+            torreCopiada.GetComponent<BoxCollider>().enabled = false;
+            SetPreviewMode(true);
             bloqueoDisparo = true;
             objetoSiendoArrastrado = true;
         }
@@ -99,11 +99,11 @@ public class PlaceManager : MonoBehaviour
         bloqueoDisparo = false;
     }
 
-    void SetObjectPreviewMode(bool previewMode)
+    void SetPreviewMode(bool previewMode)
     {
         // Por cada gameObject se añade su array de materiales correspondiente a la lista y la copia
         // de los materiales originales
-        Transform[] childs = objetoCopiado.GetComponentsInChildren<Transform>();
+        Transform[] childs = torreCopiada.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
         {
             Transform child = childs[i];
@@ -117,7 +117,7 @@ public class PlaceManager : MonoBehaviour
             }
             else
             { // De lo contrario, se referencian los ya definidos materiales del objeto sin necesidad de volverlo a hacer
-                mats = materialesObjeto[i];
+                mats = materialesTorre[i];
             }
 
             // Por cada material, se gestiona su color correspondiente según el modo preview
@@ -136,7 +136,7 @@ public class PlaceManager : MonoBehaviour
                 {
                     // RESUSTITUCIÓN: Se recupera el color original de cada material correspondiente para volverlo a aplicar
                     // al objeto implicado
-                    c = coloresOriginalesObjeto[i][j];
+                    c = coloresOriginalesTorre[i][j];
                 }
                 Material m = mats[j]; // Referenciando el material actual
 
@@ -154,8 +154,8 @@ public class PlaceManager : MonoBehaviour
             }
             if (previewMode) // Si está en preview se populan las listas para su futuro uso (previewMode == false)
             {
-                materialesObjeto.Add(mats);
-                coloresOriginalesObjeto.Add(matsColorCopy);
+                materialesTorre.Add(mats);
+                coloresOriginalesTorre.Add(matsColorCopy);
             }
         }
         if (!previewMode) // Finalmente, si deja de estar en modo preview, se limpian las listas para un posterior nuevo uso
@@ -170,11 +170,11 @@ public class PlaceManager : MonoBehaviour
     // Se invoca al terminar de colocar un objeto o al cancelar la colocación de este (click derecho)
     private void ClearSelectedObjInfo()
     {
-        materialesObjeto = new List<Material[]>();
-        coloresOriginalesObjeto = new List<Color[]>();
+        materialesTorre = new List<Material[]>();
+        coloresOriginalesTorre = new List<Color[]>();
     }
 
-    private void manageObjectPlacement()
+    private void ManageTowerPlacement()
     {
         if (objetoSiendoArrastrado)
         {
@@ -182,91 +182,91 @@ public class PlaceManager : MonoBehaviour
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
             {
-                if (!objetoCopiado.activeSelf)
+                if (!torreCopiada.activeSelf)
                 {
-                    objetoCopiado.SetActive(true);
+                    torreCopiada.SetActive(true);
                 }
-                objetoCopiado.gameObject.transform.position = golpeRayo.point;
+                torreCopiada.gameObject.transform.position = golpeRayo.point;
 
             }
             else
             {
-                if (objetoCopiado.activeSelf)
+                if (torreCopiada.activeSelf)
                 {
-                    objetoCopiado.SetActive(false);
+                    torreCopiada.SetActive(false);
                 }
             }
-            // onClickPlaceObj();
         }
     }
     
-    public void onClickButton(Button btn)
+    public void OnClickButton(Button btn)
     {
         currentButton = btn;
     }
 
-    public void onClickButtons(InputAction.CallbackContext ctx)
+    public void OnClickButtons(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
             if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
             {
-                destroyInstanceCopy();
+                DestroyInstanceCopy();
             }
             else
             {
                 currentButton.onClick.Invoke();
                 currentButton.Select();
-                if (!GameUIManager.Instance.activeObjectUI) // si el menú está escondido, mostrarlo
+                if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
                 {
-                    GameUIManager.Instance.showObjectMenu(GameUIManager.Instance.menusTransitionTime);
+                    GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
                 }
             }
         }
     }
 
-    public void onClickPlaceObj(InputAction.CallbackContext ctx)
+    public void OnClickPlaceTower(InputAction.CallbackContext ctx)
     {
         if (objetoSiendoArrastrado && ctx.performed)
         {
-            if (!objetoCopiado.activeSelf)
+            if (!torreCopiada.activeSelf)
             {
-                destroyInstanceCopy();
+                DestroyInstanceCopy();
                 return;
             }
             particulasCopia = Instantiate(particulasConstruccion);
-            particulasCopia.transform.position = objetoCopiado.transform.position;
+            particulasCopia.transform.position = torreCopiada.transform.position;
             particulasCopia.GetComponent<ParticleSystem>().Play();
 
-            objetoCopiado.GetComponent<BoxCollider>().enabled = true;
+            torreCopiada.GetComponent<BoxCollider>().enabled = true;
             objetoSiendoArrastrado = false;
-            SetObjectPreviewMode(false);
-            objetoCopiado = null; // se "elimina" la referencia del objeto para que al hacer click derecho
+            SetPreviewMode(false);
+            torreCopiada = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar
             StartCoroutine(DesbloquearDisparo());
 
-            if (!GameUIManager.Instance.activeObjectUI)
+            if (!GameUIManager.Instance.activeBuildUI)
             {
                 GameUIManager.Instance.crossHead.SetActive(false);
             }
             EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
         }
     }
-    public void onRightClickPlacingObj(InputAction.CallbackContext ctx)
+    public void OnRightClickPlaceTower(InputAction.CallbackContext ctx)
     {
-        destroyInstanceCopy();
+        DestroyInstanceCopy();
+        // TODO: Devolver a la objectpool
     }
 
-    void destroyInstanceCopy()
+    void DestroyInstanceCopy()
     {
         ClearSelectedObjInfo();
         objetoSiendoArrastrado = false;
         StartCoroutine(DesbloquearDisparo());
-        Destroy(objetoCopiado);
+        Destroy(torreCopiada);
     }
 
-    public void designMainObject(GameObject obj)
+    public void DesignMainTower(GameObject tower)
     {
-        objeto = obj;
+        PlaceManager.torre = tower;
     }
 }

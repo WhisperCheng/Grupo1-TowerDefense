@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceableObject: MonoBehaviour
+public class PlaceableTower: MonoBehaviour
 {
     private bool isACopy = false;
     // Start is called before the first frame update

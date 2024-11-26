@@ -17,9 +17,9 @@ public class TowerButton : MonoBehaviour
         
     }
 
-    public void StartButton(GameObject obj)
+    public void StartButton(GameObject tower)
     {
-        PlaceManager.Instance.designMainObject(obj);
-        PlaceManager.Instance.generarObjeto(obj);
+        PlaceManager.Instance.DesignMainTower(tower);
+        PlaceManager.Instance.GenerateTower(tower);
     }
 }

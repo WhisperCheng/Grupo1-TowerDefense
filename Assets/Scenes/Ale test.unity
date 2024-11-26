@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 26971019}
   - component: {fileID: 26971018}
   m_Layer: 0
-  m_Name: objectUI
+  m_Name: buildUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4344,11 +4344,11 @@ Transform:
   m_GameObject: {fileID: 118766655}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.72, z: 0}
+  m_LocalPosition: {x: 0, y: 7.7199993, z: 3.1699998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 743838362}
+  m_Father: {fileID: 1055343314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &119469697
 PrefabInstance:
@@ -10106,6 +10106,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60d65e4eed2ca444d9a5224665294248, type: 3}
+--- !u!1 &274398071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274398074}
+  - component: {fileID: 274398073}
+  - component: {fileID: 274398072}
+  m_Layer: 0
+  m_Name: PoolsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &274398072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c119288f63a6548aa849917d63f059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicProjectilePrefab: {fileID: 1399067913}
+  poolSize: 20
+--- !u!114 &274398073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2e3f64bc307624ea8cc0fafff26723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicImpactPrefab: {fileID: 4315008008740801804, guid: d866cb095268ca84ca07e609e2968fb6, type: 3}
+  poolSize: 20
+--- !u!4 &274398074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.032591257, y: 0.9777096, z: -0.4593021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &275282595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25130,7 +25191,6 @@ Transform:
   m_Children:
   - {fileID: 1056429973}
   - {fileID: 1055343314}
-  - {fileID: 118766656}
   m_Father: {fileID: 1040435734}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &743838363
@@ -25220,7 +25280,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 762121828}
         m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
-        m_MethodName: onClickPlaceObj
+        m_MethodName: OnClickPlaceTower
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25244,7 +25304,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 762121828}
         m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
-        m_MethodName: onRightClickPlacingObj
+        m_MethodName: OnClickPlaceTower
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25276,7 +25336,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 762121830}
         m_TargetAssemblyTypeName: GameUIManager, Assembly-CSharp
-        m_MethodName: onToggleObjectUI
+        m_MethodName: OnToggleBuildUI
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25292,7 +25352,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 762121828}
         m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
-        m_MethodName: onClickButtons
+        m_MethodName: OnClickButtons
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25304,7 +25364,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 762121828}
         m_TargetAssemblyTypeName: PlaceManager, Assembly-CSharp
-        m_MethodName: onClickButton
+        m_MethodName: OnClickButton
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1659718457}
@@ -25336,7 +25396,7 @@ MonoBehaviour:
   _animatorController: {fileID: 1056429976}
   _velocidadGravedad: 1
   _gravedadMagnitud: -9.81
-  _gravedadMultiplicador: 1
+  _gravedadMultiplicador: 2.5
   _acceleration: 4
   _maximumWalkVelocity: 4
   _maximumRunVelocity: 10
@@ -25919,10 +25979,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 743838364}
-  objectUI: {fileID: 26971016}
-  buttonsBar: {fileID: 2048757080}
+  buildUI: {fileID: 26971016}
+  buildButtons: {fileID: 2048757080}
   crossHead: {fileID: 961106802}
-  activeObjectUI: 1
+  activeBuildUI: 1
   menusTransitionTime: 0.5
 --- !u!114 &762121831
 MonoBehaviour:
@@ -33561,10 +33621,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 0}
-  objectUI: {fileID: 0}
-  buttonsBar: {fileID: 0}
+  buildUI: {fileID: 0}
+  buildButtons: {fileID: 0}
   crossHead: {fileID: 0}
-  activeObjectUI: 1
+  activeBuildUI: 0
   menusTransitionTime: 0.5
 --- !u!114 &984731000
 MonoBehaviour:
@@ -36614,6 +36674,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1288598312}
+  - {fileID: 118766656}
   m_Father: {fileID: 743838362}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1056400144
@@ -48253,6 +48314,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2524911385186326283, guid: 7459861c1d37ea34b87a556f5a00d8b2, type: 3}
   m_PrefabInstance: {fileID: 1398162397}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1399067913 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
+  m_PrefabInstance: {fileID: 444883665836228944}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1403942510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57797,7 +57863,7 @@ GameObject:
   - component: {fileID: 1659718457}
   - component: {fileID: 1659718461}
   m_Layer: 0
-  m_Name: Button
+  m_Name: CarnivoraButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72683,7 +72749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2048757081}
   m_Layer: 0
-  m_Name: ButtonsBar
+  m_Name: buildButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76094,6 +76160,7 @@ SceneRoots:
   - {fileID: 743083554}
   - {fileID: 984731001}
   - {fileID: 762121829}
+  - {fileID: 274398074}
   - {fileID: 2052048116}
   - {fileID: 1040435734}
   - {fileID: 2038469734}
