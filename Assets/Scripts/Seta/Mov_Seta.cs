@@ -15,11 +15,12 @@ public class Mov_Seta : MonoBehaviour
     //GAMEOBJECT
     public Transform enemigoMaza; //maza o el que sea que sigue la seta
     public Transform baseAliada;
+    public GameObject maza;
 
     //CONTROLADORES
     Animator animator;
     Rigidbody rb;
-    NavMeshAgent NavAgent;
+    NavMeshAgent navAgent;
     RaycastHit raycast;
 
     // Start is called before the first frame update
@@ -27,45 +28,44 @@ public class Mov_Seta : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        NavAgent = GetComponent<NavMeshAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
         SeguirEnemigo();
+        AtacarEnemigo();
     }
     void SeguirEnemigo()
     {
         Collider[] listaChoques;
         listaChoques = Physics.OverlapSphere(transform.position, radio);
-
-        Vector3 origen = transform.position;
-        Vector3 direccion = transform.forward;
         foreach (Collider enemigo in listaChoques)
         {
             if (enemigo.CompareTag("Enemy"))
             {
                 animator.SetBool("Caminar", true);
-                NavAgent.SetDestination(enemigoMaza.position);
+                navAgent.SetDestination(enemigoMaza.position);
             }
-            else
+            /*else
             {
                 radio = 15;
                 animator.SetBool("Caminar", false);
-                //NavAgent.SetDestination(baseAliada.position);
-            }
+                //navAgent.SetDestination(baseAliada.position);
+            }*/
         }
+    }
+    void AtacarEnemigo()
+    {
+        Vector3 origen = transform.position;
+        Vector3 direccion = transform.forward;
         if (Physics.Raycast(origen, direccion, out raycast, longRayo))
         {
             radio = 0;
             animator.SetBool("Ataca", true);
+            Destroy(maza,5f);
         }
-        /*else
-        {
-            radio = 15;
-            animator.SetBool("Ataca", false);
-        }*/
     }
     private void OnDrawGizmos()
     {
