@@ -33,7 +33,7 @@ public class MovPersonaje2D : MonoBehaviour
     [SerializeField] private float _slopeForceRayLength;
     public Transform orientation;
 
-
+    private bool _onGround;
 
     private Vector3 _movCharacter;
     private float _velocityZ = 0.0f;
@@ -168,7 +168,7 @@ public class MovPersonaje2D : MonoBehaviour
         /*if (isJumping)
             return false;*/
 
-        RaycastHit hit;
+        RaycastHit hit = new RaycastHit();
 
         /// Usa la posición del personaje partiendo desde su base para hacer un raycast y detectar hasta
         /// cierta distancia si hay suelo debajo del personaje. Si no lo hay es porque el personaje o está
@@ -178,7 +178,7 @@ public class MovPersonaje2D : MonoBehaviour
         /// el centro/pivote del objeto estuviera en el centro en lugar de en el suelo,
         /// siendo "slopeForceRayLength >= 1" un multiplicador de la longitud del rayo
         float maxDist = _slopeForceRayLength;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, maxDist)) { 
+        if (OnGround(hit)) { 
             //if (hit.normal != Vector3.up) {
             if (hit.normal.y <= 0.97) {
                 return true;
@@ -188,10 +188,29 @@ public class MovPersonaje2D : MonoBehaviour
         return false;
     }
 
+    private bool OnGround(RaycastHit hit) // TODO
+    {
+        //RaycastHit hit;
+        float maxDist = _slopeForceRayLength;
+        bool result = Physics.Raycast(transform.position, Vector3.down, out hit, maxDist);
+
+        // Se detectará al personaje en el suelo solo cuando la detección del raycast y la del
+        // _characterController.isGrounded se cumplen, por lo que solo se cumplirán las condiciones
+        // cuando el personaje toque suelo (ignorando el raycast del suelo cercano)
+        if (result && _characterController.isGrounded)
+        {
+            _onGround = true;
+        }
+        if (!result) // Si el personaje deja de tocar el suelo, se cambia _onGround a false
+            _onGround = false;
+
+        return result;
+    }
+
     private void OnDrawGizmos()
     {
         float maxDist = _slopeForceRayLength;
         Vector3 p = transform.position;
-        Gizmos.DrawLine(p, new Vector3(p.x, p.y - maxDist, p.z));
+        Gizmos.DrawLine(p, Vector3.down * maxDist);
     }
 }
