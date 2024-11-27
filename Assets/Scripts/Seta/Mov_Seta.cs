@@ -15,7 +15,8 @@ public class Mov_Seta : MonoBehaviour
     //GAMEOBJECT
     public Transform enemigoMaza; //maza o el que sea que sigue la seta
     public Transform baseAliada;
-    public GameObject maza;
+    public GameObject enemigoActual;
+    public List<GameObject> objetivoActual = new List<GameObject>();
 
     //CONTROLADORES
     Animator animator;
@@ -36,6 +37,40 @@ public class Mov_Seta : MonoBehaviour
     {
         SeguirEnemigo();
         AtacarEnemigo();
+
+
+        //Si no tiene enemigo seleccionado
+        //Buscar enemigo dentro del rango
+        //Si tiene enemigo lockeado
+        //Ir hacia el
+        //Si estas ya enfrente de el 
+        //Atacarlo
+            // si lo atacas y no esta enemigo lockeado null 
+
+    }
+    private void DetectarEnemigo()
+    {
+        objetivoActual.Clear();
+
+        Collider[] listaChoques = Physics.OverlapSphere(transform.position, radio);
+
+        foreach (Collider enemigo in listaChoques)
+        {
+            if (enemigo.CompareTag("Enemy"))
+            {
+                objetivoActual.Add(enemigo.gameObject);
+            }
+        }
+
+        if (objetivoActual.Count > 0 && enemigoActual == null)
+        {
+            enemigoActual = objetivoActual[0];
+        }
+
+        if (enemigoActual != null && !objetivoActual.Contains(enemigoActual))
+        {
+            enemigoActual = null;
+        }
     }
     void SeguirEnemigo()
     {
@@ -48,12 +83,6 @@ public class Mov_Seta : MonoBehaviour
                 animator.SetBool("Caminar", true);
                 navAgent.SetDestination(enemigoMaza.position);
             }
-            /*else
-            {
-                radio = 15;
-                animator.SetBool("Caminar", false);
-                //navAgent.SetDestination(baseAliada.position);
-            }*/
         }
     }
     void AtacarEnemigo()
@@ -64,7 +93,6 @@ public class Mov_Seta : MonoBehaviour
         {
             radio = 0;
             animator.SetBool("Ataca", true);
-            Destroy(maza,5f);
         }
     }
     private void OnDrawGizmos()
