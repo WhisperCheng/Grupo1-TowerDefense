@@ -3407,6 +3407,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 112935301516251139, guid: b924dce73e13fbd46b06d493f10d4ad7, type: 3}
   m_PrefabInstance: {fileID: 88003469}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &91994246 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 945014201917343695, guid: a935071301480b0429728d071419f844, type: 3}
+  m_PrefabInstance: {fileID: 1945963630}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &92291584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25941,16 +25946,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd573ee3846fdba4b95812478df94d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 743838364}
+  marcador: {fileID: 961106802}
+  particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  torreCopiada: {fileID: 0}
+  objetoSiendoArrastrado: 0
+  bloqueoDisparo: 0
   selectedColor: {r: 0.46059847, g: 1, b: 0, a: 0.6156863}
   maxPlaceDistance: 20
-  marcador: {fileID: 961106802}
-  objetoCopiado: {fileID: 0}
-  objetoSiendoArrastrado: 0
-  playerInput: {fileID: 743838364}
-  particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
-  bloqueoDisparo: 0
-  button1: {fileID: 0}
-  button3: {fileID: 1659718457}
 --- !u!4 &762121829
 Transform:
   m_ObjectHideFlags: 0
@@ -33638,16 +33641,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd573ee3846fdba4b95812478df94d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInput: {fileID: 0}
+  marcador: {fileID: 0}
+  particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  torreCopiada: {fileID: 0}
+  objetoSiendoArrastrado: 0
+  bloqueoDisparo: 0
   selectedColor: {r: 0.46059847, g: 1, b: 0, a: 0.6156863}
   maxPlaceDistance: 20
-  marcador: {fileID: 0}
-  objetoCopiado: {fileID: 0}
-  objetoSiendoArrastrado: 0
-  playerInput: {fileID: 0}
-  particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
-  bloqueoDisparo: 0
-  button1: {fileID: 0}
-  button3: {fileID: 0}
 --- !u!4 &984731001
 Transform:
   m_ObjectHideFlags: 0
@@ -35237,7 +35238,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012038795}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: a935071301480b0429728d071419f844, type: 3}
   m_Controller: {fileID: 9100000, guid: 718563015eb839749823001cf794c8d6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -35249,6 +35250,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1012038798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012038795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e872f524ada211d43b54e098c6f2cf9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rango: 10
+  cooldown: 1
+  currentTarget: {fileID: 0}
+  currentTargets: []
+  placeManager: {fileID: 0}
+  rotationPart: {fileID: 91994246}
+  rotationModel: 0
+  rotationSpeed: 5
 --- !u!1001 &1012298741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68929,6 +68950,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a935071301480b0429728d071419f844, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1012038796}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a935071301480b0429728d071419f844, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1012038798}
   m_SourcePrefab: {fileID: 100100000, guid: a935071301480b0429728d071419f844, type: 3}
 --- !u!1001 &1947540584
 PrefabInstance:
