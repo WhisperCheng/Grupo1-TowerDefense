@@ -30,7 +30,10 @@ public class MovPersonaje2D : MonoBehaviour
     [Header("Suavizado y movimiento en pendientes")]
     [SerializeField] private float _smoothingMoveSpeed = 0.2f;
     [SerializeField] private float _slopeForce;
+    [Range(0, 2f)]
     [SerializeField] private float _slopeForceRayLength;
+    //[Range(0f, 90f)]
+    /*[SerializeField]*/ private float _slopeAngle;
     public Transform orientation;
 
     private bool _onGround;
@@ -71,6 +74,7 @@ public class MovPersonaje2D : MonoBehaviour
     void Update()
     {
         MoveCharacter();
+        Debug.Log(_onGround);
     }
 
     // Físicas y movimientos del personaje
@@ -78,7 +82,7 @@ public class MovPersonaje2D : MonoBehaviour
     {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
-
+        _slopeAngle = _characterController.slopeLimit;
         /*
         // TODO (opcional/si da tiempo):
         /// Si el jugador no está tocando el suelo, se deshabilita temporalmente el control
@@ -118,7 +122,7 @@ public class MovPersonaje2D : MonoBehaviour
         
         /// Si el jugador se está moviendo y está en una rampa, se aplica un movimiento correctivo para
         /// que pueda caminar o deslizarse por ella correctamente si está dentro del ángulo de poder caminar por rampas
-        if ((_movCharacter.x != 0 || _movCharacter.z != 0) && OnSlope())
+        if ((_movCharacter.x != 0 || _movCharacter.z != 0) && OnSlope() && _onGround)
         {
             slopeFix = Vector3.down * _slopeForce * Time.deltaTime;
         }
@@ -178,9 +182,10 @@ public class MovPersonaje2D : MonoBehaviour
         /// el centro/pivote del objeto estuviera en el centro en lugar de en el suelo,
         /// siendo "slopeForceRayLength >= 1" un multiplicador de la longitud del rayo
         float maxDist = _slopeForceRayLength;
-        if (OnGround(hit)) { 
+        if (OnGround(hit)) {
             //if (hit.normal != Vector3.up) {
-            if (hit.normal.y <= 0.97) {
+            float slopeNormalLimit = (86f / 90);
+            if (hit.normal.y <= slopeNormalLimit) {
                 return true;
             }
             
@@ -201,7 +206,7 @@ public class MovPersonaje2D : MonoBehaviour
         {
             _onGround = true;
         }
-        if (!result) // Si el personaje deja de tocar el suelo, se cambia _onGround a false
+        if (!result && !_characterController.isGrounded) // Si el personaje deja de tocar el suelo, se cambia _onGround a false
             _onGround = false;
 
         return result;
@@ -211,6 +216,6 @@ public class MovPersonaje2D : MonoBehaviour
     {
         float maxDist = _slopeForceRayLength;
         Vector3 p = transform.position;
-        Gizmos.DrawLine(p, Vector3.down * maxDist);
+        Gizmos.DrawLine(p, new Vector3(p.x, p.y - maxDist, p.z));
     }
 }

@@ -20,16 +20,13 @@ public abstract class EnemigoIA : MonoBehaviour
     public float actionRadio;
     public bool showActionRadio;
     public float cooldown;
+    public string[] ignoreList;
+    protected Vector3 destination;
 
     bool canAttack;
     int enemyMask = 1 << 6;
 
     public abstract void WhileWalking();
-
-    private void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-    }
 
     protected Transform NearestForestHearthPos(Collider[] collisionsList)
     {
@@ -69,11 +66,19 @@ public abstract class EnemigoIA : MonoBehaviour
             RaycastHit hit;
             if (Physics.Linecast(transform.position, closestObjetive.position, out hit))
             {
-                if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
+                foreach (string name in ignoreList)
+                {
+                    if (hit.transform.tag != name)
+                    {
+                        enemyIsVisible = false;
+                        break;
+                    }
+                }
+                /*if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
                     && hit.transform.tag != "Aliado")
                 {
                     enemyIsVisible = false;
-                }
+                }*/
             }
         }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 using UnityEngine.InputSystem;
 
 public class ThirdPersonCam : MonoBehaviour
@@ -9,12 +10,15 @@ public class ThirdPersonCam : MonoBehaviour
     public Transform orientation;
     public Transform player;
     public Transform playerObj;
+    public CinemachineFreeLook freelookCamera;
     //[SerializeField] private float rotationSpeed = 40.0f; // La velocidad de giro
 
     [Header("Giro de cámara")]
     [SerializeField] private float _turnSpeed = 40f;
     [Range(0f, 60f)]
-    [SerializeField] private float _smoothTurnSpeed = 4f;
+    [SerializeField] private float _smoothCameraTurnSpeed = 4f;
+    [Range(0.1f, 10f)]
+    [SerializeField] private float _smoothPlayerTurnSpeed = 4f;
 
     [Header("Controles")]
     public PlayerInput playerInput;
@@ -27,7 +31,7 @@ public class ThirdPersonCam : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //freelookCamera.ForceCameraPosition(Vector3.zero, Quaternion.Euler(Vector3.zero));
     }
 
     // Update is called once per frame
@@ -35,7 +39,7 @@ public class ThirdPersonCam : MonoBehaviour
     {
         RotateOrientation();
         RotatePlayerObj();
-        orientation = GameObject.Find("Orientation").transform;
+        //orientation = GameObject.Find("Orientation").transform;
     }
 
     private void RotateOrientation()
@@ -47,11 +51,11 @@ public class ThirdPersonCam : MonoBehaviour
         // Leer input para luego apuntar a la dirección deseada
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
-
+        // suavizar rotación continuamente
+        _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothCameraTurnSpeed) * Time.deltaTime); 
         // Rotamos en el eje Y, se rota suavizado
         if (_lookDirection.x != 0) // si se está moviendo el ratón se ejecuta código
         {
-            _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothTurnSpeed) * Time.deltaTime); // suavizar rotación
             float addRotation = _lookDirection.x * _turnSpeed * Time.deltaTime;
             orientation.transform.Rotate(0, addRotation, 0); // rotación con suavizado
             _oldLookDirection.x = _lookDirection.x;
@@ -69,7 +73,7 @@ public class ThirdPersonCam : MonoBehaviour
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
             if (inputDir != Vector3.zero)
             {
-                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * _smoothTurnSpeed);
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * _smoothPlayerTurnSpeed);
             }
         }
     }
