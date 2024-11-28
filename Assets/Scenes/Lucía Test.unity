@@ -10117,6 +10117,19 @@ GameObject:
   - component: {fileID: 274398074}
   - component: {fileID: 274398073}
   - component: {fileID: 274398072}
+  - component: {fileID: 274398087}
+  - component: {fileID: 274398086}
+  - component: {fileID: 274398085}
+  - component: {fileID: 274398084}
+  - component: {fileID: 274398083}
+  - component: {fileID: 274398082}
+  - component: {fileID: 274398081}
+  - component: {fileID: 274398080}
+  - component: {fileID: 274398079}
+  - component: {fileID: 274398078}
+  - component: {fileID: 274398077}
+  - component: {fileID: 274398076}
+  - component: {fileID: 274398075}
   m_Layer: 0
   m_Name: PoolsManager
   m_TagString: Untagged
@@ -10167,6 +10180,188 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &274398075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc1a32d25abd7041b2d4cc94afb6342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornRoseProjectilePrefab: {fileID: 1092498865}
+  poolSize: 20
+--- !u!114 &274398076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51866a9e6761c94fb932104e9156096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornRosePrefab: {fileID: 1092498865}
+  poolSize: 20
+--- !u!114 &274398077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f1b78be34263a4a87334b7bdbb2bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceTowerPrefab: {fileID: 1092498865}
+  poolSize: 10
+--- !u!114 &274398078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5043f2a1b9ee937478bf77b86eb371d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniKnightPrefab: {fileID: 1092498865}
+  poolSize: 15
+--- !u!114 &274398079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd325d1b1c1cd6341b20b4c50465028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonSlashProjectilePrefab: {fileID: 1092498865}
+  poolSize: 20
+--- !u!114 &274398080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa82c8c0de3859346bb94586381cbdc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonSlashPrefab: {fileID: 1012038795}
+  poolSize: 20
+--- !u!114 &274398081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e5e304a9b4b3944b605ee01293e19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maceTankPrefab: {fileID: 1092498865}
+  poolSize: 10
+--- !u!114 &274398082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20fb9ac06ab11cc4f86a7a61b103444c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carnivorousPlantPrefab: {fileID: 1446982018}
+  poolSize: 20
+--- !u!114 &274398083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b39f537ee1374594db0bdf7c0ad99034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axeTankPrefab: {fileID: 1092498865}
+  poolSize: 10
+--- !u!114 &274398084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20cb47b74ca609f49b11233985e6f232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  archerProjectilePrefab: {fileID: 1092498865}
+  poolSize: 30
+--- !u!114 &274398085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80cc0d2d7fce5604e81f7c8af09327f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  archerPrefab: {fileID: 1092498865}
+  poolSize: 15
+--- !u!114 &274398086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d33d738dea648344947d8c488c5b628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyTowerPrefab: {fileID: 1092498865}
+  poolSize: 10
+--- !u!114 &274398087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ae4fc1852ed4f488c5fa62f8fa0055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyPrefab: {fileID: 6438163909396371309, guid: 7f3cf194ddd1fb343b0a6c86adaef934, type: 3}
+  poolSize: 20
 --- !u!1001 &275282595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38783,6 +38978,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4111116904279595642, guid: 60d65e4eed2ca444d9a5224665294248, type: 3}
   m_PrefabInstance: {fileID: 1092074423}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1092498865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1092498866}
+  m_Layer: 0
+  m_Name: Relleno
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1092498866
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092498865}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.490909, y: 1.5647674, z: 5.181545}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1093567277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -49713,6 +49939,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 112935301516251139, guid: b924dce73e13fbd46b06d493f10d4ad7, type: 3}
   m_PrefabInstance: {fileID: 1930260086}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1446982018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
+  m_PrefabInstance: {fileID: 1284872096047886707}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1447168724 stripped
 Transform:
@@ -76157,6 +76388,7 @@ SceneRoots:
   - {fileID: 984731001}
   - {fileID: 762121829}
   - {fileID: 274398074}
+  - {fileID: 1092498866}
   - {fileID: 2052048116}
   - {fileID: 1040435734}
   - {fileID: 2038469734}
