@@ -14,7 +14,8 @@ public class ThirdPersonCam : MonoBehaviour
     //[SerializeField] private float rotationSpeed = 40.0f; // La velocidad de giro
 
     [Header("Giro de cámara")]
-    [SerializeField] private float _turnSpeed = 40f;
+    [Range(0f, 80f)]
+    [SerializeField] private float _turnSpeed = 30f;
     [Range(0f, 60f)]
     [SerializeField] private float _smoothCameraTurnSpeed = 4f;
     [Range(0.1f, 10f)]
@@ -52,12 +53,13 @@ public class ThirdPersonCam : MonoBehaviour
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
         // suavizar rotación continuamente
-        _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothCameraTurnSpeed) * Time.deltaTime); 
+        _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothCameraTurnSpeed) * Time.smoothDeltaTime); 
         // Rotamos en el eje Y, se rota suavizado
         if (_lookDirection.x != 0) // si se está moviendo el ratón se ejecuta código
         {
-            float addRotation = _lookDirection.x * _turnSpeed * Time.deltaTime;
+            float addRotation = _lookDirection.x * (_turnSpeed * Time.smoothDeltaTime);
             orientation.transform.Rotate(0, addRotation, 0); // rotación con suavizado
+            Debug.Log(addRotation);
             _oldLookDirection.x = _lookDirection.x;
         }
     }
@@ -73,7 +75,7 @@ public class ThirdPersonCam : MonoBehaviour
             Vector3 inputDir = orientation.forward * verticalInput + orientation.right * horizontalInput;
             if (inputDir != Vector3.zero)
             {
-                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * _smoothPlayerTurnSpeed);
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.smoothDeltaTime * _smoothPlayerTurnSpeed);
             }
         }
     }
@@ -81,7 +83,6 @@ public class ThirdPersonCam : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(0, 0, 0);
-        
         Gizmos.DrawLine(orientation.transform.position, orientation.forward);
         
     }

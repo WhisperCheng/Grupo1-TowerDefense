@@ -32,8 +32,6 @@ public class MovPersonaje2D : MonoBehaviour
     [SerializeField] private float _slopeForce;
     [Range(0, 2f)]
     [SerializeField] private float _slopeForceRayLength;
-    //[Range(0f, 90f)]
-    /*[SerializeField]*/ private float _slopeAngle;
     public Transform orientation;
 
     private bool _onGround;
@@ -82,7 +80,6 @@ public class MovPersonaje2D : MonoBehaviour
     {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
-        _slopeAngle = _characterController.slopeLimit;
         /*
         // TODO (opcional/si da tiempo):
         /// Si el jugador no está tocando el suelo, se deshabilita temporalmente el control
@@ -177,25 +174,18 @@ public class MovPersonaje2D : MonoBehaviour
         /// Usa la posición del personaje partiendo desde su base para hacer un raycast y detectar hasta
         /// cierta distancia si hay suelo debajo del personaje. Si no lo hay es porque el personaje o está
         /// cayendo / saltando o porque la pendiente donde esté el personaje es demasiado inclinada
-        /// 
-        /// Nota: usar "maxDist = characterController.height / 2 * slopeForceRayLength" en caso de que
-        /// el centro/pivote del objeto estuviera en el centro en lugar de en el suelo,
-        /// siendo "slopeForceRayLength >= 1" un multiplicador de la longitud del rayo
-        float maxDist = _slopeForceRayLength;
         if (OnGround(hit)) {
             //if (hit.normal != Vector3.up) {
-            float slopeNormalLimit = (86f / 90);
-            if (hit.normal.y <= slopeNormalLimit) {
+            float slopeNormalLimit = (86f / 90); // Si la perpendicular de la pendiente es
+            if (hit.normal.y <= slopeNormalLimit) { // menor a 86 grados se retorna true
                 return true;
             }
-            
         }
         return false;
     }
 
-    private bool OnGround(RaycastHit hit) // TODO
+    private bool OnGround(RaycastHit hit)
     {
-        //RaycastHit hit;
         float maxDist = _slopeForceRayLength;
         bool result = Physics.Raycast(transform.position, Vector3.down, out hit, maxDist);
 
