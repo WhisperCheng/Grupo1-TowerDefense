@@ -59,7 +59,6 @@ public class ThirdPersonCam : MonoBehaviour
         {
             float addRotation = _lookDirection.x * (_turnSpeed * Time.smoothDeltaTime);
             orientation.transform.Rotate(0, addRotation, 0); // rotación con suavizado
-            Debug.Log(addRotation);
             _oldLookDirection.x = _lookDirection.x;
         }
     }

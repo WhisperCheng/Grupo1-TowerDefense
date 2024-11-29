@@ -72,7 +72,6 @@ public class MovPersonaje2D : MonoBehaviour
     void Update()
     {
         MoveCharacter();
-        Debug.Log(_onGround);
     }
 
     // Físicas y movimientos del personaje

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[SelectionBase]
 public abstract class EntityAI : MonoBehaviour
 {
     protected NavMeshAgent agent;
@@ -39,4 +40,6 @@ public abstract class EntityAI : MonoBehaviour
 
         return noObstacles;
     }
+
+    public abstract void Init();
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class EnemigoIA : EntityAI, IEnemy
 {
     //Ataque
@@ -8,18 +10,54 @@ public abstract class EnemigoIA : EntityAI, IEnemy
 
     // Variables
     [Header("Variables Enemigo IA")]
-    public float speed;
+    //public float speed;
     public float actionRadio;
     public bool showActionRadio;
     public float cooldown;
     protected Vector3 destination;
 
-    bool canAttack;
-   
-    int enemyMask = 1 << 6;
+    [Header("Animaciones")]
+    public Animator animatorController;
+
+    bool attackPlayerMode = false;
+    protected float _maxSpeed;
+    int playerMask = 1 << 7;
     private Transform _nearestRival;
 
-    public abstract void WhileWalking();
+    void Start()
+    {
+        //agent = GetComponent<NavMeshAgent>();
+    }
+
+    public virtual void WhileWalking() {
+        
+        if (animatorController != null)
+        {
+            animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));
+        }
+        // Esta lista almacenará el resultado de llamar a OverlapSphere y detectar al jugador
+        Collider[] listaChoques;
+        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, playerMask);
+
+        // Se obtiene al jugador más cercano
+        Transform nearestRival = NearestRival(listaChoques);
+
+        if (nearestRival != null) // Si detecta a un jugador en el radio de acción, se pondrá a perseguirle
+        {                                                   // y atacarle
+            destination = nearestRival.position;
+            //OnAttack();
+            //TODO
+        }
+        else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el corazón del bosque
+        {
+            //OnAbandonAtacking();
+            //TODO
+            Transform hearth = NearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
+            if (hearth != null)
+                destination = hearth.position;
+        }
+        OnAssignDestination(destination);
+    }
 
     protected Transform NearestForestHearthPos(string tag)
     {
@@ -31,18 +69,18 @@ public abstract class EnemigoIA : EntityAI, IEnemy
         // Se comprueba y elige al corazón con menor distancia
         if (heartList.Length > 0)
         {
-            foreach (GameObject gObj in heartList)
+            foreach (GameObject gameObj in heartList)
             {
                 // Distancia entre el enemigo y el objetivo
-                float actualDistance = Vector3.Distance(transform.position, gObj.transform.position);
+                float actualDistance = Vector3.Distance(transform.position, gameObj.transform.position);
                 if (actualDistance < minorDistance)
                 {
                     /* Se detectan enemigos dentro del radio de acción pero hay que comprobar que
                      * no hay muros por delante*/
-                    if (ThereAreNoObstacles(gObj.transform))
+                    if (ThereAreNoObstacles(gameObj.transform))
                     {
                         minorDistance = actualDistance;
-                        nearestForestHearthPos = gObj.transform;
+                        nearestForestHearthPos = gameObj.transform;
                     }
                 }
             }
@@ -81,10 +119,12 @@ public abstract class EnemigoIA : EntityAI, IEnemy
         // tenerlo en cuenta
     }
 
-    public void test()
+    public void OnSearchingEnemy()
     {
         throw new System.NotImplementedException();
     }
+    
+
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
@@ -93,4 +133,26 @@ public abstract class EnemigoIA : EntityAI, IEnemy
         //Gizmos.DrawRay(transform.position, transform.forward);
     }
 #endif
+    public void OnAttack()
+    {
+        attackPlayerMode = true;
+    }
+
+    public void OnAbandonAtacking()
+    {
+        attackPlayerMode = false;
+    }
+
+    public void OnAssignDestination(Vector3 destination)
+    {
+        if(this.destination != destination) // Para asignarle solo una vez la localización en caso de que sea la misma
+            agent.SetDestination(destination);
+    }
+
+    public override void Init()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        _maxSpeed = agent.speed;
+    }
+
 }

@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    public void test();
+    public void OnSearchingEnemy();
+    public void OnAttack();
+    public void OnAbandonAtacking();
+    public void OnAssignDestination(Vector3 destination);
 }
