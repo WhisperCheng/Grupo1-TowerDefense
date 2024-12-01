@@ -16,5 +16,6 @@ public class CaballeroIA : EnemigoIA
     void Update()
     {
         WhileWalking();
+        ManageCooldown();
     }
 }

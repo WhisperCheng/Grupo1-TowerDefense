@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [SelectionBase]
-public abstract class EntityAI : MonoBehaviour
+public abstract class LivingEntityAI : MonoBehaviour
 {
     protected NavMeshAgent agent;
-    [Header("Vida")]
-    public float health;
     [Header("Tags de obstáculos a ignorar")]
     public string[] ignoreTagList;
 
@@ -16,9 +14,6 @@ public abstract class EntityAI : MonoBehaviour
         bool noObstacles = true;
         if (nearestObjetive != null)
         {
-            /* Primero intenté esta parte con raycastall pero al final solo funciono con un linecast, 
-             * lo dejo como nota por si acaso*/
-
             RaycastHit hit;
             if (Physics.Linecast(transform.position, nearestObjetive.position, out hit))
             {/*

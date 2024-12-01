@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private int forestHearthAmount = 0;
     public static GameManager Instance { get; private set; }
     private void Awake() // Patrón Singleton
     {
@@ -28,6 +29,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (forestHearthAmount <= 0)
+        {
+            // TODO: Perder partida
+            Debug.Log("Partida perdida");
+        }
     }
+
+    public void addForestHearth()
+    {
+        forestHearthAmount++;
+    }
+
+    /*public int getForestHearthAmount()
+    {
+        return forestHearthAmount;
+    }*/
 }
