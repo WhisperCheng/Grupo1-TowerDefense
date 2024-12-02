@@ -16,6 +16,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     // Variables
     [Header("Variables Enemigo IA")]
     public float actionRadio;
+    public float checkWaypointProximityDistance = 1;
     //public bool showActionRadio;
     
     protected Vector3 destination;
@@ -27,9 +28,11 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     private float _currentCooldown = 0f;
     private bool attackMode = false;
     private bool canAttack = true;
+    private bool finishedWaypoints = false;
     protected float _maxSpeed;
     int playerMask = 1 << 7;
     private Transform _nearestRival;
+    private int _currentWaypointIndex = 0;
 
     void Start()
     {
@@ -41,13 +44,15 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     }
 
     public virtual void WhileWalking() {
+        
         AnimateWalking();
         Vector3 oldDest = destination;
         OnSearchingObjetives();
-        if (oldDest != destination) // Para asignarle solo una vez la localización en caso de que sea la misma
-        {
+        if (oldDest != destination) // Para comprobar que el destino sea distinto y no estar todo el rato
+        {                           // asignando la misma variable
             OnAssignDestination(destination);
         }
+        
     }
 
     protected Transform NearestForestHearthPos(string tag)
@@ -125,16 +130,45 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
             //OnAttack();
             //TODO
         }
-        else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el corazón del bosque
+        else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el waypoint correspondiente
         {
             //OnAbandonAtacking();
             //TODO
-            Transform hearth = NearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
-            if (hearth != null)
-                destination = hearth.position;
+            if (finishedWaypoints)
+            { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
+                Transform hearth = NearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
+                if (hearth != null && destination != hearth.position) destination = hearth.position;
+                // Si el corazón existe y la posición es distinta, se actualiza el destino
+            } else // Si no, va yendo de waypoint en waypoint hasta llegar al final
+            {
+                Vector3 dest = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
+                if (dest != destination)
+                {
+                    destination = dest;
+                }
+                // Vuelve a tomar la ruta de los waypoints (waypoint actual)
+
+                // Si entra dentro del radio de acción para detectar el siguiente waypoint,
+                // cambiar el destino al siguiente
+                if (Vector3.Distance(transform.position, destination) < checkWaypointProximityDistance)
+                {
+                    UpdateWayPointDestination();
+                }
+            }
         }
     }
-    
+
+    private void UpdateWayPointDestination()
+    {
+        _currentWaypointIndex++;
+        // Hasta que no llegue al final se actualizan los waypoints, pero si llega al final dejan de actualizarse
+        // y se activa el booleano finishedWaypoints
+        if (_currentWaypointIndex >= GameManager.Instance.wayPoints.Length)
+        {
+            finishedWaypoints = true;
+        }
+    }
+
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
@@ -153,7 +187,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     {
         if (canAttack)
         {
-            Debug.Log("A");
+            Debug.Log("Ataque");
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
             _currentCooldown = cooldown; // Reset del cooldown
             canAttack = false;
@@ -184,6 +218,8 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     {
         agent = GetComponent<NavMeshAgent>();
         _maxSpeed = agent.speed;
+        destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
+        OnAssignDestination(destination);
     }
 
     public void Die()

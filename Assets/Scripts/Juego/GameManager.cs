@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     private int forestHearthAmount = 0;
     public static GameManager Instance { get; private set; }
+
+    public Transform[] wayPoints;
     private void Awake() // Patrón Singleton
     {
         if (Instance != null && Instance != this)
