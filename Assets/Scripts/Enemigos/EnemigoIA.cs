@@ -217,6 +217,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
 
     private void OnTriggerStay(Collider collision)
     {
+
         if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
         {
             IDamageable hearthEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica

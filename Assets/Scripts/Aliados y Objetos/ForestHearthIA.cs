@@ -6,7 +6,7 @@ public class ForestHearthIA : MonoBehaviour, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
-    private HealthBar _healthBar;
+     private HealthBar _healthBar;
 
     private float _currentHealth;
     private float _maxHealth;
