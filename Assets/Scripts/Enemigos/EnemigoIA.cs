@@ -37,9 +37,6 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     void Start()
     {
         //agent = GetComponent<NavMeshAgent>();
-        _currentHealth = health;
-        _maxHealth = health;
-        _currentCooldown = cooldown;
     }
 
     public virtual void WhileWalking() {
@@ -215,6 +212,9 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
 
     public override void Init()
     {
+        _currentHealth = health;
+        _maxHealth = health;
+        _currentCooldown = cooldown;
         _healthBar = GetComponentInChildren<HealthBar>();
         agent = GetComponent<NavMeshAgent>();
         _maxSpeed = agent.speed;
@@ -232,14 +232,14 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     {
         // Dañar enemigo
         _currentHealth -= damageAmount;
-
+        Debug.Log(_currentHealth);
         // TODO ? Spawn particulas de golpe?
 
         // Actualizar barra de vida
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
         if (_currentHealth <= 0)
         {
-            Die();
+            //Die();
         }
     }
 
