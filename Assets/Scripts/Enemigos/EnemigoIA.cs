@@ -7,8 +7,8 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
     [Header("Vida")] // Vida
     public float health;
     private HealthBar _healthBar;
+    [SerializeField] private ParticleSystem _particulasMuerte;
 
-    
     [Header("Ataque")] //Ataque
     public float attackDamage;
     public float cooldown = 1f;
@@ -224,7 +224,8 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
 
     public void Die()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        _particulasMuerte.Play();
         // TODO: Devolver a la pool
     }
 
@@ -239,7 +240,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
         if (_currentHealth <= 0)
         {
-            //Die();
+            Die();
         }
     }
 
