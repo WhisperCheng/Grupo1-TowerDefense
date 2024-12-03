@@ -2,8 +2,13 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[SelectionBase]
 public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnimatable
 {
+    protected NavMeshAgent agent;
+    [Header("Tags de obstáculos a ignorar")]
+    public string[] ignoreTagList;
+
     [Header("Vida")] // Vida
     public float health;
     private HealthBar _healthBar;
@@ -36,7 +41,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
 
     void Start()
     {
-        //agent = GetComponent<NavMeshAgent>();
+        
     }
 
     public virtual void WhileWalking() {
@@ -51,7 +56,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
         
     }
 
-    protected Transform NearestForestHearthPos(string tag)
+    protected Transform GetNearestForestHearthPos(string tag)
     {
         Transform nearestForestHearthPos = null;
         float minorDistance = Mathf.Infinity;
@@ -79,6 +84,33 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
         }
         return nearestForestHearthPos; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
     }                               // tenerlo en cuenta
+
+    public virtual bool ThereAreNoObstacles(Transform nearestObjetive)
+    {
+        bool noObstacles = true;
+        if (nearestObjetive != null)
+        {
+            RaycastHit hit;
+            if (Physics.Linecast(transform.position, nearestObjetive.position, out hit))
+            {/*
+                if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
+                    && hit.transform.tag != "Gnomo")
+                {
+                    noObstacles = false;
+                }*/
+                foreach (string name in ignoreTagList)
+                {
+                    if (hit.transform.tag != name)
+                    {
+                        noObstacles = false;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return noObstacles;
+    }
 
     protected Transform NearestRival(Collider[] listaChoques)
     {
@@ -132,7 +164,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
             //TODO
             if (finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
-                Transform hearth = NearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
+                Transform hearth = GetNearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
                 if (hearth != null && destination != hearth.position) destination = hearth.position;
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
             } else // Si no, va yendo de waypoint en waypoint hasta llegar al final
