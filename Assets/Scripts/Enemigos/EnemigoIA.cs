@@ -39,7 +39,6 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
         //agent = GetComponent<NavMeshAgent>();
         _currentHealth = health;
         _maxHealth = health;
-        _healthBar = GetComponentInChildren<HealthBar>();
         _currentCooldown = cooldown;
     }
 
@@ -216,6 +215,7 @@ public abstract class EnemigoIA : LivingEntityAI, IAttacker, IDamageable, IAnima
 
     public override void Init()
     {
+        _healthBar = GetComponentInChildren<HealthBar>();
         agent = GetComponent<NavMeshAgent>();
         _maxSpeed = agent.speed;
         destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;

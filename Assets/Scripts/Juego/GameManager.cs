@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
+    public string tagEnemigos;
     // Start is called before the first frame update
     void Start()
     {

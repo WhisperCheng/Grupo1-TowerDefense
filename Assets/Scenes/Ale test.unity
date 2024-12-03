@@ -28667,6 +28667,7 @@ MonoBehaviour:
   - {fileID: 576880168}
   - {fileID: 1104261720}
   tagCorazonDelBosque: ForestHearth
+  tagEnemigos: Enemy
 --- !u!4 &763926544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4111116904279595642, guid: 60d65e4eed2ca444d9a5224665294248, type: 3}
@@ -39793,9 +39794,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: caballero
       objectReference: {fileID: 0}
-    - target: {fileID: 2420067691883901700, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
+    - target: {fileID: 919132149155446097, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2420067691883901700, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3451312712507563589, guid: 816f2332d6eaa0b43874d79381772a17, type: 3}
       propertyPath: m_LocalRotation.w
