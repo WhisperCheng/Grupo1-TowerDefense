@@ -6,11 +6,6 @@ using UnityEngine.AI;
 
 public class BasicEnemyAI : EnemyAI
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        Init();
-    }
 
     // Update is called once per frame
     void Update()
@@ -30,23 +25,6 @@ public class BasicEnemyAI : EnemyAI
         }
     }
 
-    public override void Init()
-    {
-        _currentHealth = health;
-        _maxHealth = health;
-        _currentCooldown = cooldown;
-        _healthBar = GetComponentInChildren<HealthBar>();
-        agent = GetComponent<NavMeshAgent>();
-        _maxSpeed = agent.speed;
-        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
-        OnAssignDestination(_destination);
-    }
-
-    private void OnAssignDestination(Vector3 destination)
-    {
-        agent.SetDestination(destination);
-    }
-
     public override void OnAttack()
     {
         // TODO: Efectos visuales al atacar
@@ -55,7 +33,6 @@ public class BasicEnemyAI : EnemyAI
     {
         if (_canAttack)
         {
-            Debug.Log("Ataque");
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
             _currentCooldown = cooldown; // Reset del cooldown
             _canAttack = false;
@@ -64,9 +41,18 @@ public class BasicEnemyAI : EnemyAI
 
     public override void Die()
     {
-        //Destroy(this.gameObject);
         _particulasMuerte.Play();
+        _hasDied = true;
         // TODO: Devolver a la pool
+    }
+
+    public override bool HasDied()
+    {
+        return _hasDied;
+    }
+    protected override void OnDamageTaken()
+    {
+        //Debug.Log("809");
     }
 
     private void OnTriggerStay(Collider collision)
@@ -77,10 +63,5 @@ public class BasicEnemyAI : EnemyAI
             IDamageable hearthEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
             Attack(hearthEntity);
         }
-    }
-
-    protected override void OnDamageTaken()
-    {
-        //Debug.Log("809");
     }
 }

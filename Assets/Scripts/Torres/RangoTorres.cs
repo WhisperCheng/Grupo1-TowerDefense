@@ -8,28 +8,27 @@ public class RangoTorres : MonoBehaviour
     public GameObject rangeIndicator;
     private float rangoTorre;
     private bool torreApuntada = false;
-    public PlaceManager placeManager; 
 
     private void Start()
     {
         rangeIndicator = Instantiate(rangeIndicator);
-        placeManager = FindAnyObjectByType<PlaceManager>();
     }
 
     void Update()
     {
         torreApuntada = false;
-
-        if (placeManager.objetoSiendoArrastrado)
+        bool objetoSiendoArrastrado = PlaceManager.Instance.objetoSiendoArrastrado;
+        if (objetoSiendoArrastrado)
         {
-            if (placeManager.torreCopiada != null && placeManager.torreCopiada.activeSelf)
+            GameObject torreCopiada = PlaceManager.Instance.torreCopiada;
+            if (torreCopiada != null && torreCopiada.activeSelf)
             {
-                Tower torreScript = placeManager.torreCopiada.GetComponent<Tower>();
+                Tower torreScript = PlaceManager.Instance.torreCopiada.GetComponent<Tower>();
 
                 if (torreScript != null)
                 {
-                    rangoTorre = 2 * torreScript.rango; 
-                    rangeIndicator.transform.position = placeManager.torreCopiada.transform.position;
+                    rangoTorre = 2 * torreScript.range; 
+                    rangeIndicator.transform.position = torreCopiada.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     rangeIndicator.gameObject.SetActive(true); 
                     torreApuntada = true;
@@ -45,7 +44,7 @@ public class RangoTorres : MonoBehaviour
                 {
                     rangeIndicator.gameObject.SetActive(true);
                     GameObject torre = golpeRayo.collider.gameObject;
-                    rangoTorre = 2 * torre.GetComponent<Tower>().rango; 
+                    rangoTorre = 2 * torre.GetComponent<Tower>().range;
                     rangeIndicator.transform.position = torre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     torreApuntada = true;

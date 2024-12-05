@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ataque : MonoBehaviour
+public class MagicAttack : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] private float damage;
@@ -20,7 +20,6 @@ public class ataque : MonoBehaviour
 
     private void Attack(IDamageable damageableEntity)
     {
-        Debug.Log("Ataque");
         damageableEntity.TakeDamage(damage); 
     }
 
@@ -29,9 +28,11 @@ public class ataque : MonoBehaviour
 
         if (collision.tag == GameManager.Instance.tagEnemigos)
         {
-            IDamageable hearthEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-            Attack(hearthEntity);
-            Debug.Log("Hola");
+            IDamageable damageableEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+            if (!damageableEntity.HasDied()) // Si no ha muerto, se sigue atacando
+            {
+                Attack(damageableEntity);
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForestHearthIA : MonoBehaviour, IDamageable
+public class ForestHearthIA : LivingEntityAI, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
@@ -10,19 +10,26 @@ public class ForestHearthIA : MonoBehaviour, IDamageable
 
     private float _currentHealth;
     private float _maxHealth;
+
+    private bool _hasDied = false;
     // Start is called before the first frame update
     void Start()
     {
-        _currentHealth = health;
-        _maxHealth = health;
-        _healthBar = GetComponentInChildren<HealthBar>();
-        GameManager.Instance.addForestHearth();
+        Init();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public override void Init()
+    {
+        _currentHealth = health;
+        _maxHealth = health;
+        _healthBar = GetComponentInChildren<HealthBar>();
+        GameManager.Instance.addForestHearth();
     }
 
     public void TakeDamage(float damageAmount)
@@ -42,7 +49,13 @@ public class ForestHearthIA : MonoBehaviour, IDamageable
 
     public void Die()
     {
+        _hasDied = true;
         Destroy(this.gameObject);
         // TODO: Efecto de partículas, llamar al GameManager para actualizar la info del corazón del bosque
+    }
+
+    public bool HasDied()
+    {
+        return _hasDied;
     }
 }

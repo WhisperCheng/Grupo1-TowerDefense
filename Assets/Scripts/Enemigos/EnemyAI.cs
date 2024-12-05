@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [SelectionBase]
-public abstract class EnemyAI : LivingEntityAI, IDamageable, IAnimatable
+public abstract class EnemyAI : LivingEntityAI, IDamageable
 {
     protected NavMeshAgent agent;
     // Variables
@@ -38,11 +38,13 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IAnimatable
     protected bool _attackMode = false;
     protected bool _canAttack = true;
     protected bool _finishedWaypoints = false;
+    protected bool _hasDied = false;
     
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
 
     protected int _playerMask = 1 << 7;
+    protected int _allyMask = 1 << 9;
 
     protected abstract void WhileWalking();
     public abstract void OnAttack(); // Efectos de partículas al golpear, cambiar animación, etc
@@ -50,105 +52,40 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IAnimatable
     public abstract void Die();
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
 
-    /// --- Funciones y "Herramientas" base de las funciones principales y para las clases herederas --- ///
+    public abstract bool HasDied();
+
+    // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
+    void Start()
+    {
+        Init();
+    }
+    public override void Init()
+    {
+        _currentHealth = health;
+        _maxHealth = health;
+        _currentCooldown = cooldown;
+        _healthBar = GetComponentInChildren<HealthBar>();
+        agent = GetComponent<NavMeshAgent>();
+        _maxSpeed = agent.speed;
+        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
+        OnAssignDestination(_destination);
+    }
+
+    protected void OnAssignDestination(Vector3 destination)
+    {
+        agent.SetDestination(destination);
+    }
+
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de
     /// funcionalidad, y sobre todo usarlos como métodos/herramientas ya definidas en esta clase base --- ///
-
-    protected Transform GetNearestForestHearthPos(string tag)
-    {
-        Transform nearestForestHearthPos = null;
-        float minorDistance = Mathf.Infinity;
-
-        GameObject[] heartList = GameObject.FindGameObjectsWithTag(tag);
-
-        // Se comprueba y elige al corazón con menor distancia
-        if (heartList.Length > 0)
-        {
-            foreach (GameObject gameObj in heartList)
-            {
-                // Distancia entre el enemigo y el objetivo
-                float actualDistance = Vector3.Distance(transform.position, gameObj.transform.position);
-                if (actualDistance < minorDistance)
-                {
-                    /* Se detectan enemigos dentro del radio de acción pero hay que comprobar que
-                     * no hay muros por delante*/
-                    if (ThereAreNoObstacles(gameObj.transform))
-                    {
-                        minorDistance = actualDistance;
-                        nearestForestHearthPos = gameObj.transform;
-                    }
-                }
-            }
-        }
-        return nearestForestHearthPos; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
-    }                               // tenerlo en cuenta
-
-    protected bool ThereAreNoObstacles(Transform nearestObjetive)
-    {
-        bool noObstacles = true;
-        if (nearestObjetive != null)
-        {
-            RaycastHit hit;
-            if (Physics.Linecast(transform.position, nearestObjetive.position, out hit))
-            {/*
-                if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
-                    && hit.transform.tag != "Gnomo")
-                {
-                    noObstacles = false;
-                }*/
-                foreach (string name in ignoreTagList)
-                {
-                    if (hit.transform.tag != name)
-                    {
-                        noObstacles = false;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return noObstacles;
-    }
-
-    protected Transform NearestRival(Collider[] listaChoques)
-    {
-        // Esta lista almacenará el resultado de llamar a OverlapSphere
-        //Collider[] listaChoques;
-
-        //listaChoques = Physics.OverlapSphere(transform.position, radio, mascara);
-        Transform enemigoMasCercano = null;
-        float menorDistancia = Mathf.Infinity; // TODO
-
-        // Se comprueba y elige el enemigo con menor distancia
-        if (listaChoques.Length > 0)
-        {
-            foreach (Collider choque in listaChoques)
-            {
-                float distanciaActual = Vector3.Distance(transform.position, choque.transform.position);
-                if (distanciaActual < menorDistancia)
-                {
-                    /* Se detectan enemigos dentro del radio de acción pero hay que comprobar que
-                     * no hay muros por delante*/
-                    if (ThereAreNoObstacles(choque.transform))
-                    {
-                        menorDistancia = distanciaActual;
-                        enemigoMasCercano = choque.transform;
-                    }
-                }
-            }
-        }
-        return enemigoMasCercano; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
-        // tenerlo en cuenta
-    }
-
-    protected void OnSearchingObjetives()
+    protected virtual void OnSearchingObjetives()
     {
         // Esta lista almacenará el resultado de llamar a OverlapSphere y detectar al jugador
         Collider[] listaChoques;
-        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, _playerMask);
+        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
 
         // Se obtiene al jugador más cercano
-        Transform nearestRival = NearestRival(listaChoques);
+        Transform nearestRival = EntityUtils.NearestRival(listaChoques, transform.position, ignoreTagList, true);
 
         if (nearestRival != null) // Si detecta a un jugador en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
@@ -158,7 +95,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IAnimatable
         {
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
-                Transform hearth = GetNearestForestHearthPos(GameManager.Instance.tagCorazonDelBosque);
+                Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, ignoreTagList);
                 if (hearth != null && _destination != hearth.position) _destination = hearth.position;
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
             } else // Si no, va yendo de waypoint en waypoint hasta llegar al final

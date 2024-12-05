@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private int forestHearthAmount = 0;
     public static GameManager Instance { get; private set; }
-
-    public Transform[] wayPoints;
     private void Awake() // Patrón Singleton
     {
         if (Instance != null && Instance != this)
@@ -19,10 +16,17 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+    [Header("WayPoints")]
+    public Transform[] wayPoints;
 
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
     public string tagEnemigos;
+
+    [Header("Layers Globales")]
+    public int layerEnemigos;
+
+    private int forestHearthAmount = 0;
     // Start is called before the first frame update
     void Start()
     {

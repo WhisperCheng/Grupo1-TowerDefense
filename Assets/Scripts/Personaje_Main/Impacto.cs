@@ -5,11 +5,11 @@ using UnityEngine;
 public class Impacto : MonoBehaviour
 {
     // Update is called once per frame
-    [SerializeField] GameObject particulasImpacto;
-    [SerializeField] GameObject trail;
-    [SerializeField] GameObject trail2;
-    TrailRenderer TrailRenderer;
-    TrailRenderer TrailRenderer2;
+    [SerializeField] private GameObject particulasImpacto;
+    [SerializeField] private GameObject trail;
+    [SerializeField] private GameObject trail2;
+    private TrailRenderer TrailRenderer;
+    private TrailRenderer TrailRenderer2;
     private void Start()
     {
         TrailRenderer = trail.GetComponent<TrailRenderer>();

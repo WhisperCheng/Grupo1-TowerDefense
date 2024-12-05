@@ -1,51 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class Tower : MonoBehaviour
+public abstract class Tower : LivingEntityAI, IDamageable
 {
-    public float rango = 10f;
-    public float cooldown = 1f;
-    public GameObject currentTarget;
-    public List<GameObject> currentTargets = new List<GameObject>();
-    public PlaceManager placeManager;
-
-    public Transform rotationPart;
-    public float rotationModel = 180f;
+    [Header("Variables Torre")]
+    public float range = 10f;
     public float rotationSpeed = 5f;
-    Animator animator;
+
+    [Header("Parte a rotar")]
+    public Transform rotationPart;
+
+    protected List<GameObject> currentTargets = new List<GameObject>();
+    protected GameObject currentTarget;
+
+    private float rotationModel = 0f;
+
+    protected bool _hasEnemyAssigned = false;
+    protected bool _hasDied = false;
+
+    protected int _enemyMask;
+
+    protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
+    public abstract void OnAttack(); // Efectos de partículas al golpear, cambiar animación, etc
+    public abstract void Attack(IDamageable damageableEntity);
+    public abstract void Die();
+    public abstract void TakeDamage(float damageAmount);
+    public abstract bool HasDied();
 
     private void Start()
     {
-        StartCoroutine(Atacar());
-        placeManager = FindAnyObjectByType<PlaceManager>();
-        animator = GetComponent<Animator>();
+        //StartCoroutine(Attack());
+        //placeManager = FindAnyObjectByType<PlaceManager>();
+        //Init();
+        _enemyMask = 1 << GameManager.Instance.layerEnemigos;
     }
 
-    private void Update()
+    protected void EnemyDetection()
     {
-        EnemyDetection();
-        if (placeManager.objetoSiendoArrastrado == false)
-        {
-            LookRotation();
-        }
-    }
+        //currentTargets.Clear();
 
-    private void EnemyDetection()
-    {
-        currentTargets.Clear();
-
-        Collider[] colliders = Physics.OverlapSphere(transform.position, rango);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
 
         foreach (Collider collider in colliders)
         {
-            if (collider.CompareTag("Enemy"))
-            {
-                currentTargets.Add(collider.gameObject);
+            if (!_hasEnemyAssigned && collider.tag == "Enemy") // Si no tiene ningún enemigo asignado,
+            {                                                   // se le asigna uno
+                //currentTargets.Add(collider.gameObject);
+                currentTarget = collider.gameObject;
+                _hasEnemyAssigned = true;
             }
         }
 
-        if (currentTargets.Count > 0 && currentTarget == null)
+        if (currentTarget != null && !_hasEnemyAssigned)
+        {
+            currentTarget = null;
+        }
+
+
+
+        // Ordenar por proximidad
+        //Vector3 center = transform.position;
+        //currentTargets.OrderBy(c => (center - c.transform.position).sqrMagnitude).ToArray();
+
+        /*if (currentTargets.Count > 0 && currentTarget == null)
         {
             currentTarget = currentTargets[0];
         }
@@ -53,12 +72,12 @@ public class Tower : MonoBehaviour
         if (currentTarget != null && !currentTargets.Contains(currentTarget))
         {
             currentTarget = null;
-        }
+        }*/
     }
 
-    private void LookRotation()
+    protected void LookRotation()
     {
-        if (currentTarget != null)
+        if (currentTarget != null && rotationPart != null)
         {
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
             directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
@@ -69,17 +88,17 @@ public class Tower : MonoBehaviour
             float targetZRotation = targetRotation.eulerAngles.y; // Usamos el valor en Y para rotación en el plano XZ
 
             // Invertimos el ángulo de rotación en el eje Z
-            float smoothZRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + rotationModel, Time.deltaTime * rotationSpeed);
+            float smoothYRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + rotationModel, Time.deltaTime * rotationSpeed);
 
-            rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothZRotation, currentEuler.z);
+            rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothYRotation, currentEuler.z);
         }
     }
 
-    private IEnumerator Atacar()
+    /*private IEnumerator Attack()
     {
         while (true)
         {
-            if (currentTarget != null && placeManager.objetoSiendoArrastrado == false)
+            if (currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
             {
                 Shoot();
                 animator.SetBool("ataque", true);
@@ -90,16 +109,11 @@ public class Tower : MonoBehaviour
                 animator.SetBool("ataque", false);
             }
         }
-    }
-
-    private void Shoot()
-    {
-
-    }
+    }*/
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, rango);
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
