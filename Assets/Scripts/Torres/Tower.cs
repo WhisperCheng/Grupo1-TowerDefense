@@ -34,23 +34,31 @@ public abstract class Tower : LivingEntityAI, IDamageable
         //StartCoroutine(Attack());
         //placeManager = FindAnyObjectByType<PlaceManager>();
         //Init();
-        _enemyMask = 1 << GameManager.Instance.layerEnemigos;
     }
 
     protected void EnemyDetection()
     {
         //currentTargets.Clear();
-
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
-
-        foreach (Collider collider in colliders)
+        if (colliders.Length > 0)
         {
-            if (!_hasEnemyAssigned && collider.tag == "Enemy") // Si no tiene ningún enemigo asignado,
-            {                                                   // se le asigna uno
-                //currentTargets.Add(collider.gameObject);
-                currentTarget = collider.gameObject;
-                _hasEnemyAssigned = true;
+            
+            foreach (Collider collider in colliders)
+            {
+                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado,
+                {                                                   // se le asigna uno
+                                                                    //currentTargets.Add(collider.gameObject);
+                    
+                    currentTarget = collider.gameObject;
+                    _hasEnemyAssigned = true;
+                }
             }
+
+
+        }
+        else
+        {
+            currentTarget = null;
         }
 
         if (currentTarget != null && !_hasEnemyAssigned)

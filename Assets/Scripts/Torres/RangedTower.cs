@@ -56,6 +56,7 @@ public class RangedTower : Tower
         _maxHealth = health;
         _currentCooldown = cooldown;
         _healthBar = GetComponentInChildren<HealthBar>();
+        _enemyMask = 1 << GameManager.Instance.layerEnemigos;
     }
 
     public override void OnAttack()
