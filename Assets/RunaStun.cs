@@ -6,29 +6,29 @@ using UnityEngine.AI;
 public class RunaStun : MonoBehaviour
 {
     private bool canAttack = true;
-    public float cooldown = 2f;
-    private float _currentCooldown = 0f;
+    [SerializeField] private float duration = 3f;
+    private float _currentDuration = 0f;
+    [SerializeField] private float cooldown = 2f;
     private float originalSpeed;
     private NavMeshAgent navmesh;
     private bool isStunned = false;
 
     void Update()
     {
-        // Si está stunneado, decrementa el cooldown
         if (isStunned)
         {
-            _currentCooldown -= Time.deltaTime;
-            if (_currentCooldown <= 0)
+            _currentDuration -= Time.deltaTime;
+            if (_currentDuration <= 0)
             {
-                // Restablece la velocidad y reinicia el estado
                 navmesh.speed = originalSpeed;
                 isStunned = false;
+                StartCoroutine(wait());
                 Debug.Log("Enemigo destunneado");
             }
         }
     }
 
-    private void OnTriggerStay(Collider collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag(GameManager.Instance.tagEnemigos) && canAttack)
         {
@@ -38,11 +38,17 @@ public class RunaStun : MonoBehaviour
                 Debug.Log("Ataque");
                 originalSpeed = navmesh.speed;
                 navmesh.speed = 0;
-                _currentCooldown = cooldown;
+                _currentDuration = duration;
                 isStunned = true;
-                canAttack = false; // Impide múltiples activaciones
+                canAttack = false; 
                 Debug.Log("Enemigo stunneado");
             }
         }
+    }
+
+    private IEnumerator wait()
+    {
+        yield return new WaitForSeconds(cooldown);
+        canAttack = true;
     }
 }
