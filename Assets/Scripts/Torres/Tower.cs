@@ -45,26 +45,25 @@ public abstract class Tower : LivingEntityAI, IDamageable
             
             foreach (Collider collider in colliders)
             {
-                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado,
-                {                                                   // se le asigna uno
-                                                                    //currentTargets.Add(collider.gameObject);
-                    
+                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna uno
+                {
+                    //currentTargets.Add(collider.gameObject);
                     currentTarget = collider.gameObject;
                     _hasEnemyAssigned = true;
                 }
             }
-
-
         }
-        else
+        else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
             currentTarget = null;
+            _hasEnemyAssigned = false;
         }
-
+        /*
         if (currentTarget != null && !_hasEnemyAssigned)
         {
             currentTarget = null;
-        }
+            _hasEnemyAssigned = false;
+        }*/
 
 
 
