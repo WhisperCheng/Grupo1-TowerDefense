@@ -54,8 +54,8 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
         // TODO: Efecto de partículas, llamar al GameManager para actualizar la info del corazón del bosque
     }
 
-    public bool HasDied()
+    public float GetHealth()
     {
-        return _hasDied;
+        return _currentHealth;
     }
 }

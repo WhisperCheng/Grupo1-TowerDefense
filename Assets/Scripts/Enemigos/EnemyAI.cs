@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -35,10 +36,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
 
+    protected List<Collider> attackingList;
+
     protected bool _attackMode = false;
-    protected bool _canAttack = true;
+    protected bool _canDamage = false;
     protected bool _finishedWaypoints = false;
-    protected bool _hasDied = false;
     
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
@@ -51,8 +53,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     public abstract void Attack(IDamageable damageableEntity);
     public abstract void Die();
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
-
-    public abstract bool HasDied();
+    public abstract float GetHealth();
+    protected abstract void CheckIfRivalsInsideAttackRange();
 
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
@@ -69,6 +71,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         _maxSpeed = agent.speed;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
         OnAssignDestination(_destination);
+        animatorController = GetComponent<Animator>();
+        attackingList = new List<Collider>();
     }
 
     protected void OnAssignDestination(Vector3 destination)
@@ -87,7 +91,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         // Se obtiene al jugador más cercano
         Transform nearestRival = EntityUtils.NearestRival(listaChoques, transform.position, ignoreTagList, true);
 
-        if (nearestRival != null) // Si detecta a un jugador en el radio de acción, se pondrá a perseguirle
+        if (nearestRival != null)
+            // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
         }
@@ -100,6 +105,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
             } else // Si no, va yendo de waypoint en waypoint hasta llegar al final
             {
+                if (_attackMode)
+                {
+                    _attackMode = false;
+                }
+
                 Vector3 dest = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
                 if (dest != _destination)
                 {
@@ -128,15 +138,37 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         }
     }
 
-    protected void ManageCooldown()
+    protected void ManageCooldown() // No
     {
         _currentCooldown -= Time.deltaTime;
-        if (!_canAttack && _currentCooldown <= 0)
+        if (!_canDamage && _currentCooldown <= 0)
         {
-            _canAttack = true;
+            //_canDamage = true;
             _currentCooldown = 0;
         }
     }
+
+    public void AttackEvent()
+    {
+        if (_attackMode) // Si está únicamente en modo de ataque (cuando hay un rival dentro de la hitbox de ataque,
+        {               // activar el booleano de hacer daño)
+            _canDamage = true;
+        }
+        else
+        {
+            _canDamage = false;
+        }
+    }
+
+    public void CheckAttackModeEvent()
+    {
+        if (!_attackMode)
+        {
+            animatorController.SetBool("AttackMode", false); // Modo de ataque = falso, se usa para terminar de atacar
+            _canDamage = false;
+        }
+    }
+
     public virtual void TakeDamage(float damageAmount) // Se puede sobreescribir (virtual), por si es necesario
     {
         // Dañar enemigo
@@ -154,7 +186,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     {
         if (animatorController != null)
         {
-            animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));
+            //animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));
         }
     }
 
@@ -166,9 +198,4 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         //Gizmos.DrawRay(transform.position, transform.forward);
     }
 #endif
-
-    /*protected void OnAbandonAtacking()
-    {
-        _attackMode = false;
-    }*/
 }

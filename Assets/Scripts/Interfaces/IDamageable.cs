@@ -8,6 +8,6 @@ public interface IDamageable
     // del daño de cada entidad
     public void Die();
     public void TakeDamage(float damageAmount);
-    public bool HasDied();
+    public float GetHealth();
     //public void RestoreHealth();
 }

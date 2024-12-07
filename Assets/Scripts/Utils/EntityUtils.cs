@@ -48,7 +48,7 @@ public static class EntityUtils
         return nearestGameObjectPos;
     }
 
-    private static Transform GetNearestCollisionInList(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
+    private static Transform GetNearestRivalCollisionInList(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
         bool ignoreVisibility)
     {
         Transform nearestObjetivePos = null;
@@ -56,10 +56,13 @@ public static class EntityUtils
 
         foreach (Collider col in colliderList)
         {
+            IDamageable entity = col.GetComponent<IDamageable>();
             // Distancia entre el enemigo y el objetivo
             float actualDistance = Vector3.Distance(actualPos, col.transform.position);
-            if (actualDistance < minorDistance)
-            {
+            if (entity != null && entity.GetHealth() > 0 && actualDistance < minorDistance)
+            {   // Si se detecta un rival vivo, y la distance actual es menor que las anteriores, se procede
+
+                // En los siguientes casos se tendrá en cuenta si el enemigo tiene vida superior a 0 (si está vivo)
                 if (ignoreVisibility)
                 { /* Si se ignora la visibilidad directa del enemigo, se escoge siempre el más cercano aunque
                    hayan obstáculos por delante */
@@ -80,7 +83,7 @@ public static class EntityUtils
     }
     private static Transform GetNearestCollisionInList(Collider[] colliderList, Vector3 actualPos)
     {
-        return GetNearestCollisionInList(colliderList, actualPos, null, true);
+        return GetNearestRivalCollisionInList(colliderList, actualPos, null, true);
     }
 
 
@@ -127,7 +130,7 @@ public static class EntityUtils
         // Se comprueba y elige el enemigo con menor distancia
         if (colliderList.Length > 0)
         {
-            nearestRival = GetNearestCollisionInList(colliderList, pos, ignoreTagList, ignoreDirectVisbility);
+            nearestRival = GetNearestRivalCollisionInList(colliderList, pos, ignoreTagList, ignoreDirectVisbility);
         }
         return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
         // tenerlo en cuenta

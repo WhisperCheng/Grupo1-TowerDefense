@@ -12,7 +12,7 @@ public abstract class Tower : LivingEntityAI, IDamageable
     [Header("Parte a rotar")]
     public Transform rotationPart;
 
-    protected List<GameObject> currentTargets = new List<GameObject>();
+    //protected List<GameObject> currentTargets = new List<GameObject>();
     protected GameObject currentTarget;
 
     private float rotationModel = 0f;
@@ -23,11 +23,11 @@ public abstract class Tower : LivingEntityAI, IDamageable
     protected int _enemyMask;
 
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
-    public abstract void OnAttack(); // Efectos de partículas al golpear, cambiar animación, etc
-    public abstract void Attack(IDamageable damageableEntity);
+    public abstract void OnAttack(); // Disparar proyectiles, efectos de partículas al golpear, cambiar animación, etc
+    //public abstract void Attack(IDamageable damageableEntity);
     public abstract void Die();
     public abstract void TakeDamage(float damageAmount);
-    public abstract bool HasDied();
+    public abstract float GetHealth();
 
     private void Start()
     {
@@ -50,13 +50,22 @@ public abstract class Tower : LivingEntityAI, IDamageable
                     //currentTargets.Add(collider.gameObject);
                     currentTarget = collider.gameObject;
                     _hasEnemyAssigned = true;
+                    break;
                 }
             }
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
-            currentTarget = null;
-            _hasEnemyAssigned = false;
+            if (currentTarget != null)
+            {
+                currentTarget = null;
+                _hasEnemyAssigned = false;
+            }
+        }
+
+        if (_hasEnemyAssigned)
+        {
+            OnAttack();
         }
         /*
         if (currentTarget != null && !_hasEnemyAssigned)

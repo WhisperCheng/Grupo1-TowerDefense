@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangedTower : Tower
+public abstract class RangedTower : Tower
 {
     [Header("Vida")] // Vida
     public float health;
@@ -14,8 +14,11 @@ public class RangedTower : Tower
     public float attackDamage;
     public float cooldown = 1f;
 
-    [Header("Animaciones")]
-    protected Animator animator;
+    //[Header("Animaciones")]
+    public Animator animator;
+
+    [Header("Proyectil")]
+    [SerializeField] protected GameObject proyectile;
 
     protected float _currentHealth;
     protected float _maxHealth;
@@ -29,19 +32,36 @@ public class RangedTower : Tower
     {
         Init();
     }
-    private void Update()
+    protected void Update()
     {
         EnemyDetection();
+        ManageCooldown();
         if (PlaceManager.Instance.objetoSiendoArrastrado == false)
         {
             LookRotation();
         }
     }
 
-    public override void Attack(IDamageable damageableEntity)
+    protected void ManageCooldown()
     {
-        throw new System.NotImplementedException();
+        _currentCooldown -= Time.deltaTime;
+        if (!_canAttack && _currentCooldown <= 0)
+        {
+            _canAttack = true;
+            _currentCooldown = 0;
+        }
     }
+
+    /*public override void Attack(IDamageable damageableEntity)
+    {
+        if (_canAttack)
+        {
+            //damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
+            _currentCooldown = cooldown; // Reset del cooldown
+            _canAttack = false;
+            Debug.Log("AtaqueRosa");
+        }
+    }*/
 
     public override void Die()
     {
@@ -61,12 +81,19 @@ public class RangedTower : Tower
 
     public override void OnAttack()
     {
-        if (currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
+        if (_canAttack)
+        {
+            
+        }
+
+        if (_canAttack && currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
         {
             ShootProyectile();
+            _currentCooldown = cooldown; // Reset del cooldown
+            _canAttack = false;
             animator.SetBool("ataque", true);
         }
-        if (currentTarget == null)
+        if (!_canAttack || currentTarget == null)
         {
             animator.SetBool("ataque", false);
         }
@@ -74,21 +101,30 @@ public class RangedTower : Tower
 
     protected void ShootProyectile()
     {
-        Debug.Log("G");
+        //Debug.Log("G");
     }
 
     public override void TakeDamage(float damageAmount)
     {
-        throw new System.NotImplementedException();
+        // Dañar torre
+        _currentHealth -= damageAmount;
+        OnDamageTaken();
+
+        // Actualizar barra de vida
+        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+        if (_currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     protected override void OnDamageTaken()
     {
-        throw new System.NotImplementedException();
+        //
     }
 
-    public override bool HasDied()
+    public override float GetHealth()
     {
-        return _hasDied;
+        return _currentHealth;
     }
 }

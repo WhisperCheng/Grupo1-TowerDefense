@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [Header("Layers Globales")]
     public int layerEnemigos;
 
+    //[Header("Tags de enemigos")]
+    //public List<string> listaTagEnemigos;
+
     private int forestHearthAmount = 0;
     // Start is called before the first frame update
     void Start()
