@@ -12,7 +12,6 @@ public class BasicEnemyAI : EnemyAI
     {
         WhileWalking();
         CheckIfRivalsInsideAttackRange();
-
         //ManageCooldown();
     }
 
@@ -24,14 +23,33 @@ public class BasicEnemyAI : EnemyAI
     // en rango y con ello determinar si puede seguir atacando o no.
     protected override void CheckIfRivalsInsideAttackRange()
     {
-        if (_canDamage && attackingList.Count == 0)
+        if (_canDamage)
         {
-            _canDamage = false; 
+            for (int i = 0; i < attackingList.Count; i++)
+            {
+                Collider col = attackingList[i];
+                if (col == null || !col.enabled)
+                {
+                    attackingList.Remove(col);
+                    Debug.Log(attackingList.Count);
+                }
+            }
+
+            // Si la lista es tamaño == 0, desactivar el daño
+            if (attackingList.Count == 0)
+            {
+                _attackMode = false;
+                animatorController.SetBool("AttackMode", false);
+                Debug.Log("-");
+                _canDamage = false;
+            }
         }
+        
     }
 
     protected override void WhileWalking()
     {
+        animatorController.SetBool("AttackMode", _attackMode);
         AnimateWalking();
         Vector3 oldDest = _destination;
         OnSearchingObjetives();

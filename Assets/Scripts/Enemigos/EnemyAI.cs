@@ -164,7 +164,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     {
         if (!_attackMode)
         {
-            animatorController.SetBool("AttackMode", false); // Modo de ataque = falso, se usa para terminar de atacar
+            _attackMode = false; // Modo de ataque = falso, se usa para terminar de atacar
             _canDamage = false;
         }
     }

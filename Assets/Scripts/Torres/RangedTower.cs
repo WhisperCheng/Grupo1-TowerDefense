@@ -81,11 +81,6 @@ public abstract class RangedTower : Tower
 
     public override void OnAttack()
     {
-        if (_canAttack)
-        {
-            
-        }
-
         if (_canAttack && currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
         {
             ShootProyectile();

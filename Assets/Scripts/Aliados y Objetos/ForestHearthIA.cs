@@ -10,8 +10,6 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
 
     private float _currentHealth;
     private float _maxHealth;
-
-    private bool _hasDied = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +47,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
 
     public void Die()
     {
-        _hasDied = true;
+        this.gameObject.SetActive(false);
         Destroy(this.gameObject);
         // TODO: Efecto de partículas, llamar al GameManager para actualizar la info del corazón del bosque
     }
