@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 /// <summary>
-/// Herramientas y métodos helper para la detección de enemigos y aliados
+/// Herramientas y mÃ©todos helper para la detecciÃ³n de enemigos y aliados
 /// </summary>
 public static class EntityUtils
 {
@@ -16,15 +16,15 @@ public static class EntityUtils
 
         GameObject[] heartList = GameObject.FindGameObjectsWithTag(GameManager.Instance.tagCorazonDelBosque);
 
-        // Se comprueba y elige al corazón con menor distancia
+        // Se comprueba y elige al corazÃ³n con menor distancia
         if (heartList.Length > 0)
         {
-            nearestForestHearthPos = GetNearestTransformInList(heartList, actualPos, ignoreTagList);
+            nearestForestHearthPos = GetNearestTransform(heartList, actualPos, ignoreTagList);
         }
         return nearestForestHearthPos; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
     }                               // tenerlo en cuenta
 
-    private static Transform GetNearestTransformInList(GameObject[] gameObjectList, Vector3 actualPos, string[] ignoreTagList)
+    private static Transform GetNearestTransform(GameObject[] gameObjectList, Vector3 actualPos, string[] ignoreTagList)
     {
         Transform nearestGameObjectPos = null;
         float minorDistance = Mathf.Infinity;
@@ -35,7 +35,7 @@ public static class EntityUtils
             float actualDistance = Vector3.Distance(actualPos, gameObj.transform.position);
             if (actualDistance < minorDistance)
             {
-                /* Se detectan enemigos dentro del radio de acción pero hay que comprobar que
+                /* Se detectan enemigos dentro del radio de acciÃ³n pero hay que comprobar que
                  * no hay muros por delante*/
                 if (ThereAreNoObstacles(gameObj.transform, actualPos, ignoreTagList))
                 {
@@ -48,7 +48,7 @@ public static class EntityUtils
         return nearestGameObjectPos;
     }
 
-    private static Transform GetNearestRivalCollisionInList(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
+    private static Transform GetNearestRivalCollision(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
         bool ignoreVisibility)
     {
         Transform nearestObjetivePos = null;
@@ -62,16 +62,16 @@ public static class EntityUtils
             if (entity != null && entity.GetHealth() > 0 && actualDistance < minorDistance)
             {   // Si se detecta un rival vivo, y la distance actual es menor que las anteriores, se procede
 
-                // En los siguientes casos se tendrá en cuenta si el enemigo tiene vida superior a 0 (si está vivo)
+                // En los siguientes casos se tendrÃ¡ en cuenta si el enemigo tiene vida superior a 0 (si estÃ¡ vivo)
                 if (ignoreVisibility)
-                { /* Si se ignora la visibilidad directa del enemigo, se escoge siempre el más cercano aunque
-                   hayan obstáculos por delante */
+                { /* Si se ignora la visibilidad directa del enemigo, se escoge siempre el mÃ¡s cercano aunque
+                   hayan obstÃ¡culos por delante */
                     minorDistance = actualDistance;
                     nearestObjetivePos = col.transform;
                 }
                 if (!ignoreVisibility && ThereAreNoObstacles(col.transform, actualPos, ignoreTagList))
                 {
-                    /* Si no se ignora la visibilidad directa, se detectan enemigos dentro del radio de acción
+                    /* Si no se ignora la visibilidad directa, se detectan enemigos dentro del radio de acciÃ³n
                      * comprobando que no hay muros por delante*/
                     minorDistance = actualDistance;
                     nearestObjetivePos = col.transform;
@@ -81,9 +81,51 @@ public static class EntityUtils
 
         return nearestObjetivePos;
     }
-    private static Transform GetNearestCollisionInList(Collider[] colliderList, Vector3 actualPos)
+    
+    private static Transform GetNearestRivalCollisionOnNavMesh(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
+        bool ignoreVisibility, float reachDistance)
     {
-        return GetNearestRivalCollisionInList(colliderList, actualPos, null, true);
+        Transform nearestObjetivePos = null;
+        float minorDistance = Mathf.Infinity;
+
+        foreach (Collider col in colliderList)
+        {
+            IDamageable entity = col.GetComponent<IDamageable>();
+            // Distancia entre el enemigo y el objetivo
+            float actualDistance = Vector3.Distance(actualPos, col.transform.position);
+
+            NavMeshHit hit = new NavMeshHit();
+            bool canReachRivalOnNavMesh = NavMesh.SamplePosition(col.transform.position, out hit, reachDistance, NavMesh.AllAreas);
+            
+            // Si se trata de una entidad con vida > 0 y la distancia es una menor a las anteriores y puede alcanzarla
+            // dentro del navmesh, se prosigue
+            if (entity != null && entity.GetHealth() > 0 && actualDistance < minorDistance && canReachRivalOnNavMesh)
+            {   // Si se detecta un rival vivo, y la distance actual es menor que las anteriores, se procede
+
+                // En los siguientes casos se tendrÃ¡ en cuenta si el enemigo tiene vida superior a 0 (si estÃ¡ vivo)
+                if (ignoreVisibility)
+                { /* Si se ignora la visibilidad directa del enemigo, se escoge siempre el mÃ¡s cercano aunque
+                   hayan obstÃ¡culos por delante */
+                    minorDistance = actualDistance;
+                    nearestObjetivePos = col.transform;
+                    Debug.DrawLine(actualPos, col.transform.position, Color.green);
+                }
+                if (!ignoreVisibility && ThereAreNoObstacles(col.transform, actualPos, ignoreTagList))
+                {
+                    /* Si no se ignora la visibilidad directa, se detectan enemigos dentro del radio de acciÃ³n
+                     * comprobando que no hay muros por delante*/
+                    minorDistance = actualDistance;
+                    nearestObjetivePos = col.transform;
+                    Debug.DrawLine(actualPos, col.transform.position, Color.green);
+                }
+            }
+        }
+
+        return nearestObjetivePos;
+    }
+    private static Transform GetNearestCollision(Collider[] colliderList, Vector3 actualPos)
+    {
+        return GetNearestRivalCollision(colliderList, actualPos, null, true);
     }
 
 
@@ -124,13 +166,27 @@ public static class EntityUtils
 
     public static Transform NearestRival(Collider[] colliderList, Vector3 pos, string[] ignoreTagList, bool ignoreDirectVisbility)
     {
-        // Esta lista almacenará el resultado de llamar a OverlapSphere
+        // Esta lista almacenarÃ¡ el resultado de llamar a OverlapSphere
         Transform nearestRival = null;
 
         // Se comprueba y elige el enemigo con menor distancia
         if (colliderList.Length > 0)
         {
-            nearestRival = GetNearestRivalCollisionInList(colliderList, pos, ignoreTagList, ignoreDirectVisbility);
+            nearestRival = GetNearestRivalCollision(colliderList, pos, ignoreTagList, ignoreDirectVisbility);
+        }
+        return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
+        // tenerlo en cuenta
+    }
+    public static Transform NearestRivalOnNavMesh(Collider[] colliderList, Vector3 pos, string[] ignoreTagList, bool ignoreDirectVisbility, 
+        float reachDistanceOutSideNavMesh)
+    {
+        // Esta lista almacenarÃ¡ el resultado de llamar a OverlapSphere
+        Transform nearestRival = null;
+
+        // Se comprueba y elige el enemigo con menor distancia
+        if (colliderList.Length > 0)
+        {
+            nearestRival = GetNearestRivalCollisionOnNavMesh(colliderList, pos, ignoreTagList, ignoreDirectVisbility, reachDistanceOutSideNavMesh);
         }
         return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
         // tenerlo en cuenta

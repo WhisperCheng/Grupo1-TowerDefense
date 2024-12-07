@@ -93,27 +93,13 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
 
         // Se obtiene al jugador más cercano
-        Transform nearestRival = EntityUtils.NearestRival(listaChoques, transform.position, ignoreTagList, true);
-        
+        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(listaChoques, transform.position, ignoreTagList, true, reachAttackRange);
         if (nearestRival != null)
             // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
-            NavMeshHit hit = new NavMeshHit();
-            //bool blocked = false;
-
-            if (NavMesh.SamplePosition(_destination, out hit, reachAttackRange, NavMesh.AllAreas))
-            {
-                Debug.DrawLine(transform.position, _destination, Color.green);
-            }
-
-            
-
-            //if (blocked)
-                //Debug.DrawRay(hit.position, Vector3.up, Color.red);
 
             _agent.acceleration = _onFocusAcceleration; // Cambiar la aceleración de rotación del enemigo
-
             var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
         }
