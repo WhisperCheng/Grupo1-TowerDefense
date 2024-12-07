@@ -7,11 +7,12 @@ using UnityEngine.AI;
 [SelectionBase]
 public abstract class EnemyAI : LivingEntityAI, IDamageable
 {
-    protected NavMeshAgent agent;
+    protected NavMeshAgent _agent;
     // Variables
     [Header("Variables Enemigo IA")]
     public float actionRadio;
     public float checkWaypointProximityDistance = 3;
+    public float _onFocusAcceleration = 30;
 
     [Header("Tags de obstáculos a ignorar")]
     public string[] ignoreTagList;
@@ -25,12 +26,13 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     [Header("Ataque")] //Ataque
     public float attackDamage;
     public float cooldown;
-    
+    public float reachAttackRange = 3;
+
     [Header("Animaciones")]
     public Animator animatorController;
 
     protected Vector3 _destination;
-
+    protected float _defaultAcceleration;
     protected float _currentHealth;
     protected float _maxHealth;
     protected float _currentCooldown = 0f;
@@ -67,17 +69,19 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         _maxHealth = health;
         _currentCooldown = cooldown;
         _healthBar = GetComponentInChildren<HealthBar>();
-        agent = GetComponent<NavMeshAgent>();
-        _maxSpeed = agent.speed;
+        _agent = GetComponent<NavMeshAgent>();
+        _maxSpeed = _agent.speed;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
         OnAssignDestination(_destination);
         animatorController = GetComponent<Animator>();
         attackingList = new List<Collider>();
+        _defaultAcceleration = _agent.acceleration;
+        //reachAttackRange = GetComponent<BoxCollider>().bounds.center.z / 3.25f;
     }
 
     protected void OnAssignDestination(Vector3 destination)
     {
-        agent.SetDestination(destination);
+        _agent.SetDestination(destination);
     }
 
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de
@@ -90,14 +94,32 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
 
         // Se obtiene al jugador más cercano
         Transform nearestRival = EntityUtils.NearestRival(listaChoques, transform.position, ignoreTagList, true);
-
+        
         if (nearestRival != null)
             // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
+            NavMeshHit hit = new NavMeshHit();
+            //bool blocked = false;
+
+            if (NavMesh.SamplePosition(_destination, out hit, reachAttackRange, NavMesh.AllAreas))
+            {
+                Debug.DrawLine(transform.position, _destination, Color.green);
+            }
+
+            
+
+            //if (blocked)
+                //Debug.DrawRay(hit.position, Vector3.up, Color.red);
+
+            _agent.acceleration = _onFocusAcceleration; // Cambiar la aceleración de rotación del enemigo
+
+            var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
         }
         else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el waypoint correspondiente
         {
+            _agent.acceleration = _defaultAcceleration; // Cambiar la aceleración de rotación del enemigo a la original
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
                 Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, ignoreTagList);
@@ -195,6 +217,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, actionRadio);
+        Gizmos.DrawWireSphere(transform.position, reachAttackRange);
         //Gizmos.DrawRay(transform.position, transform.forward);
     }
 #endif

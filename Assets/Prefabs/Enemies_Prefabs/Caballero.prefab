@@ -387,7 +387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6126205
+      value: 1.51
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.y
@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.961898
+      value: 7.41
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalRotation.w
@@ -664,11 +664,14 @@ PrefabInstance:
       addedObject: {fileID: 4726402877614626766}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
-      insertIndex: -1
+      insertIndex: 1
       addedObject: {fileID: 9101717700536509563}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
-      insertIndex: -1
+      insertIndex: 2
       addedObject: {fileID: 7258662094469348518}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 205607263392768273}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3010747392079810142}
@@ -679,6 +682,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4415481603863536599}
   m_SourcePrefab: {fileID: 100100000, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
+--- !u!95 &1430370802095963213 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
+  m_PrefabInstance: {fileID: 4806228123316486620}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4988192326317303351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
@@ -712,7 +720,7 @@ MonoBehaviour:
   _particulasGolpe: {fileID: 0}
   attackDamage: 10
   cooldown: 1
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 1430370802095963213}
 --- !u!195 &7258662094469348518
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -735,6 +743,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &205607263392768273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652667148767116429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0f797e9de1c6e34b8f98cd3fc24e39a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAnimationTriggered:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9101717700536509563}
+        m_TargetAssemblyTypeName: EnemyAI, Assembly-CSharp
+        m_MethodName: AttackEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &3010747392079810142
 BoxCollider:
   m_ObjectHideFlags: 0

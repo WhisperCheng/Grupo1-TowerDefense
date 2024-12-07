@@ -31,7 +31,6 @@ public class BasicEnemyAI : EnemyAI
                 if (col == null || !col.enabled)
                 {
                     attackingList.Remove(col);
-                    Debug.Log(attackingList.Count);
                 }
             }
 
@@ -40,7 +39,6 @@ public class BasicEnemyAI : EnemyAI
             {
                 _attackMode = false;
                 animatorController.SetBool("AttackMode", false);
-                Debug.Log("-");
                 _canDamage = false;
             }
         }
