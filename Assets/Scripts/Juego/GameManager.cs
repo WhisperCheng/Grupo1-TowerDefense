@@ -17,11 +17,12 @@ public class GameManager : MonoBehaviour
         }
     }
     [Header("WayPoints")]
-    public Transform[] wayPoints;
+    public GameObject[] wayPoints;
 
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
     public string tagEnemigos;
+    public string tagWaypoints;
 
     [Header("Layers Globales")]
     public int layerEnemigos;
