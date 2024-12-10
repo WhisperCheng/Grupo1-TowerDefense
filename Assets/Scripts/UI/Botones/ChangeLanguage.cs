@@ -10,10 +10,10 @@ public class CambiarIdioma : MonoBehaviour
 
 
 
-    public void ActualizarIdioma(int indexIdioma)
+    public void ActualizarIdioma(int LocalizationTable)
     {
 
-        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[indexIdioma];
+        LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[LocalizationTable];
     }
 }
 
