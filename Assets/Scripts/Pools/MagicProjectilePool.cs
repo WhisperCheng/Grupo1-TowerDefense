@@ -13,6 +13,10 @@ public class MagicProjectilePool : MonoBehaviour
     // Lista de proyectiles de la pool
     private Stack<GameObject> pool;
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     // Instancia singleton de la pool
     public static MagicProjectilePool Instance;
 
@@ -27,6 +31,12 @@ public class MagicProjectilePool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        grandParent = GameObject.Find(grandParentName);
+        if (grandParent == null)
+        {
+            Debug.LogError($"No se encontró un objeto llamado '{grandParentName}' en la escena.");
+        }
     }
 
     void Start()
@@ -39,11 +49,15 @@ public class MagicProjectilePool : MonoBehaviour
         // Inicializar la pool
         pool = new Stack<GameObject>();
         GameObject projectile = null;
-
+        parent = new GameObject("MagicProjectilePoolContainer");
+        parent.transform.parent = grandParent.transform;
         // Instanciar y desactivar todos los proyectiles al inicio
         for (int i = 0; i < poolSize; i++)
         {
             projectile = Instantiate(magicProjectilePrefab);
+           
+            
+            projectile.transform.parent = parent.transform;
             projectile.SetActive(false);
             pool.Push(projectile);
         }
