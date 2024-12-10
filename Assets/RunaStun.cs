@@ -7,48 +7,70 @@ public class RunaStun : MonoBehaviour
 {
     private bool canAttack = true;
     [SerializeField] private float duration = 3f;
-    private float _currentDuration = 0f;
     [SerializeField] private float cooldown = 2f;
-    private float originalSpeed;
-    private NavMeshAgent navmesh;
-    private bool isStunned = false;
+    [SerializeField] private float range = 10f;
+
+    private Dictionary<NavMeshAgent, float> stunnedEnemies = new Dictionary<NavMeshAgent, float>();
 
     void Update()
     {
-        if (isStunned)
+        
+    }
+
+    private void EnemyDetection()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range);
+        foreach (Collider collider in colliders)
         {
-            _currentDuration -= Time.deltaTime;
-            if (_currentDuration <= 0)
+            NavMeshAgent enemyNavMesh = collider.GetComponent<NavMeshAgent>();
+            if (enemyNavMesh != null && !stunnedEnemies.ContainsKey(enemyNavMesh))
             {
-                navmesh.speed = originalSpeed;
-                isStunned = false;
-                StartCoroutine(wait());
-                Debug.Log("Enemigo destunneado");
+                StartCoroutine(StunCoroutine(enemyNavMesh));
             }
+        }
+    }
+
+    private IEnumerator StunCoroutine(NavMeshAgent enemyNavMesh)
+    {
+        // Guardar la velocidad original del enemigo
+        if (!stunnedEnemies.ContainsKey(enemyNavMesh))
+        {
+            stunnedEnemies[enemyNavMesh] = enemyNavMesh.speed;
+        }
+
+        enemyNavMesh.speed = 0; // Aplicar el stun
+        Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
+
+        yield return new WaitForSeconds(duration);
+
+        // Restaurar la velocidad original del enemigo
+        if (stunnedEnemies.ContainsKey(enemyNavMesh))
+        {
+            enemyNavMesh.speed = stunnedEnemies[enemyNavMesh];
+            stunnedEnemies.Remove(enemyNavMesh);
+            Debug.Log($"Enemigo {enemyNavMesh.name} destunneado");
         }
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag(GameManager.Instance.tagEnemigos) && canAttack)
+        if (collision.CompareTag(GameManager.Instance.tagEnemigos) && canAttack && !collision.isTrigger)
         {
-            navmesh = collision.GetComponent<NavMeshAgent>();
-            if (navmesh != null)
-            {
-                Debug.Log("Ataque");
-                originalSpeed = navmesh.speed;
-                navmesh.speed = 0;
-                _currentDuration = duration;
-                isStunned = true;
-                canAttack = false; 
-                Debug.Log("Enemigo stunneado");
-            }
+            canAttack = false; 
+            EnemyDetection();
+            StartCoroutine(ResetCooldown());
         }
     }
 
-    private IEnumerator wait()
+    private IEnumerator ResetCooldown()
     {
         yield return new WaitForSeconds(cooldown);
         canAttack = true;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, range);
     }
 }
