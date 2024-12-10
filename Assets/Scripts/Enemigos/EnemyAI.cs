@@ -71,12 +71,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         _maxSpeed = _agent.speed;
-        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
+        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
         animatorController = GetComponent<Animator>();
         attackingList = new List<Collider>();
         _defaultAcceleration = _agent.acceleration;
-        //reachAttackRange = GetComponent<BoxCollider>().bounds.center.z / 3.25f;
     }
 
     protected void OnAssignDestination(Vector3 destination)
@@ -117,32 +116,48 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
                 {
                     _attackMode = false;
                 }
-
-                Vector3 dest = GameManager.Instance.wayPoints[_currentWaypointIndex].position;
-                if (dest != _destination)
-                {
-                    _destination = dest;
-                }
+                
+                Transform nearestWaypoint = EntityUtils.GetNearestWayPoint(transform.position);
                 // Vuelve a tomar la ruta de los waypoints (waypoint actual)
+                
+                int nearestWaypointIndex = Array.FindIndex(GameManager.Instance.wayPoints, i => (nearestWaypoint.position == i.transform.position));
 
-                // Si entra dentro del radio de acción para detectar el siguiente waypoint,
+                // Si entra dentro del radio de acción para detectar el waypoint más cercano,
                 // cambiar el destino al siguiente
-                if (Vector3.Distance(transform.position, _destination) < checkWaypointProximityDistance)
+                if (nearestWaypoint != null)
                 {
-                    UpdateWayPointDestination();
+                    bool isNextWaypoint = nearestWaypoint.position == GameManager.Instance.wayPoints[nearestWaypointIndex].transform.position;
+                    if (isNextWaypoint && Vector3.Distance(transform.position, nearestWaypoint.position) < checkWaypointProximityDistance)
+                    {
+                        //Debug.Log(_currentWaypointIndex + " - " + _destination);
+                        UpdateWayPointDestination(++nearestWaypointIndex);
+                    }
+                }
+                
+                if (!_finishedWaypoints)
+                {
+                    Vector3 dest = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
+                    if (dest != _destination)
+                    {
+                        _destination = dest;
+                    } // Vuelve a tomar la ruta con el nuevo destino actualizado si no s ha actualizado antes
                 }
             }
         }
     }
 
-    protected void UpdateWayPointDestination()
+    protected void UpdateWayPointDestination(int index)
     {
-        _currentWaypointIndex++;
+        _currentWaypointIndex = index;
+        //_destination = waypoint.position;
         // Hasta que no llegue al final se actualizan los waypoints, pero si llega al final dejan de actualizarse
         // y se activa el booleano finishedWaypoints
         if (_currentWaypointIndex >= GameManager.Instance.wayPoints.Length)
         {
             _finishedWaypoints = true;
+        } else
+        {
+            _finishedWaypoints = false;
         }
     }
 
@@ -203,7 +218,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, actionRadio);
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, reachAttackRange);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, checkWaypointProximityDistance);
         //Gizmos.DrawRay(transform.position, transform.forward);
     }
 #endif

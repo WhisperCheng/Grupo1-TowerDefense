@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Herramientas y métodos helper para la detección de enemigos y aliados
+/// Herramientas y métodos helper para la detección de enemigos, aliados y waypoints
 /// </summary>
 public static class EntityUtils
 {
@@ -12,17 +12,31 @@ public static class EntityUtils
     /// --- Funciones y "Herramientas" para las Clases de Torres, Aliados Y Enemigos --- ///
     public static Transform GetNearestForestHearthPos(Vector3 actualPos, string[] ignoreTagList)
     {
-        Transform nearestForestHearthPos = null;
+        Transform nearestForestHearth = null;
 
         GameObject[] heartList = GameObject.FindGameObjectsWithTag(GameManager.Instance.tagCorazonDelBosque);
 
         // Se comprueba y elige al corazón con menor distancia
         if (heartList.Length > 0)
         {
-            nearestForestHearthPos = GetNearestTransform(heartList, actualPos, ignoreTagList);
+            nearestForestHearth = GetNearestTransform(heartList, actualPos, ignoreTagList);
         }
-        return nearestForestHearthPos; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
+        return nearestForestHearth; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
     }                               // tenerlo en cuenta
+
+    public static Transform GetNearestWayPoint(Vector3 actualPos)
+    {
+        Transform nearestWaypoint = null;
+
+        GameObject[] waypointList = GameManager.Instance.wayPoints;
+
+        // Se comprueba y elige al waypoint con menor distancia
+        if (waypointList.Length > 0)
+        {
+            nearestWaypoint = GetNearestWaypointTransform(waypointList, actualPos);
+        }
+        return nearestWaypoint; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
+    }
 
     private static Transform GetNearestTransform(GameObject[] gameObjectList, Vector3 actualPos, string[] ignoreTagList)
     {
@@ -42,6 +56,25 @@ public static class EntityUtils
                     minorDistance = actualDistance;
                     nearestGameObjectPos = gameObj.transform;
                 }
+            }
+        }
+
+        return nearestGameObjectPos;
+    }
+
+    private static Transform GetNearestWaypointTransform(GameObject[] gameObjectList, Vector3 actualPos)
+    {
+        Transform nearestGameObjectPos = null;
+        float minorDistance = Mathf.Infinity;
+
+        foreach (GameObject gameObj in gameObjectList)
+        {
+            // Distancia entre el enemigo y el objetivo
+            float actualDistance = Vector3.Distance(actualPos, gameObj.transform.position);
+            if (actualDistance < minorDistance)
+            {
+                minorDistance = actualDistance;
+                nearestGameObjectPos = gameObj.transform;
             }
         }
 
