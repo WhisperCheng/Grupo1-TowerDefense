@@ -10,6 +10,10 @@ public class ArcherPool : MonoBehaviour
     private Stack<GameObject> pool;
     public static ArcherPool Instance;
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +24,8 @@ public class ArcherPool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        grandParent = GameObject.Find(grandParentName);
     }
 
     void Start()
@@ -30,9 +36,11 @@ public class ArcherPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
+        parent = new GameObject("Archer_PC");
         for (int i = 0; i < poolSize; i++)
         {
             GameObject archer = Instantiate(archerPrefab);
+            archer.transform.parent = parent.transform;
             archer.SetActive(false);
             pool.Push(archer);
         }
@@ -43,7 +51,9 @@ public class ArcherPool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de arqueros vacía.");
-            return null;
+            GameObject newArcher = Instantiate(archerPrefab);
+            newArcher.transform.parent = parent.transform;
+            return newArcher;
         }
 
         GameObject archer = pool.Pop();

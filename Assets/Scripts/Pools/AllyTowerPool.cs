@@ -10,6 +10,10 @@ public class AllyTowerPool : MonoBehaviour
     private Stack<GameObject> pool;
     public static AllyTowerPool Instance;
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +24,8 @@ public class AllyTowerPool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        grandParent = GameObject.Find(grandParentName);
     }
 
     void Start()
@@ -30,9 +36,11 @@ public class AllyTowerPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
+        parent = new GameObject("AllyTower_PC");
         for (int i = 0; i < poolSize; i++)
         {
             GameObject tower = Instantiate(allyTowerPrefab);
+            tower.transform.parent = parent.transform;
             tower.SetActive(false);
             pool.Push(tower);
         }
@@ -43,7 +51,9 @@ public class AllyTowerPool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de torres de aliados vacía.");
-            return null;
+            GameObject newTower = Instantiate(allyTowerPrefab);
+            newTower.transform.parent = parent.transform;
+            return newTower;
         }
 
         GameObject tower = pool.Pop();

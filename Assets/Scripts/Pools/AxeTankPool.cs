@@ -10,6 +10,10 @@ public class AxeTankPool : MonoBehaviour
     private Stack<GameObject> pool;
     public static AxeTankPool Instance;
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +24,8 @@ public class AxeTankPool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        grandParent = GameObject.Find(grandParentName);
     }
 
     void Start()
@@ -30,9 +36,11 @@ public class AxeTankPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
+        parent = new GameObject("AxeTank_PC");
         for (int i = 0; i < poolSize; i++)
         {
             GameObject tank = Instantiate(axeTankPrefab);
+            tank.transform.parent = parent.transform;
             tank.SetActive(false);
             pool.Push(tank);
         }
@@ -43,7 +51,9 @@ public class AxeTankPool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de tanques con hacha vacía.");
-            return null;
+            GameObject newTank = Instantiate(axeTankPrefab);
+            newTank.transform.parent = parent.transform;
+            return newTank;
         }
 
         GameObject tank = pool.Pop();
