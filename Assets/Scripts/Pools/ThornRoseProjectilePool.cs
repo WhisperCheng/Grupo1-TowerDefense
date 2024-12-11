@@ -43,7 +43,8 @@ public class ThornRoseProjectilePool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de proyectiles de la rosa lanzaespinas vacía.");
-            return null;
+            SetupPool();
+            //return null;
         }
 
         GameObject projectile = pool.Pop();

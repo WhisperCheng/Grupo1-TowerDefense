@@ -23,7 +23,7 @@ public static class ProyectileUtils
         Vector3 directionB = Vector3.Normalize(centroPos - targetLocation);
         // https://stackoverflow.com/questions/49383884/find-angle-between-two-objects-while-taking-another-object-as-center-in-unity-us
 
-        float angulo = Vector3.Angle(directionA, directionB);
+        float angulo = Vector3.Angle(directionA, directionB) * (thrower.position.y > targetLocation.y ? -1 : 1);
 
         float firingElevationAngle = FiringElevationAngle(Physics.gravity.magnitude, distance, initialVelocity);
 
@@ -32,9 +32,10 @@ public static class ProyectileUtils
             return false; // Se sale si el ángulo es inválido y no dispara
         }
 
-        firingElevationAngle = 90f - firingElevationAngle - (angulo > 0 ? angulo : 90f);
+        firingElevationAngle = 90f /** ((thrower.position.y > targetLocation.y) ? 1.25f : 1)*/  - firingElevationAngle - angulo/* - (angulo > 0 ? angulo : 90f)*/;
+        Debug.Log(angulo);
         //Debug.Log(firingElevationAngle + " " + Vector3.Angle(directionA, directionB));
-        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * thrower.up;
+        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * new Vector3(0,1,0);
         float directionAngle = AngleBetweenAboutAxis(thrower.forward, direction, thrower.up);
         Vector3 velocity = Quaternion.AngleAxis(directionAngle, thrower.up) * elevation * initialVelocity;
 

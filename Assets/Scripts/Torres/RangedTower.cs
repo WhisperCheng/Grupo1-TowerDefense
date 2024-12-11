@@ -19,6 +19,7 @@ public abstract class RangedTower : Tower
 
     [Header("Proyectil")]
     [SerializeField] protected GameObject proyectile;
+    [SerializeField] protected Transform shooterSource;
 
     protected float _currentHealth;
     protected float _maxHealth;
@@ -131,14 +132,7 @@ public abstract class RangedTower : Tower
 
 
 
-    protected void ShootProyectileEvent()
-    {
-        //Debug.Log("G");
-        GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
-        ProyectileUtils.ThrowBallAtTargetLocation(transform, proyectile, currentTarget.transform.position, 10);
-        // TODO
-
-    }
+    public abstract void ShootProyectileEvent();
 
     public override void TakeDamage(float damageAmount)
     {
