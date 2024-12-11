@@ -3658,6 +3658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magicProjectilePrefab: {fileID: 1399067913}
   poolSize: 20
+  grandParentName: ObjectPoolsObjects
 --- !u!114 &274398073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3672,6 +3673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   magicImpactPrefab: {fileID: 4315008008740801804, guid: d866cb095268ca84ca07e609e2968fb6, type: 3}
   poolSize: 20
+  grandParentName: ObjectPoolsObjects
 --- !u!4 &274398074
 Transform:
   m_ObjectHideFlags: 0
@@ -4498,7 +4500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 396852416}
   m_Layer: 0
-  m_Name: ObjectPools
+  m_Name: ObjectPoolsObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6594,6 +6596,7 @@ MonoBehaviour:
   range: 10
   rotationSpeed: 5
   rotationPart: {fileID: 934066603}
+  rotationModel: 0
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}
@@ -6725,6 +6728,7 @@ MonoBehaviour:
   range: 10
   rotationSpeed: 5
   rotationPart: {fileID: 1273940958}
+  rotationModel: 0
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}

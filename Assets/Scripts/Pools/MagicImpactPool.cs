@@ -41,7 +41,7 @@ public class MagicImpactPool : MonoBehaviour
     {
 
         pool = new Stack<GameObject>();
-        parent = new GameObject("MagicImpactPoolContainer");
+        parent = new GameObject("MagicImpact_PC");
         parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
@@ -59,7 +59,7 @@ public class MagicImpactPool : MonoBehaviour
         {
             Debug.LogWarning("Pool de impactos vacía. Creando nuevo objeto de impacto.");
             GameObject newImpact = Instantiate(magicImpactPrefab);
-            newImpact.transform.parent = parent.transform; // Asigna un padre para mantener el orden en la jerarquía
+            newImpact.transform.parent = parent.transform; 
             return newImpact;
         }
 

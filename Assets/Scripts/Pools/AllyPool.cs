@@ -10,6 +10,10 @@ public class AllyPool : MonoBehaviour
     private Stack<GameObject> pool;
     public static AllyPool Instance;
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     private void Awake()
     {
         if (Instance == null)
@@ -20,6 +24,8 @@ public class AllyPool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        grandParent = GameObject.Find(grandParentName);
     }
 
     void Start()
@@ -33,6 +39,7 @@ public class AllyPool : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject ally = Instantiate(allyPrefab);
+            ally.transform.parent = parent.transform;
             ally.SetActive(false);
             pool.Push(ally);
         }
