@@ -71,6 +71,7 @@ public class MagicProjectilePool : MonoBehaviour
         {
             // Si no hay proyectiles, instanciar uno nuevo
             newProjectile = Instantiate(magicProjectilePrefab, vector3, quaternion);
+            newProjectile.transform.parent = parent.transform;
         }
         else
         {
