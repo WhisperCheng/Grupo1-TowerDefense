@@ -52,6 +52,41 @@ public abstract class RangedTower : Tower
         }
     }
 
+    protected override void EnemyDetection()
+    {
+        //currentTargets.Clear();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
+        if (colliders.Length > 0)
+        {
+
+            foreach (Collider collider in colliders)
+            {
+                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna uno
+                {
+                    //currentTargets.Add(collider.gameObject);
+                    currentTarget = collider.gameObject;
+                    _hasEnemyAssigned = true;
+                    animator.SetBool("AttackMode", true);
+                    break;
+                }
+            }
+        }
+        else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
+        {
+            if (currentTarget != null)
+            {
+                currentTarget = null;
+                _hasEnemyAssigned = false;
+                animator.SetBool("AttackMode", false);
+            }
+        }
+
+        if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
+        {
+            OnAttack();
+        }
+    }
+
     /*public override void Attack(IDamageable damageableEntity)
     {
         if (_canAttack)
@@ -83,20 +118,23 @@ public abstract class RangedTower : Tower
     {
         if (_canAttack && currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
         {
-            ShootProyectile();
+            //ShootProyectile();
             _currentCooldown = cooldown; // Reset del cooldown
             _canAttack = false;
-            animator.SetBool("ataque", true);
+            animator.SetTrigger("Attack");
         }
         if (!_canAttack || currentTarget == null)
         {
-            animator.SetBool("ataque", false);
+            //animator.SetBool("Attack", false);
         }
     }
 
-    protected void ShootProyectile()
+
+
+    protected void ShootProyectileEvent()
     {
         //Debug.Log("G");
+        ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
     }
 
     public override void TakeDamage(float damageAmount)
