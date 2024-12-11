@@ -134,7 +134,10 @@ public abstract class RangedTower : Tower
     protected void ShootProyectileEvent()
     {
         //Debug.Log("G");
-        ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
+        GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
+        ProyectileUtils.ThrowBallAtTargetLocation(transform, proyectile, currentTarget.transform.position, 10);
+        // TODO
+
     }
 
     public override void TakeDamage(float damageAmount)
