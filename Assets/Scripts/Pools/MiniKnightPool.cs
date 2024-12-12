@@ -70,11 +70,11 @@ public class MiniKnightPool : MonoBehaviour
 
     public void ReturnMiniKnight(GameObject returnedKnight)
     {
-        // Desactivar y devolver a la pool
-        returnedKnight.SetActive(false);
-
         // Llamar al método ResetKnight para limpiar el estado del caballero
         returnedKnight.GetComponent<MiniKnightAI>().ResetKnight();
+
+        // Desactivar y devolver a la pool
+        returnedKnight.SetActive(false);
 
         // Agregar de vuelta a la pool
         pool.Push(returnedKnight);

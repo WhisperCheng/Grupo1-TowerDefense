@@ -49,10 +49,12 @@ public class MiniKnightAI : MonoBehaviour
         enemyAI.GetComponent<NavMeshAgent>().enabled = true;
         enemyAI.enabled = true;
 
+
         // Restaurar la salud del caballero al valor máximo
         enemyAI.health = maxHealth;  // Asegúrate de asignar la salud máxima directamente
         enemyAI.GetComponent<BasicEnemyAI>().ResetValues(); // Aseguramos que _currentHealth también se actualice
-        
+
+        //enemyAI._agent.SetDestination(GameManager.Instance.wayPoints[0].transform.position);
 
         // Si necesitas reiniciar animaciones o efectos, también puedes hacerlo aquí
         if (enemyAI.animatorController != null)
