@@ -92,7 +92,7 @@ public class BasicEnemyAI : EnemyAI
     public void ResetValues()
     {
         _currentHealth = health;
-        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth); // Actualizamos la barra de salud
+        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
     }
 
