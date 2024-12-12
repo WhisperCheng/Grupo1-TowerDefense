@@ -35,9 +35,9 @@ public static class ProyectileUtils
         firingElevationAngle = 90f - firingElevationAngle - angulo;
         //Debug.Log(angulo);
         //Debug.Log(firingElevationAngle + " " + Vector3.Angle(directionA, directionB));
-        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * Vector3.up;
+        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * Vector3.up / 2;
         float directionAngle = AngleBetweenAboutAxis(thrower.forward, direction, thrower.up);
-        Vector3 velocity = Quaternion.AngleAxis(directionAngle, thrower.up) * elevation * initialVelocity;
+        Vector3 velocity = Quaternion.AngleAxis(directionAngle, thrower.up) * elevation * initialVelocity*2;
 
         // ballGameObject is object to be thrown
         ballGameObject.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.VelocityChange);

@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: ataque
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3613329658030156948}
@@ -81,7 +81,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: ataque
+    m_ConditionEvent: AttackMode
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8814550957173571242}
@@ -106,8 +106,14 @@ AnimatorController:
   m_Name: Tajo
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: ataque
+  - m_Name: AttackMode
     m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: Attack
+    m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -158,7 +164,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2587985577660134210, guid: a935071301480b0429728d071419f844, type: 3}
+  m_Motion: {fileID: 7400000, guid: 6d5ad04e6b5e0ab44b19774761c2da23, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

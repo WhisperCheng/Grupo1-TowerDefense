@@ -15,7 +15,7 @@ public abstract class RangedTower : Tower
     public float cooldown = 1f;
 
     //[Header("Animaciones")]
-    public Animator animator;
+    protected Animator animator;
 
     [Header("Proyectil")]
     //[SerializeField] protected GameObject proyectile;
