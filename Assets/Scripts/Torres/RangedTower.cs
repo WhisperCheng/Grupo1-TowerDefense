@@ -67,6 +67,7 @@ public abstract class RangedTower : Tower
                     //currentTargets.Add(collider.gameObject);
                     currentTarget = collider.gameObject;
                     _hasEnemyAssigned = true;
+                    _attackMode = true;
                     animator.SetBool("AttackMode", true);
                     break;
                 }
@@ -74,12 +75,13 @@ public abstract class RangedTower : Tower
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
-            if (currentTarget != null)
-            {
-                currentTarget = null;
+            //if (currentTarget != null)
+            //{
+                //currentTarget = null;
                 _hasEnemyAssigned = false;
-                animator.SetBool("AttackMode", false);
-            }
+            _attackMode = false;
+            animator.SetBool("AttackMode", false);
+            //}
         }
 
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
@@ -117,13 +119,18 @@ public abstract class RangedTower : Tower
 
     public override void OnAttack()
     {
-        if (_canAttack && currentTarget != null && PlaceManager.Instance.objetoSiendoArrastrado == false)
+        if (_canAttack && _attackMode && !_locked && currentTarget != null
+            && PlaceManager.Instance.objetoSiendoArrastrado == false)
         {
-            //ShootProyectile();
             _currentCooldown = cooldown; // Reset del cooldown
             _canAttack = false;
             animator.SetTrigger("Attack");
         }
+        else
+        {
+            _attackMode = false;
+        }
+
         if (!_canAttack || currentTarget == null)
         {
             //animator.SetBool("Attack", false);

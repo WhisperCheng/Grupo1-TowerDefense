@@ -19,17 +19,20 @@ public class RoseTower : RangedTower
 
     public override void ShootProyectileEvent()
     {
-        //Debug.Log("G");
-        GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
+        
 
-        // Para apuntar hacia el centro del enemigo
-        float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?
-            currentTarget.GetComponent<NavMeshAgent>().height / 2 : 0;
+        if (currentTarget != null)
+        {
+            GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
 
-        Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
+            // Para apuntar hacia el centro del enemigo
+            float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?
+                currentTarget.GetComponent<NavMeshAgent>().height / 2 : 0;
 
-        proyectile.transform.position = shooterSource.position;
-        ProyectileUtils.ThrowBallAtTargetLocation(shooterSource.transform, proyectile, targetPosition, 20);
+            Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
 
+            proyectile.transform.position = shooterSource.position;
+            ProyectileUtils.ThrowBallAtTargetLocation(shooterSource.transform, proyectile, targetPosition, 20);
+        }
     }
 }

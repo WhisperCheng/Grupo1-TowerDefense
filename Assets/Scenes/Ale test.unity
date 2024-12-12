@@ -515,6 +515,10 @@ PrefabInstance:
       value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
+      propertyPath: _locked
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
       propertyPath: shooterSource
       value: 
       objectReference: {fileID: 398565984}
@@ -2798,6 +2802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thornRoseProjectilePrefab: {fileID: 6911511816760255790, guid: bf5f7fcaed486cf47b62604822dcb6bf, type: 3}
   poolSize: 20
+  grandParentName: ObjectPoolsObjects
 --- !u!4 &281110812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4988192326317303351, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
@@ -6695,6 +6700,7 @@ GameObject:
   - component: {fileID: 762121829}
   - component: {fileID: 762121834}
   - component: {fileID: 762121828}
+  - component: {fileID: 762121835}
   - component: {fileID: 762121830}
   - component: {fileID: 762121831}
   - component: {fileID: 762121832}
@@ -6789,7 +6795,6 @@ MonoBehaviour:
   proyectilPrefab: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
   puntoDisparo: {fileID: 2032757081}
   velocidadProyectil: 30
-  placeManager: {fileID: 0}
 --- !u!114 &762121833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6834,6 +6839,21 @@ MonoBehaviour:
   tagEnemigos: Enemy
   tagWaypoints: Waypoint
   layerEnemigos: 10
+  layerJugador: 7
+  layerUI: 5
+  layerPath: 8
+--- !u!114 &762121835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762121827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b3d66b4b83e634f8a9cd72ebb256e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &765945895
 GameObject:
   m_ObjectHideFlags: 0
@@ -7517,7 +7537,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &833594682
 Transform:
   m_ObjectHideFlags: 0
@@ -11905,6 +11925,10 @@ PrefabInstance:
     - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
       propertyPath: range
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
+      propertyPath: _locked
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
       propertyPath: shooterSource
@@ -19007,6 +19031,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1040435734}
     m_Modifications:
+    - target: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
+      propertyPath: _locked
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8514692920454964661, guid: c08e725860d9faa47805d131f013fc75, type: 3}
       propertyPath: m_Name
       value: RosaEspinoza

@@ -53,7 +53,7 @@ public class ThornRoseProjectilePool : MonoBehaviour
             Debug.Log("Pool de proyectiles de la rosa lanzaespinas vacía.");
             GameObject newProjectile = Instantiate(thornRoseProjectilePrefab);
             newProjectile.transform.parent = parent.transform;
-            return null;
+            return newProjectile;
         }
 
         GameObject projectile = pool.Pop();

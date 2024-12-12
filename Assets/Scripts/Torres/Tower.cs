@@ -19,6 +19,7 @@ public abstract class Tower : LivingEntityAI, IDamageable
 
     protected bool _hasEnemyAssigned = false;
     protected bool _hasDied = false;
+    public bool _locked = true; // Bloqueado / ataque de torres desactivado por defecto. Se activa el ataque cuando se colocan
 
     protected int _enemyMask;
 
@@ -29,7 +30,7 @@ public abstract class Tower : LivingEntityAI, IDamageable
     public abstract float GetHealth();
     protected abstract void EnemyDetection();
 
-    protected void LookRotation()
+    protected virtual void LookRotation()
     {
         if (currentTarget != null && rotationPart != null)
         {
@@ -46,6 +47,11 @@ public abstract class Tower : LivingEntityAI, IDamageable
 
             rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothYRotation, currentEuler.z);
         }
+    }
+
+    public void UnlockTower()
+    {
+        _locked = false;
     }
 
     private void OnDrawGizmosSelected()

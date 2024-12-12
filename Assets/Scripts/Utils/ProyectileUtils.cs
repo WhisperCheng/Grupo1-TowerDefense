@@ -32,10 +32,10 @@ public static class ProyectileUtils
             return false; // Se sale si el ángulo es inválido y no dispara
         }
 
-        firingElevationAngle = 90f /** ((thrower.position.y > targetLocation.y) ? 1.25f : 1)*/  - firingElevationAngle - angulo/* - (angulo > 0 ? angulo : 90f)*/;
-        Debug.Log(angulo);
+        firingElevationAngle = 90f - firingElevationAngle - angulo;
+        //Debug.Log(angulo);
         //Debug.Log(firingElevationAngle + " " + Vector3.Angle(directionA, directionB));
-        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * new Vector3(0,1,0);
+        Vector3 elevation = Quaternion.AngleAxis(firingElevationAngle, thrower.right) * Vector3.up;
         float directionAngle = AngleBetweenAboutAxis(thrower.forward, direction, thrower.up);
         Vector3 velocity = Quaternion.AngleAxis(directionAngle, thrower.up) * elevation * initialVelocity;
 
