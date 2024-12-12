@@ -7,6 +7,10 @@ public class RuneTrapPool : MonoBehaviour
     public GameObject runeTrapPrefab; // Prefab de la trampa de runa
     public int poolSize = 10; // Tamaño de la pool
 
+    GameObject parent;
+    private GameObject grandParent;
+    public string grandParentName = "ObjectPoolsObjects";
+
     private Stack<GameObject> pool;
     public static RuneTrapPool Instance;
 
@@ -20,6 +24,7 @@ public class RuneTrapPool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        grandParent = GameObject.Find(grandParentName);
     }
 
     void Start()
@@ -30,9 +35,12 @@ public class RuneTrapPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
+        parent = new GameObject("RuneTrap_PC");
+        parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
             GameObject trap = Instantiate(runeTrapPrefab);
+            trap.transform.parent = parent.transform;
             trap.SetActive(false);
             pool.Push(trap);
         }
@@ -43,7 +51,9 @@ public class RuneTrapPool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de trampas de runa vacía.");
-            return null;
+            GameObject newTrap = Instantiate(runeTrapPrefab);
+            newTrap.transform.parent = parent.transform;
+            return newTrap;
         }
 
         GameObject trap = pool.Pop();

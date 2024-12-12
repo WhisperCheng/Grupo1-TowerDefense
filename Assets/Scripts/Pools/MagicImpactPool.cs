@@ -46,7 +46,6 @@ public class MagicImpactPool : MonoBehaviour
         for (int i = 0; i < poolSize; i++)
         {
             GameObject impact = Instantiate(magicImpactPrefab);
-            
             impact.transform.parent = parent.transform;
             impact.SetActive(false);
             pool.Push(impact);

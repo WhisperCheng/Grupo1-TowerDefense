@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThornRoseProjectilePool : MonoBehaviour
+public class PoisonYewProjectilePool : MonoBehaviour
 {
-    public GameObject thornRoseProjectilePrefab; // Prefab del proyectil de la rosa lanzaespinas
-    public int poolSize = 20; // Tamaño de la pool
+    public GameObject poisonYewProjectilePrefab; // Prefab del proyectil del tejo venenoso
+    public int poolSize = 20; // Tamaño de la pool 
 
     GameObject parent;
     private GameObject grandParent;
     public string grandParentName = "ObjectPoolsObjects";
 
     private Stack<GameObject> pool;
-    public static ThornRoseProjectilePool Instance;
+    public static PoisonYewProjectilePool Instance;
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class ThornRoseProjectilePool : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
         grandParent = GameObject.Find(grandParentName);
     }
 
@@ -35,25 +36,25 @@ public class ThornRoseProjectilePool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
-        parent = new GameObject("ThornRoseProjectile_PC");
+        parent = new GameObject("PoisonYewProjectile_PC");
         parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject projectile = Instantiate(thornRoseProjectilePrefab);
+            GameObject projectile = Instantiate(poisonYewProjectilePrefab);
             projectile.transform.parent = parent.transform;
             projectile.SetActive(false);
             pool.Push(projectile);
         }
     }
 
-    public GameObject GetThornRoseProjectile()
+    public GameObject GetPoisonYewProjectile()
     {
         if (pool.Count == 0)
         {
-            Debug.Log("Pool de proyectiles de la rosa lanzaespinas vacía.");
-            GameObject newProjectile = Instantiate(thornRoseProjectilePrefab);
+            Debug.Log("Pool de proyectiles del tejo venenoso vacía.");
+            GameObject newProjectile = Instantiate(poisonYewProjectilePrefab);
             newProjectile.transform.parent = parent.transform;
-            return null;
+            return newProjectile;
         }
 
         GameObject projectile = pool.Pop();
@@ -62,11 +63,10 @@ public class ThornRoseProjectilePool : MonoBehaviour
         return projectile;
     }
 
-    public void ReturnThornRoseProjectile(GameObject returnedProjectile)
+    public void ReturnPoisonYewProjectile(GameObject returnedProjectile)
     {
         // Desactivar y devolver a la pool
         returnedProjectile.SetActive(false);
         pool.Push(returnedProjectile);
     }
 }
-
