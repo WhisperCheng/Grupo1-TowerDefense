@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Layers Globales")]
     public int layerEnemigos;
+    public int layerJugador;
+    public int layerUI;
+    public int layerPath;
 
     //[Header("Tags de enemigos")]
     //public List<string> listaTagEnemigos;

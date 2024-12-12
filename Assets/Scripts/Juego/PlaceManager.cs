@@ -161,6 +161,8 @@ public class PlaceManager : MonoBehaviour
         if (!previewMode) // Finalmente, si deja de estar en modo preview, se limpian las listas para un posterior nuevo uso
         { // (al salir de todos los bucles)
             ClearSelectedObjInfo();
+            torreCopiada.GetComponent<Tower>().UnlockTower(); // Desbloquea la torre, permite atacar y rotar hacia los enemigos
+            //MoneyManager.
         }
     }
 

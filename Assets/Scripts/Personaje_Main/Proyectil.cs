@@ -8,16 +8,15 @@ public class Proyectil : MonoBehaviour
     public GameObject proyectilPrefab; 
     public Transform puntoDisparo; 
     public float velocidadProyectil = 20f;
-    public PlaceManager placeManager;
     
     private void Start()
     {
-        placeManager = FindAnyObjectByType<PlaceManager>();
+
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !placeManager.bloqueoDisparo) 
+        if (Input.GetButtonDown("Fire1") && !PlaceManager.Instance.bloqueoDisparo) 
         {
             LanzarProyectil();
         }
@@ -29,7 +28,7 @@ public class Proyectil : MonoBehaviour
         RaycastHit golpeRayo;
 
         Vector3 destino;
-        if (Physics.Raycast(rayo, out golpeRayo))
+        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, 1 << GameManager.Instance.layerPath))
         {
             destino = golpeRayo.point;
         }
