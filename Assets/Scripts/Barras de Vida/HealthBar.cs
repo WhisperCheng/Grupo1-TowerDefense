@@ -51,6 +51,7 @@ public class HealthBar : MonoBehaviour
         {
             elapsedTime += Time.deltaTime; // Actualizar el tiempo / se va sumando
             float howLongInSeconds = (elapsedTime / _timeToDrain); // Tiempo que tarda en hacer la transición
+            Debug.Log("A");
             _image.fillAmount = Mathf.Lerp(fillAmount, _targetAmount, howLongInSeconds);
             // Nuevo valor "suavizado" del fillAmount de la imagen
             _image.color = Color.Lerp(currentColor, _newHealthBarColor, howLongInSeconds);
