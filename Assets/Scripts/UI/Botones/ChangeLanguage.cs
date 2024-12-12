@@ -16,13 +16,17 @@ public class CambiarIdioma : MonoBehaviour
 
     public void CambiarIdiomaArriba()
     {
-        idiomaActual = (idiomaActual - 1 + listaIdiomas.Count) % listaIdiomas.Count;
-        LocalizationSettings.SelectedLocale = listaIdiomas[idiomaActual];
+        idiomaActual = (idiomaActual + 1) % listaIdiomas.Count;
+        LocalizationSettings.SelectedLocale = listaIdiomas[idiomaActual++];
+        
+        
     }
     public void CambiarIdiomaAbajo()
     {
-        idiomaActual = (idiomaActual + 1) % listaIdiomas.Count;
-        LocalizationSettings.SelectedLocale = listaIdiomas[idiomaActual++];
+
+        idiomaActual = (idiomaActual - 1 + listaIdiomas.Count) % listaIdiomas.Count;
+        LocalizationSettings.SelectedLocale = listaIdiomas[idiomaActual];
+        
     }
 
 }
