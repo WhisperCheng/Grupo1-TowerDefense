@@ -46,6 +46,7 @@ public class HealthBar : MonoBehaviour
         _targetAmount = 1; // Valor entr 0 y 1
         _image.fillAmount = _targetAmount;
         CheckHealthBarGradient();
+        _image.color = _newHealthBarColor;
     }
 
     // Corutina para ejecutar por separado el while que anima suavemente la transición de cambio del nuevo valor de vida

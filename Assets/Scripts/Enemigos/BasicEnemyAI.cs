@@ -93,6 +93,7 @@ public class BasicEnemyAI : EnemyAI
     {
         _currentHealth = health;
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth); // Actualizamos la barra de salud
+        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
     }
 
     private void OnTriggerStay(Collider collision)
