@@ -35,4 +35,13 @@ public class YewTower : RangedTower
             ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
         }
     }
+
+    protected override void ReturnToPool()
+    {
+        throw new System.NotImplementedException();
+    }
+    public override GameObject RestoreToDefault()
+    {
+        throw new System.NotImplementedException();
+    }
 }

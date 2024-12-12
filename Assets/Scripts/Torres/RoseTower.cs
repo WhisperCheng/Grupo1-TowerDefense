@@ -5,18 +5,6 @@ using UnityEngine.AI;
 
 public class RoseTower : RangedTower
 {
-    // Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
-
-    // Update is called once per frame
-    //void Update()
-    //{
-
-    //}
-
     public override void ShootProyectileEvent()
     {
         
@@ -34,5 +22,15 @@ public class RoseTower : RangedTower
             proyectile.transform.position = shooterSource.position;
             ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
         }
+    }
+
+    protected override void ReturnToPool()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override GameObject RestoreToDefault()
+    {
+        throw new System.NotImplementedException();
     }
 }

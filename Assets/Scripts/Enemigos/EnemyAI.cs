@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [SelectionBase]
-public abstract class EnemyAI : LivingEntityAI, IDamageable
+public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
 {
     protected NavMeshAgent _agent;
     // Variables
@@ -57,6 +57,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
     public abstract float GetHealth();
     protected abstract void CheckIfRivalsInsideAttackRange();
+    protected abstract void ReturnToPool();
+    public abstract GameObject RestoreToDefault();
 
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
@@ -65,12 +67,14 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable
     }
     public override void Init()
     {
-        _currentHealth = health;
+        _currentHealth = health; // Inicializar/Restaurar la salud del caballero al valor máximo
         _maxHealth = health;
         _currentCooldown = cooldown;
+        
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         _maxSpeed = _agent.speed;
+        _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
         animatorController = GetComponent<Animator>();

@@ -23,7 +23,7 @@ public class MiniKnightAI : MonoBehaviour
         if (enemyAI.GetHealth() <= 0)
         {
             // Si la salud es menor o igual a 0, se activa el método para devolverlo a la pool
-            Die();
+            //Die();
         }
     }
 
@@ -33,11 +33,11 @@ public class MiniKnightAI : MonoBehaviour
         // Aquí podrías agregar efectos de muerte, animaciones, etc.
 
         // Desactivamos el NavMeshAgent y la IA del enemigo
-        enemyAI.GetComponent<NavMeshAgent>().enabled = false;
-        enemyAI.enabled = false;
+        //enemyAI.GetComponent<NavMeshAgent>().enabled = false;
+        //enemyAI.enabled = false;
 
         // Llamamos a la pool para devolver al caballero
-        MiniKnightPool.Instance.ReturnMiniKnight(gameObject);
+        //MiniKnightPool.Instance.ReturnMiniKnight(gameObject);
 
         // Si deseas agregar efectos visuales de muerte, partículas, etc., puedes hacerlo aquí.
     }
@@ -46,13 +46,13 @@ public class MiniKnightAI : MonoBehaviour
     public void ResetKnight()
     {
         // Volver a activar el NavMeshAgent y la IA del enemigo
-        enemyAI.GetComponent<NavMeshAgent>().enabled = true;
-        enemyAI.enabled = true;
+        //enemyAI.GetComponent<NavMeshAgent>().enabled = true;
+        //enemyAI.enabled = true;
 
 
         // Restaurar la salud del caballero al valor máximo
-        enemyAI.health = maxHealth;  // Asegúrate de asignar la salud máxima directamente
-        enemyAI.GetComponent<BasicEnemyAI>().ResetValues(); // Aseguramos que _currentHealth también se actualice
+        //enemyAI.health = maxHealth;  // Asegúrate de asignar la salud máxima directamente
+        //enemyAI.GetComponent<BasicEnemyAI>().ResetValues(); // Aseguramos que _currentHealth también se actualice
 
         //enemyAI._agent.SetDestination(GameManager.Instance.wayPoints[0].transform.position);
 

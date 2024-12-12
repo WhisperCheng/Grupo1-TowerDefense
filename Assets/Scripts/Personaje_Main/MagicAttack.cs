@@ -28,7 +28,6 @@ public class MagicAttack : MonoBehaviour
 
         if (collision.gameObject.tag == GameManager.Instance.tagEnemigos)
         {
-            Debug.Log(collision.GetType());
             IDamageable damageableEntity = collision.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
             if (damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
             {

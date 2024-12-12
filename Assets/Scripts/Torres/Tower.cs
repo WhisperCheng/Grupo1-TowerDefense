@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class Tower : LivingEntityAI, IDamageable
+public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
 {
     [Header("Variables Torre")]
     public float range = 10f;
@@ -29,6 +29,8 @@ public abstract class Tower : LivingEntityAI, IDamageable
     public abstract void TakeDamage(float damageAmount);
     public abstract float GetHealth();
     protected abstract void EnemyDetection();
+    protected abstract void ReturnToPool();
+    public abstract GameObject RestoreToDefault();
 
     protected virtual void LookRotation()
     {

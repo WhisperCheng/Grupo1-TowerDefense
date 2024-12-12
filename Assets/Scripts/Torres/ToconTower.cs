@@ -104,6 +104,14 @@ public class ToconTower : Tower
     {
         throw new System.NotImplementedException();
     }
+    protected override void ReturnToPool() {
+
+    }
+    public override GameObject RestoreToDefault()
+    {
+        // TODO
+        return gameObject;
+    }
 
     // Start is called before the first frame update
     void Start()

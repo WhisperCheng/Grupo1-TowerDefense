@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
     [Header("WayPoints")]
     public GameObject[] wayPoints;
 
+    [Header("Respawn Enemigos")]
+    public Transform respawnEnemigos;
+
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
     public string tagEnemigos;

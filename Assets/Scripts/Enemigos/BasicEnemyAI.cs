@@ -77,7 +77,8 @@ public class BasicEnemyAI : EnemyAI
     public override void Die()
     {
         _particulasMuerte.Play();
-        // TODO: Devolver a la pool
+        // Devolver a la pool
+        ReturnToPool();
     }
 
     public override float GetHealth()
@@ -89,19 +90,10 @@ public class BasicEnemyAI : EnemyAI
         //Debug.Log("809");
     }
 
-    public void ResetValues()
+    /*protected void ResetValues()
     {
-        _currentHealth = health;
-        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
-        _destination = GameManager.Instance.wayPoints[0].transform.position;
-        _currentWaypointIndex = 0;
-        _attackMode = false;
-        _canDamage = false;
-        _finishedWaypoints = false;
-        _currentCooldown = 0;
-        attackingList = new List<Collider>();
-        animatorController.SetBool("AttackMode", false);
-    }
+        
+    }*/
 
     private void OnTriggerStay(Collider collision)
     {
@@ -119,6 +111,41 @@ public class BasicEnemyAI : EnemyAI
         {
             _canDamage = false;
         }
+    }
+    protected override void ReturnToPool()
+    {
+        // Desactivamos el NavMeshAgent y la IA del enemigo
+
+        _agent.updatePosition = false;
+        //_agent.updatePosition = false; // Desactivar el update de la IA para que no se ralle luego al hacerle tp y volverlo a activar
+        //_agent.Warp(GameManager.Instance.respawnEnemigos.position); // Se teleporta al respawn
+        transform.position = GameManager.Instance.respawnEnemigos.position;
+        _agent.updatePosition = true;
+        //_agent.enabled = false; // Se desactiva la IA
+        //enabled = false; // Se desactiva el script para que no consuma recursos
+
+        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+
+        // Llamamos a la pool para devolver al caballero
+        MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
+    }
+
+    public override GameObject RestoreToDefault()
+    {
+        Init();
+        enabled = true;
+        
+        //_destination = GameManager.Instance.wayPoints[0].transform.position; // Reset del destino original, primer waypoint
+        //_currentWaypointIndex = 0; // Actualizar índice del waypoint*/
+        _attackMode = false;
+        _canDamage = false;
+        _finishedWaypoints = false;
+        _currentCooldown = 0;
+        animatorController.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar*/
+        //OnAssignDestination(_destination);
+        return this.gameObject;
     }
 
     private void OnTriggerExit(Collider collision)
