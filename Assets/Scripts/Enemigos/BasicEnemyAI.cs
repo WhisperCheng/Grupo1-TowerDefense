@@ -93,7 +93,14 @@ public class BasicEnemyAI : EnemyAI
     {
         _currentHealth = health;
         _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
-        _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
+        _destination = GameManager.Instance.wayPoints[0].transform.position;
+        _currentWaypointIndex = 0;
+        _attackMode = false;
+        _canDamage = false;
+        _finishedWaypoints = false;
+        _currentCooldown = 0;
+        attackingList = new List<Collider>();
+        animatorController.SetBool("AttackMode", false);
     }
 
     private void OnTriggerStay(Collider collision)
