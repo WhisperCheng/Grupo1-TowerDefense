@@ -18,7 +18,7 @@ public abstract class RangedTower : Tower
     public Animator animator;
 
     [Header("Proyectil")]
-    [SerializeField] protected GameObject proyectile;
+    //[SerializeField] protected GameObject proyectile;
     [SerializeField] protected Transform shooterSource;
 
     protected float _currentHealth;
@@ -33,6 +33,7 @@ public abstract class RangedTower : Tower
     {
         Init();
     }
+
     protected void Update()
     {
         EnemyDetection();

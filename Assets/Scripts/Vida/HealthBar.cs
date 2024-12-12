@@ -41,6 +41,13 @@ public class HealthBar : MonoBehaviour
         CheckHealthBarGradient();
     }
 
+    public void ResetHealthBar() // Reset instantáneo de la barra de vida
+    {
+        _targetAmount = 1; // Valor entr 0 y 1
+        _image.fillAmount = _targetAmount;
+        CheckHealthBarGradient();
+    }
+
     // Corutina para ejecutar por separado el while que anima suavemente la transición de cambio del nuevo valor de vida
     private IEnumerator DrainHealthBar()
     {
