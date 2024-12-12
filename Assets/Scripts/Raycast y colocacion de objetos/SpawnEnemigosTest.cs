@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class SpawnEnemigosTest : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float spawnInterval = 2.0f; // Intervalo en segundos para instanciar los mini caballeros
+    
+
+    private void Start()
     {
-        
+        StartCoroutine(SpawnMiniKnights());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SpawnMiniKnights()
     {
-        
+        while (true)
+        {
+            GameObject miniKnight = MiniKnightPool.Instance.GetMiniKnight();
+            if (miniKnight != null)
+            {
+                miniKnight.transform.position = transform.position;
+                miniKnight.transform.rotation = transform.rotation;
+            }
+            yield return new WaitForSeconds(spawnInterval);
+        }
     }
 }

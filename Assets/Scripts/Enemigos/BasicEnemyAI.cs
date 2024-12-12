@@ -92,6 +92,7 @@ public class BasicEnemyAI : EnemyAI
     public void ResetValues()
     {
         _currentHealth = health;
+        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth); // Actualizamos la barra de salud
     }
 
     private void OnTriggerStay(Collider collision)
