@@ -32,7 +32,7 @@ public class YewTower : RangedTower
             Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
 
             proyectile.transform.position = shooterSource.position;
-            ProyectileUtils.ThrowBallAtTargetLocation(shooterSource.transform, proyectile, targetPosition, 20);
+            ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
         }
     }
 }

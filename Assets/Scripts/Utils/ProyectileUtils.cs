@@ -11,7 +11,7 @@ public static class ProyectileUtils
     // Para hacer la trayectoria dada una altura máxima (lo dejo como apunte por si lo necesito
     // yo en el futuro, no lo voy a usar):
     //https://youtu.be/IvT8hjy6q4o
-    public static bool ThrowBallAtTargetLocation(Transform thrower, GameObject ballGameObject, Vector3 targetLocation, float initialVelocity)
+    public static bool ThrowProyectileAtTargetLocation(Transform thrower, GameObject ballGameObject, Vector3 targetLocation, float initialVelocity)
     {
         bool result = true;
         Vector3 direction = (targetLocation - thrower.position).normalized;

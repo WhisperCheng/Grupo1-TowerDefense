@@ -20,6 +20,8 @@ public abstract class RangedTower : Tower
     [Header("Proyectil")]
     //[SerializeField] protected GameObject proyectile;
     [SerializeField] protected Transform shooterSource;
+    [Range(0,100)]
+    [SerializeField] protected float shootingSpeed;
 
     protected float _currentHealth;
     protected float _maxHealth;

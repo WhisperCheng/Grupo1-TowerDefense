@@ -23,7 +23,7 @@ public class RoseTower : RangedTower
 
         if (currentTarget != null)
         {
-            GameObject proyectile = PoisonYewProjectilePool.Instance.GetPoisonYewProjectile();
+            GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
 
             // Para apuntar hacia el centro del enemigo
             float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?
@@ -32,7 +32,7 @@ public class RoseTower : RangedTower
             Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
 
             proyectile.transform.position = shooterSource.position;
-            ProyectileUtils.ThrowBallAtTargetLocation(shooterSource.transform, proyectile, targetPosition, 20);
+            ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
         }
     }
 }
