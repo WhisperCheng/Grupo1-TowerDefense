@@ -77,7 +77,8 @@ public class PlaceManager : MonoBehaviour
             //Ray rayo = Camera.main.ScreenPointToRay(Input.mousePosition);
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
-            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance);
+            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, ~GameManager.Instance.layerJugador
+                | ~GameManager.Instance.layerUI);
             torreCopiada = Instantiate(objeto,
                     !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);
             // Se cambia el "tag" <<original>> del objeto a falso para posteriormente poder borrar todos

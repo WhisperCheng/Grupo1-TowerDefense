@@ -23,7 +23,7 @@ public class RoseTower : RangedTower
 
         if (currentTarget != null)
         {
-            GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
+            GameObject proyectile = PoisonYewProjectilePool.Instance.GetPoisonYewProjectile();
 
             // Para apuntar hacia el centro del enemigo
             float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?

@@ -89,6 +89,11 @@ public class BasicEnemyAI : EnemyAI
         //Debug.Log("809");
     }
 
+    public void ResetValues()
+    {
+        _currentHealth = health;
+    }
+
     private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica

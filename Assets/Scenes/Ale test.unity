@@ -2736,6 +2736,7 @@ GameObject:
   - component: {fileID: 274398073}
   - component: {fileID: 274398072}
   - component: {fileID: 274398075}
+  - component: {fileID: 274398076}
   m_Layer: 0
   m_Name: PoolsManager
   m_TagString: Untagged
@@ -2795,12 +2796,27 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 274398071}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dc1a32d25abd7041b2d4cc94afb6342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thornRoseProjectilePrefab: {fileID: 6911511816760255790, guid: bf5f7fcaed486cf47b62604822dcb6bf, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &274398076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd325d1b1c1cd6341b20b4c50465028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonYewProjectilePrefab: {fileID: 6911511816760255790, guid: bf5f7fcaed486cf47b62604822dcb6bf, type: 3}
   poolSize: 20
   grandParentName: ObjectPoolsObjects
 --- !u!4 &281110812 stripped
@@ -12606,7 +12622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1518686376}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Colisiones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
