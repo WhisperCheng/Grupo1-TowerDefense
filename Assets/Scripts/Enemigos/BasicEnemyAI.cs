@@ -134,17 +134,16 @@ public class BasicEnemyAI : EnemyAI
 
     public override GameObject RestoreToDefault()
     {
-        Init();
-        enabled = true;
-        
-        //_destination = GameManager.Instance.wayPoints[0].transform.position; // Reset del destino original, primer waypoint
-        //_currentWaypointIndex = 0; // Actualizar índice del waypoint*/
-        _attackMode = false;
-        _canDamage = false;
-        _finishedWaypoints = false;
-        _currentCooldown = 0;
-        animatorController.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar*/
-        //OnAssignDestination(_destination);
+        //if (GetComponent<NavMeshAgent>() != null)
+        if (_initialized)
+        {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
+            Init();
+            enabled = true;
+            _attackMode = false;
+            _canDamage = false;
+            _finishedWaypoints = false;
+            animatorController.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar*/
+        }
         return this.gameObject;
     }
 

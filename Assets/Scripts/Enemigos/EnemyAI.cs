@@ -43,6 +43,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     protected bool _attackMode = false;
     protected bool _canDamage = false;
     protected bool _finishedWaypoints = false;
+    protected bool _initialized = false;
     
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
@@ -67,6 +68,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     }
     public override void Init()
     {
+        _initialized = true;
         _currentHealth = health; // Inicializar/Restaurar la salud del caballero al valor máximo
         _maxHealth = health;
         _currentCooldown = cooldown;
@@ -77,6 +79,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
+        _currentCooldown = 0f;
         animatorController = GetComponent<Animator>();
         attackingList = new List<Collider>();
         _defaultAcceleration = _agent.acceleration;

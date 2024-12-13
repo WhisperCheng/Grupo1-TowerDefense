@@ -65,6 +65,7 @@ public class MiniKnightPool : MonoBehaviour
 
         knight.SetActive(true);
 
+        // Solo se resetea si ya ha existido previamente
         knight = poolableKnight.RestoreToDefault();
 
         return knight;
