@@ -118,8 +118,8 @@ public class BasicEnemyAI : EnemyAI
 
         _agent.updatePosition = false;
         //_agent.updatePosition = false; // Desactivar el update de la IA para que no se ralle luego al hacerle tp y volverlo a activar
-        //_agent.Warp(GameManager.Instance.respawnEnemigos.position); // Se teleporta al respawn
-        transform.position = GameManager.Instance.respawnEnemigos.position;
+        _agent.Warp(GameManager.Instance.respawnEnemigos.position); // Se teleporta al respawn
+        //transform.position = GameManager.Instance.respawnEnemigos.position;
         _agent.updatePosition = true;
         //_agent.enabled = false; // Se desactiva la IA
         //enabled = false; // Se desactiva el script para que no consuma recursos
