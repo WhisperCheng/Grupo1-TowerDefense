@@ -7,8 +7,6 @@ public class RoseTower : RangedTower
 {
     public override void ShootProyectileEvent()
     {
-        
-
         if (currentTarget != null)
         {
             GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
@@ -24,13 +22,11 @@ public class RoseTower : RangedTower
         }
     }
 
-    protected override void ReturnToPool()
+    public override void Die()
     {
-        throw new System.NotImplementedException();
+        _hasDied = true;
+        ReturnToPool();
+        ThornRosePool.Instance.ReturnThornRose(this.gameObject);
     }
 
-    public override GameObject RestoreToDefault()
-    {
-        throw new System.NotImplementedException();
-    }
 }

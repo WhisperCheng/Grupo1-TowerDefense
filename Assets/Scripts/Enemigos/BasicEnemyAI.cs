@@ -76,7 +76,7 @@ public class BasicEnemyAI : EnemyAI
 
     public override void Die()
     {
-        _particulasMuerte.Play();
+        //_particulasMuerte.Play();
         // Devolver a la pool
         ReturnToPool();
     }

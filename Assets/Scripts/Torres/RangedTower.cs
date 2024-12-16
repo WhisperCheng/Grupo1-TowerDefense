@@ -38,15 +38,15 @@ public abstract class RangedTower : Tower
 
     protected void Update()
     {
-        EnemyDetection();
-        ManageCooldown();
-        if (PlaceManager.Instance.objetoSiendoArrastrado == false)
+        if (!_locked)
         {
+            //ManageCooldown(); // TODO: Implementar cooldown
+            EnemyDetection();
             LookRotation();
         }
     }
 
-    protected void ManageCooldown()
+    /*protected void ManageCooldown()
     {
         _currentCooldown -= Time.deltaTime;
         if (!_canAttack && _currentCooldown <= 0)
@@ -54,7 +54,29 @@ public abstract class RangedTower : Tower
             _canAttack = true;
             _currentCooldown = 0;
         }
+    }*/
+
+    protected override void ReturnToPool()
+    {
+        _locked = true;
+        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
     }
+
+    public override GameObject RestoreToDefault()
+    {
+        if (!_locked)
+        {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
+            Init();
+            enabled = true;
+            _attackMode = false;
+            _canAttack = false;
+            animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
+        }
+        return this.gameObject;
+    }
+
 
     protected override void EnemyDetection()
     {
@@ -80,10 +102,10 @@ public abstract class RangedTower : Tower
         {
             //if (currentTarget != null)
             //{
-                //currentTarget = null;
+                currentTarget = null;
                 _hasEnemyAssigned = false;
-            _attackMode = false;
-            animator.SetBool("AttackMode", false);
+                _attackMode = false;
+                animator.SetBool("AttackMode", false);
             //}
         }
 
@@ -104,12 +126,6 @@ public abstract class RangedTower : Tower
         }
     }*/
 
-    public override void Die()
-    {
-        _hasDied = true;
-        // TODO: Pool
-    }
-
     public override void Init()
     {
         animator = GetComponent<Animator>();
@@ -122,11 +138,9 @@ public abstract class RangedTower : Tower
 
     public override void OnAttack()
     {
-        if (_canAttack && _attackMode && !_locked && currentTarget != null
-            && PlaceManager.Instance.objetoSiendoArrastrado == false)
+        if (_canAttack && _attackMode && !_locked && currentTarget != null)
         {
             _currentCooldown = cooldown; // Reset del cooldown
-            _canAttack = false;
             animator.SetTrigger("Attack");
         }
         else
@@ -134,10 +148,10 @@ public abstract class RangedTower : Tower
             _attackMode = false;
         }
 
-        if (!_canAttack || currentTarget == null)
+        /*if (!_canAttack || currentTarget == null)
         {
-            //animator.SetBool("Attack", false);
-        }
+            //animator.SetBool("AttackMode", false);
+        }*/
     }
 
 

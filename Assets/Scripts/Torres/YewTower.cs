@@ -19,8 +19,6 @@ public class YewTower : RangedTower
 
     public override void ShootProyectileEvent()
     {
-
-
         if (currentTarget != null)
         {
             GameObject proyectile = PoisonYewProjectilePool.Instance.GetPoisonYewProjectile();
@@ -36,12 +34,10 @@ public class YewTower : RangedTower
         }
     }
 
-    protected override void ReturnToPool()
+    public override void Die()
     {
-        throw new System.NotImplementedException();
-    }
-    public override GameObject RestoreToDefault()
-    {
-        throw new System.NotImplementedException();
+        _hasDied = true;
+        ReturnToPool();
+        PoisonYewPool.Instance.ReturnPoisonYew(this.gameObject);
     }
 }
