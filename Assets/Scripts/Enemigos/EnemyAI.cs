@@ -9,6 +9,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
 {
     protected NavMeshAgent _agent;
     // Variables
+    //public Transform hearth;
     [Header("Variables Enemigo IA")]
     public float actionRadio;
     public float checkWaypointProximityDistance = 3;
@@ -114,7 +115,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
             _agent.acceleration = _defaultAcceleration; // Cambiar la aceleración de rotación del enemigo a la original
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
-                Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, ignoreTagList);
+                //Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, ignoreTagList);
+                Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, null);
                 if (hearth != null && _destination != hearth.position) _destination = hearth.position;
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
             } else // Si no, va yendo de waypoint en waypoint hasta llegar al final
@@ -123,7 +125,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
                 {
                     _attackMode = false;
                 }
-                
                 Transform nearestWaypoint = EntityUtils.GetNearestWayPoint(transform.position);
                 // Vuelve a tomar la ruta de los waypoints (waypoint actual)
                 
@@ -147,7 +148,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
                     if (dest != _destination)
                     {
                         _destination = dest;
-                    } // Vuelve a tomar la ruta con el nuevo destino actualizado si no s ha actualizado antes
+                    } // Vuelve a tomar la ruta con el nuevo destino actualizado si no se ha actualizado antes
                 }
             }
         }
@@ -168,7 +169,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         }
     }
 
-    protected void ManageCooldown() // No
+    /*protected void ManageCooldown() // No
     {
         _currentCooldown -= Time.deltaTime;
         if (!_canDamage && _currentCooldown <= 0)
@@ -176,7 +177,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
             //_canDamage = true;
             _currentCooldown = 0;
         }
-    }
+    }*/
 
     public void AttackEvent()
     {

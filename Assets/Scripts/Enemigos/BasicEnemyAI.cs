@@ -51,10 +51,10 @@ public class BasicEnemyAI : EnemyAI
         AnimateWalking();
         Vector3 oldDest = _destination;
         OnSearchingObjetives();
-        if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
-        {                           // asignando la misma variable
+        //if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
+        //{                           // asignando la misma variable
             OnAssignDestination(_destination);
-        }
+        //}
     }
 
     public override void OnAttack()
@@ -142,7 +142,7 @@ public class BasicEnemyAI : EnemyAI
             _attackMode = false;
             _canDamage = false;
             _finishedWaypoints = false;
-            animatorController.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar*/
+            animatorController.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
         }
         return this.gameObject;
     }
