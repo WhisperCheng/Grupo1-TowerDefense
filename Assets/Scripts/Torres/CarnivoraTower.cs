@@ -143,7 +143,6 @@ public class CarnivoraTower : Tower
     {
         _hasDied = true;
         ReturnToPool();
-        VineTrapPool.Instance.ReturnVineTrap(this.gameObject);
     }
 
     public override float GetHealth()
@@ -152,13 +151,20 @@ public class CarnivoraTower : Tower
     }
     
 
-    protected override void ReturnToPool()
+    public override void ReturnToPool()
     {
         _locked = true;
         _currentHealth = health; // Restaurar la salud del caballero al valor máximo
         _healthBar = GetComponentInChildren<HealthBar>();
         _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
     }
+
+    public override GameObject GetFromPool()
+    {
+        return CarnivorousPlantPool.Instance.GetCarnivorousPlant();
+    }
+
 
     public override GameObject RestoreToDefault()
     {

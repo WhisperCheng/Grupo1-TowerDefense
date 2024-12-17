@@ -15,9 +15,9 @@ public class PlaceManager : MonoBehaviour
     public GameObject marcador;
     public GameObject particulasConstruccion;
 
-    private static GameObject torre;
+    private static Tower torre;
     private Button currentButton;
-    public GameObject torreCopiada;
+    public Tower torreCopiada;
 
     public bool objetoSiendoArrastrado = false;
     public bool bloqueoDisparo = false;
@@ -69,7 +69,7 @@ public class PlaceManager : MonoBehaviour
         GenerateTower(torre);
     }
 
-    public void GenerateTower(GameObject objeto)
+    public void GenerateTower(Tower objeto)
     {
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
@@ -79,15 +79,16 @@ public class PlaceManager : MonoBehaviour
             RaycastHit golpeRayo;
             bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, ~GameManager.Instance.layerJugador
                 | ~GameManager.Instance.layerUI);
-            torreCopiada = Instantiate(objeto,
-                    !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);
+            /*torreCopiada = Instantiate(objeto,
+                    !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);*/
+            torreCopiada = torreCopiada.GetComponent<IPoolable>().GetFromPool().GetComponent<Tower>();
             // Se cambia el "tag" <<original>> del objeto a falso para posteriormente poder borrar todos
             // excepto el original
             //objetoCopiado.GetComponent<PlaceableObject>().setIsACopy(true);
             // TODO: Sin uso, pero se queda así por si hace falta luego eliminar todas las copias
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
-            torreCopiada.GetComponent<BoxCollider>().enabled = false;
+            ToggleTowerCollisions(torreCopiada, false);
             SetPreviewMode(true);
             bloqueoDisparo = true;
             objetoSiendoArrastrado = true;
@@ -185,18 +186,18 @@ public class PlaceManager : MonoBehaviour
             RaycastHit golpeRayo;
             if (Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance))
             {
-                if (!torreCopiada.activeSelf)
+                if (!torreCopiada.GetGameObject().activeSelf)
                 {
-                    torreCopiada.SetActive(true);
+                    torreCopiada.GetGameObject().SetActive(true);
                 }
                 torreCopiada.gameObject.transform.position = golpeRayo.point;
 
             }
             else
             {
-                if (torreCopiada.activeSelf)
+                if (torreCopiada.GetGameObject().activeSelf)
                 {
-                    torreCopiada.SetActive(false);
+                    torreCopiada.GetGameObject().SetActive(false);
                 }
             }
         }
@@ -213,7 +214,7 @@ public class PlaceManager : MonoBehaviour
         {
             if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
             {
-                DestroyInstanceCopy();
+                ReturnInstanceCopy();
             }
             else
             {
@@ -227,20 +228,33 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
+    private void ToggleTowerCollisions(Tower tower, bool bol)
+    {
+        BoxCollider[] colliders = tower.GetComponents<BoxCollider>();
+        foreach (Collider col in colliders)
+        {
+            if (col != null)
+            {
+                col.enabled = bol;
+            }
+        }
+    }
+
     public void OnClickPlaceTower(InputAction.CallbackContext ctx)
     {
         if (objetoSiendoArrastrado && ctx.performed)
         {
-            if (!torreCopiada.activeSelf)
+            if (!torreCopiada.GetGameObject().activeSelf)
             {
-                DestroyInstanceCopy();
+                ReturnInstanceCopy();
                 return;
             }
             particulasCopia = Instantiate(particulasConstruccion);
             particulasCopia.transform.position = torreCopiada.transform.position;
             particulasCopia.GetComponent<ParticleSystem>().Play();
 
-            torreCopiada.GetComponent<BoxCollider>().enabled = true;
+            ToggleTowerCollisions(torreCopiada, true);
+
             objetoSiendoArrastrado = false;
             SetPreviewMode(false);
             torreCopiada = null; // se "elimina" la referencia del objeto para que al hacer click derecho
@@ -256,20 +270,21 @@ public class PlaceManager : MonoBehaviour
     }
     public void OnRightClickPlaceTower(InputAction.CallbackContext ctx)
     {
-        DestroyInstanceCopy();
+        ReturnInstanceCopy();
         // TODO: Devolver a la objectpool
     }
 
-    void DestroyInstanceCopy()
+    void ReturnInstanceCopy()
     {
         ClearSelectedObjInfo();
         objetoSiendoArrastrado = false;
         StartCoroutine(DesbloquearDisparo());
-        Destroy(torreCopiada);
+        //Destroy(torreCopiada);
+        torreCopiada.GetComponent<IPoolable>().ReturnToPool();
     }
 
-    public void DesignMainTower(GameObject tower)
+    public void DesignMainTower(Tower tower)
     {
-        PlaceManager.torre = tower;
+        torre = tower;
     }
 }

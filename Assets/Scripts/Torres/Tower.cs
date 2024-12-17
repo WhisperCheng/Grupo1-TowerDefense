@@ -29,8 +29,9 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
     public abstract void TakeDamage(float damageAmount);
     public abstract float GetHealth();
     protected abstract void EnemyDetection();
-    protected abstract void ReturnToPool();
+    public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
+    public abstract GameObject GetFromPool();
 
     protected virtual void LookRotation()
     {
@@ -60,5 +61,10 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
     }
 }

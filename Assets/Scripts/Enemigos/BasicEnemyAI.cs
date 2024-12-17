@@ -51,10 +51,10 @@ public class BasicEnemyAI : EnemyAI
         AnimateWalking();
         Vector3 oldDest = _destination;
         OnSearchingObjetives();
-        //if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
-        //{                           // asignando la misma variable
+        if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
+        {                           // asignando la misma variable
             OnAssignDestination(_destination);
-        //}
+        }
     }
 
     public override void OnAttack()
@@ -90,10 +90,20 @@ public class BasicEnemyAI : EnemyAI
         //Debug.Log("809");
     }
 
-    /*protected void ResetValues()
+    protected override void ManageCombat()
     {
-        
-    }*/
+        if (_canDamage)
+        {
+            for (int i = 0; i < attackingList.Count; i++)
+            {
+                if (attackingList[i] != null)
+                {
+
+                }
+            }
+            _canDamage = false;
+        }
+    }
 
     private void OnTriggerStay(Collider collision)
     {
@@ -112,7 +122,7 @@ public class BasicEnemyAI : EnemyAI
             _canDamage = false;
         }
     }
-    protected override void ReturnToPool()
+    public override void ReturnToPool()
     {
         // Desactivamos el NavMeshAgent y la IA del enemigo
 
@@ -130,6 +140,11 @@ public class BasicEnemyAI : EnemyAI
 
         // Llamamos a la pool para devolver al caballero
         MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
+    }
+
+    public override GameObject GetFromPool()
+    {
+        return MiniKnightPool.Instance.GetMiniKnight();
     }
 
     public override GameObject RestoreToDefault()

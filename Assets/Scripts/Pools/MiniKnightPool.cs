@@ -53,9 +53,7 @@ public class MiniKnightPool : MonoBehaviour
         {
             //Debug.Log("Pool de mini caballeros vacía.");
             GameObject newKnight = Instantiate(miniKnightPrefab);
-            //IPoolable poolableKnight = newKnight.GetComponent<IPoolable>();
             newKnight.transform.parent = parent.transform;
-            //poolableKnight.restoreToDefault();
 
             return newKnight;
         }
@@ -73,9 +71,6 @@ public class MiniKnightPool : MonoBehaviour
 
     public void ReturnMiniKnight(GameObject returnedKnight)
     {
-        // Llamar al método ResetKnight para limpiar el estado del caballero
-        //returnedKnight.GetComponent<MiniKnightAI>().ResetKnight();
-
         // Desactivar y devolver a la pool
         returnedKnight.SetActive(false);
 

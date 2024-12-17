@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToconTower : Tower
+public class AllyTower : Tower
 {
+    [Header("Vida")]
+    [SerializeField] protected float health = 100;
+    protected float _currentHealth;
+    protected HealthBar _healthBar;
 
     private List<GameObject> attackingList = new List<GameObject>();
     protected override void LookRotation() { }
@@ -104,13 +108,24 @@ public class ToconTower : Tower
     {
         throw new System.NotImplementedException();
     }
-    protected override void ReturnToPool() {
-
+    public override void ReturnToPool()
+    {
+        _locked = true;
+        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        AllyTowerPool.Instance.ReturnAllyTower(this.gameObject);
     }
+
     public override GameObject RestoreToDefault()
     {
         // TODO
         return gameObject;
+    }
+
+    public override GameObject GetFromPool()
+    {
+        return AllyTowerPool.Instance.GetAllyTower();
     }
 
     // Start is called before the first frame update

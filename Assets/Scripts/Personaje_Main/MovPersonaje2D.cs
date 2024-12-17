@@ -45,10 +45,9 @@ public class MovPersonaje2D : MonoBehaviour
     PlayerInput playerInput;
     private Vector2 _moveDirection;
     private Vector2 _smoothedMoveDirection;
-    private Vector2 _lookDirection;
-    private float _oldLookDirection = 0f;
+    //private Vector2 _lookDirection;
+    //private float _oldLookDirection = 0f;
     private Vector2 _smoothedMoveSpeed;
-    private int sueloMask = 1 << 6;
     
     //float rotateYAngle = 0f;
 
@@ -78,7 +77,7 @@ public class MovPersonaje2D : MonoBehaviour
     private void MoveCharacter()
     {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
-        _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
+        //_lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
         /*
         // TODO (opcional/si da tiempo):
         /// Si el jugador no está tocando el suelo, se deshabilita temporalmente el control

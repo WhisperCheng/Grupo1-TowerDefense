@@ -22,10 +22,21 @@ public class RoseTower : RangedTower
         }
     }
 
+    public override GameObject GetFromPool()
+    {
+        return ThornRosePool.Instance.GetThornRose();
+    }
+
+
     public override void Die()
     {
         _hasDied = true;
         ReturnToPool();
+    }
+
+    public override void ReturnToPool()
+    {
+        base.ReturnToPool();
         ThornRosePool.Instance.ReturnThornRose(this.gameObject);
     }
 

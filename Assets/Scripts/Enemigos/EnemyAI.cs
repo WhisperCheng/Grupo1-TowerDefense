@@ -14,6 +14,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     public float actionRadio;
     public float checkWaypointProximityDistance = 3;
     public float _onFocusAcceleration = 30;
+    public float speed = 3.5f;
 
     [Header("Tags de obstáculos a ignorar")]
     public string[] ignoreTagList;
@@ -59,8 +60,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
     public abstract float GetHealth();
     protected abstract void CheckIfRivalsInsideAttackRange();
-    protected abstract void ReturnToPool();
+    public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
+    protected abstract void ManageCombat();
+    public abstract GameObject GetFromPool();
 
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
@@ -77,6 +80,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         _maxSpeed = _agent.speed;
+        _agent.speed = speed;
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
@@ -215,6 +219,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     }
     public virtual void AnimateWalking()
     {
+        _agent.speed = speed;
         if (animatorController != null)
         {
             //animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));

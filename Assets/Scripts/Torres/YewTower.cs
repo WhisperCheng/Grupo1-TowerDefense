@@ -33,11 +33,18 @@ public class YewTower : RangedTower
             ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
         }
     }
-
+    public override GameObject GetFromPool()
+    {
+        return PoisonYewPool.Instance.GetPoisonYew();
+    }
     public override void Die()
     {
         _hasDied = true;
         ReturnToPool();
+    }
+    public override void ReturnToPool()
+    {
+        base.ReturnToPool();
         PoisonYewPool.Instance.ReturnPoisonYew(this.gameObject);
     }
 }
