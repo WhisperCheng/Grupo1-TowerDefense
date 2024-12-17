@@ -59,7 +59,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     public abstract void Die();
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
     public abstract float GetHealth();
-    protected abstract void CheckRivalsInsideAttackRange();
+    protected abstract void CheckIfRivalsInsideAttackRange();
     public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
     protected abstract void ManageCombat();
