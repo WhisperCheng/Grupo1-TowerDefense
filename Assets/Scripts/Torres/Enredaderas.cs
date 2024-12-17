@@ -1,22 +1,27 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enredaderas : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private float OriginalSpeed;
-    [SerializeField] private float SpeedPercentage;
-    void Start()
-    {
-        
-    }
+    // Variables
+    private float originalSpeed;
+    [SerializeField] private float speedPercentage;
+    [SerializeField] private float cooldown = 2f;
+    [SerializeField] private float damage = 10f;
+    private Dictionary<Collider, float> damageTimers = new Dictionary<Collider, float>();
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        List<Collider> keys = new List<Collider>(damageTimers.Keys);
+
+        foreach (Collider enemy in keys)
+        {
+            if (damageTimers[enemy] > 0)
+            {
+                damageTimers[enemy] -= Time.deltaTime;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -26,8 +31,29 @@ public class Enredaderas : MonoBehaviour
             NavMeshAgent enemyNavMesh = collision.GetComponent<NavMeshAgent>();
             if (enemyNavMesh != null)
             {
-                OriginalSpeed = enemyNavMesh.speed;
-                enemyNavMesh.speed = (SpeedPercentage * OriginalSpeed) / 100f; 
+                originalSpeed = enemyNavMesh.speed;
+                enemyNavMesh.speed = (speedPercentage * originalSpeed) / 100f;
+            }
+
+            if (!damageTimers.ContainsKey(collision))
+            {
+                damageTimers.Add(collision, 0f);
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag(GameManager.Instance.tagEnemigos) && !other.isTrigger)
+        {
+            if (damageTimers.ContainsKey(other) && damageTimers[other] <= 0f)
+            {
+                IDamageable damageableEntity = other.GetComponent(typeof(IDamageable)) as IDamageable;
+                if (damageableEntity != null)
+                {
+                    damageableEntity.TakeDamage(damage);
+                    damageTimers[other] = cooldown;
+                }
             }
         }
     }
@@ -39,7 +65,11 @@ public class Enredaderas : MonoBehaviour
             NavMeshAgent enemyNavMesh = other.GetComponent<NavMeshAgent>();
             if (enemyNavMesh != null)
             {
-                enemyNavMesh.speed = OriginalSpeed;
+                enemyNavMesh.speed = originalSpeed;
+            }
+            if (damageTimers.ContainsKey(other))
+            {
+                damageTimers.Remove(other);
             }
         }
     }
