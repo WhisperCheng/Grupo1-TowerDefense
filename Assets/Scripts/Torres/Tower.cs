@@ -20,6 +20,7 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
     protected bool _hasEnemyAssigned = false;
     protected bool _hasDied = false;
     public bool _locked = true; // Bloqueado / ataque de torres desactivado por defecto. Se activa el ataque cuando se colocan
+    protected bool _initialized = false;
 
     protected int _enemyMask;
 
@@ -32,6 +33,14 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
     public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
     public abstract GameObject GetFromPool();
+
+    public override void Init()
+    {
+        _locked = true; // Por defecto cuando se crea la torre en el modo Preview con el PlaceManager la torre
+                        // estará bloqueada para que no pueda atacar hasta que se coloque.
+                        // El PlaceManager se encargará de desbloquear la torre una vez colocada
+        _initialized = true;
+    }
 
     protected virtual void LookRotation()
     {
@@ -61,10 +70,5 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);
-    }
-
-    public GameObject GetGameObject()
-    {
-        return gameObject;
     }
 }

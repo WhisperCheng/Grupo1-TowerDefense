@@ -6,8 +6,8 @@ public class AllyTower : Tower
 {
     [Header("Vida")]
     [SerializeField] protected float health = 100;
-    protected float _currentHealth;
-    protected HealthBar _healthBar;
+    //protected float _currentHealth;
+    //protected HealthBar _healthBar;
 
     private List<GameObject> attackingList = new List<GameObject>();
     protected override void LookRotation() { }
@@ -91,7 +91,7 @@ public class AllyTower : Tower
 
     public override void Init()
     {
-        throw new System.NotImplementedException();
+        base.Init();
     }
 
     public override void OnAttack()
@@ -111,9 +111,9 @@ public class AllyTower : Tower
     public override void ReturnToPool()
     {
         _locked = true;
-        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
-        _healthBar = GetComponentInChildren<HealthBar>();
-        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        //_currentHealth = health; // Restaurar la salud del caballero al valor máximo
+        //_healthBar = GetComponentInChildren<HealthBar>();
+        //_healthBar.ResetHealthBar(); // Actualizamos la barra de salud
         AllyTowerPool.Instance.ReturnAllyTower(this.gameObject);
     }
 

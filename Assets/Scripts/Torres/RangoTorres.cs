@@ -20,15 +20,15 @@ public class RangoTorres : MonoBehaviour
         bool objetoSiendoArrastrado = PlaceManager.Instance.objetoSiendoArrastrado;
         if (objetoSiendoArrastrado)
         {
-            GameObject torreCopiada = PlaceManager.Instance.torreCopiada;
-            if (torreCopiada != null && torreCopiada.activeSelf)
+            GameObject gameObjTorreCopiada = PlaceManager.Instance.GetCurrentManagedTower().gameObject;
+            if (gameObjTorreCopiada != null && gameObjTorreCopiada.activeSelf)
             {
-                Tower torreScript = PlaceManager.Instance.torreCopiada.GetComponent<Tower>();
+                Tower torre = PlaceManager.Instance.GetCurrentManagedTower();
 
-                if (torreScript != null)
+                if (torre != null)
                 {
-                    rangoTorre = 2 * torreScript.range; 
-                    rangeIndicator.transform.position = torreCopiada.transform.position;
+                    rangoTorre = 2 * torre.range; 
+                    rangeIndicator.transform.position = gameObjTorreCopiada.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     rangeIndicator.gameObject.SetActive(true); 
                     torreApuntada = true;
@@ -43,9 +43,9 @@ public class RangoTorres : MonoBehaviour
                 if (golpeRayo.collider.CompareTag("Tower"))
                 {
                     rangeIndicator.gameObject.SetActive(true);
-                    GameObject torre = golpeRayo.collider.gameObject;
-                    rangoTorre = 2 * torre.GetComponent<Tower>().range;
-                    rangeIndicator.transform.position = torre.transform.position;
+                    GameObject gameObjTorre = golpeRayo.collider.gameObject;
+                    rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().range;
+                    rangeIndicator.transform.position = gameObjTorre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     torreApuntada = true;
                 }

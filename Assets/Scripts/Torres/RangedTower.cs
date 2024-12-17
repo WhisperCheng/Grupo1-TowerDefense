@@ -33,6 +33,7 @@ public abstract class RangedTower : Tower
 
     private void Start()
     {
+        base.Init();
         Init();
     }
 
@@ -58,11 +59,14 @@ public abstract class RangedTower : Tower
 
     public override void ReturnToPool()
     {
-        _locked = true;
-        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
-        _healthBar = GetComponentInChildren<HealthBar>();
-        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
-        // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
+        if (_initialized)
+        {
+            _locked = true;
+            _currentHealth = health; // Restaurar la salud del caballero al valor máximo
+            _healthBar = GetComponentInChildren<HealthBar>();
+            _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+            // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
+        }
     }
 
     public override GameObject RestoreToDefault()

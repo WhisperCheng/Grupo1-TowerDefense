@@ -2849,11 +2849,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 274398071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35698619f018ff84793c79584f319dde, type: 3}
+  m_Script: {fileID: 11500000, guid: 20fb9ac06ab11cc4f86a7a61b103444c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vineTrapPrefab: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-  poolSize: 10
+  carnivorousPlantPrefab: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
+  poolSize: 20
   grandParentName: ObjectPoolsObjects
 --- !u!4 &281110812 stripped
 Transform:
@@ -5248,10 +5248,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Caballero
       objectReference: {fileID: 0}
-    - target: {fileID: 5652667148767116429, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6743,7 +6739,6 @@ MonoBehaviour:
   playerInput: {fileID: 743838364}
   marcador: {fileID: 961106802}
   particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
-  torreCopiada: {fileID: 0}
   objetoSiendoArrastrado: 0
   bloqueoDisparo: 0
   selectedColor: {r: 0.46059847, g: 1, b: 0, a: 0.6156863}
@@ -10059,7 +10054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443a8b114a3c5124195165ff56ac13e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 10
+  spawnInterval: 2
 --- !u!4 &1126879990
 Transform:
   m_ObjectHideFlags: 0
@@ -14448,12 +14443,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1659718462}
-        m_TargetAssemblyTypeName: ObjectPlacer, Assembly-CSharp
+        m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 5750050111347682588, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
+          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -18848,39 +18843,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c75e4992221528b42936701e456ec8c7, type: 3}
---- !u!1 &2140359337 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-  m_PrefabInstance: {fileID: 1284872096047886707}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2140359341 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5337711061124082340, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
   m_PrefabInstance: {fileID: 1284872096047886707}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &2140359344
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140359337}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.93
-  m_Height: 8.39
-  m_Direction: 1
-  m_Center: {x: 0, y: 3.13, z: 0}
 --- !u!1 &2144681971 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8562407562423627312, guid: 05776fdb795d70a4ebc94d9f1763af6e, type: 3}
@@ -19042,22 +19009,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: planta_carnivora4-3
       objectReference: {fileID: 0}
-    - target: {fileID: 4944068088493750361, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      propertyPath: m_Size.z
-      value: 7.92
-      objectReference: {fileID: 0}
-    - target: {fileID: 4944068088493750361, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      propertyPath: m_Center.z
-      value: 3.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 4944068088493750361, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 5149834643317450592, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5337711061124082340, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.58
@@ -19098,17 +19049,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5750050111347682588, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      propertyPath: range
-      value: 4.41
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2140359344}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
 --- !u!1001 &8625271863609374941
 PrefabInstance:

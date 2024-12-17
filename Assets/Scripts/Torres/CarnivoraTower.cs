@@ -44,6 +44,7 @@ public class CarnivoraTower : Tower
 
     public override void Init()
     {
+        base.Init();
         animator = GetComponent<Animator>();
         _currentHealth = health;
         _maxHealth = health;
@@ -153,10 +154,13 @@ public class CarnivoraTower : Tower
 
     public override void ReturnToPool()
     {
-        _locked = true;
-        _currentHealth = health; // Restaurar la salud del caballero al valor máximo
-        _healthBar = GetComponentInChildren<HealthBar>();
-        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        if (_initialized)
+        {
+            _locked = true;
+            _currentHealth = health; // Restaurar la salud del caballero al valor máximo
+            _healthBar = GetComponentInChildren<HealthBar>();
+            _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        }
         CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
     }
 
@@ -194,7 +198,6 @@ public class CarnivoraTower : Tower
             entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0;
         if (validEnemyCollision)
         {
-            Debug.Log("a");
             Attack(entity); // Atacar a la entidad
             /*if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
             {                                       // no contiene a la entidad, se almacena en ella
