@@ -39,7 +39,7 @@ public class RunaStun : MonoBehaviour
             stunnedEnemies[enemyNavMesh] = enemy.speed;
         }
 
-        enemyNavMesh.speed = 0; // Aplicar el stun
+        enemy.speed = 0; // Aplicar el stun
         Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
 
         yield return new WaitForSeconds(duration);
@@ -47,7 +47,7 @@ public class RunaStun : MonoBehaviour
         // Restaurar la velocidad original del enemigo
         if (stunnedEnemies.ContainsKey(enemyNavMesh))
         {
-            enemyNavMesh.speed = stunnedEnemies[enemyNavMesh];
+            enemy.speed = stunnedEnemies[enemyNavMesh];
             stunnedEnemies.Remove(enemyNavMesh);
             Debug.Log($"Enemigo {enemyNavMesh.name} destunneado");
         }
