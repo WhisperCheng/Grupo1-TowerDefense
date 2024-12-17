@@ -11,8 +11,8 @@ public class BasicEnemyAI : EnemyAI
     void Update()
     {
         WhileWalking();
-        CheckIfRivalsInsideAttackRange();
-        //ManageCooldown();
+        CheckRivalsInsideAttackRange();
+        ManageCombat();
     }
 
     // Método necesario para que cuando no haya ningún enemigo dentro de la hitbox de ataque, automáticamente deje de poder atacar siempre
@@ -21,7 +21,7 @@ public class BasicEnemyAI : EnemyAI
     // de ataque que ejecuta "_canDamage = true" (animation event), al ejecutarse este código después de haber salido del hitbox de ataque
     // el OnTriggerExit no puede ejecutar "_canDamage = false", por lo que es necesario una lista que almacena los enemigos actuales
     // en rango y con ello determinar si puede seguir atacando o no.
-    protected override void CheckIfRivalsInsideAttackRange()
+    protected override void CheckRivalsInsideAttackRange()
     {
         if (_canDamage)
         {
@@ -42,7 +42,22 @@ public class BasicEnemyAI : EnemyAI
                 _canDamage = false;
             }
         }
-        
+    }
+    // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
+    protected override void ManageCombat()
+    {
+        if (_canDamage && _attackMode)
+        { // Se recorre la lista de los objetivos a atacar y se les hace daño
+            for (int i = 0; i < attackingList.Count; i++)
+            {
+                if (attackingList[i] != null)
+                {
+                    IDamageable entity = attackingList[i].GetComponent<IDamageable>();
+                    Attack(entity);
+                }
+            }
+            _canDamage = false; // Se quita el modo de atacar
+        }
     }
 
     protected override void WhileWalking()
@@ -63,9 +78,6 @@ public class BasicEnemyAI : EnemyAI
     }
     public override void Attack(IDamageable damageableEntity)
     {
-        animatorController.SetTrigger("Attack");
-        animatorController.SetBool("AttackMode", true);
-        _attackMode = true;
         if (_canDamage)
         {
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
@@ -89,39 +101,7 @@ public class BasicEnemyAI : EnemyAI
     {
         //Debug.Log("809");
     }
-
-    protected override void ManageCombat()
-    {
-        if (_canDamage)
-        {
-            for (int i = 0; i < attackingList.Count; i++)
-            {
-                if (attackingList[i] != null)
-                {
-
-                }
-            }
-            _canDamage = false;
-        }
-    }
-
-    private void OnTriggerStay(Collider collision)
-    {
-        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
-        if (entity != null && collision.tag != "Enemy" && entity.GetHealth() > 0)
-        {
-            Attack(entity); // Atacar a la entidad
-            if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
-            {                                       // no contiene a la entidad, se almacena en ella
-                attackingList.Add(collision);
-            }
-        }
-        else
-        {
-            _canDamage = false;
-        }
-    }
+    
     public override void ReturnToPool()
     {
         // Desactivamos el NavMeshAgent y la IA del enemigo
@@ -162,6 +142,34 @@ public class BasicEnemyAI : EnemyAI
         return this.gameObject;
     }
 
+    private void OnTriggerStay(Collider collision)
+    {
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
+        if (entity != null && collision.tag != "Enemy" && entity.GetHealth() > 0)
+        {
+            if (attackingList.Contains(collision))
+            {
+                _attackMode = true;
+                animatorController.SetTrigger("Attack");
+            }
+        }
+    }
+   
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
+        if (entity != null && collision.tag != "Enemy" && entity.GetHealth() > 0)
+        {
+            if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
+            {                                       // no contiene a la entidad, se almacena en ella
+                attackingList.Add(collision);
+            }
+        }
+    }
+
     private void OnTriggerExit(Collider collision)
     {
         
@@ -169,11 +177,10 @@ public class BasicEnemyAI : EnemyAI
         if (entity != null && collision.tag != "Enemy")
         {
             animatorController.SetBool("AttackMode", false);
-            if (attackingList.Contains(collision)) // Si se sale un rival de la hitbox de ataque, se elimina de
-            {                                       // la lista de enemigos dentro del área de ataque
-                attackingList.Remove(collision);
-            }
+            // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
+            attackingList.Remove(collision);
             _canDamage = false;
+            _attackMode = false;
         }
     }
 }
