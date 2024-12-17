@@ -23,19 +23,20 @@ public class RunaStun : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             NavMeshAgent enemyNavMesh = collider.GetComponent<NavMeshAgent>();
-            if (enemyNavMesh != null && !stunnedEnemies.ContainsKey(enemyNavMesh))
+            EnemyAI enemy = collider.GetComponent<EnemyAI>();
+            if (enemyNavMesh != null && enemy != null && !stunnedEnemies.ContainsKey(enemyNavMesh))
             {
-                StartCoroutine(StunCoroutine(enemyNavMesh));
+                StartCoroutine(StunCoroutine(enemyNavMesh, enemy));
             }
         }
     }
 
-    private IEnumerator StunCoroutine(NavMeshAgent enemyNavMesh)
+    private IEnumerator StunCoroutine(NavMeshAgent enemyNavMesh, EnemyAI enemy)
     {
         // Guardar la velocidad original del enemigo
         if (!stunnedEnemies.ContainsKey(enemyNavMesh))
         {
-            stunnedEnemies[enemyNavMesh] = enemyNavMesh.speed;
+            stunnedEnemies[enemyNavMesh] = enemy.speed;
         }
 
         enemyNavMesh.speed = 0; // Aplicar el stun
