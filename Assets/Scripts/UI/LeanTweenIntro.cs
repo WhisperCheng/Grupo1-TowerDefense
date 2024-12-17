@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LeanTweenIntro : MonoBehaviour
 {
-
+    [Header("Intro Elements")]
     [SerializeField]
     GameObject logoImage;
     [SerializeField]
     GameObject introCanvas;
+    [SerializeField]
+    GameObject languageCanvas;
 
     void Start()
     {
@@ -17,7 +19,8 @@ public class LeanTweenIntro : MonoBehaviour
 
 
     }
-  private void BajarAlpha()
+    
+    private void BajarAlpha()
     {
        
         LeanTween.alpha(introCanvas.GetComponent<RectTransform>(), 0f, 1f).setDelay(0.75f);
