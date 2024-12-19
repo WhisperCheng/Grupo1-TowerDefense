@@ -34,6 +34,10 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
     public abstract GameObject RestoreToDefault();
     public abstract GameObject GetFromPool();
 
+    void Start()
+    {
+
+    }
     public override void Init()
     {
         _locked = true; // Por defecto cuando se crea la torre en el modo Preview con el PlaceManager la torre
@@ -44,8 +48,10 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
 
     protected virtual void LookRotation()
     {
+        
         if (currentTarget != null && rotationPart != null)
         {
+            Debug.Log(currentTarget + " " + currentTarget.activeSelf + Vector3.Distance(gameObject.transform.position, currentTarget.transform.position));
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
             directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);

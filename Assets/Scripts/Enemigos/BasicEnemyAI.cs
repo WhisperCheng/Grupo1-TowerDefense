@@ -26,7 +26,7 @@ public class BasicEnemyAI : EnemyAI
         for (int i = 0; i < attackingList.Count; i++)
         {
             Collider col = attackingList[i];
-            if (col == null || !col.enabled)
+            if (col == null || !col.gameObject.activeSelf)
             {
                 attackingList.Remove(col);
             }
@@ -56,7 +56,9 @@ public class BasicEnemyAI : EnemyAI
                     Attack(entity);
                 }
             }
+            _attackMode = false;
             _canDamage = false; // Se quita el modo de atacar
+            _currentCooldown = cooldown; // Reset del cooldown
         }
     }
 
@@ -81,8 +83,7 @@ public class BasicEnemyAI : EnemyAI
         if (_canDamage)
         {
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-            _currentCooldown = cooldown; // Reset del cooldown
-            _canDamage = false;
+            
         }
     }
 
@@ -189,8 +190,8 @@ public class BasicEnemyAI : EnemyAI
             animatorController.SetBool("AttackMode", false);
             // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
             attackingList.Remove(collision);
-            _canDamage = false;
-            _attackMode = false;
+            //_canDamage = false;
+            //_attackMode = false;
         }
     }
 }

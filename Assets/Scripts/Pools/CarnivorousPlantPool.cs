@@ -37,6 +37,7 @@ public class CarnivorousPlantPool : MonoBehaviour
     {
         pool = new Stack<GameObject>();
         parent = new GameObject("CarnivorousPlant_PC");
+        parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
             GameObject plant = Instantiate(carnivorousPlantPrefab);
@@ -57,7 +58,10 @@ public class CarnivorousPlantPool : MonoBehaviour
         }
 
         GameObject plant = pool.Pop();
+        IPoolable poolablePlant = plant.GetComponent<IPoolable>();
         plant.SetActive(true);
+        // Solo se resetea si ya ha existido previamente
+        plant = poolablePlant.RestoreToDefault();
 
         return plant;
     }

@@ -12,14 +12,13 @@ public class CarnivoraTower : Tower
     public float attackDamage;
     public float cooldown = 1f;
 
-    [Header("Área de ataque")]
-    [SerializeField] protected BoxCollider attackCollider;
-
     //[Header("Animaciones")]
     protected Animator animator;
 
     [Header("Partículas de construcción")]
     [SerializeField] protected ParticleSystem particlesPlacing;
+
+    protected List<Collider> attackingList;
 
     protected float _currentHealth;
     protected float _maxHealth;
@@ -40,18 +39,22 @@ public class CarnivoraTower : Tower
     {
         if (!_locked)
         {
+            CheckAvailableRivals();
             EnemyDetection();
             LookRotation();
+            ManageCombat();
         }
     }
 
     public override void Init()
     {
         base.Init();
+        attackingList = new List<Collider>();
         animator = GetComponent<Animator>();
         _currentHealth = health;
         _maxHealth = health;
         _currentCooldown = cooldown;
+        currentTarget = null;
         _healthBar = GetComponentInChildren<HealthBar>();
         _enemyMask = 1 << GameManager.Instance.layerEnemigos;
     }
@@ -89,7 +92,21 @@ public class CarnivoraTower : Tower
 
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
         {
-            OnAttack();
+            //OnAttack();
+        }
+    }
+
+    // Método necesario para que cuando no haya ningún enemigo dentro de la hitbox de ataque, automáticamente elimine a los
+    // enemigos a atacar de la lista de targets
+    protected void CheckAvailableRivals()
+    {
+        for (int i = 0; i < attackingList.Count; i++)
+        {
+            Collider col = attackingList[i];
+            if (col == null || !col.gameObject.activeSelf || !col.enabled)
+            {
+                attackingList.Remove(col);
+            }
         }
     }
 
@@ -98,12 +115,12 @@ public class CarnivoraTower : Tower
         if (_canAttack && _attackMode && !_locked && currentTarget != null)
         {
             _currentCooldown = cooldown; // Reset del cooldown
-            _canAttack = false;
+            //_canAttack = false;
         }
-        else
+        /*else
         {
             _attackMode = false;
-        }
+        }*/
 
         /*if (!_hasEnemyAssigned || currentTarget == null)
         {
@@ -119,8 +136,8 @@ public class CarnivoraTower : Tower
         if (_canAttack)
         {
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-            _currentCooldown = cooldown; // Reset del cooldown
-            _canAttack = false;
+            //_currentCooldown = cooldown; // Reset del cooldown
+            //_canAttack = false;
         }
     }
 
@@ -181,6 +198,7 @@ public class CarnivoraTower : Tower
         if (!_locked)
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
+            _locked = true;
             enabled = true;
             _attackMode = false;
             _canAttack = false;
@@ -203,25 +221,64 @@ public class CarnivoraTower : Tower
         particlesPlacing.Play();
     }*/
 
+    // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
+    protected void ManageCombat()
+    {
+        if (_canAttack && _attackMode)
+        { // Se recorre la lista de los objetivos a atacar y se les hace daño
+            for (int i = 0; i < attackingList.Count; i++)
+            {
+                if (attackingList[i] != null && attackingList[i].enabled)
+                {
+                    IDamageable entity = attackingList[i].GetComponent<IDamageable>();
+                    Attack(entity);
+                }
+            }
+            _canAttack = false; // Se quita el modo de atacar
+            _currentCooldown = cooldown; // Reset del cooldown
+        }
+    }
+
     private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
         bool validEnemyCollision = collision.GetType().ToString().Equals("UnityEngine.BoxCollider") &&
             entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0;
         if (validEnemyCollision)
         {
-            Attack(entity); // Atacar a la entidad
-            /*if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
-            {                                       // no contiene a la entidad, se almacena en ella
-                attackingList.Add(collision);
-            }*/
+            if (attackingList.Contains(collision))
+            {
+                _attackMode = true;
+                animator.SetTrigger("Attack");
+            }
         }
-        /*else
-        {
-            Debug.Log(collision.name);
-            _canAttack = false;
-        }*/
     }
 
-    
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
+        //bool isEnemy = collision.tag != "Ally" && collision.tag != "Tower"
+        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        {
+            if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
+            {                                       // no contiene a la entidad, se almacena en ella
+                attackingList.Add(collision);
+                Debug.Log("añadido " + attackingList.Count + collision.gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
+        if (entity != null && collision.tag == "Enemy")
+        {
+            // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
+            attackingList.Remove(collision);
+        }
+    }
 }

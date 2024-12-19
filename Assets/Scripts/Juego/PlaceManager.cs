@@ -14,6 +14,7 @@ public class PlaceManager : MonoBehaviour
     public PlayerInput playerInput;
 
     public GameObject marcador;
+    [Header("Partículas de construcción")]
     public GameObject particulasConstruccion;
 
     private static Tower torre;
