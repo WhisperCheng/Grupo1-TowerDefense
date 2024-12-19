@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
+public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
 {
     [Header("Variables Torre")]
     public float range = 10f;
@@ -66,6 +66,11 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
         _locked = false;
     }
 
+
+    public bool IsLocked()
+    {
+        return _locked;
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

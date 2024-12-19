@@ -131,15 +131,18 @@ public class CarnivoraTower : Tower
 
     public override void TakeDamage(float damageAmount)
     {
-        // Dañar torre
-        _currentHealth -= damageAmount;
-        OnDamageTaken();
-
-        // Actualizar barra de vida
-        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
-        if (_currentHealth <= 0)
+        if (gameObject.activeSelf)
         {
-            Die();
+            // Dañar torre
+            _currentHealth -= damageAmount;
+            OnDamageTaken();
+
+            // Actualizar barra de vida
+            _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
     }
 

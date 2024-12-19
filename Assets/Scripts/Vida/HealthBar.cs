@@ -36,12 +36,14 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthBar(float maxHealth, float currentHealth)
     {
-        if (enabled) // Se puede dar el caso de que se intente golpear justo después de haber sido desactivada, entonces
-        {               // hay que manejar ese posible caso
-            _targetAmount = currentHealth / maxHealth; // Valor entr 0 y 1
+        _targetAmount = currentHealth / maxHealth; // Valor entr 0 y 1
+        if (gameObject.activeInHierarchy)
+        {
+            
             drainHealthCoroutine = StartCoroutine(DrainHealthBar()); // Iniciar corutina con el suavizado de la vida
-            CheckHealthBarGradient();
+           
         }
+        CheckHealthBarGradient();
     }
 
     public void ResetHealthBar() // Reset instantáneo de la barra de vida
@@ -58,8 +60,8 @@ public class HealthBar : MonoBehaviour
         Color currentColor = _image.color;
         float fillAmount = _image.fillAmount; // Cantidad de llenado de la barra de vida
         float elapsedTime = 0f; // Tiempo transcurrido, inicialmente a 0
-        while (elapsedTime < _timeToDrain)
-        {
+        while ((elapsedTime < _timeToDrain)) // Solo se hace la transición si la barra de vida está activa y
+        {                                               // no se ha completado el tiempo de transición
             float howLongInSeconds = (elapsedTime / _timeToDrain); // Tiempo que tarda en hacer la transición
             fillAmount = Mathf.Lerp(fillAmount, _image.fillAmount, howLongInSeconds); // Actualizar a nuevos valores externos (por si varias entidades hacen daño a la vez)
             elapsedTime += Time.deltaTime; // Actualizar el tiempo / se va sumando

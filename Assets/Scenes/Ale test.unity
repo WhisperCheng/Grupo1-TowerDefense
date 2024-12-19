@@ -1521,63 +1521,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8719739787567930251, guid: 341e51ffcacc4a3419e517763508953d, type: 3}
   m_PrefabInstance: {fileID: 2010851023}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &106806981
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1505292329734927531, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_Name
-      value: Trampas_Enredaderas
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.32273293
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.3412008
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -6.25321
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2281090574176497169, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
 --- !u!1 &118766655
 GameObject:
   m_ObjectHideFlags: 0
@@ -10177,7 +10120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 443a8b114a3c5124195165ff56ac13e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 1
+  spawnInterval: 2
 --- !u!4 &1126879990
 Transform:
   m_ObjectHideFlags: 0
@@ -19016,6 +18959,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: planta_carnivora4-3
       objectReference: {fileID: 0}
+    - target: {fileID: 4944068088493750361, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
+      propertyPath: m_Center.z
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5337711061124082340, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.58
@@ -19356,4 +19303,3 @@ SceneRoots:
   - {fileID: 2131687940}
   - {fileID: 2032310907}
   - {fileID: 1126879990}
-  - {fileID: 106806981}

@@ -160,10 +160,20 @@ public class BasicEnemyAI : EnemyAI
     private void OnTriggerEnter(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
         if (entity != null && collision.tag != "Enemy" && entity.GetHealth() > 0)
         {
-            if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
+            /*bool locked = false; // Valor por defecto
+            ILockeable lockeableEntity = collision.GetComponent<ILockeable>();
+            // Si se trata de un objeto que puede ser bloqueado hasta no ser colocado (torres) y resulta que está bloqueado,
+            // este será ignorado
+            if (lockeableEntity != null)
+            {
+                locked = lockeableEntity.IsLocked();
+                Debug.Log(" S " + locked);
+            }*/
+            if (/*!locked &&*/ !attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
             {                                       // no contiene a la entidad, se almacena en ella
                 attackingList.Add(collision);
             }
