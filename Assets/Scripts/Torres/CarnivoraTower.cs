@@ -18,6 +18,9 @@ public class CarnivoraTower : Tower
     //[Header("Animaciones")]
     protected Animator animator;
 
+    [Header("Partículas de construcción")]
+    [SerializeField] protected ParticleSystem particlesPlacing;
+
     protected float _currentHealth;
     protected float _maxHealth;
     protected float _currentCooldown = 0f;
