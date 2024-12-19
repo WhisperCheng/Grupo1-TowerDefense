@@ -84,7 +84,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         speed = _originalSpeed;
         _maxSpeed = _originalSpeed;
         _agent.speed = _originalSpeed;
-        Debug.Log(speed);
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
