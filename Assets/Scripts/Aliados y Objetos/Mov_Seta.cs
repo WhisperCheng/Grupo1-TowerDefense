@@ -94,6 +94,11 @@ public class Mov_Seta : MonoBehaviour
             radio = 0;
             animator.SetBool("Ataca", true);
         }
+        else
+        {
+            animator.SetBool("Ataca", false);
+            //navAgent.SetDestination(baseAliada.position);
+        }
     }
     private void OnDrawGizmos()
     {
