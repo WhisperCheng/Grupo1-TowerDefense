@@ -39,6 +39,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     protected float _maxHealth;
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
+    protected float _originalSpeed;
 
     protected List<Collider> attackingList;
 
@@ -68,6 +69,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
     {
+        _originalSpeed = speed;
         Init();
     }
     public override void Init()
@@ -79,8 +81,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
-        _maxSpeed = _agent.speed;
-        _agent.speed = speed;
+        speed = _originalSpeed;
+        _maxSpeed = _originalSpeed;
+        _agent.speed = _originalSpeed;
+        Debug.Log(speed);
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
@@ -206,15 +210,18 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
 
     public virtual void TakeDamage(float damageAmount) // Se puede sobreescribir (virtual), por si es necesario
     {
-        // Dañar enemigo
-        _currentHealth -= damageAmount;
-        OnDamageTaken();
-
-        // Actualizar barra de vida
-        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
-        if (_currentHealth <= 0)
+        // Dañar enemigo si está habilitado
+        if (enabled)
         {
-            Die();
+            _currentHealth -= damageAmount;
+            OnDamageTaken();
+
+            // Actualizar barra de vida
+            _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
         }
     }
     public virtual void AnimateWalking()
@@ -225,6 +232,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
             //animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));
         }
     }
+
+    /*public void SetSpeed(float speed)
+    {
+        _agent.speed = speed;
+    }*/
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

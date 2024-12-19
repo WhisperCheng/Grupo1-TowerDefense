@@ -61,7 +61,7 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable
         }
     }
 
-    public void UnlockTower()
+    public virtual void UnlockTower()
     {
         _locked = false;
     }

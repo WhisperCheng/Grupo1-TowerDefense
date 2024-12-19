@@ -36,9 +36,12 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthBar(float maxHealth, float currentHealth)
     {
-        _targetAmount = currentHealth / maxHealth; // Valor entr 0 y 1
-        drainHealthCoroutine = StartCoroutine(DrainHealthBar()); // Iniciar corutina con el suavizado de la vida
-        CheckHealthBarGradient();
+        if (enabled) // Se puede dar el caso de que se intente golpear justo después de haber sido desactivada, entonces
+        {               // hay que manejar ese posible caso
+            _targetAmount = currentHealth / maxHealth; // Valor entr 0 y 1
+            drainHealthCoroutine = StartCoroutine(DrainHealthBar()); // Iniciar corutina con el suavizado de la vida
+            CheckHealthBarGradient();
+        }
     }
 
     public void ResetHealthBar() // Reset instantáneo de la barra de vida

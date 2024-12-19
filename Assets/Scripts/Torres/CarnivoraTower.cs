@@ -194,6 +194,12 @@ public class CarnivoraTower : Tower
         }
     }
 
+    /*public override void UnlockTower()
+    {
+        base.UnlockTower();
+        particlesPlacing.Play();
+    }*/
+
     private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica

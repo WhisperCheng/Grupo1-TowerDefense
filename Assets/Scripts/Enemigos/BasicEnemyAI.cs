@@ -23,17 +23,17 @@ public class BasicEnemyAI : EnemyAI
     // en rango y con ello determinar si puede seguir atacando o no.
     protected override void CheckRivalsInsideAttackRange()
     {
+        for (int i = 0; i < attackingList.Count; i++)
+        {
+            Collider col = attackingList[i];
+            if (col == null || !col.enabled)
+            {
+                attackingList.Remove(col);
+            }
+        }
+
         if (_canDamage)
         {
-            for (int i = 0; i < attackingList.Count; i++)
-            {
-                Collider col = attackingList[i];
-                if (col == null || !col.enabled)
-                {
-                    attackingList.Remove(col);
-                }
-            }
-
             // Si la lista es tamaño == 0, desactivar el daño
             if (attackingList.Count == 0)
             {
@@ -50,7 +50,7 @@ public class BasicEnemyAI : EnemyAI
         { // Se recorre la lista de los objetivos a atacar y se les hace daño
             for (int i = 0; i < attackingList.Count; i++)
             {
-                if (attackingList[i] != null)
+                if (attackingList[i] != null && attackingList[i].enabled)
                 {
                     IDamageable entity = attackingList[i].GetComponent<IDamageable>();
                     Attack(entity);
