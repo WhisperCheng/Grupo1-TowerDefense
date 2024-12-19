@@ -29,10 +29,11 @@ public class Enredaderas : MonoBehaviour
         if (collision.CompareTag(GameManager.Instance.tagEnemigos) && !collision.isTrigger)
         {
             NavMeshAgent enemyNavMesh = collision.GetComponent<NavMeshAgent>();
-            if (enemyNavMesh != null)
+            EnemyAI enemy = collision.GetComponent<EnemyAI>();
+            if (enemyNavMesh != null && enemy != null)
             {
-                originalSpeed = enemyNavMesh.speed;
-                enemyNavMesh.speed = (speedPercentage * originalSpeed) / 100f;
+                originalSpeed = enemy.speed;
+                enemy.speed = (speedPercentage * originalSpeed) / 100f;
             }
 
             if (!damageTimers.ContainsKey(collision))
@@ -63,9 +64,10 @@ public class Enredaderas : MonoBehaviour
         if (other.CompareTag(GameManager.Instance.tagEnemigos) && !other.isTrigger)
         {
             NavMeshAgent enemyNavMesh = other.GetComponent<NavMeshAgent>();
-            if (enemyNavMesh != null)
+            EnemyAI enemy = other.GetComponent<EnemyAI>();
+            if (enemyNavMesh != null && enemy != null)
             {
-                enemyNavMesh.speed = originalSpeed;
+                enemy.speed = originalSpeed;
             }
             if (damageTimers.ContainsKey(other))
             {
