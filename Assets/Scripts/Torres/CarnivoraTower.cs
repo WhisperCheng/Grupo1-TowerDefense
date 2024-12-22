@@ -49,7 +49,15 @@ public class CarnivoraTower : Tower
     public override void Init()
     {
         base.Init();
-        attackingList = new List<Collider>();
+        if (attackingList != null)
+        {
+            attackingList.Clear();
+        }
+        else
+        {
+            attackingList = new List<Collider>();
+        }
+        _hasEnemyAssigned = false;
         animator = GetComponent<Animator>();
         _currentHealth = health;
         _maxHealth = health;
@@ -63,37 +71,51 @@ public class CarnivoraTower : Tower
     {
         //currentTargets.Clear();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
+
+        if (!_hasEnemyAssigned) currentTarget = null;
         if (colliders.Length > 0)
         {
-
             foreach (Collider collider in colliders)
             {
-                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna uno
+                if (/*!_hasEnemyAssigned && */collider.gameObject != null && collider.gameObject.activeSelf
+                    /*&& Vector3.Distance(gameObject.transform.position, collider.transform.position) <= range*/) // Si no tiene ningún enemigo asignado, se le asigna uno
                 {
-                    //currentTargets.Add(collider.gameObject);
                     currentTarget = collider.gameObject;
                     _hasEnemyAssigned = true;
                     _attackMode = true;
-                    animator.SetBool("AttackMode", true);
                     break;
                 }
+                /*else
+                {
+                    currentTarget = null;
+                    _hasEnemyAssigned = false;
+                    _attackMode = false;
+                }*/
             }
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
-            //if (currentTarget != null)
-            //{
-            currentTarget = null;
+            if (currentTarget != null)
+            {
+                currentTarget = null;
+            }
             _hasEnemyAssigned = false;
             _attackMode = false;
-            animator.SetBool("AttackMode", false);
-            //}
         }
+        
+        /*if(Vector3.Distance(gameObject.transform.position, currentTarget.transform.position) > range)
+        {
+            currentTarget = null;
+            _hasEnemyAssigned = false;
+        }*/
 
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
         {
+            _attackMode = true;
             //OnAttack();
         }
+
+        animator.SetBool("AttackMode", _attackMode);
     }
 
     // Método necesario para que cuando no haya ningún enemigo dentro de la hitbox de ataque, automáticamente elimine a los
@@ -103,9 +125,15 @@ public class CarnivoraTower : Tower
         for (int i = 0; i < attackingList.Count; i++)
         {
             Collider col = attackingList[i];
-            if (col == null || !col.gameObject.activeSelf || !col.enabled)
+            if (col == null || !col.gameObject.activeInHierarchy || !col.enabled ||
+                Vector3.Distance(gameObject.transform.position, col.transform.position) > range)
             {
                 attackingList.Remove(col);
+                if (currentTarget == col)
+                {
+                    currentTarget = null;
+                    _hasEnemyAssigned = false; // Para hacer "trigger" del bool y volver a elegir un nuevo enemigo
+                }
             }
         }
     }
@@ -131,7 +159,6 @@ public class CarnivoraTower : Tower
     public void Attack(IDamageable damageableEntity)
     {
         //animator.SetTrigger("Attack");
-        animator.SetBool("AttackMode", true);
         _attackMode = true;
         if (_canAttack)
         {
@@ -183,6 +210,9 @@ public class CarnivoraTower : Tower
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+            _hasEnemyAssigned = false;
+            _attackMode = false;
+            currentTarget = null;
         }
         CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
     }
@@ -199,7 +229,7 @@ public class CarnivoraTower : Tower
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
             _locked = true;
-            enabled = true;
+            //enabled = true;
             _attackMode = false;
             _canAttack = false;
             animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
@@ -252,30 +282,34 @@ public class CarnivoraTower : Tower
                 _attackMode = true;
                 animator.SetTrigger("Attack");
             }
+            else
+            { // Si la lista para almacenar rivales dentro de la hitbox de ataque no contiene a la entidad, se almacena en ella
+                attackingList.Add(collision);
+            }
         }
     }
 
 
-    private void OnTriggerEnter(Collider collision)
+    /*private void OnTriggerEnter(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
         //bool isEnemy = collision.tag != "Ally" && collision.tag != "Tower"
-        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        if (entity != null && collision.CompareTag("Enemy") && entity.GetHealth() > 0)
         {
             if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
             {                                       // no contiene a la entidad, se almacena en ella
                 attackingList.Add(collision);
-                Debug.Log("añadido " + attackingList.Count + collision.gameObject);
+                Debug.Log(attackingList.Count);
             }
         }
-    }
+    }*/
 
     private void OnTriggerExit(Collider collision)
     {
 
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
-        if (entity != null && collision.tag == "Enemy")
+        if (entity != null && collision.CompareTag("Enemy"))
         {
             // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
             attackingList.Remove(collision);

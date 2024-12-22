@@ -48,18 +48,19 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
 
     protected virtual void LookRotation()
     {
-        
+        //Debug.Log(currentTarget + " " + currentTarget.activeSelf + Vector3.Distance(gameObject.transform.position, currentTarget.transform.position));
+        //Debug.Log((currentTarget != null) + " " +  (rotationPart != null) + " " + _locked);
         if (currentTarget != null && rotationPart != null)
         {
-            Debug.Log(currentTarget + " " + currentTarget.activeSelf + Vector3.Distance(gameObject.transform.position, currentTarget.transform.position));
+            
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
             directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
+            
             // Obtenemos solo la rotación en el eje Z
             Vector3 currentEuler = rotationPart.rotation.eulerAngles;
             float targetZRotation = targetRotation.eulerAngles.y; // Usamos el valor en Y para rotación en el plano XZ
-
+            
             // Invertimos el ángulo de rotación en el eje Z
             float smoothYRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + rotationModel, Time.deltaTime * rotationSpeed);
 
@@ -81,5 +82,7 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);
+        if (currentTarget !=null)
+        Gizmos.DrawLine(currentTarget.transform.position, currentTarget.transform.position + Vector3.up*7);
     }
 }
