@@ -85,7 +85,7 @@ public class CarnivoraTower : Tower
                     break;
                 }
             }
-                foreach (Collider collider in colliders)
+            foreach (Collider collider in colliders)
             {
                 if (!_hasEnemyAssigned && collider.gameObject != null && collider.gameObject.activeSelf)
                 { // Si no tiene ningún enemigo asignado, se le asigna uno
@@ -95,7 +95,7 @@ public class CarnivoraTower : Tower
                     break;
                 }
                 else
-                { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool (pasa repentinamente a estar fuera de rango), entonces
+                { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces
                     if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
                     {
                         currentTarget = null;
@@ -170,13 +170,11 @@ public class CarnivoraTower : Tower
 
     public void Attack(IDamageable damageableEntity)
     {
-        //animator.SetTrigger("Attack");
         _attackMode = true;
         if (_canAttack)
         {
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
             //_currentCooldown = cooldown; // Reset del cooldown
-            //_canAttack = false;
         }
     }
 

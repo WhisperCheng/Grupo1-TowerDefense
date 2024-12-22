@@ -28,6 +28,8 @@ public abstract class RangedTower : Tower
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
 
+    protected List<Collider> attackingList;
+
     protected bool _attackMode = false;
     protected bool _canAttack = true;
 
@@ -65,6 +67,9 @@ public abstract class RangedTower : Tower
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+            _hasEnemyAssigned = false;
+            _attackMode = false;
+            currentTarget = null;
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
     }
@@ -77,59 +82,66 @@ public abstract class RangedTower : Tower
             enabled = true;
             _attackMode = false;
             _canAttack = false;
+            _hasEnemyAssigned = false;
+            _attackMode = false;
+            currentTarget = null;
             animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
         }
         return this.gameObject;
     }
 
-
     protected override void EnemyDetection()
     {
         //currentTargets.Clear();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
+       
         if (colliders.Length > 0)
         {
-
+            bool insideRange = false;
             foreach (Collider collider in colliders)
             {
-                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna uno
-                {
-                    //currentTargets.Add(collider.gameObject);
-                    currentTarget = collider.gameObject;
-                    _hasEnemyAssigned = true;
-                    _attackMode = true;
-                    animator.SetBool("AttackMode", true);
+                if (collider.gameObject != null && collider.gameObject.activeSelf
+                    && collider.gameObject == currentTarget) // Se comprueba si el enemigo está contenido dentro de la nueva lista de colisiones
+                {                               // De ser así, se actualiza insideRange a true y se deja de buscar dentro del bucle de colliders
+                    insideRange = true;
                     break;
+                }
+            }
+            Collider lastEnemy = colliders[colliders.Length - 1]; // Escoge al último enemigo que entró
+            if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna el enemigo
+            {
+                //currentTargets.Add(collider.gameObject);
+                currentTarget = lastEnemy.gameObject;
+                _hasEnemyAssigned = true;
+                _attackMode = true;
+            }
+            else
+            { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces
+                if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
+                {
+                    currentTarget = null;
+                    _hasEnemyAssigned = false;
+                    _attackMode = false;
                 }
             }
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
-            //if (currentTarget != null)
-            //{
+            if (currentTarget != null)
+            {
                 currentTarget = null;
-                _hasEnemyAssigned = false;
-                _attackMode = false;
-                animator.SetBool("AttackMode", false);
-            //}
+            }
+            _hasEnemyAssigned = false;
+            _attackMode = false;
         }
 
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
         {
             OnAttack();
         }
-    }
 
-    /*public override void Attack(IDamageable damageableEntity)
-    {
-        if (_canAttack)
-        {
-            //damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-            _currentCooldown = cooldown; // Reset del cooldown
-            _canAttack = false;
-            Debug.Log("AtaqueRosa");
-        }
-    }*/
+        animator.SetBool("AttackMode", _attackMode);
+    }
 
     public override void Init()
     {
@@ -139,6 +151,14 @@ public abstract class RangedTower : Tower
         _currentCooldown = cooldown;
         _healthBar = GetComponentInChildren<HealthBar>();
         _enemyMask = 1 << GameManager.Instance.layerEnemigos;
+        if (attackingList != null)
+        {
+            attackingList.Clear();
+        }
+        else
+        {
+            attackingList = new List<Collider>();
+        }
     }
 
     public override void OnAttack()
@@ -152,14 +172,7 @@ public abstract class RangedTower : Tower
         {
             _attackMode = false;
         }
-
-        /*if (!_canAttack || currentTarget == null)
-        {
-            //animator.SetBool("AttackMode", false);
-        }*/
     }
-
-
 
     public abstract void ShootProyectileEvent();
 
