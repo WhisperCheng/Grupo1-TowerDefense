@@ -59,7 +59,7 @@ public abstract class RangedTower : Tower
 
     public override void ReturnToPool()
     {
-        if (_initialized)
+        if (_initialized && _loaded)
         {
             _locked = true;
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo

@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.79
+      value: 3.44
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -373,7 +373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       propertyPath: m_TagString
@@ -690,11 +690,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4279822961977691105}
   m_SourcePrefab: {fileID: 100100000, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
---- !u!4 &130958325693804433 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8879528566716807029, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
-  m_PrefabInstance: {fileID: 8857223432581765348}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4649543179063663829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4210112674444559409, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
@@ -719,9 +714,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 16
   rotationSpeed: 5
-  rotationPart: {fileID: 130958325693804433}
-  rotationModel: 0
-  _locked: 0
+  rotationPart: {fileID: 9034665835644337935}
+  rotationModel: 180
+  _locked: 1
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}

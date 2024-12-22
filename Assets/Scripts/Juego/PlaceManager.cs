@@ -27,9 +27,8 @@ public class PlaceManager : MonoBehaviour
     public float maxPlaceDistance;
 
     GameObject particulasCopia;
-    
-    List<Material[]> materialesTorre;
-    List<Color[]> coloresOriginalesTorre;
+
+    MaterialPropertyBlock materialesSeleccionados;
 
     private void Awake()
     {
@@ -52,8 +51,15 @@ public class PlaceManager : MonoBehaviour
         // haciendo esto
         //https://youtu.be/NZBAr_V7r0M?t=153
         Cursor.lockState = CursorLockMode.Locked;
-        materialesTorre = new List<Material[]>();
-        coloresOriginalesTorre = new List<Color[]>();
+
+        // Materiales Seleccionados
+        materialesSeleccionados = new MaterialPropertyBlock();
+        materialesSeleccionados.SetColor("_BaseColor", selectedColor);
+        materialesSeleccionados.SetColor("_Color", selectedColor); // por si el material no tiene el toon shader
+        materialesSeleccionados.SetFloat("_Tweak_transparency", -(1 - selectedColor.a));
+        // Sombras
+        materialesSeleccionados.SetColor("_1st_ShadeColor", selectedColor);
+        materialesSeleccionados.SetColor("_2nd_ShadeColor", selectedColor);
     }
 
     // Update is called once per frame
@@ -96,88 +102,28 @@ public class PlaceManager : MonoBehaviour
 
     void SetPreviewMode(bool previewMode)
     {
-        // Por cada gameObject se añade su array de materiales correspondiente a la lista y la copia
-        // de los materiales originales
         Transform[] childs = torre.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
         {
             Transform child = childs[i];
-            Material[] mats = new Material[0];
-            Color[] matsColorCopy = null;
-
             Renderer rend = child.gameObject.GetComponent<Renderer>();
-            // PREPARACIÓN: Si está en modo preview y el objeto tiene un renderes disponible, se preparan
-            // los materiales del objeto y un array para los nuevos colores
             if (rend != null)
             {
-                if (previewMode)
+                if (previewMode) // Si se está en modo selección, se cambia el PropertyBlock de materiales al de materiales seleccionados
                 {
-                    mats = rend.materials;
-                    matsColorCopy = new Color[mats.Length];
+                    rend.SetPropertyBlock(materialesSeleccionados);
                 }
-                else
-                { // De lo contrario, se referencian los ya definidos materiales del objeto sin necesidad de volverlo a hacer
-                    //if (materialesTorre.Count > 0)
-                    //{
-                    mats = materialesTorre[i];
-                    //}
-                }
-
-                // Por cada material, se gestiona su color correspondiente según el modo preview
-                for (int j = 0; j < mats.Length; j++)
+                else // Y si deja de estarlo, se quita el PropertyBlock de materiales seleccionados
                 {
-                    Color c;
-                    float transparency;
-                    if (previewMode)
-                    {
-                        // ALMACENAMIENTO: Se escoge el color de cada material para sobre la marcha almacenarlo en la lista
-                        // de colores originales por cada array de materiales y cambiar el color del objeto
-                        c = new Color(selectedColor.r, selectedColor.g, selectedColor.b, 1);
-                        matsColorCopy[j] = mats[j].color; // Almacenando el color original
-                    }
-                    else
-                    {
-                        // RESUSTITUCIÓN: Se recupera el color original de cada material correspondiente para volverlo a aplicar
-                        // al objeto implicado
-                        c = coloresOriginalesTorre[i][j];
-                    }
-                    Material m = mats[j]; // Referenciando el material actual
-
-                    // CAMBIO DE COLOR Y TRANSPARENCIA
-                    m.SetColor("_BaseColor", c);
-                    m.SetColor("_Color", c); // por si el material no tiene el toon shader
-                    transparency = previewMode ? selectedColor.a : c.a;
-                    m.SetFloat("_Tweak_transparency", -(1 - transparency));
-                    // Sombras
-                    if (m.HasColor("_1st_ShadeColor") && m.HasColor("_2nd_ShadeColor"))
-                    {
-                        m.SetColor("_1st_ShadeColor", c);
-                        m.SetColor("_2nd_ShadeColor", c);
-                    }
-                }
-                if (previewMode) // Si está en preview se populan las listas para su futuro uso (previewMode == false)
-                {
-                    materialesTorre.Add(mats);
-                    coloresOriginalesTorre.Add(matsColorCopy);
+                    rend.SetPropertyBlock(null);
                 }
             }
         }
-        if (!previewMode) // Finalmente, si deja de estar en modo preview, se limpian las listas para un posterior nuevo uso
-        { // (al salir de todos los bucles)
-            ClearSelectedObjInfo();
-            torre.UnlockTower(); // Desbloquea la torre, permite atacar y rotar hacia los enemigos
-            //MoneyManager.
-        }
-    }
 
-    /// <summary>
-    /// Vacía la información de las listas usadas para posteriormente usar correctamente las listas con nuevos objetos.
-    /// </summary>
-    // Se invoca al terminar de colocar un objeto o al cancelar la colocación de este (click derecho)
-    private void ClearSelectedObjInfo()
-    {
-        materialesTorre = new List<Material[]>();
-        coloresOriginalesTorre = new List<Color[]>();
+        if (!previewMode) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
+        {  // lo que permite atacar y rotar hacia los enemigos
+            torre.UnlockTower();
+        }
     }
 
     private void ManageTowerPlacement()
@@ -192,7 +138,6 @@ public class PlaceManager : MonoBehaviour
                 if (!torre.gameObject.activeSelf)
                 {
                     torre.gameObject.SetActive(true);
-                    
                 }
                 torre.gameObject.transform.position = golpeRayo.point;
                 torre.SetLoaded(true); // Se establece que la torre ya ha sido cargada en el mundo. Útil para vereficar posteriormente
@@ -300,7 +245,6 @@ public class PlaceManager : MonoBehaviour
         //torre.gameObject.SetActive(true); // Necesario para activar los renderers
         SetPreviewMode(false);
         ToggleTowerCollisions(torre, true);
-        ClearSelectedObjInfo();
         objetoSiendoArrastrado = false;
         StartCoroutine(DesbloquearDisparo());
         //Destroy(torreCopiada);

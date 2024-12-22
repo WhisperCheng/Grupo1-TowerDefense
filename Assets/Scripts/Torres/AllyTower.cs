@@ -110,10 +110,13 @@ public class AllyTower : Tower
     }
     public override void ReturnToPool()
     {
-        _locked = true;
-        //_currentHealth = health; // Restaurar la salud del caballero al valor máximo
-        //_healthBar = GetComponentInChildren<HealthBar>();
-        //_healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        if (_initialized && _loaded)
+        {
+            _locked = true;
+            //_currentHealth = health; // Restaurar la salud del caballero al valor máximo
+            //_healthBar = GetComponentInChildren<HealthBar>();
+            //_healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+        }
         AllyTowerPool.Instance.ReturnAllyTower(this.gameObject);
     }
 
