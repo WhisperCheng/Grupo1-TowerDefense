@@ -64,14 +64,10 @@ public class PlaceManager : MonoBehaviour
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        /*if (objetoCopiado != null)
-        {
-            Destroy(objetoCopiado);
-        }*/
-        GenerateTower(torre);
+        GenerateTower();
     }
 
-    public void GenerateTower(Tower objeto)
+    public void GenerateTower() // Genera
     {
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
@@ -83,10 +79,6 @@ public class PlaceManager : MonoBehaviour
             /*torreCopiada = Instantiate(objeto,
                     !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);*/
             torre = torre.GetComponent<IPoolable>().GetFromPool().GetComponent<Tower>();
-            // Se cambia el "tag" <<original>> del objeto a falso para posteriormente poder borrar todos
-            // excepto el original
-            //objetoCopiado.GetComponent<PlaceableObject>().setIsACopy(true);
-            // TODO: Sin uso, pero se queda así por si hace falta luego eliminar todas las copias
 
             // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
             ToggleTowerCollisions(torre, false);
@@ -200,9 +192,11 @@ public class PlaceManager : MonoBehaviour
                 if (!torre.gameObject.activeSelf)
                 {
                     torre.gameObject.SetActive(true);
+                    
                 }
                 torre.gameObject.transform.position = golpeRayo.point;
-
+                torre.SetLoaded(true); // Se establece que la torre ya ha sido cargada en el mundo. Útil para vereficar posteriormente
+                // si todos los componentes han sido cargados y poder volver a enviar a la torre a la pool con los componentes ya inicializados
             }
             else
             {

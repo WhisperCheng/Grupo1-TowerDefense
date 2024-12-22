@@ -18,10 +18,14 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
     public float rotationModel = 0f;
 
     protected bool _hasEnemyAssigned = false;
-    protected bool _hasDied = false;
-    public bool _locked = true; // Bloqueado / ataque de torres desactivado por defecto. Se activa el ataque cuando se colocan
-    protected bool _initialized = false;
+    public bool _locked = true; // Bloqueado / ataque de torres desactivado por defecto. Se activa el ataque cuando se coloca la torre.
 
+    protected bool _initialized = false; // Initialized se usa para indicar si la torre ha sido cargada dentro de la escena (en memoria),
+                                         // ya sea estando desactivada o activada.
+
+    protected bool _loaded = false; // Loaded se llama cuando la torre está empezando a ser colocada (el objeto ya se ha cargado y es visible, aunque sea
+                                    // en modo previsualización). Se usa para saber si la torre ya ha sido colocada en el mundo y de esa forma saber si
+                                    // al devolverla a la pool se puede devolver con sus valores reiniciados en caso de que esos valores no sean nulos.
     protected int _enemyMask;
 
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
@@ -48,20 +52,17 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
 
     protected virtual void LookRotation()
     {
-        //Debug.Log(currentTarget + " " + currentTarget.activeSelf + Vector3.Distance(gameObject.transform.position, currentTarget.transform.position));
-        //Debug.Log((currentTarget != null) + " " +  (rotationPart != null) + " " + _locked);
         if (currentTarget != null && rotationPart != null)
         {
-            
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
             directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
             
-            // Obtenemos solo la rotación en el eje Z
+            // Obtenemos solo la rotación en el eje Y
             Vector3 currentEuler = rotationPart.rotation.eulerAngles;
             float targetZRotation = targetRotation.eulerAngles.y; // Usamos el valor en Y para rotación en el plano XZ
             
-            // Invertimos el ángulo de rotación en el eje Z
+            // Se suaviza el ángulo de rotación en el eje Y
             float smoothYRotation = Mathf.LerpAngle(currentEuler.y, targetZRotation + rotationModel, Time.deltaTime * rotationSpeed);
 
             rotationPart.rotation = Quaternion.Euler(currentEuler.x, smoothYRotation, currentEuler.z);
@@ -78,6 +79,12 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
     {
         return _locked;
     }
+
+    public void SetLoaded(bool loaded)
+    {
+        _loaded = loaded;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

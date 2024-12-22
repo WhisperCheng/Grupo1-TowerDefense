@@ -72,25 +72,37 @@ public class CarnivoraTower : Tower
         //currentTargets.Clear();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
 
-        if (!_hasEnemyAssigned) currentTarget = null;
-        if (colliders.Length > 0)
+        //if (!_hasEnemyAssigned) currentTarget = null;
+        if (colliders.Length > 0) // Si hay enemigos
         {
+            bool insideRange = false;
             foreach (Collider collider in colliders)
+            { 
+                if(collider.gameObject != null && collider.gameObject.activeSelf 
+                    && collider.gameObject == currentTarget) // Se comprueba si el enemigo está contenido dentro de la nueva lista de colisiones
+                {                               // De ser así, se actualiza insideRange a true y se deja de buscar dentro del bucle de colliders
+                    insideRange = true;
+                    break;
+                }
+            }
+                foreach (Collider collider in colliders)
             {
-                if (/*!_hasEnemyAssigned && */collider.gameObject != null && collider.gameObject.activeSelf
-                    /*&& Vector3.Distance(gameObject.transform.position, collider.transform.position) <= range*/) // Si no tiene ningún enemigo asignado, se le asigna uno
-                {
+                if (!_hasEnemyAssigned && collider.gameObject != null && collider.gameObject.activeSelf)
+                { // Si no tiene ningún enemigo asignado, se le asigna uno
                     currentTarget = collider.gameObject;
                     _hasEnemyAssigned = true;
                     _attackMode = true;
                     break;
                 }
-                /*else
-                {
-                    currentTarget = null;
-                    _hasEnemyAssigned = false;
-                    _attackMode = false;
-                }*/
+                else
+                { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool (pasa repentinamente a estar fuera de rango), entonces
+                    if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
+                    {
+                        currentTarget = null;
+                        _hasEnemyAssigned = false;
+                        _attackMode = false;
+                    }
+                }
             }
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
@@ -192,7 +204,6 @@ public class CarnivoraTower : Tower
 
     public override void Die()
     {
-        _hasDied = true;
         ReturnToPool();
     }
 
@@ -204,7 +215,7 @@ public class CarnivoraTower : Tower
 
     public override void ReturnToPool()
     {
-        if (_initialized)
+        if (_initialized && _loaded)
         {
             _locked = true;
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
@@ -288,22 +299,6 @@ public class CarnivoraTower : Tower
             }
         }
     }
-
-
-    /*private void OnTriggerEnter(Collider collision)
-    {
-        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
-        //bool isEnemy = collision.tag != "Ally" && collision.tag != "Tower"
-        if (entity != null && collision.CompareTag("Enemy") && entity.GetHealth() > 0)
-        {
-            if (!attackingList.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
-            {                                       // no contiene a la entidad, se almacena en ella
-                attackingList.Add(collision);
-                Debug.Log(attackingList.Count);
-            }
-        }
-    }*/
 
     private void OnTriggerExit(Collider collision)
     {

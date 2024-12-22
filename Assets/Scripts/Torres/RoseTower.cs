@@ -30,7 +30,6 @@ public class RoseTower : RangedTower
 
     public override void Die()
     {
-        _hasDied = true;
         ReturnToPool();
     }
 

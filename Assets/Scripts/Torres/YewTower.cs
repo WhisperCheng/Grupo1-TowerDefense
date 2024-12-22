@@ -39,7 +39,6 @@ public class YewTower : RangedTower
     }
     public override void Die()
     {
-        _hasDied = true;
         ReturnToPool();
     }
     public override void ReturnToPool()
