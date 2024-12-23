@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AllyTower : Tower
+public class ToconTower : Tower
 {
     [Header("Vida")]
     [SerializeField] protected float health = 100;
     //protected float _currentHealth;
     //protected HealthBar _healthBar;
+
+    public ToconBrain brain;
 
     private List<GameObject> attackingList = new List<GameObject>();
     protected override void LookRotation() { }

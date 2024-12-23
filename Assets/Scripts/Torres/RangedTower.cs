@@ -11,7 +11,7 @@ public abstract class RangedTower : Tower
     [SerializeField] protected ParticleSystem _particulasGolpe;
 
     [Header("Ataque")] //Ataque
-    public float attackDamage;
+    public float projectileDamage;
     public float cooldown = 1f;
 
     //[Header("Animaciones")]
@@ -28,8 +28,6 @@ public abstract class RangedTower : Tower
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
 
-    protected List<Collider> attackingList;
-
     protected bool _attackMode = false;
     protected bool _canAttack = true;
 
@@ -45,6 +43,14 @@ public abstract class RangedTower : Tower
         {
             //ManageCooldown(); // TODO: Implementar cooldown
             EnemyDetection();
+            //LookRotation();
+        }
+    }
+
+    protected void LateUpdate()
+    {
+        if (!_locked)
+        {
             LookRotation();
         }
     }
@@ -70,6 +76,8 @@ public abstract class RangedTower : Tower
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
+            //animator.keepAnimatorStateOnDisable = false;
+            
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
     }
@@ -79,16 +87,32 @@ public abstract class RangedTower : Tower
         if (!_locked)
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
-            enabled = true;
-            _attackMode = false;
             _canAttack = false;
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
-            animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
+            /*animator.enabled = true;
+            animator.Rebind();
+            animator.Update(0f);*/
+            /* animator.keepAnimatorStateOnDisable = true;*/
+            /*animator.Rebind();
+            animator.Update(0f);
+            animator.Play("Idle", 0);*/
+            //Debug.Log("a " + );
         }
         return this.gameObject;
     }
+
+    /*public override void SetLoaded(bool loaded)
+    {
+        base.SetLoaded(loaded);
+        if (animator != null)
+        {
+            animator.enabled = true;
+            animator.Rebind();
+            animator.Update(0f);
+        }
+    }*/
 
     protected override void EnemyDetection()
     {
@@ -114,14 +138,15 @@ public abstract class RangedTower : Tower
                 currentTarget = lastEnemy.gameObject;
                 _hasEnemyAssigned = true;
                 _attackMode = true;
+                Debug.Log("D" + _attackMode);
             }
             else
             { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces
                 if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
                 {
                     currentTarget = null;
-                    _hasEnemyAssigned = false;
-                    _attackMode = false;
+                    //_hasEnemyAssigned = false;
+                    //_attackMode = false;
                 }
             }
         }
@@ -139,7 +164,7 @@ public abstract class RangedTower : Tower
         {
             OnAttack();
         }
-
+        
         animator.SetBool("AttackMode", _attackMode);
     }
 
@@ -151,14 +176,8 @@ public abstract class RangedTower : Tower
         _currentCooldown = cooldown;
         _healthBar = GetComponentInChildren<HealthBar>();
         _enemyMask = 1 << GameManager.Instance.layerEnemigos;
-        if (attackingList != null)
-        {
-            attackingList.Clear();
-        }
-        else
-        {
-            attackingList = new List<Collider>();
-        }
+        _attackMode = false;
+        animator.SetBool("AttackMode", _attackMode); // Dejar de reproducir animación de atacar
     }
 
     public override void OnAttack()
@@ -167,10 +186,6 @@ public abstract class RangedTower : Tower
         {
             _currentCooldown = cooldown; // Reset del cooldown
             animator.SetTrigger("Attack");
-        }
-        else
-        {
-            _attackMode = false;
         }
     }
 

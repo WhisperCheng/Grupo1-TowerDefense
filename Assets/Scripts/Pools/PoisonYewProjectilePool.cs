@@ -54,6 +54,7 @@ public class PoisonYewProjectilePool : MonoBehaviour
             //Debug.Log("Pool de proyectiles del tejo venenoso vacía.");
             GameObject newProjectile = Instantiate(poisonYewProjectilePrefab);
             newProjectile.transform.parent = parent.transform;
+            newProjectile.SetActive(true);
             return newProjectile;
         }
 

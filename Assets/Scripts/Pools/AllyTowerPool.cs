@@ -53,6 +53,7 @@ public class AllyTowerPool : MonoBehaviour
             Debug.Log("Pool de torres de aliados vacía.");
             GameObject newTower = Instantiate(allyTowerPrefab);
             newTower.transform.parent = parent.transform;
+            newTower.SetActive(true);
             return newTower;
         }
 
