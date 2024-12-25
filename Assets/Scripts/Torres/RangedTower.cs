@@ -138,7 +138,6 @@ public abstract class RangedTower : Tower
                 currentTarget = lastEnemy.gameObject;
                 _hasEnemyAssigned = true;
                 _attackMode = true;
-                Debug.Log("D" + _attackMode);
             }
             else
             { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces

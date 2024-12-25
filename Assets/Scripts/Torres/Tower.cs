@@ -52,7 +52,7 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
 
     protected virtual void LookRotation()
     {
-        if (currentTarget != null && rotationPart != null)
+        if (currentTarget != null && rotationPart != null && !_locked)
         {
             Vector3 directionToTarget = currentTarget.transform.position - rotationPart.position;
             directionToTarget.y = 0; // Mantenemos solo la rotación en el plano XZ
