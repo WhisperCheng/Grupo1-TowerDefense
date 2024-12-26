@@ -57,10 +57,10 @@ public class MiniKnightAI : MonoBehaviour
         //enemyAI._agent.SetDestination(GameManager.Instance.wayPoints[0].transform.position);
 
         // Si necesitas reiniciar animaciones o efectos, también puedes hacerlo aquí
-        if (enemyAI.animatorController != null)
-        {
+        //if (enemyAI.animatorController != null)
+        //{
             // Reiniciar animaciones si es necesario
-            enemyAI.animatorController.SetTrigger("Reset"); // Asume que tienes un trigger para resetear animaciones
-        }
+            //enemyAI.animatorController.SetTrigger("Reset"); // Asume que tienes un trigger para resetear animaciones
+        //}
     }
 }

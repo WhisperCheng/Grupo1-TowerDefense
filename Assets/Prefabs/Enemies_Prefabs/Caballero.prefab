@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.40563917
+      value: 0.415
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.92
+      value: 3.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalRotation.w
@@ -258,7 +258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_TagString
@@ -517,11 +517,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4415481603863536599}
   m_SourcePrefab: {fileID: 100100000, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
---- !u!95 &1430370802095963213 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
-  m_PrefabInstance: {fileID: 4806228123316486620}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4988192326317303351 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
@@ -558,7 +553,6 @@ MonoBehaviour:
   attackDamage: 5
   cooldown: 1
   reachAttackRange: 2.3
-  animatorController: {fileID: 1430370802095963213}
 --- !u!195 &7258662094469348518
 NavMeshAgent:
   m_ObjectHideFlags: 0

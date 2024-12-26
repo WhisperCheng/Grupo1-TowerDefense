@@ -4,39 +4,86 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mov_Seta : MonoBehaviour
+public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
 {
     //VARIABLES
-    int radio = 15;
-    int longRayo = 1;
-    float vida = 10;
-    float fuerza = 20;
+    [Header("Variables Seta Aliada IA")]
+    //public int radio = 15;
+    public float speed = 4f;
+    public float cooldown = 0f;
+    public float distanceFromWhichCanGetInsideHome = 1f;
+    //private int longRayo = 1;
 
-    //GAMEOBJECT
-    public Transform enemigoMaza; //maza o el que sea que sigue la seta
-    public Transform baseAliada;
-    public GameObject enemigoActual;
-    public List<GameObject> objetivoActual = new List<GameObject>();
+    [Header("Vida")] // Vida
+    public float vida = 10;
+    private HealthBar _healthBar;
+
+    [Header("Ataque")] //Ataque
+    public float attackDamage = 1;
+    //public float cooldown;
+    public float reachAttackRange = 3;
+
+
+    //GAMEOBJECTs
+    //public Transform enemigo; 
+    //public Transform baseAliada;
+    private ToconBrain toconBrain;
+    public ToconBrain ToconBrain { private get; set; } // Encapsulación del toconBrain con getter y setter
+    private GameObject enemigoActual; //maza o el que sea que sigue la seta
+    private List<Collider> objetivosDeAtaqueActuales = new List<Collider>();
 
     //CONTROLADORES
-    Animator animator;
-    Rigidbody rb;
-    NavMeshAgent navAgent;
-    RaycastHit raycast;
+    private Animator _animator;
+    private Rigidbody rb;
+    private NavMeshAgent _navAgent;
+    private RaycastHit raycast;
+
+    private float _currentHealth;
+    private float _maxHealth;
+    private float _maxVelocity;
+    private float _currentCooldown = 0f;
+
+    private bool _initialized = false;
+    private bool _canDamage = false;
+    private bool _attackMode = false;
+
+    private int _velocityHash;
+
+    public override void Init()
+    {
+        _initialized = true;
+        _currentHealth = vida; // Inicializar/Restaurar la salud del caballero al valor máximo
+        _maxHealth = vida;
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _navAgent = GetComponent<NavMeshAgent>();
+        _currentCooldown = 0f;
+        _animator = GetComponent<Animator>();
+        objetivosDeAtaqueActuales = new List<Collider>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
-        navAgent = GetComponent<NavMeshAgent>();
+        _velocityHash = Animator.StringToHash("VelMagnitud");
+        //
+        //animator = GetComponent<Animator>();
+        //navAgent = GetComponent<NavMeshAgent>();
+        Init();
+        _maxVelocity = _navAgent.speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        SeguirEnemigo();
-        AtacarEnemigo();
+        if (isActiveAndEnabled)
+        {
+            SeguirEnemigo();
+            AnimarSeta();
+            CheckRivalsInsideAttackRange();
+            ManejarAtaqueAEnemigos();
+        }
+        
+        //AtacarEnemigo();
 
 
         //Si no tiene enemigo seleccionado
@@ -48,9 +95,14 @@ public class Mov_Seta : MonoBehaviour
             // si lo atacas y no esta enemigo lockeado null 
 
     }
-    private void DetectarEnemigo()
+
+    private void AnimarSeta()
     {
-        objetivoActual.Clear();
+        _animator.SetFloat(_velocityHash, _navAgent.velocity.magnitude / _maxVelocity);
+    }
+    /*private void DetectarEnemigo()
+    {
+        objetivosActuales.Clear();
 
         Collider[] listaChoques = Physics.OverlapSphere(transform.position, radio);
 
@@ -58,51 +110,251 @@ public class Mov_Seta : MonoBehaviour
         {
             if (enemigo.CompareTag("Enemy"))
             {
-                objetivoActual.Add(enemigo.gameObject);
+                objetivosActuales.Add(enemigo);
             }
         }
 
-        if (objetivoActual.Count > 0 && enemigoActual == null)
+        if (objetivosActuales.Count > 0 && enemigoActual == null)
         {
-            enemigoActual = objetivoActual[0];
+            //enemigoActual = objetivosActuales[0].gameObject; // TODO
         }
 
-        if (enemigoActual != null && !objetivoActual.Contains(enemigoActual))
+        //if (enemigoActual != null && !objetivosActuales.Contains(enemigoActual))
+        //{
+            //enemigoActual = null;
+        //}
+    }*/
+
+    public void AttackEvent()
+    {
+        if (_attackMode) // Si está únicamente en modo de ataque (cuando hay un rival dentro de la hitbox de ataque,
+        {               // activar el booleano de hacer daño)
+            _canDamage = true;
+        }
+        else
         {
-            enemigoActual = null;
+            _canDamage = false;
         }
     }
-    void SeguirEnemigo()
+
+    private bool ComprobarSiEsNuevoDestino(Vector3 dest)
     {
-        Collider[] listaChoques;
+        return _navAgent.destination != dest;
+    }
+
+    private void SeguirEnemigo()
+    {
+        enemigoActual = toconBrain.ObjetivoActual;
+
+        if (enemigoActual)
+        {
+            Vector3 enemigoPos = toconBrain.ObjetivoActual.transform.position;
+            if (ComprobarSiEsNuevoDestino(enemigoPos)) // Si tiene una nueva posición diferente, se actualiza
+            {
+                _navAgent.SetDestination(enemigoPos);
+            }
+            //_animator.SetBool("Caminar", true);
+            _attackMode = true;
+        }
+        else
+        { // Cuando no haya enemigos a detectar, se van todos a su casa y se van a la pool de objetos
+            if (ComprobarSiEsNuevoDestino(toconBrain.HomePos))
+            _navAgent.SetDestination(toconBrain.HomePos);
+            _attackMode = false;
+
+            if(Vector3.Distance(transform.position, toconBrain.HomePos) <= distanceFromWhichCanGetInsideHome)
+            {
+                Die(); // Retornar a la pool y descontar aliado del toconBrain
+            }
+        }
+
+        _animator.SetBool("AttackMode", _attackMode);
+
+        /*Collider[] listaChoques;
         listaChoques = Physics.OverlapSphere(transform.position, radio);
         foreach (Collider enemigo in listaChoques)
         {
             if (enemigo.CompareTag("Enemy"))
             {
                 animator.SetBool("Caminar", true);
-                navAgent.SetDestination(enemigoMaza.position);
+                _navAgent.SetDestination(enemigo.transform.position);
+            }
+        }*/
+    }
+    public void SetToconBrain(ToconBrain brain)
+    {
+        toconBrain = brain;
+    }
+    private void ManejarAtaqueAEnemigos()
+    {
+        if (_canDamage)
+        {
+            foreach (Collider col in objetivosDeAtaqueActuales)
+            {
+                IDamageable enemigo = col.GetComponent<IDamageable>();
+                enemigo.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
             }
         }
-    }
-    void AtacarEnemigo()
-    {
-        Vector3 origen = transform.position;
+
+        if (_canDamage && _attackMode)
+        { // Se recorre la lista de los objetivos a atacar y se les hace daño
+            for (int i = 0; i < objetivosDeAtaqueActuales.Count; i++)
+            {
+                if (objetivosDeAtaqueActuales[i] != null && objetivosDeAtaqueActuales[i].enabled && objetivosDeAtaqueActuales[i].gameObject.activeSelf)
+                {
+                    IDamageable entity = objetivosDeAtaqueActuales[i].GetComponent<IDamageable>();
+                    Attack(entity);
+                }
+            }
+            //_attackMode = false;
+            _canDamage = false; // Se quita el modo de atacar
+            _currentCooldown = cooldown; // Reset del cooldown
+        }
+        /*Vector3 origen = transform.position;
         Vector3 direccion = transform.forward;
         if (Physics.Raycast(origen, direccion, out raycast, longRayo))
         {
-            radio = 0;
-            animator.SetBool("Ataca", true);
+            //radio = 0;
+            _animator.SetBool("Ataca", true);
         }
         else
         {
-            animator.SetBool("Ataca", false);
+            _animator.SetBool("Ataca", false);
             //navAgent.SetDestination(baseAliada.position);
+        }*/
+    }
+
+    private void CheckRivalsInsideAttackRange()
+    {
+        for (int i = 0; i < objetivosDeAtaqueActuales.Count; i++)
+        {
+            Collider col = objetivosDeAtaqueActuales[i];
+            if (col == null || !col.gameObject.activeSelf)
+            {
+                objetivosDeAtaqueActuales.Remove(col);
+            }
+        }
+
+        if (_canDamage)
+        {
+            // Si la lista es tamaño == 0, desactivar el daño
+            if (objetivosDeAtaqueActuales.Count == 0)
+            {
+                _attackMode = false;
+                _animator.SetBool("AttackMode", false);
+                _canDamage = false;
+            }
         }
     }
-    private void OnDrawGizmos()
+
+    private void Attack(IDamageable damageableEntity)
     {
-        Gizmos.DrawWireSphere(transform.position, radio);
-        Gizmos.color = Color.blue;
+        if (_canDamage)
+        {
+            damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
+        }
+    }
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, reachAttackRange);
+    }
+#endif
+
+    public void Die()
+    {
+        toconBrain.QuitarAliado();
+        ReturnToPool();
+    }
+
+    public void TakeDamage(float damageAmount)
+    {
+        if (isActiveAndEnabled)
+        {
+            _currentHealth -= damageAmount;
+            //OnDamageTaken();
+
+            // Actualizar barra de vida
+            _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
+            if (_currentHealth <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
+    public float GetHealth()
+    {
+        return vida;
+    }
+
+    public GameObject RestoreToDefault()
+    {
+        //if (GetComponent<NavMeshAgent>() != null)
+        if (_initialized)
+        {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
+            Init();
+            _attackMode = false;
+            _canDamage = false;
+            _animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
+        }
+        return this.gameObject;
+    }
+
+    public GameObject GetFromPool()
+    {
+        return AllyPool.Instance.GetAlly();
+    }
+
+    public void ReturnToPool()
+    {
+        _currentHealth = vida; // Restaurar la salud del aliado al valor máximo
+        _healthBar = GetComponentInChildren<HealthBar>();
+        _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+
+        // Llamamos a la pool para devolver al aliado
+        AllyPool.Instance.ReturnAlly(this.gameObject);
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
+        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        {
+            if (objetivosDeAtaqueActuales.Contains(collision))
+            {
+                _attackMode = true;
+                _animator.SetTrigger("Attack");
+                
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        {
+            if (!objetivosDeAtaqueActuales.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
+            {                                       // no contiene a la entidad, se almacena en ella
+                objetivosDeAtaqueActuales.Add(collision);
+                
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+
+        IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
+        if (entity != null && collision.tag == "Enemy")
+        {
+            _animator.SetBool("AttackMode", false);
+            // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
+            objetivosDeAtaqueActuales.Remove(collision);
+        }
     }
 }

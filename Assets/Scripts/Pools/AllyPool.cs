@@ -36,6 +36,8 @@ public class AllyPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
+        parent = new GameObject("Ally_PC");
+        parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
             GameObject ally = Instantiate(allyPrefab);
@@ -50,11 +52,17 @@ public class AllyPool : MonoBehaviour
         if (pool.Count == 0)
         {
             Debug.Log("Pool de aliados vacía.");
-            return null;
+            GameObject newAlly = Instantiate(allyPrefab);
+            newAlly.transform.parent = parent.transform;
+            newAlly.SetActive(true);
+            return newAlly;
         }
 
         GameObject ally = pool.Pop();
+        IPoolable poolableAlly = ally.GetComponent<IPoolable>();
         ally.SetActive(true);
+        // Solo se resetea si ya ha existido previamente
+        ally = poolableAlly.RestoreToDefault();
 
         return ally;
     }

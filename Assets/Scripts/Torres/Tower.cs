@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
+public abstract class Tower : LivingEntityAI, IPoolable
 {
     [Header("Variables Torre")]
     public float range = 10f;
     public float rotationSpeed = 5f;
+    public float towerRadiusSize = 1f;
 
     [Header("Parte a rotar")]
     public Transform rotationPart;
@@ -47,6 +48,7 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
         _locked = true; // Por defecto cuando se crea la torre en el modo Preview con el PlaceManager la torre
                         // estará bloqueada para que no pueda atacar hasta que se coloque.
                         // El PlaceManager se encargará de desbloquear la torre una vez colocada
+        _enemyMask = 1 << GameManager.Instance.layerEnemigos;
         _initialized = true;
     }
 
@@ -89,7 +91,9 @@ public abstract class Tower : LivingEntityAI, IDamageable, IPoolable, ILockeable
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);
-        if (currentTarget !=null)
+        if (currentTarget != null)
         Gizmos.DrawLine(currentTarget.transform.position, currentTarget.transform.position + Vector3.up*7);
+        Gizmos.color = Color.gray;
+        Gizmos.DrawSphere(transform.position, towerRadiusSize);
     }
 }

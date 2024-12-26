@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarnivoraTower : Tower
+public class CarnivoraTower : Tower, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;

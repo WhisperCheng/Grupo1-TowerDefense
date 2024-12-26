@@ -37,6 +37,7 @@ public class AllyTowerPool : MonoBehaviour
     {
         pool = new Stack<GameObject>();
         parent = new GameObject("AllyTower_PC");
+        parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
             GameObject tower = Instantiate(allyTowerPrefab);

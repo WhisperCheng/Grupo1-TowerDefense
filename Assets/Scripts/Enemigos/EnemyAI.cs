@@ -30,8 +30,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     public float cooldown;
     public float reachAttackRange = 3;
 
-    [Header("Animaciones")]
-    public Animator animatorController;
+    //[Header("Animaciones")]
+    protected Animator animatorController;
 
     protected Vector3 _destination;
     protected float _defaultAcceleration;
@@ -107,7 +107,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
 
         // Se obtiene al jugador más cercano
-        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(listaChoques, transform.position, ignoreTagList, true, reachAttackRange);
+        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(listaChoques, transform.position, null, true, reachAttackRange);
         if (nearestRival != null)
             // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
@@ -210,7 +210,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     public virtual void TakeDamage(float damageAmount) // Se puede sobreescribir (virtual), por si es necesario
     {
         // Dañar enemigo si está habilitado
-        if (enabled)
+        if (isActiveAndEnabled)
         {
             _currentHealth -= damageAmount;
             OnDamageTaken();

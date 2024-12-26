@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RangedTower : Tower
+public abstract class RangedTower : Tower, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;

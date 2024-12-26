@@ -132,7 +132,7 @@ public class PlaceManager : MonoBehaviour
         {
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
-            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, 1 << GameManager.Instance.layerPath);
+            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, (1 << GameManager.Instance.layerTerreno));
             if (colisionConRayo)
             {
                 if (!torre.gameObject.activeSelf)

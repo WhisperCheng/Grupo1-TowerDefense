@@ -2,61 +2,101 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ToconBrain))]
 public class ToconTower : Tower
 {
-    [Header("Vida")]
-    [SerializeField] protected float health = 100;
-    //protected float _currentHealth;
-    //protected HealthBar _healthBar;
+    [Header("Spawn Setas Aliadas")]
+    [SerializeField] private Transform spawn;
 
-    public ToconBrain brain;
+    [Header("Cantidad Setas Aliadas")]
+    [SerializeField] private int maximaCantidadSetas;
 
-    private List<GameObject> attackingList = new List<GameObject>();
-    protected override void LookRotation() { }
+    [Header("Cooldown de spawn")]
+    [SerializeField] private float spawnCooldown;
 
+    private ToconBrain brain;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        Init();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!_locked)
+        {
+            brain.SpawnCooldown = spawnCooldown; // Actualizar constantemente variables del cerebro si es necesario
+            brain.MaxNumAliados = maximaCantidadSetas;
+            EnemyDetection();
+        }
+    }
+
+    public override void Die() { } // El tocón no tiene vida, pero los enemigos sí, por lo que nunca va a morir
+    public override void TakeDamage(float damageAmount) { } // Lo mismo con TakeDamage y OnDamageTaken y otras funciones
+    protected override void OnDamageTaken() { }
+    public override float GetHealth() { return 0; }
+    public override void OnAttack() { }
+    public override void Init()
+    {
+        base.Init();
+        brain = GetComponent<ToconBrain>();
+        currentTarget = null;
+        _hasEnemyAssigned = false;
+    }
     protected override void EnemyDetection()
     {
-        //currentTargets.Clear();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
+
         if (colliders.Length > 0)
         {
-
+            bool insideRange = false;
             foreach (Collider collider in colliders)
             {
-                if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna uno
-                {
-                    //currentTargets.Add(collider.gameObject);
-                    currentTarget = collider.gameObject;
-                    _hasEnemyAssigned = true;
-
-                    if (!attackingList.Contains(currentTarget))
-                    {
-                        attackingList.Add(currentTarget);
-                    }
+                if (collider.gameObject != null && collider.gameObject.activeSelf
+                    && collider.gameObject == currentTarget) // Se comprueba si el enemigo está contenido dentro de la nueva lista de colisiones
+                {                               // De ser así, se actualiza insideRange a true y se deja de buscar dentro del bucle de colliders
+                    insideRange = true;
                     break;
+                }
+            }
+            Collider lastEnemy = colliders[colliders.Length - 1]; // Escoge al último enemigo que entró
+            if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna el enemigo
+            {
+                currentTarget = lastEnemy.gameObject;
+                _hasEnemyAssigned = true;
+                //_attackMode = true;
+            }
+            else
+            { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces
+                if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
+                {
+                    currentTarget = null;
+                    //_hasEnemyAssigned = false;
+                    //_attackMode = false;
                 }
             }
         }
         else // Si no se han detectado enemigos, el target actual es nulo y no le hace focus a nada
         {
-            if (attackingList.Contains(currentTarget)) // TODO
+            if (currentTarget != null)
             {
-                attackingList.Remove(currentTarget);
+                currentTarget = null;
             }
-            //if (currentTarget != null)
-            //{
-            currentTarget = null;
             _hasEnemyAssigned = false;
-            //}
+            //_attackMode = false;
+        }
+        
+        if (currentTarget == null) // Si no tiene un enemigo asignado entonces las setas se irán a su casa
+        {
+            _hasEnemyAssigned = false;
         }
 
-        //if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
-        //{
-            //OnAttack();
-        //}
+        brain.ObjetivoActual = currentTarget;
     }
 
-    private void DetectarEnemigo() //
+    /*private void DetectarEnemigos() //
     {
         attackingList.Clear();
 
@@ -70,54 +110,30 @@ public class ToconTower : Tower
             }
         }
 
-        if (attackingList.Count > 0 && currentTarget == null)
+        if (attackingList.Count > 0 && brain.ObjetivoActual == null)
         {
-            currentTarget = attackingList[0];
+            brain.ObjetivoActual = attackingList[0];
         }
 
-        if (currentTarget != null && !attackingList.Contains(currentTarget))
+        if (brain.ObjetivoActual != null && !attackingList.Contains(brain.ObjetivoActual))
         {
-            currentTarget = null;
+            brain.ObjetivoActual = null;
         }
+    }*/
+    public override void UnlockTower()
+    {
+        base.UnlockTower();
+        brain = GetComponent<ToconBrain>();
+        brain.ResetValues(spawn.transform.position, spawnCooldown, maximaCantidadSetas); // Reset cerebro e iniciar a partir del momento del desbloqueo el spawn de aliados
+        brain.ActivarSpawn();
+        //brain.SpawnCooldown = spawnCooldown;
     }
 
-    public override void Die()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override float GetHealth()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Init()
-    {
-        base.Init();
-    }
-
-    public override void OnAttack()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void TakeDamage(float damageAmount)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void OnDamageTaken()
-    {
-        throw new System.NotImplementedException();
-    }
     public override void ReturnToPool()
     {
-        if (_initialized && _loaded)
+        if (_initialized)
         {
             _locked = true;
-            //_currentHealth = health; // Restaurar la salud del caballero al valor máximo
-            //_healthBar = GetComponentInChildren<HealthBar>();
-            //_healthBar.ResetHealthBar(); // Actualizamos la barra de salud
         }
         AllyTowerPool.Instance.ReturnAllyTower(this.gameObject);
     }
@@ -125,23 +141,16 @@ public class ToconTower : Tower
     public override GameObject RestoreToDefault()
     {
         // TODO
+        if (_initialized)
+        {
+            Init();
+        }
+        
         return gameObject;
     }
 
     public override GameObject GetFromPool()
     {
         return AllyTowerPool.Instance.GetAllyTower();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
