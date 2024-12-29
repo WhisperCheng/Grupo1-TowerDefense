@@ -100,30 +100,6 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     {
         _animator.SetFloat(_velocityHash, _navAgent.velocity.magnitude / _maxVelocity);
     }
-    /*private void DetectarEnemigo()
-    {
-        objetivosActuales.Clear();
-
-        Collider[] listaChoques = Physics.OverlapSphere(transform.position, radio);
-
-        foreach (Collider enemigo in listaChoques)
-        {
-            if (enemigo.CompareTag("Enemy"))
-            {
-                objetivosActuales.Add(enemigo);
-            }
-        }
-
-        if (objetivosActuales.Count > 0 && enemigoActual == null)
-        {
-            //enemigoActual = objetivosActuales[0].gameObject; // TODO
-        }
-
-        //if (enemigoActual != null && !objetivosActuales.Contains(enemigoActual))
-        //{
-            //enemigoActual = null;
-        //}
-    }*/
 
     public void AttackEvent()
     {
@@ -167,19 +143,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
                 Die(); // Retornar a la pool y descontar aliado del toconBrain
             }
         }
-
         _animator.SetBool("AttackMode", _attackMode);
-
-        /*Collider[] listaChoques;
-        listaChoques = Physics.OverlapSphere(transform.position, radio);
-        foreach (Collider enemigo in listaChoques)
-        {
-            if (enemigo.CompareTag("Enemy"))
-            {
-                animator.SetBool("Caminar", true);
-                _navAgent.SetDestination(enemigo.transform.position);
-            }
-        }*/
     }
     public void SetToconBrain(ToconBrain brain)
     {
@@ -187,14 +151,14 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     }
     private void ManejarAtaqueAEnemigos()
     {
-        if (_canDamage)
+        /*if (_canDamage)
         {
             foreach (Collider col in objetivosDeAtaqueActuales)
             {
                 IDamageable enemigo = col.GetComponent<IDamageable>();
                 enemigo.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
             }
-        }
+        }*/
 
         if (_canDamage && _attackMode)
         { // Se recorre la lista de los objetivos a atacar y se les hace daño
@@ -210,18 +174,6 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
             _canDamage = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown
         }
-        /*Vector3 origen = transform.position;
-        Vector3 direccion = transform.forward;
-        if (Physics.Raycast(origen, direccion, out raycast, longRayo))
-        {
-            //radio = 0;
-            _animator.SetBool("Ataca", true);
-        }
-        else
-        {
-            _animator.SetBool("Ataca", false);
-            //navAgent.SetDestination(baseAliada.position);
-        }*/
     }
 
     private void CheckRivalsInsideAttackRange()
@@ -322,7 +274,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
-        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        if (entity != null && collision.tag == GameManager.Instance.tagEnemigos && entity.GetHealth() > 0)
         {
             if (objetivosDeAtaqueActuales.Contains(collision))
             {
@@ -336,7 +288,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     private void OnTriggerEnter(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-        if (entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0)
+        if (entity != null && collision.tag == GameManager.Instance.tagEnemigos && entity.GetHealth() > 0)
         {
             if (!objetivosDeAtaqueActuales.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
             {                                       // no contiene a la entidad, se almacena en ella
@@ -350,7 +302,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     {
 
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
-        if (entity != null && collision.tag == "Enemy")
+        if (entity != null && collision.tag == GameManager.Instance.tagEnemigos)
         {
             _animator.SetBool("AttackMode", false);
             // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque

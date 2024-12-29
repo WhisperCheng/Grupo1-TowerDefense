@@ -8,7 +8,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
     [Header("Variables Torre")]
     public float range = 10f;
     public float rotationSpeed = 5f;
-    public float towerRadiusSize = 1f;
+    //public float towerRadiusSize = 1f;
 
     [Header("Parte a rotar")]
     public Transform rotationPart;
@@ -94,6 +94,6 @@ public abstract class Tower : LivingEntityAI, IPoolable
         if (currentTarget != null)
         Gizmos.DrawLine(currentTarget.transform.position, currentTarget.transform.position + Vector3.up*7);
         Gizmos.color = Color.gray;
-        Gizmos.DrawSphere(transform.position, towerRadiusSize);
+        //Gizmos.DrawWireSphere(transform.position, towerRadiusSize);
     }
 }

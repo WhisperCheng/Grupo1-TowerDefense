@@ -18,7 +18,7 @@ public class MagicAttack : MonoBehaviour
 
     }
 
-    private void Attack(IDamageable damageableEntity)
+    protected void Attack(IDamageable damageableEntity)
     {
         damageableEntity.TakeDamage(damage); 
     }

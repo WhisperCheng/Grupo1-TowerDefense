@@ -25,7 +25,11 @@ public class GameManager : MonoBehaviour
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
     public string tagEnemigos;
+    public string tagAliados;
     public string tagWaypoints;
+    public string tagPlayer;
+    public string tagTerreno;
+    public string tagPath;
 
     [Header("Layers Globales")]
     public int layerEnemigos;

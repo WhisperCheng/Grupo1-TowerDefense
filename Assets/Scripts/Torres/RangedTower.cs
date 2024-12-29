@@ -11,7 +11,7 @@ public abstract class RangedTower : Tower, IDamageable
     [SerializeField] protected ParticleSystem _particulasGolpe;
 
     [Header("Ataque")] //Ataque
-    public float projectileDamage;
+    //public float projectileDamage;
     public float cooldown = 1f;
 
     //[Header("Animaciones")]
@@ -43,17 +43,17 @@ public abstract class RangedTower : Tower, IDamageable
         {
             //ManageCooldown(); // TODO: Implementar cooldown
             EnemyDetection();
-            //LookRotation();
+            LookRotation();
         }
     }
 
-    protected void LateUpdate()
+    /*protected void LateUpdate()
     {
         if (!_locked)
         {
             LookRotation();
         }
-    }
+    }*/
 
     /*protected void ManageCooldown()
     {
@@ -91,28 +91,9 @@ public abstract class RangedTower : Tower, IDamageable
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
-            /*animator.enabled = true;
-            animator.Rebind();
-            animator.Update(0f);*/
-            /* animator.keepAnimatorStateOnDisable = true;*/
-            /*animator.Rebind();
-            animator.Update(0f);
-            animator.Play("Idle", 0);*/
-            //Debug.Log("a " + );
         }
         return this.gameObject;
     }
-
-    /*public override void SetLoaded(bool loaded)
-    {
-        base.SetLoaded(loaded);
-        if (animator != null)
-        {
-            animator.enabled = true;
-            animator.Rebind();
-            animator.Update(0f);
-        }
-    }*/
 
     protected override void EnemyDetection()
     {
@@ -134,7 +115,6 @@ public abstract class RangedTower : Tower, IDamageable
             Collider lastEnemy = colliders[colliders.Length - 1]; // Escoge al último enemigo que entró
             if (!_hasEnemyAssigned) // Si no tiene ningún enemigo asignado, se le asigna el enemigo
             {
-                //currentTargets.Add(collider.gameObject);
                 currentTarget = lastEnemy.gameObject;
                 _hasEnemyAssigned = true;
                 _attackMode = true;
@@ -144,8 +124,8 @@ public abstract class RangedTower : Tower, IDamageable
                 if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
                 {
                     currentTarget = null;
-                    //_hasEnemyAssigned = false;
-                    //_attackMode = false;
+                    _hasEnemyAssigned = false;
+                    _attackMode = false;
                 }
             }
         }
