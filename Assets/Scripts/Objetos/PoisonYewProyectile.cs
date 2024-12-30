@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PoisonYewProyectile : RangedTowerProyectile
 {
+    [Header("Parámetros proyectil venenoso")]
+    public float poisonDamage;
+    public float poisonInterval;
+    public float poisonDuration;
     protected override void ReturnToPool()
     {
         Rigidbody rb = gameObject.GetComponent<Rigidbody>();
@@ -13,8 +17,21 @@ public class PoisonYewProyectile : RangedTowerProyectile
         PoisonYewProjectilePool.Instance.ReturnPoisonYewProjectile(this.gameObject);
     }
 
-    protected override void OnImpactEffects()
+    protected override void OnImpactEffects(Collider[] collisions)
     {
+        PoisonEnemies(collisions);
+        // TODO: Efectos de partículas
+    }
 
+    private void PoisonEnemies(Collider[] collisions)
+    {
+        if(collisions.Length > 0)
+            foreach (Collider col in collisions){
+                if (col.gameObject.activeSelf)
+                {
+                    IPoisonable poisonableEntity = col.GetComponent<IPoisonable>();
+                    poisonableEntity.PoisonEntity(poisonDuration, poisonInterval, poisonDamage);
+                }
+        }
     }
 }

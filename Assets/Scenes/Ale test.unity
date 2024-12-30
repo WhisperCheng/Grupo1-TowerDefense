@@ -3272,10 +3272,10 @@ GameObject:
   - component: {fileID: 274398073}
   - component: {fileID: 274398072}
   - component: {fileID: 274398075}
-  - component: {fileID: 274398076}
   - component: {fileID: 274398077}
   - component: {fileID: 274398078}
   - component: {fileID: 274398079}
+  - component: {fileID: 274398076}
   - component: {fileID: 274398080}
   - component: {fileID: 274398081}
   - component: {fileID: 274398082}
@@ -7811,7 +7811,7 @@ MonoBehaviour:
   particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
   objetoSiendoArrastrado: 0
   bloqueoDisparo: 0
-  selectedColor: {r: 0.46059847, g: 1, b: 0, a: 0.6156863}
+  selectionColor: {r: 0, g: 1, b: 0, a: 0.62352943}
   maxPlaceDistance: 20
 --- !u!4 &762121829
 Transform:
@@ -7915,6 +7915,7 @@ MonoBehaviour:
   layerUI: 5
   layerPath: 8
   layerTerreno: 6
+  colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
 --- !u!114 &762121835
 MonoBehaviour:
   m_ObjectHideFlags: 0

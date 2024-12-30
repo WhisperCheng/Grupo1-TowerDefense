@@ -1,12 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [SelectionBase]
-public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
+public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisonable
 {
+    protected float poisonedTime = 0;
     protected NavMeshAgent _agent;
     // Variables
     //public Transform hearth;
@@ -71,6 +73,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
     {
         _originalSpeed = speed;
         Init();
+    }
+    protected virtual void Update()
+    {
+        if (poisonedTime > 0)
+            poisonedTime -= Time.deltaTime;
     }
     public override void Init()
     {
@@ -232,10 +239,28 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable
         }
     }
 
-    /*public void SetSpeed(float speed)
+    public void PoisonEntity(float time, float poisonInterval, float poisonDamage)
     {
-        _agent.speed = speed;
-    }*/
+        StopAllCoroutines(); // Reset de las corutinas de envenenamiento
+        if (gameObject.activeSelf)
+        {
+            ColorUtils.ChangeObjectMaterialColors(gameObject, GameManager.Instance.materialPropertyVeneno);
+            StartCoroutine(PoisonCoroutine(time, poisonInterval, poisonDamage));
+        }
+    }
+
+    private IEnumerator PoisonCoroutine(float time, float poisonInterval, float poisonDamage) // Corutina para hacer daño cada x tiempo a causa del efecto de veneno
+    {
+        poisonedTime = time;
+        while (gameObject.activeSelf && poisonedTime > 0) // While loop para hacer daño cada x tiempo
+        {
+            TakeDamage(poisonDamage);
+            yield return new WaitForSeconds(poisonInterval);
+            if (poisonedTime < 0)
+                poisonedTime = 0;
+        }
+        ColorUtils.ChangeObjectMaterialColors(gameObject, null); // Volver a aplicar el color normal una vez se termine la duración del veneno
+    }
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()

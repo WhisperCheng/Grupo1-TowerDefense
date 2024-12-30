@@ -58,10 +58,11 @@ public class PoisonYewProjectilePool : MonoBehaviour
             return newProjectile;
         }
 
-        GameObject projectile = pool.Pop();
-        projectile.SetActive(true);
+        GameObject proyectile = pool.Pop();
+        proyectile.SetActive(true);
+        proyectile.gameObject.GetComponent<RangedTowerProyectile>().PopFromPool();
 
-        return projectile;
+        return proyectile;
     }
 
     public void ReturnPoisonYewProjectile(GameObject returnedProjectile)

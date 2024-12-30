@@ -6,10 +6,10 @@ using UnityEngine.AI;
 
 public class BasicEnemyAI : EnemyAI
 {
-
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         WhileWalking();
         CheckRivalsInsideAttackRange();
         ManageCombat();
@@ -105,19 +105,15 @@ public class BasicEnemyAI : EnemyAI
     
     public override void ReturnToPool()
     {
-        // Desactivamos el NavMeshAgent y la IA del enemigo
-
         _agent.updatePosition = false;
-        //_agent.updatePosition = false; // Desactivar el update de la IA para que no se ralle luego al hacerle tp y volverlo a activar
         _agent.Warp(GameManager.Instance.respawnEnemigos.position); // Se teleporta al respawn
-        //transform.position = GameManager.Instance.respawnEnemigos.position;
         _agent.updatePosition = true;
-        //_agent.enabled = false; // Se desactiva la IA
-        //enabled = false; // Se desactiva el script para que no consuma recursos
-
+        StopAllCoroutines(); // Reset de las corutinas de envenenamiento, si hay alguna activa
         _currentHealth = health; // Restaurar la salud del caballero al valor máximo
         _healthBar = GetComponentInChildren<HealthBar>();
         _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
+
+        ColorUtils.ChangeObjectMaterialColors(gameObject, null); // Volver a aplicar el color normal si ha sido envenenado
 
         // Llamamos a la pool para devolver al caballero
         MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);

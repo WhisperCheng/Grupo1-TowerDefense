@@ -13,7 +13,7 @@ public class RoseProyectile : RangedTowerProyectile
         ThornRoseProjectilePool.Instance.ReturnThornRoseProjectile(this.gameObject);
     }
 
-    protected override void OnImpactEffects()
+    protected override void OnImpactEffects(Collider[] collisions)
     {
 
     }

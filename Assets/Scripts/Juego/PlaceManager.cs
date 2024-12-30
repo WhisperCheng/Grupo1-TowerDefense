@@ -23,12 +23,12 @@ public class PlaceManager : MonoBehaviour
 
     public bool objetoSiendoArrastrado = false;
     public bool bloqueoDisparo = false;
-    public Color selectedColor;
+    public Color selectionColor;
     public float maxPlaceDistance;
 
     GameObject particulasCopia;
 
-    MaterialPropertyBlock materialesSeleccionados;
+    MaterialPropertyBlock materialesSeleccionPropertyBlock;
 
     private void Awake()
     {
@@ -53,13 +53,13 @@ public class PlaceManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         // Materiales Seleccionados
-        materialesSeleccionados = new MaterialPropertyBlock();
-        materialesSeleccionados.SetColor("_BaseColor", selectedColor);
-        materialesSeleccionados.SetColor("_Color", selectedColor); // por si el material no tiene el toon shader
-        materialesSeleccionados.SetFloat("_Tweak_transparency", -(1 - selectedColor.a));
+        materialesSeleccionPropertyBlock = new MaterialPropertyBlock();
+        materialesSeleccionPropertyBlock.SetColor("_BaseColor", selectionColor);
+        materialesSeleccionPropertyBlock.SetColor("_Color", selectionColor); // por si el material no tiene el toon shader
+        materialesSeleccionPropertyBlock.SetFloat("_Tweak_transparency", -(1 - selectionColor.a));
         // Sombras
-        materialesSeleccionados.SetColor("_1st_ShadeColor", selectedColor);
-        materialesSeleccionados.SetColor("_2nd_ShadeColor", selectedColor);
+        materialesSeleccionPropertyBlock.SetColor("_1st_ShadeColor", selectionColor);
+        materialesSeleccionPropertyBlock.SetColor("_2nd_ShadeColor", selectionColor);
     }
 
     // Update is called once per frame
@@ -100,7 +100,7 @@ public class PlaceManager : MonoBehaviour
         bloqueoDisparo = false;
     }
 
-    void SetPreviewMode(bool previewMode)
+    private void SetPreviewMode(bool previewMode)
     {
         Transform[] childs = torre.GetComponentsInChildren<Transform>();
         for (int i = 0; i < childs.Length; i++)
@@ -111,7 +111,7 @@ public class PlaceManager : MonoBehaviour
             {
                 if (previewMode) // Si se está en modo selección, se cambia el PropertyBlock de materiales al de materiales seleccionados
                 {
-                    rend.SetPropertyBlock(materialesSeleccionados);
+                    rend.SetPropertyBlock(materialesSeleccionPropertyBlock);
                 }
                 else // Y si deja de estarlo, se quita el PropertyBlock de materiales seleccionados
                 {
@@ -119,6 +119,15 @@ public class PlaceManager : MonoBehaviour
                 }
             }
         }
+        /*if (previewMode)
+        {
+            ColorUtils.ChangeObjectMaterialColors(torre.gameObject, materialesSeleccionPropertyBlock);
+        }
+        else
+        {
+            ColorUtils.ChangeObjectMaterialColors(torre.gameObject, null);
+        }*/
+        
 
         if (!previewMode) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
         {  // lo que permite atacar y rotar hacia los enemigos

@@ -6,12 +6,12 @@ public abstract class RangedTowerProyectile : MonoBehaviour
 {
     [Header("Variables proyectil")]
     [SerializeField] private float damage;
-    [SerializeField] private float proyectileRadius;
+    [SerializeField] private float proyectileAttackRadius;
     [SerializeField] private float automaticReturnToPoolTime;
 
     protected bool inPool = true;
 
-    protected abstract void OnImpactEffects();
+    protected abstract void OnImpactEffects(Collider[] collisions);
     protected abstract void ReturnToPool();
     private void OnCollisionEnter(Collision collision)
     {
@@ -24,12 +24,12 @@ public abstract class RangedTowerProyectile : MonoBehaviour
 
     protected void OnImpact()
     {
-        Collider[] enemies = Physics.OverlapSphere(gameObject.transform.position, proyectileRadius, 1 << GameManager.Instance.layerEnemigos);
+        Collider[] enemies = Physics.OverlapSphere(gameObject.transform.position, proyectileAttackRadius, 1 << GameManager.Instance.layerEnemigos);
         if (enemies.Length > 0)
         {
             foreach (Collider col in enemies)
             {
-                if (col != null && col.gameObject.activeInHierarchy) // Por si acaso el proyectil np está activo (no debería de ocurrir en teoría)
+                if (col != null && col.gameObject.activeInHierarchy) // Por si acaso el proyectil no está activo (no debería de ocurrir en teoría)
                 {
                     IDamageable damageableEntity = col.gameObject.GetComponent<IDamageable>();
                     if (damageableEntity != null && damageableEntity.GetHealth() > 0)
@@ -39,7 +39,7 @@ public abstract class RangedTowerProyectile : MonoBehaviour
                 }
             }
         }
-        OnImpactEffects();
+        OnImpactEffects(enemies);
         CancelInvoke("ReturnToPool"); // Cancelar el invoke previo de enviar a la pool automáticamente
         ReturnToPool();
     }
@@ -53,6 +53,6 @@ public abstract class RangedTowerProyectile : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(gameObject.transform.position, proyectileRadius);
+        Gizmos.DrawWireSphere(gameObject.transform.position, proyectileAttackRadius);
     }
 }

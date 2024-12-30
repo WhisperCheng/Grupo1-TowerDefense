@@ -38,6 +38,10 @@ public class GameManager : MonoBehaviour
     public int layerPath;
     public int layerTerreno;
 
+    [Header("Colores")]
+    public Color colorVeneno;
+    public MaterialPropertyBlock materialPropertyVeneno;
+
     //[Header("Tags de enemigos")]
     //public List<string> listaTagEnemigos;
 
@@ -45,7 +49,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        ConfigureMaterialPropertyBlocks();
     }
 
     // Update is called once per frame
@@ -56,6 +60,17 @@ public class GameManager : MonoBehaviour
             // TODO: Perder partida
             Debug.Log("Partida perdida");
         }
+    }
+
+    private void ConfigureMaterialPropertyBlocks()
+    {
+        // -- Veneno --
+        materialPropertyVeneno = new MaterialPropertyBlock();
+        materialPropertyVeneno.SetColor("_BaseColor", colorVeneno);
+        materialPropertyVeneno.SetColor("_Color", colorVeneno); // por si el material no tiene el toon shader
+        // Sombras
+        materialPropertyVeneno.SetColor("_1st_ShadeColor", colorVeneno);
+        materialPropertyVeneno.SetColor("_2nd_ShadeColor", colorVeneno);
     }
 
     public void addForestHearth()
