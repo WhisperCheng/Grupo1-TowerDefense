@@ -13,6 +13,10 @@ public abstract class Tower : LivingEntityAI, IPoolable
     [Header("Parte a rotar")]
     public Transform rotationPart;
 
+    [Header("Ataque")] //Ataque
+    public float cooldown = 1f;
+    protected float _currentCooldown;
+
     //protected List<GameObject> currentTargets = new List<GameObject>();
     protected GameObject currentTarget;
 
@@ -43,12 +47,14 @@ public abstract class Tower : LivingEntityAI, IPoolable
     {
 
     }
+
     public override void Init()
     {
         _locked = true; // Por defecto cuando se crea la torre en el modo Preview con el PlaceManager la torre
                         // estará bloqueada para que no pueda atacar hasta que se coloque.
                         // El PlaceManager se encargará de desbloquear la torre una vez colocada
         _enemyMask = 1 << GameManager.Instance.layerEnemigos;
+        _currentCooldown = cooldown; // Reset del cooldown, simulando que desde que se coloque la torre se va preparando hasta poder atacar
         _initialized = true;
     }
 
@@ -76,7 +82,6 @@ public abstract class Tower : LivingEntityAI, IPoolable
         _locked = false;
     }
 
-
     public bool IsLocked()
     {
         return _locked;
@@ -85,6 +90,18 @@ public abstract class Tower : LivingEntityAI, IPoolable
     public void SetLoaded(bool loaded)
     {
         _loaded = loaded;
+    }
+
+    protected virtual void UpdateCurrentCooldown()
+    {
+        if (_currentCooldown > 0)
+        {
+            _currentCooldown -= Time.deltaTime;
+        }
+        if (_currentCooldown < 0)
+        {
+            _currentCooldown = 0;
+        }
     }
 
     private void OnDrawGizmosSelected()

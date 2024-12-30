@@ -7,6 +7,7 @@ public class RoseTower : RangedTower
 {
     public override void ShootProyectileEvent()
     {
+        base.ShootProyectileEvent();
         if (currentTarget != null)
         {
             GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();

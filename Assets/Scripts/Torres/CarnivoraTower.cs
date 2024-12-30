@@ -10,7 +10,6 @@ public class CarnivoraTower : Tower, IDamageable
 
     [Header("Ataque")] //Ataque
     public float attackDamage;
-    public float cooldown = 1f;
 
     //[Header("Animaciones")]
     protected Animator animator;
@@ -22,7 +21,6 @@ public class CarnivoraTower : Tower, IDamageable
 
     protected float _currentHealth;
     protected float _maxHealth;
-    protected float _currentCooldown = 0f;
     protected float _maxSpeed;
 
     protected bool _attackMode = false;

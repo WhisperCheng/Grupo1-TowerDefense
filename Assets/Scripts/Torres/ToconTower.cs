@@ -11,8 +11,8 @@ public class ToconTower : Tower
     [Header("Cantidad Setas Aliadas")]
     [SerializeField] private int maximaCantidadSetas;
 
-    [Header("Cooldown de spawn")]
-    [SerializeField] private float spawnCooldown;
+    //[Header("Cooldown de spawn")]
+    //[SerializeField] private float spawnCooldown;
 
     private ToconBrain brain;
 
@@ -27,7 +27,7 @@ public class ToconTower : Tower
     {
         if (!_locked)
         {
-            brain.SpawnCooldown = spawnCooldown; // Actualizar constantemente variables del cerebro si es necesario
+            brain.SpawnCooldown = cooldown; // Actualizar constantemente variables del cerebro si es necesario
             brain.MaxNumAliados = maximaCantidadSetas;
             EnemyDetection();
         }
@@ -95,36 +95,11 @@ public class ToconTower : Tower
 
         brain.ObjetivoActual = currentTarget;
     }
-
-    /*private void DetectarEnemigos() //
-    {
-        attackingList.Clear();
-
-        Collider[] listaChoques = Physics.OverlapSphere(transform.position, range);
-
-        foreach (Collider enemigo in listaChoques)
-        {
-            if (enemigo.CompareTag("Enemy"))
-            {
-                attackingList.Add(enemigo.gameObject);
-            }
-        }
-
-        if (attackingList.Count > 0 && brain.ObjetivoActual == null)
-        {
-            brain.ObjetivoActual = attackingList[0];
-        }
-
-        if (brain.ObjetivoActual != null && !attackingList.Contains(brain.ObjetivoActual))
-        {
-            brain.ObjetivoActual = null;
-        }
-    }*/
     public override void UnlockTower()
     {
         base.UnlockTower();
         brain = GetComponent<ToconBrain>();
-        brain.ResetValues(spawn.transform.position, spawnCooldown, maximaCantidadSetas); // Reset cerebro e iniciar a partir del momento del desbloqueo el spawn de aliados
+        brain.ResetValues(spawn.transform.position, cooldown, maximaCantidadSetas); // Reset cerebro e iniciar a partir del momento del desbloqueo el spawn de aliados
         brain.ActivarSpawn();
         //brain.SpawnCooldown = spawnCooldown;
     }

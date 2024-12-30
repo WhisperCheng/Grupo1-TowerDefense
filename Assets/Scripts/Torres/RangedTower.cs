@@ -10,10 +10,6 @@ public abstract class RangedTower : Tower, IDamageable
     [SerializeField] protected ParticleSystem _particulasMuerte;
     [SerializeField] protected ParticleSystem _particulasGolpe;
 
-    [Header("Ataque")] //Ataque
-    //public float projectileDamage;
-    public float cooldown = 1f;
-
     //[Header("Animaciones")]
     protected Animator animator;
 
@@ -25,7 +21,6 @@ public abstract class RangedTower : Tower, IDamageable
 
     protected float _currentHealth;
     protected float _maxHealth;
-    protected float _currentCooldown = 0f;
     protected float _maxSpeed;
 
     protected bool _attackMode = false;
@@ -44,26 +39,15 @@ public abstract class RangedTower : Tower, IDamageable
             //ManageCooldown(); // TODO: Implementar cooldown
             EnemyDetection();
             LookRotation();
+            UpdateCurrentCooldown();
         }
     }
 
-    /*protected void LateUpdate()
+    protected override void UpdateCurrentCooldown()
     {
-        if (!_locked)
-        {
-            LookRotation();
-        }
-    }*/
-
-    /*protected void ManageCooldown()
-    {
-        _currentCooldown -= Time.deltaTime;
-        if (!_canAttack && _currentCooldown <= 0)
-        {
-            _canAttack = true;
-            _currentCooldown = 0;
-        }
-    }*/
+        base.UpdateCurrentCooldown();
+        animator.SetFloat("Cooldown", _currentCooldown);
+    }
 
     public override void ReturnToPool()
     {
@@ -141,9 +125,12 @@ public abstract class RangedTower : Tower, IDamageable
 
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
         {
+            _attackMode = true;
             OnAttack();
         }
-        
+        if(!_canAttack)
+        animator.ResetTrigger("Attack");
+
         animator.SetBool("AttackMode", _attackMode);
     }
 
@@ -161,14 +148,22 @@ public abstract class RangedTower : Tower, IDamageable
 
     public override void OnAttack()
     {
-        if (_canAttack && _attackMode && !_locked && currentTarget != null)
+        if (_canAttack && _attackMode && _currentCooldown <= 0 && !_locked && currentTarget != null)
         {
-            _currentCooldown = cooldown; // Reset del cooldown
             animator.SetTrigger("Attack");
         }
     }
 
-    public abstract void ShootProyectileEvent();
+    public virtual void ShootProyectileEvent()
+    {
+        if(currentTarget != null)
+        {
+            _attackMode = false;
+            animator.SetBool("AttackMode", false);
+            _currentCooldown = cooldown; // Reset del cooldown
+        }
+        // Cada RangedTower implementa su lógica de disparo
+    }
 
     public override void TakeDamage(float damageAmount)
     {

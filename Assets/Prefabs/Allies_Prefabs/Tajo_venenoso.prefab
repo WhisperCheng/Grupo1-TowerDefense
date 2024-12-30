@@ -309,11 +309,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8353933893196853562, guid: a935071301480b0429728d071419f844, type: 3}
   m_PrefabInstance: {fileID: 8055319263661419814}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &7122270565756168937 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 945014201917343695, guid: a935071301480b0429728d071419f844, type: 3}
-  m_PrefabInstance: {fileID: 8055319263661419814}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7136894658829570167 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a935071301480b0429728d071419f844, type: 3}
@@ -333,14 +328,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 18
   rotationSpeed: 5
-  rotationPart: {fileID: 7122270565756168937}
+  rotationPart: {fileID: 7512152945389669069}
+  cooldown: 3
   rotationModel: 0
   _locked: 1
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}
-  projectileDamage: 0
-  cooldown: 1
   shooterSource: {fileID: 3700682981131548956}
   shootingSpeed: 20
 --- !u!65 &2092488931615787901
