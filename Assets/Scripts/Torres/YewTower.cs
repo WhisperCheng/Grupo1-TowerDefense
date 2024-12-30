@@ -11,7 +11,6 @@ public class YewTower : RangedTower
         if (currentTarget != null)
         {
             GameObject proyectile = PoisonYewProjectilePool.Instance.GetPoisonYewProjectile();
-            //_currentCooldown = cooldown; // Volver a aumentar el cooldown
 
             // Para apuntar hacia el centro del enemigo
             float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?

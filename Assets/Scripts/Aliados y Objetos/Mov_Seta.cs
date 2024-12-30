@@ -77,6 +77,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
     {
         if (isActiveAndEnabled)
         {
+            UpdateCurrentCooldown();
             SeguirEnemigo();
             AnimarSeta();
             CheckRivalsInsideAttackRange();
@@ -94,6 +95,19 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
         //Atacarlo
             // si lo atacas y no esta enemigo lockeado null 
 
+    }
+
+    protected virtual void UpdateCurrentCooldown()
+    {
+        if (_currentCooldown > 0)
+        {
+            _currentCooldown -= Time.deltaTime;
+        }
+        if (_currentCooldown < 0)
+        {
+            _currentCooldown = 0;
+        }
+        _animator.SetFloat("Cooldown", _currentCooldown);
     }
 
     private void AnimarSeta()
@@ -156,7 +170,7 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
             foreach (Collider col in objetivosDeAtaqueActuales)
             {
                 IDamageable enemigo = col.GetComponent<IDamageable>();
-                enemigo.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
+                enemigo.TakeDamage(attackDamage); 
             }
         }*/
 
@@ -167,9 +181,10 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
                 if (objetivosDeAtaqueActuales[i] != null && objetivosDeAtaqueActuales[i].enabled && objetivosDeAtaqueActuales[i].gameObject.activeSelf)
                 {
                     IDamageable entity = objetivosDeAtaqueActuales[i].GetComponent<IDamageable>();
-                    Attack(entity);
+                    Attack(entity); // Atacar a la entidad Damageable
                 }
             }
+            _animator.ResetTrigger("Attack");
             //_attackMode = false;
             _canDamage = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown

@@ -37,11 +37,18 @@ public class CarnivoraTower : Tower, IDamageable
     {
         if (!_locked)
         {
+            UpdateCurrentCooldown();
             CheckAvailableRivals();
             EnemyDetection();
             LookRotation();
             ManageCombat();
         }
+    }
+
+    protected override void UpdateCurrentCooldown()
+    {
+        base.UpdateCurrentCooldown();
+        animator.SetFloat("Cooldown", _currentCooldown);
     }
 
     public override void Init()
@@ -124,6 +131,8 @@ public class CarnivoraTower : Tower, IDamageable
             _attackMode = true;
             //OnAttack();
         }
+        //if (!_canAttack)
+            //animator.ResetTrigger("Attack");
 
         animator.SetBool("AttackMode", _attackMode);
     }

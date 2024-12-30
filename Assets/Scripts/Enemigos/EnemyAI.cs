@@ -74,11 +74,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         _originalSpeed = speed;
         Init();
     }
-    protected virtual void Update()
-    {
-        if (poisonedTime > 0)
-            poisonedTime -= Time.deltaTime;
-    }
     public override void Init()
     {
         _initialized = true;
@@ -99,10 +94,27 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         attackingList = new List<Collider>();
         _defaultAcceleration = _agent.acceleration;
     }
+    protected virtual void UpdateCurrentCooldown()
+    {
+        if (_currentCooldown > 0)
+        {
+            _currentCooldown -= Time.deltaTime;
+        }
+        if (_currentCooldown < 0)
+        {
+            _currentCooldown = 0;
+        }
+    }
 
     protected void OnAssignDestination(Vector3 destination)
     {
         _agent.SetDestination(destination);
+    }
+
+    protected void ManagePoisonCooldown()
+    {
+        if (poisonedTime > 0)
+            poisonedTime -= Time.deltaTime;
     }
 
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de

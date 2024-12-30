@@ -7,10 +7,11 @@ using UnityEngine.AI;
 public class BasicEnemyAI : EnemyAI
 {
     // Update is called once per frame
-    protected override void Update()
+    void Update()
     {
-        base.Update();
         WhileWalking();
+        ManagePoisonCooldown();
+        UpdateCurrentCooldown();
         CheckRivalsInsideAttackRange();
         ManageCombat();
     }
@@ -56,6 +57,7 @@ public class BasicEnemyAI : EnemyAI
                     Attack(entity);
                 }
             }
+            _currentCooldown = cooldown; // Reset del cooldown
             _attackMode = false;
             _canDamage = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown
@@ -102,7 +104,13 @@ public class BasicEnemyAI : EnemyAI
     {
         //Debug.Log("809");
     }
-    
+
+    protected override void UpdateCurrentCooldown()
+    {
+        base.UpdateCurrentCooldown();
+        animatorController.SetFloat("Cooldown", _currentCooldown);
+    }
+
     public override void ReturnToPool()
     {
         _agent.updatePosition = false;
