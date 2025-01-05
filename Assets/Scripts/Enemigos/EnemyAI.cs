@@ -59,7 +59,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected abstract void WhileWalking();
     public abstract void OnAttack(); // Efectos de partículas al golpear, cambiar animación, etc
     public abstract void Attack(IDamageable damageableEntity);
-    public abstract void Die();
     protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
     public abstract float GetHealth();
     protected abstract void CheckRivalsInsideAttackRange();
@@ -115,6 +114,13 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     {
         if (poisonedTime > 0)
             poisonedTime -= Time.deltaTime;
+    }
+
+    public virtual void Die()
+    {
+        // Cada enemigo ejecuta su funcion de volver a la pool
+        RoundManager.enemiesAlive--;
+        ReturnToPool();
     }
 
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de

@@ -70,10 +70,10 @@ public class BasicEnemyAI : EnemyAI
         AnimateWalking();
         Vector3 oldDest = _destination;
         OnSearchingObjetives();
-        if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
-        {                           // asignando la misma variable
+        //if (oldDest != _destination) // Para comprobar que el destino sea distinto y no estar todo el rato
+        //{                           // asignando la misma variable
             OnAssignDestination(_destination);
-        }
+        //}
     }
 
     public override void OnAttack()
@@ -92,8 +92,7 @@ public class BasicEnemyAI : EnemyAI
     public override void Die()
     {
         //_particulasMuerte.Play();
-        // Devolver a la pool
-        ReturnToPool();
+        base.Die();
     }
 
     public override float GetHealth()
