@@ -66,31 +66,26 @@ public class BasicEnemyAI : EnemyAI
             _currentCooldown = cooldown; // Reset del cooldown
         }*/
 
-
-        Vector3 center = transform.position + attackingBoxPos;
-        //transform.TransformPoint(attackingBoxSize);
-        Collider[] allies = Physics.OverlapBox(center, attackingBoxSize, Quaternion.identity, 1 << GameManager.Instance.layerJugador);
+        Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
+        Collider[] allies = Physics.OverlapBox(center, attackingBoxSize/2, transform.rotation, 1 << GameManager.Instance.layerJugador);
 
         if (allies.Length > 0)
         {
-            if (_canDamage)
+            foreach (Collider col in allies) // En este bucle solo va a estar el jugador, así que solo se va a ejecutar una vez
             {
-                foreach (Collider col in allies) // En este bucle solo va a estar el jugador, así que solo se va a ejecutar una vez
+                IDamageable damageableEntity = col.gameObject.GetComponent<IDamageable>();
+                if (damageableEntity != null && damageableEntity.GetHealth() > 0) // Solo atacar si existe y tiene vida +> 0
                 {
-                    if (col != null && col.gameObject.activeInHierarchy) // Por si acaso el jugador no está activo 
-                    {                                                       // (no debería de ocurrir en teoría)
-                        _attackMode = true;
-                        animatorController.SetTrigger("Attack");
-
-                        IDamageable damageableEntity = col.gameObject.GetComponent<IDamageable>();
-                        if (damageableEntity != null && damageableEntity.GetHealth() > 0)
-                        {
-                            Attack(damageableEntity);
-                        }
+                    _attackMode = true;
+                    animatorController.SetTrigger("Attack");
+                    if (_canDamage)
+                    {
+                        Attack(damageableEntity);
+                        _canDamage = false;
+                        _attackMode = false; // Reset del bool para hacer daño y del de modo de ataque
+                        _currentCooldown = cooldown; // Reset del cooldown
                     }
                 }
-                _canDamage = false;
-                _attackMode = false; // Reset del bool para hacer daño y del de modo de ataque
             }
         }
         else
@@ -224,13 +219,23 @@ public class BasicEnemyAI : EnemyAI
         }
     }*/
 
-    private void OnDrawGizmosSelected()
+    protected override void OnDrawGizmosSelected()
     {
-        //Gizmos.matrix = transform.localToWorldMatrix;
+        base.OnDrawGizmosSelected();
         Gizmos.color = Color.red;
-        //
-        //Gizmos.matrix = Matrix4x4.TRS(transform.position + attackingBoxPos, transform.rotation, transform.localScale);
+        
+        Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
+        Matrix4x4 prevMatrix = Gizmos.matrix;
+
         Gizmos.matrix = transform.localToWorldMatrix;
-        Gizmos.DrawWireCube(attackingBoxPos, attackingBoxSize);
+        //Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation * Quaternion.Euler(0, 180, 0), transform.localScale);
+        center = transform.InverseTransformPoint(center); // convert from world position to local position 
+        Gizmos.DrawWireCube(center, attackingBoxSize);
+
+        Gizmos.matrix = prevMatrix;
+        Gizmos.color = Color.cyan;
+        Vector3 centers = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
+        Gizmos.DrawLine(transform.position, centers);
+        
     }
 }
