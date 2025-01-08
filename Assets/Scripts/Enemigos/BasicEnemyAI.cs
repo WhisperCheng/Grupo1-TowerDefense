@@ -6,13 +6,15 @@ using UnityEngine.AI;
 
 public class BasicEnemyAI : EnemyAI
 {
+    public Vector3 attackingBoxSize;
+    public Vector3 attackingBoxPos;
     // Update is called once per frame
     void Update()
     {
         WhileWalking();
         ManagePoisonCooldown();
         UpdateCurrentCooldown();
-        CheckRivalsInsideAttackRange();
+        //CheckRivalsInsideAttackRange();
         ManageCombat();
     }
 
@@ -24,7 +26,7 @@ public class BasicEnemyAI : EnemyAI
     // en rango y con ello determinar si puede seguir atacando o no.
     protected override void CheckRivalsInsideAttackRange()
     {
-        for (int i = 0; i < attackingList.Count; i++)
+        /*for (int i = 0; i < attackingList.Count; i++)
         {
             Collider col = attackingList[i];
             if (col == null || !col.gameObject.activeSelf)
@@ -42,12 +44,13 @@ public class BasicEnemyAI : EnemyAI
                 animatorController.SetBool("AttackMode", false);
                 _canDamage = false;
             }
-        }
+        }*/
+
     }
     // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
     protected override void ManageCombat()
     {
-        if (_canDamage && _attackMode)
+        /*if (_canDamage && _attackMode)
         { // Se recorre la lista de los objetivos a atacar y se les hace daño
             for (int i = 0; i < attackingList.Count; i++)
             {
@@ -61,6 +64,39 @@ public class BasicEnemyAI : EnemyAI
             _attackMode = false;
             _canDamage = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown
+        }*/
+
+
+        Vector3 center = transform.position + attackingBoxPos;
+        //transform.TransformPoint(attackingBoxSize);
+        Collider[] allies = Physics.OverlapBox(center, attackingBoxSize, Quaternion.identity, 1 << GameManager.Instance.layerJugador);
+
+        if (allies.Length > 0)
+        {
+            if (_canDamage)
+            {
+                foreach (Collider col in allies) // En este bucle solo va a estar el jugador, así que solo se va a ejecutar una vez
+                {
+                    if (col != null && col.gameObject.activeInHierarchy) // Por si acaso el jugador no está activo 
+                    {                                                       // (no debería de ocurrir en teoría)
+                        _attackMode = true;
+                        animatorController.SetTrigger("Attack");
+
+                        IDamageable damageableEntity = col.gameObject.GetComponent<IDamageable>();
+                        if (damageableEntity != null && damageableEntity.GetHealth() > 0)
+                        {
+                            Attack(damageableEntity);
+                        }
+                    }
+                }
+                _canDamage = false;
+                _attackMode = false; // Reset del bool para hacer daño y del de modo de ataque
+            }
+        }
+        else
+        {
+            _attackMode = false;
+            animatorController.ResetTrigger("Attack");
         }
     }
 
@@ -146,7 +182,7 @@ public class BasicEnemyAI : EnemyAI
         return this.gameObject;
     }
 
-    private void OnTriggerStay(Collider collision)
+    /*private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
@@ -186,5 +222,15 @@ public class BasicEnemyAI : EnemyAI
             //_canDamage = false;
             //_attackMode = false;
         }
+    }*/
+
+    private void OnDrawGizmosSelected()
+    {
+        //Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.color = Color.red;
+        //
+        //Gizmos.matrix = Matrix4x4.TRS(transform.position + attackingBoxPos, transform.rotation, transform.localScale);
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(attackingBoxPos, attackingBoxSize);
     }
 }

@@ -43,7 +43,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected float _maxSpeed;
     protected float _originalSpeed;
 
-    protected List<Collider> attackingList;
+    //protected List<Collider> attackingList;
 
     protected bool _attackMode = false;
     protected bool _canDamage = false;
@@ -90,7 +90,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         OnAssignDestination(_destination);
         _currentCooldown = 0f;
         animatorController = GetComponent<Animator>();
-        attackingList = new List<Collider>();
+        //attackingList = new List<Collider>();
         _defaultAcceleration = _agent.acceleration;
     }
     protected virtual void UpdateCurrentCooldown()
