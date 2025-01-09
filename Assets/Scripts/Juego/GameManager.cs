@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public int layerUI;
     public int layerPath;
     public int layerTerreno;
+    public int layerCorazon;
 
     [Header("Colores")]
     public Color colorVeneno;
