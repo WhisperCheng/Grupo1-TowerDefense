@@ -15,8 +15,11 @@ public class MovPersonaje2D : MonoBehaviour
     private CharacterController _characterController;
     [SerializeField] private Animator _animatorController;
 
-    [Header("Gravedad")]
+    [Header("Controles")]
     [SerializeField] private float _velocidadGravedad = 1f;
+
+    [Header("Gravedad")]
+    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private float _gravedadMagnitud = -9.81f;
     [SerializeField] private float _gravedadMultiplicador = 1f;
 
@@ -42,7 +45,6 @@ public class MovPersonaje2D : MonoBehaviour
     private int _velocityZHash;
     private int _velocityXHash;
 
-    PlayerInput playerInput;
     private Vector2 _moveDirection;
     private Vector2 _smoothedMoveDirection;
     //private Vector2 _lookDirection;
@@ -55,12 +57,11 @@ public class MovPersonaje2D : MonoBehaviour
     {
         // Get the Character Controller on the player
         _characterController = GetComponent<CharacterController>();
-        //animatorController = GetComponent<Animator>();
         _velocityZHash = Animator.StringToHash("VelZ");
         _velocityXHash = Animator.StringToHash("VelX");
         _currentMaxVelocity = _maximumWalkVelocity;
 
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
     }
     void FixedUpdate()
     {
