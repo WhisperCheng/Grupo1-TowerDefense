@@ -16,10 +16,10 @@ public class MovPersonaje2D : MonoBehaviour
     [SerializeField] private Animator _animatorController;
 
     [Header("Controles")]
-    [SerializeField] private float _velocidadGravedad = 1f;
+    [SerializeField] private PlayerInput playerInput;
 
     [Header("Gravedad")]
-    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private float _velocidadGravedad = 1f;
     [SerializeField] private float _gravedadMagnitud = -9.81f;
     [SerializeField] private float _gravedadMultiplicador = 1f;
 

@@ -7605,6 +7605,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e480e3ae-ac5f-46df-b7d1-5523f3dd5dc2
     m_ActionName: UI/Button9[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d30dbd4-8c09-4d6c-b096-2fef9babe738
+    m_ActionName: Player/RotateTower[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -7623,8 +7627,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animatorController: {fileID: 1056429976}
-  _velocidadGravedad: 1
   playerInput: {fileID: 1320726159}
+  _velocidadGravedad: 1
   _gravedadMagnitud: -9.81
   _gravedadMultiplicador: 2.5
   _acceleration: 4
@@ -7904,7 +7908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10c62a32da3e98468f227dfbb896929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 743838364}
+  playerInput: {fileID: 1320726159}
   buildUI: {fileID: 26971016}
   buildButtons: {fileID: 2048757080}
   crossHead: {fileID: 961106802}
@@ -13543,6 +13547,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e480e3ae-ac5f-46df-b7d1-5523f3dd5dc2
     m_ActionName: UI/Button9[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d30dbd4-8c09-4d6c-b096-2fef9babe738
+    m_ActionName: Player/RotateTower[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -15069,8 +15077,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animatorController: {fileID: 0}
-  _velocidadGravedad: 1
   playerInput: {fileID: 0}
+  _velocidadGravedad: 1
   _gravedadMagnitud: -9.81
   _gravedadMultiplicador: 1
   _acceleration: 2

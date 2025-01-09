@@ -73,7 +73,7 @@ public class PlaceManager : MonoBehaviour
         GenerateTower();
     }
 
-    public void GenerateTower() // Genera
+    public void GenerateTower() // Genera la torre designada
     {
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
@@ -139,6 +139,8 @@ public class PlaceManager : MonoBehaviour
     {
         if (objetoSiendoArrastrado)
         {
+            float x = playerInput.actions["Correr"].ReadValue<float>();
+            Debug.Log(x);
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, (1 << GameManager.Instance.layerTerreno));
