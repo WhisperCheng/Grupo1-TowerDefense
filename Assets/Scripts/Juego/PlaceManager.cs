@@ -73,7 +73,7 @@ public class PlaceManager : MonoBehaviour
         GenerateTower();
     }
 
-    public void GenerateTower() // Genera la torre designada
+    public void GenerateTower() // Genera el tipo de torre designada
     {
         if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
                                      // hasta que no se coloque
@@ -135,12 +135,22 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
+    public void RotateCurrentTower(InputAction.CallbackContext context)
+    {
+        if (context.performed && objetoSiendoArrastrado && torre != null && torre.isActiveAndEnabled 
+            && !LeanTween.isTweening(torre.gameObject)) // Solo se activa si se está arrastrando el objeto activo y no
+        {                                                                   // se está reproduciendo animación de rotar
+            //torre.transform.LeanRotateY(torre.transform.eulerAngles.y + 90,0.25f);
+            LeanTween.rotateY(torre.gameObject, torre.transform.eulerAngles.y + 90, 0.25f);
+        }
+    }
+
     private void ManageTowerPlacement()
     {
         if (objetoSiendoArrastrado)
         {
-            float x = playerInput.actions["Correr"].ReadValue<float>();
-            Debug.Log(x);
+            //float x = playerInput.actions["Correr"].ReadValue<float>();
+            //Debug.Log(x);
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
             bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, (1 << GameManager.Instance.layerTerreno));
