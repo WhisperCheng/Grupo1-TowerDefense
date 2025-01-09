@@ -115,8 +115,8 @@ public static class EntityUtils
         return nearestObjetivePos;
     }
     
-    private static Transform GetNearestRivalCollisionOnNavMesh(Collider[] colliderList, Vector3 actualPos, string[] ignoreTagList,
-        bool ignoreVisibility, float reachDistance)
+    private static Transform GetNearestRivalCollisionOnNavMesh(NavMeshAgent agent, Collider[] colliderList, Vector3 actualPos, 
+        string[] ignoreTagList, bool ignoreVisibility, float reachDistance)
     {
         Transform nearestObjetivePos = null;
         float minorDistance = Mathf.Infinity;
@@ -128,8 +128,12 @@ public static class EntityUtils
             float actualDistance = Vector3.Distance(actualPos, col.transform.position);
 
             NavMeshHit hit = new NavMeshHit();
-            bool canReachRivalOnNavMesh = NavMesh.SamplePosition(col.transform.position, out hit, reachDistance, NavMesh.AllAreas);
-            
+            bool canReachRivalOnNavMesh = NavMesh.SamplePosition(col.transform.position, out hit, reachDistance,
+                new NavMeshQueryFilter()
+                {
+                    agentTypeID = agent.agentTypeID,
+                    areaMask = agent.areaMask
+                });
             // Si se trata de una entidad con vida > 0 y la distancia es una menor a las anteriores y puede alcanzarla
             // dentro del navmesh, se prosigue
             if (entity != null && entity.GetHealth() > 0 && actualDistance < minorDistance && canReachRivalOnNavMesh)
@@ -210,8 +214,8 @@ public static class EntityUtils
         return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
         // tenerlo en cuenta
     }
-    public static Transform NearestRivalOnNavMesh(Collider[] colliderList, Vector3 pos, string[] ignoreTagList, bool ignoreDirectVisbility, 
-        float reachDistanceOutSideNavMesh)
+    public static Transform NearestRivalOnNavMesh(NavMeshAgent agent, Collider[] colliderList, Vector3 pos, string[] ignoreTagList, 
+        bool ignoreDirectVisbility, float reachDistanceOutSideNavMesh)
     {
         // Esta lista almacenará el resultado de llamar a OverlapSphere
         Transform nearestRival = null;
@@ -219,10 +223,9 @@ public static class EntityUtils
         // Se comprueba y elige el enemigo con menor distancia
         if (colliderList.Length > 0)
         {
-            nearestRival = GetNearestRivalCollisionOnNavMesh(colliderList, pos, ignoreTagList, ignoreDirectVisbility, reachDistanceOutSideNavMesh);
+            nearestRival = GetNearestRivalCollisionOnNavMesh(agent, colliderList, pos, ignoreTagList, ignoreDirectVisbility, 
+                reachDistanceOutSideNavMesh);
         }
-        return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que                    
-        // tenerlo en cuenta
+        return nearestRival; // puede llegar a ser nulo si no hay nada al rededor, hay que tenerlo en cuenta
     }
-
 }

@@ -132,7 +132,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
 
         // Se obtiene al jugador más cercano
-        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(listaChoques, transform.position, null, true, reachAttackRange);
+        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(_agent, listaChoques, transform.position, null, 
+            true, reachAttackRange);
         if (nearestRival != null)
             // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
