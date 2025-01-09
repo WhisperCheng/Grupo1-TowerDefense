@@ -67,7 +67,8 @@ public class BasicEnemyAI : EnemyAI
         }*/
 
         Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
-        Collider[] allies = Physics.OverlapBox(center, attackingBoxSize/2, transform.rotation, 1 << GameManager.Instance.layerJugador);
+        Collider[] allies = Physics.OverlapBox(center, attackingBoxSize/2, transform.rotation, 
+            1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados);
 
         if (allies.Length > 0)
         {

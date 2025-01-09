@@ -53,7 +53,7 @@ public class ToconBrain : MonoBehaviour
             GameObject ally = AllyPool.Instance.GetAlly();
             //ally.transform.position = _homeTarget;
             ally.GetComponent<NavMeshAgent>().Warp(_homeTarget);
-            ally.GetComponent<Mov_Seta>().SetToconBrain(this);
+            ally.GetComponent<Seta_AliadaAI>().SetToconBrain(this);
             _currentNumAliados++;
             //yield return new WaitForSeconds(_spawnCooldown);
             //Debug.Log(_currentNumAliados + " " + _maxNumAliados);

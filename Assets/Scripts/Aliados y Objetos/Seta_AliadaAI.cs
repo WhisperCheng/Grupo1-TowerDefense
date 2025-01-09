@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
+public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
 {
     //VARIABLES
     [Header("Variables Seta Aliada IA")]
@@ -308,7 +308,6 @@ public class Mov_Seta : LivingEntityAI, IDamageable, IPoolable
             if (!objetivosDeAtaqueActuales.Contains(collision)) // Si la lista para almacenar rivales dentro de la hitbox de ataque
             {                                       // no contiene a la entidad, se almacena en ella
                 objetivosDeAtaqueActuales.Add(collision);
-                
             }
         }
     }
