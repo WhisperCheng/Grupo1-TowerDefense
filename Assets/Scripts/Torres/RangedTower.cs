@@ -126,10 +126,11 @@ public abstract class RangedTower : Tower, IDamageable
         if (_hasEnemyAssigned) // Si tiene un enemigo asignado que esé dentro del rango, empieza a atacar
         {
             _attackMode = true;
+            _canAttack = true;
             OnAttack();
         }
-        if(!_canAttack)
-        animator.ResetTrigger("Attack");
+        //if(!_canAttack)
+        //animator.ResetTrigger("Attack");
 
         animator.SetBool("AttackMode", _attackMode);
     }
@@ -150,6 +151,7 @@ public abstract class RangedTower : Tower, IDamageable
     {
         if (_canAttack && _attackMode && _currentCooldown <= 0 && !_locked && currentTarget != null)
         {
+            Debug.Log("G");
             animator.SetTrigger("Attack");
         }
     }
