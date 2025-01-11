@@ -6,8 +6,7 @@ using UnityEngine.AI;
 
 public class BasicEnemyAI : EnemyAI
 {
-    public Vector3 attackingBoxSize;
-    public Vector3 attackingBoxPos;
+    public AttackBox attackBox;
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +65,7 @@ public class BasicEnemyAI : EnemyAI
             _currentCooldown = cooldown; // Reset del cooldown
         }*/
 
-        Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
+        /*Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
         Collider[] allies = Physics.OverlapBox(center, attackingBoxSize/2, transform.rotation, 
             1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados | 1 << GameManager.Instance.layerCorazon);
 
@@ -93,6 +92,15 @@ public class BasicEnemyAI : EnemyAI
         {
             _attackMode = false;
             animatorController.ResetTrigger("Attack");
+        }*/
+        int attackMasks = 1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados | 1 << GameManager.Instance.layerCorazon;
+
+        bool attackDone = attackBox.ManageAttack(gameObject, attackMasks, animatorController, _canDamage, attackDamage);
+        _attackMode = attackBox.AttackModeBool; // Se actualizan los booleanos que manejan el combate al valor correspondiente
+        _canDamage = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
+        if (attackDone)
+        { // Si se ataca con éxito a los enemigos dentro del área de ataque, se resetea el cooldown
+            _currentCooldown = cooldown;
         }
     }
 
@@ -117,7 +125,6 @@ public class BasicEnemyAI : EnemyAI
         if (_canDamage)
         {
             damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-            
         }
     }
 
@@ -225,18 +232,18 @@ public class BasicEnemyAI : EnemyAI
         base.OnDrawGizmosSelected();
         Gizmos.color = Color.red;
         
-        Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
+        Vector3 center = transform.position + (transform.forward * attackBox.attackingBoxPos.z) + (transform.right * attackBox.attackingBoxPos.x) 
+            + (transform.up * attackBox.attackingBoxPos.y);
         Matrix4x4 prevMatrix = Gizmos.matrix;
 
         Gizmos.matrix = transform.localToWorldMatrix;
         //Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation * Quaternion.Euler(0, 180, 0), transform.localScale);
         center = transform.InverseTransformPoint(center); // convert from world position to local position 
-        Gizmos.DrawWireCube(center, attackingBoxSize);
+        Gizmos.DrawWireCube(center, attackBox.attackingBoxSize);
 
         Gizmos.matrix = prevMatrix;
         Gizmos.color = Color.cyan;
-        Vector3 centers = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
-        Gizmos.DrawLine(transform.position, centers);
+        Gizmos.DrawLine(transform.position, center);
         
     }
 }

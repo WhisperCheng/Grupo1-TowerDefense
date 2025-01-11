@@ -148,7 +148,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             _agent.acceleration = _defaultAcceleration; // Cambiar la aceleración de rotación del enemigo a la original
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
-                //Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, ignoreTagList);
                 Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, null);
                 if (hearth != null && _destination != hearth.position) _destination = hearth.position;
                 // Si el corazón existe y la posición es distinta, se actualiza el destino

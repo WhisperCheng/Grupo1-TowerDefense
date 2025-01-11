@@ -553,8 +553,9 @@ MonoBehaviour:
   attackDamage: 5
   cooldown: 2
   reachAttackRange: 2.3
-  attackingBoxSize: {x: 2.36, y: 1.37, z: 2.05}
-  attackingBoxPos: {x: 0, y: 0.84, z: 0.89}
+  attackBox:
+    attackingBoxSize: {x: 2.36, y: 1.37, z: 2.05}
+    attackingBoxPos: {x: 0, y: 0.84, z: 0.89}
 --- !u!195 &7258662094469348518
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -289,8 +289,7 @@ public class CarnivoraTower : Tower, IDamageable
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
-        bool validEnemyCollision = collision.GetType().ToString().Equals("UnityEngine.BoxCollider") &&
-            entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0;
+        bool validEnemyCollision = entity != null && collision.tag == "Enemy" && entity.GetHealth() > 0;
         if (validEnemyCollision)
         {
             if (attackingList.Contains(collision))
