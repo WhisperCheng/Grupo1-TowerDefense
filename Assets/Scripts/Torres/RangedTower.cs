@@ -14,7 +14,6 @@ public abstract class RangedTower : Tower, IDamageable
     protected Animator animator;
 
     [Header("Proyectil")]
-    //[SerializeField] protected GameObject proyectile;
     [SerializeField] protected Transform shooterSource;
     [Range(0,100)]
     [SerializeField] protected float shootingSpeed;
@@ -36,7 +35,6 @@ public abstract class RangedTower : Tower, IDamageable
     {
         if (!_locked)
         {
-            //ManageCooldown(); // TODO: Implementar cooldown
             EnemyDetection();
             LookRotation();
             UpdateCurrentCooldown();
@@ -60,7 +58,6 @@ public abstract class RangedTower : Tower, IDamageable
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
-            //animator.keepAnimatorStateOnDisable = false;
             
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
@@ -81,7 +78,6 @@ public abstract class RangedTower : Tower, IDamageable
 
     protected override void EnemyDetection()
     {
-        //currentTargets.Clear();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
        
         if (colliders.Length > 0)
@@ -178,11 +174,6 @@ public abstract class RangedTower : Tower, IDamageable
         {
             Die();
         }
-    }
-
-    protected override void OnDamageTaken()
-    {
-        //
     }
 
     public override float GetHealth()

@@ -57,10 +57,9 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected int _allyMask = 1 << 9;
 
     protected abstract void WhileWalking();
-    public abstract void OnAttack(); // Efectos de partículas al golpear, cambiar animación, etc
-    protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
+    public virtual void OnAttack() { } // Efectos de partículas al golpear, cambiar animación, etc
+    protected virtual void OnDamageTaken() { } // Efectos de partículas y efectos visuales al recibir daño
     public abstract float GetHealth();
-    protected abstract void CheckRivalsInsideAttackRange();
     public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
     protected abstract void ManageCombat();

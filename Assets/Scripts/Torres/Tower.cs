@@ -33,7 +33,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
                                     // al devolverla a la pool se puede devolver con sus valores reiniciados en caso de que esos valores no sean nulos.
     protected int _enemyMask;
 
-    protected abstract void OnDamageTaken(); // Efectos de partículas y efectos visuales al recibir daño
+    protected virtual void OnDamageTaken() { } // Efectos de partículas y efectos visuales al recibir daño
     public abstract void OnAttack(); // Disparar proyectiles, efectos de partículas al golpear, cambiar animación, etc
     public abstract void Die();
     public abstract void TakeDamage(float damageAmount);
