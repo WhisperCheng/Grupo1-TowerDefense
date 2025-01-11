@@ -23,13 +23,14 @@ public class AttackBox
     /// <param name="damage"></param>
     /// <param name="cooldown"></param>
     /// <returns>True si se ha realizado la acción de atacar</returns>
-    public bool ManageAttack(GameObject originGameObject, int masks, Animator animator, bool canAttackOrDamageBool, float damage)
+    public bool ManageAttack(Transform mainObject, Transform rotation, int masks, Animator animator, bool canAttackOrDamageBool, float damage)
     {
+        if (rotation == null)
+            rotation = mainObject;
         bool result = false;
-        Transform transform = originGameObject.transform;
         // Centro relativo
-        Vector3 center = transform.position + (transform.forward * attackingBoxPos.z) + (transform.right * attackingBoxPos.x) + (transform.up * attackingBoxPos.y);
-        Collider[] rivals = Physics.OverlapBox(center, attackingBoxSize / 2, transform.rotation, masks); // OverlapBox respecto al centro relativo y la rotación
+        Vector3 center = mainObject.position + (mainObject.forward * attackingBoxPos.z) + (mainObject.right * attackingBoxPos.x) + (mainObject.up * attackingBoxPos.y);
+        Collider[] rivals = Physics.OverlapBox(center, attackingBoxSize / 2, rotation.rotation, masks); // OverlapBox respecto al centro relativo y la rotación
 
         if (rivals.Length > 0)
         {
@@ -59,5 +60,30 @@ public class AttackBox
             result = false;
         }
         return result;
+    }
+
+    public bool ManageAttack(Transform mainObject, int masks, Animator animator, bool canAttackOrDamageBool, float damage)
+    {
+        return ManageAttack(mainObject, null, masks, animator, canAttackOrDamageBool, damage);
+    }
+
+    public void DrawGizmos(Transform mainObject)
+    {
+        Color prevColor = Gizmos.color;
+        Matrix4x4 prevMatrix = Gizmos.matrix;
+
+        Gizmos.color = Color.red;
+        Vector3 matrixCenter = mainObject.position + (mainObject.forward * attackingBoxPos.z) + (mainObject.right * attackingBoxPos.x)
+            + (mainObject.up * attackingBoxPos.y);
+        Vector3 center = matrixCenter;
+
+        Gizmos.matrix = mainObject.localToWorldMatrix;
+        matrixCenter = mainObject.InverseTransformPoint(matrixCenter); // convert from world position to local position 
+        Gizmos.DrawWireCube(matrixCenter, attackingBoxSize);
+
+        Gizmos.matrix = prevMatrix;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(mainObject.position, center);
+        Gizmos.color = prevColor;
     }
 }

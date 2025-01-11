@@ -95,7 +95,7 @@ public class BasicEnemyAI : EnemyAI
         }*/
         int attackMasks = 1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados | 1 << GameManager.Instance.layerCorazon;
 
-        bool attackDone = attackBox.ManageAttack(gameObject, attackMasks, animatorController, _canDamage, attackDamage);
+        bool attackDone = attackBox.ManageAttack(gameObject.transform, attackMasks, animatorController, _canDamage, attackDamage);
         _attackMode = attackBox.AttackModeBool; // Se actualizan los booleanos que manejan el combate al valor correspondiente
         _canDamage = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
         if (attackDone)
@@ -119,13 +119,6 @@ public class BasicEnemyAI : EnemyAI
     public override void OnAttack()
     {
         // TODO: Efectos visuales al atacar
-    }
-    public override void Attack(IDamageable damageableEntity)
-    {
-        if (_canDamage)
-        {
-            damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-        }
     }
 
     public override void Die()
@@ -231,8 +224,8 @@ public class BasicEnemyAI : EnemyAI
     {
         base.OnDrawGizmosSelected();
         Gizmos.color = Color.red;
-        
-        Vector3 center = transform.position + (transform.forward * attackBox.attackingBoxPos.z) + (transform.right * attackBox.attackingBoxPos.x) 
+
+        /*Vector3 center = transform.position + (transform.forward * attackBox.attackingBoxPos.z) + (transform.right * attackBox.attackingBoxPos.x) 
             + (transform.up * attackBox.attackingBoxPos.y);
         Matrix4x4 prevMatrix = Gizmos.matrix;
 
@@ -243,7 +236,9 @@ public class BasicEnemyAI : EnemyAI
 
         Gizmos.matrix = prevMatrix;
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(transform.position, center);
-        
+        Gizmos.DrawLine(transform.position, center);*/
+        attackBox.DrawGizmos(transform);
+
+
     }
 }

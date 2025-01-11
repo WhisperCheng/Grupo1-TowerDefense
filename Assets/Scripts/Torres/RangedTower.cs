@@ -151,7 +151,6 @@ public abstract class RangedTower : Tower, IDamageable
     {
         if (_canAttack && _attackMode && _currentCooldown <= 0 && !_locked && currentTarget != null)
         {
-            Debug.Log("G");
             animator.SetTrigger("Attack");
         }
     }

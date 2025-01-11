@@ -10,6 +10,8 @@ public class CarnivoraTower : Tower, IDamageable
 
     [Header("Ataque")] //Ataque
     public float attackDamage;
+    public AttackBox attackBox;
+    public Transform attackBoxHolder;
 
     //[Header("Animaciones")]
     protected Animator animator;
@@ -38,7 +40,7 @@ public class CarnivoraTower : Tower, IDamageable
         if (!_locked)
         {
             UpdateCurrentCooldown();
-            CheckAvailableRivals();
+            //CheckAvailableRivals();
             EnemyDetection();
             LookRotation();
             ManageCombat();
@@ -139,7 +141,7 @@ public class CarnivoraTower : Tower, IDamageable
 
     // Método necesario para que cuando no haya ningún enemigo dentro de la hitbox de ataque, automáticamente elimine a los
     // enemigos a atacar de la lista de targets
-    protected void CheckAvailableRivals()
+    /*protected void CheckAvailableRivals()
     {
         for (int i = 0; i < attackingList.Count; i++)
         {
@@ -155,7 +157,7 @@ public class CarnivoraTower : Tower, IDamageable
                 }
             }
         }
-    }
+    }*/
 
     public override void OnAttack() // Al atacar se resetean los parámetros booleanos a su estado normal
     {
@@ -270,7 +272,7 @@ public class CarnivoraTower : Tower, IDamageable
     // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
     protected void ManageCombat()
     {
-        if (_canAttack && _attackMode)
+        /*if (_canAttack && _attackMode)
         { // Se recorre la lista de los objetivos a atacar y se les hace daño
             for (int i = 0; i < attackingList.Count; i++)
             {
@@ -282,10 +284,25 @@ public class CarnivoraTower : Tower, IDamageable
             }
             _canAttack = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown
+        }*/
+        int attackMasks = 1 << GameManager.Instance.layerEnemigos;
+
+        bool attackDone = attackBox.ManageAttack(attackBoxHolder, gameObject.transform, attackMasks, animator, _canAttack, attackDamage);
+        _attackMode = attackBox.AttackModeBool; // Se actualizan los booleanos que manejan el combate al valor correspondiente
+        _canAttack = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
+        if (attackDone)
+        { // Si se ataca con éxito a los enemigos dentro del área de ataque, se resetea el cooldown
+            _currentCooldown = cooldown;
         }
     }
 
-    private void OnTriggerStay(Collider collision)
+    protected override void OnDrawGizmosSelected()
+    {
+        base.OnDrawGizmosSelected();
+        attackBox.DrawGizmos(attackBoxHolder);
+    }
+
+    /*private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
@@ -313,5 +330,5 @@ public class CarnivoraTower : Tower, IDamageable
             // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
             attackingList.Remove(collision);
         }
-    }
+    }*/
 }

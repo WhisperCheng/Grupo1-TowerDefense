@@ -104,7 +104,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
         }
     }
 
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);

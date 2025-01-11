@@ -22,15 +22,14 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
     public float attackDamage = 1;
     //public float cooldown;
     public float reachAttackRange = 3;
+    public AttackBox attackBox;
 
 
     //GAMEOBJECTs
-    //public Transform enemigo; 
-    //public Transform baseAliada;
     private ToconBrain toconBrain;
     public ToconBrain ToconBrain { private get; set; } // Encapsulación del toconBrain con getter y setter
     private GameObject enemigoActual; //maza o el que sea que sigue la seta
-    private List<Collider> objetivosDeAtaqueActuales = new List<Collider>();
+    //private List<Collider> objetivosDeAtaqueActuales = new List<Collider>();
 
     //CONTROLADORES
     private Animator _animator;
@@ -58,7 +57,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
         _navAgent = GetComponent<NavMeshAgent>();
         _currentCooldown = 0f;
         _animator = GetComponent<Animator>();
-        objetivosDeAtaqueActuales = new List<Collider>();
+        //objetivosDeAtaqueActuales = new List<Collider>();
     }
 
     // Start is called before the first frame update
@@ -80,7 +79,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
             UpdateCurrentCooldown();
             SeguirEnemigo();
             AnimarSeta();
-            CheckRivalsInsideAttackRange();
+            //CheckRivalsInsideAttackRange();
             ManejarAtaqueAEnemigos();
         }
         
@@ -174,7 +173,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
             }
         }*/
 
-        if (_canDamage && _attackMode)
+        /*if (_canDamage && _attackMode)
         { // Se recorre la lista de los objetivos a atacar y se les hace daño
             for (int i = 0; i < objetivosDeAtaqueActuales.Count; i++)
             {
@@ -188,10 +187,19 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
             //_attackMode = false;
             _canDamage = false; // Se quita el modo de atacar
             _currentCooldown = cooldown; // Reset del cooldown
+        }*/
+        int attackMasks = 1 << GameManager.Instance.layerEnemigos;
+
+        bool attackDone = attackBox.ManageAttack(gameObject.transform, attackMasks, _animator, _canDamage, attackDamage);
+        _attackMode = attackBox.AttackModeBool; // Se actualizan los booleanos que manejan el combate al valor correspondiente
+        _canDamage = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
+        if (attackDone)
+        { // Si se ataca con éxito a los enemigos dentro del área de ataque, se resetea el cooldown
+            _currentCooldown = cooldown;
         }
     }
 
-    private void CheckRivalsInsideAttackRange()
+    /*private void CheckRivalsInsideAttackRange()
     {
         for (int i = 0; i < objetivosDeAtaqueActuales.Count; i++)
         {
@@ -212,23 +220,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
                 _canDamage = false;
             }
         }
-    }
-
-    private void Attack(IDamageable damageableEntity)
-    {
-        if (_canDamage)
-        {
-            damageableEntity.TakeDamage(attackDamage); // Hacer daño a la entidad Damageable
-        }
-    }
-
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, reachAttackRange);
-    }
-#endif
+    }*/
 
     public void Die()
     {
@@ -285,7 +277,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
         AllyPool.Instance.ReturnAlly(this.gameObject);
     }
 
-    private void OnTriggerStay(Collider collision)
+    /*private void OnTriggerStay(Collider collision)
     {
         IDamageable entity = collision.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
         //if (collision.tag == GameManager.Instance.tagCorazonDelBosque)
@@ -322,5 +314,14 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
             // Si se sale un rival de la hitbox de ataque, se elimina de la lista de enemigos dentro del área de ataque
             objetivosDeAtaqueActuales.Remove(collision);
         }
+    }*/
+
+#if UNITY_EDITOR
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, reachAttackRange);
+        attackBox.DrawGizmos(transform);
     }
+#endif
 }
