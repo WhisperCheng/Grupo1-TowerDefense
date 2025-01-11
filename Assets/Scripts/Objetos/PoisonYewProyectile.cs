@@ -20,7 +20,10 @@ public class PoisonYewProyectile : RangedTowerProyectile
     protected override void OnImpactEffects(Collider[] collisions)
     {
         PoisonEnemies(collisions);
-        // TODO: Efectos de partículas
+
+        GameObject poisonParticles = PoisonParticleImpactPool.Instance.GetPoisonYewImpactParticles();
+        poisonParticles.transform.position = transform.position;
+        poisonParticles.GetComponent<ParticleSystem>().Play();
     }
 
     private void PoisonEnemies(Collider[] collisions)

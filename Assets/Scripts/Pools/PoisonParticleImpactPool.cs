@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeathParticlesPool : MonoBehaviour
+public class PoisonParticleImpactPool : MonoBehaviour
 {
-    public GameObject enemyDeathParticlesPrefab; // Prefab de las partículas de muerte de enemigos
+    public GameObject poisonYewImpactParticlesPrefab; // Prefab de las partículas de impacto del tajo venenoso
     public int poolSize = 20;
 
     GameObject parent;
@@ -12,7 +12,7 @@ public class EnemyDeathParticlesPool : MonoBehaviour
     public string grandParentName = "ObjectPoolsObjects";
 
     private Stack<GameObject> pool;
-    public static EnemyDeathParticlesPool Instance;
+    public static PoisonParticleImpactPool Instance;
 
     private void Awake()
     {
@@ -36,23 +36,23 @@ public class EnemyDeathParticlesPool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
-        parent = new GameObject("EnemyDeathParticles_PC");
+        parent = new GameObject("PoisonYewParticles_PC");
         parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject particles = Instantiate(enemyDeathParticlesPrefab);
+            GameObject particles = Instantiate(poisonYewImpactParticlesPrefab);
             particles.transform.parent = parent.transform;
             particles.SetActive(false);
             pool.Push(particles);
         }
     }
 
-    public GameObject GetEnemyDeathParticles()
+    public GameObject GetPoisonYewImpactParticles()
     {
         if (pool.Count == 0)
         {
             //Debug.LogWarning("Pool de partículas de muerte de enemigos vacía. Creando nuevo objeto de partículas.");
-            GameObject newParticles = Instantiate(enemyDeathParticlesPrefab);
+            GameObject newParticles = Instantiate(poisonYewImpactParticlesPrefab);
             newParticles.transform.parent = parent.transform;
             return newParticles;
         }
@@ -62,7 +62,7 @@ public class EnemyDeathParticlesPool : MonoBehaviour
         return particles;
     }
 
-    public void ReturnEnemyDeathParticles(GameObject returnedParticles)
+    public void ReturnPoisonYewImpactParticles(GameObject returnedParticles)
     {
         // Desactivar y devolver a la pool
         returnedParticles.SetActive(false);

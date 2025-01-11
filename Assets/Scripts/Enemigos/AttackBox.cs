@@ -51,6 +51,10 @@ public class AttackBox
                         result = true;
                     }
                 }
+                else
+                {
+                    animator.ResetTrigger("Attack");
+                }
             }
         }
         else

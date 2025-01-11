@@ -24,8 +24,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     [Header("Vida")] // Vida
     public float health;
     protected HealthBar _healthBar;
-    [SerializeField] protected ParticleSystem _particulasMuerte;
-    [SerializeField] protected ParticleSystem _particulasGolpe;
 
     [Header("Ataque")] //Ataque
     public float attackDamage;

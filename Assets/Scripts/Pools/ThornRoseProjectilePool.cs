@@ -58,14 +58,6 @@ public class ThornRoseProjectilePool : MonoBehaviour
         }
 
         GameObject proyectile = pool.Pop();
-        /*GameObject projectile = pool.ToArray().LastOrDefault(x => !x.activeSelf);
-        if(projectile != null) // Si no hay proyectiles activos se crea uno nuevo
-        {
-            pool.TryPop(out projectile); // Eliminar objeto de la pool
-        } else
-        {
-            return CreateNewProyectile();
-        }*/
         proyectile.SetActive(true);
         proyectile.gameObject.GetComponent<RangedTowerProyectile>().PopFromPool();
         return proyectile;

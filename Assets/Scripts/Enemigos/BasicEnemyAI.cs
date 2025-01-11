@@ -40,12 +40,13 @@ public class BasicEnemyAI : EnemyAI
 
     public override void Die()
     {
-        //_particulasMuerte.Play();
+        GameObject deathParticles = EnemyDeathParticlesPool.Instance.GetEnemyDeathParticles();
+        deathParticles.transform.position = transform.position;
+        deathParticles.GetComponent<ParticleSystem>().Play();
         base.Die();
     }
 
-    public override float GetHealth()
-    {return _currentHealth;}
+    public override float GetHealth() { return _currentHealth; }
 
     protected override void UpdateCurrentCooldown()
     {
@@ -68,8 +69,7 @@ public class BasicEnemyAI : EnemyAI
         MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
     }
 
-    public override GameObject GetFromPool()
-    {return MiniKnightPool.Instance.GetMiniKnight();}
+    public override GameObject GetFromPool() { return MiniKnightPool.Instance.GetMiniKnight(); }
 
     public override GameObject RestoreToDefault()
     {
