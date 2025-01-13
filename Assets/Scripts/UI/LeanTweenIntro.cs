@@ -23,9 +23,13 @@ public class LeanTweenIntro : MonoBehaviour
     private void BajarAlpha()
     {
        
-        LeanTween.alpha(introCanvas.GetComponent<RectTransform>(), 0f, 1f).setDelay(0.75f);
+        LeanTween.alpha(introCanvas.GetComponent<RectTransform>(), 0f, 1f).setDelay(0.75f).setOnComplete(ActivateTheGameMenu);
         introCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
 
+    private void ActivateTheGameMenu()
+    {
+        SwitchController.timeToChange = true;
     }
 }
 
