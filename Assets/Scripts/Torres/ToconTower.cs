@@ -25,7 +25,7 @@ public class ToconTower : Tower
     // Update is called once per frame
     void Update()
     {
-        if (!_locked)
+        if (!locked)
         {
             brain.SpawnCooldown = cooldown; // Actualizar constantemente variables del cerebro si es necesario
             brain.MaxNumAliados = maximaCantidadSetas;
@@ -108,7 +108,7 @@ public class ToconTower : Tower
     {
         if (_initialized)
         {
-            _locked = true;
+            locked = true;
         }
         AllyTowerPool.Instance.ReturnAllyTower(this.gameObject);
     }

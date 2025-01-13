@@ -33,7 +33,7 @@ public abstract class RangedTower : Tower, IDamageable
 
     protected void Update()
     {
-        if (!_locked)
+        if (!locked)
         {
             EnemyDetection();
             LookRotation();
@@ -51,7 +51,7 @@ public abstract class RangedTower : Tower, IDamageable
     {
         if (_initialized && _loaded)
         {
-            _locked = true;
+            locked = true;
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
@@ -65,7 +65,7 @@ public abstract class RangedTower : Tower, IDamageable
 
     public override GameObject RestoreToDefault()
     {
-        if (!_locked)
+        if (!locked)
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
             _canAttack = false;
@@ -145,7 +145,7 @@ public abstract class RangedTower : Tower, IDamageable
 
     public override void OnAttack()
     {
-        if (_canAttack && _attackMode && _currentCooldown <= 0 && !_locked && currentTarget != null)
+        if (_canAttack && _attackMode && _currentCooldown <= 0 && !locked && currentTarget != null)
         {
             animator.SetTrigger("Attack");
         }

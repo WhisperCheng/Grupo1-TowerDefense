@@ -75,22 +75,26 @@ public class PlaceManager : MonoBehaviour
 
     public void GenerateTower() // Genera el tipo de torre designada
     {
-        if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
-                                     // hasta que no se coloque
+        Debug.Log(MoneyManager.Instance.gems);
+        if (MoneyManager.Instance.gems >= torre.money)
         {
-            //Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
-            //RaycastHit golpeRayo;
-            /*bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, ~GameManager.Instance.layerJugador
-                | ~GameManager.Instance.layerUI);*/
-            /*torreCopiada = Instantiate(objeto,
-                    !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);*/
-            torre = torre.GetComponent<IPoolable>().GetFromPool().GetComponent<Tower>();
+            if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
+                                         // hasta que no se coloque
+            {
+                //Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
+                //RaycastHit golpeRayo;
+                /*bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, ~GameManager.Instance.layerJugador
+                    | ~GameManager.Instance.layerUI);*/
+                /*torreCopiada = Instantiate(objeto,
+                        !colisionConRayo ? objeto.transform.position : golpeRayo.point, objeto.transform.rotation);*/
+                torre = torre.GetComponent<IPoolable>().GetFromPool().GetComponent<Tower>();
 
-            // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
-            ToggleTowerCollisions(torre, false);
-            SetPreviewMode(true);
-            bloqueoDisparo = true;
-            objetoSiendoArrastrado = true;
+                // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
+                ToggleTowerCollisions(torre, false);
+                SetPreviewMode(true);
+                bloqueoDisparo = true;
+                objetoSiendoArrastrado = true;
+            }
         }
     }
 
@@ -129,7 +133,7 @@ public class PlaceManager : MonoBehaviour
         }*/
         
 
-        if (!previewMode) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
+        if (!previewMode && torre.placed) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
         {  // lo que permite atacar y rotar hacia los enemigos
             torre.UnlockTower();
         }
@@ -238,7 +242,9 @@ public class PlaceManager : MonoBehaviour
             particulasCopia.GetComponent<ParticleSystem>().Play();
 
             ToggleTowerCollisions(torre, true);
+            torre.placed = true;
             SetPreviewMode(false);
+            
             objetoSiendoArrastrado = false;
             torre = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                                   // no se vuelva a eliminar

@@ -33,7 +33,7 @@ public class CarnivoraTower : Tower, IDamageable
 
     void Update()
     {
-        if (!_locked)
+        if (!locked)
         {
             UpdateCurrentCooldown();
             EnemyDetection();
@@ -116,7 +116,7 @@ public class CarnivoraTower : Tower, IDamageable
     }
     public override void OnAttack() // Al atacar se resetean los parámetros booleanos a su estado normal
     {
-        if (_canAttack && _attackMode && !_locked && currentTarget != null)
+        if (_canAttack && _attackMode && !locked && currentTarget != null)
         {
             _currentCooldown = cooldown; // Reset del cooldown
         }
@@ -143,7 +143,7 @@ public class CarnivoraTower : Tower, IDamageable
     {
         if (_initialized && _loaded)
         {
-            _locked = true;
+            locked = true;
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
@@ -157,10 +157,10 @@ public class CarnivoraTower : Tower, IDamageable
     public override GameObject GetFromPool() { return CarnivorousPlantPool.Instance.GetCarnivorousPlant(); }
     public override GameObject RestoreToDefault()
     {
-        if (!_locked)
+        if (!locked)
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
-            _locked = true;
+            locked = true;
             //enabled = true;
             _attackMode = false;
             _canAttack = false;

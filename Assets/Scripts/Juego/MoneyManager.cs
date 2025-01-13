@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class MoneyManager : MonoBehaviour
 {
-    int gemas = 50; //número de gemas que tenga inicialmente X
+    public static MoneyManager Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    public int gems = 50; //número de gemas que tenga inicialmente X
     // Start is called before the first frame update
     void Start()
     {
@@ -16,20 +28,8 @@ public class MoneyManager : MonoBehaviour
     {
         
     }
-    public void QuitarDineroRosaEspinas()
+    public void RemoveMoney(int money)
     {
-        gemas -= 5; //num X según lo que se quiera quitar por cada rosa que se ponga
-    }
-    public void QuitarDineroPlantaCarnovira()
-    {
-        gemas -= 10; //num X según lo que se quiera quitar por cada carnivora que se ponga
-    }
-    public void QuitarDineroTajoVenenoso()
-    {
-        gemas -= 20; //num X según lo que se quiera quitar por cada tajo que se ponga
-    }
-    public void QuitarDineroMejoras()
-    {
-        gemas -= 25; //num X según se quite para las mejoras de plantas
+        gems -= money;
     }
 }
