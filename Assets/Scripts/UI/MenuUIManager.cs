@@ -5,28 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    [Header("Intro Elements")]
-    [SerializeField] private GameObject selectLanguageCanvas;
-
-    [Header("Main Menu Elements")]
-    [SerializeField] private GameObject mainMenuCanvas;
-    [SerializeField] private GameObject selectLevelCanvas;
-    [SerializeField] private GameObject optionsMenuCanvas;
-    [SerializeField] private GameObject creditsMenuCanvas;
-
-    [Header("Options Menu Elements")]
-    [SerializeField] private GameObject brightnessOptionsCanvas;
-    [SerializeField] private GameObject soundOptionsCanvas;
-    [SerializeField] private GameObject controlsCanvas;
+    [Header("Animation Object")]
+    [SerializeField] private GameObject animationObject;
 
     [Header("Animation Parameters")]
     [SerializeField] private LeanTweenType easeInScale;
     [SerializeField] private float animationInTime;
+    [SerializeField] private float animationTimer;
+    [SerializeField] Vector2 initialPosition;
+    [SerializeField] Vector2 finalPosition;
 
-    public void OpenMainMenu()
+    public void ExecuteAnimation()
     {
-        LeanTween.scale(selectLanguageCanvas, Vector3.zero, animationInTime);
-        mainMenuCanvas.SetActive(true);
-        LeanTween.scale(mainMenuCanvas, Vector3.one, animationInTime).setEase(easeInScale);
+        
+        LeanTween.move(gameObject, (finalPosition), animationTimer).setEase(LeanTweenType.easeInBack);
     }
 }
