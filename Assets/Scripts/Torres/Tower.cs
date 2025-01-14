@@ -6,7 +6,7 @@ using System.Linq;
 public abstract class Tower : LivingEntityAI, IPoolable
 {
     [Header("Precio")]
-    public int money;
+    [SerializeField] protected int money;
 
     [Header("Rango y Radio de tamaño")]
     [SerializeField] protected float range = 1f;
@@ -17,13 +17,13 @@ public abstract class Tower : LivingEntityAI, IPoolable
     [SerializeField] protected float rotationModelDegrees = 0f;
 
     [Header("Cooldown")] //Ataque
-    public float cooldown = 1f;
+    [SerializeField] protected float cooldown = 1f;
     protected float _currentCooldown;
 
     //protected List<GameObject> currentTargets = new List<GameObject>();
     protected GameObject currentTarget;
 
-
+    public int Money { get { return money; } private set { } }
 
     protected bool _hasEnemyAssigned = false;
     public bool locked = true; // Bloqueado / ataque de torres desactivado por defecto. Se activa el ataque cuando se coloca la torre.

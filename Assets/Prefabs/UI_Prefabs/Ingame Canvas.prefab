@@ -460,10 +460,10 @@ MonoBehaviour:
       - m_Target: {fileID: 8880157202813847420}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -481,6 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 511131227371108847, guid: c08e725860d9faa47805d131f013fc75, type: 3}
 --- !u!1 &2799213958635505941
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,10 +606,10 @@ MonoBehaviour:
       - m_Target: {fileID: 4030137209494042860}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 2892515410044463881, guid: fae98853c52bcd842a7e4c288d5defff, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -626,6 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 2892515410044463881, guid: fae98853c52bcd842a7e4c288d5defff, type: 3}
 --- !u!1 &3232207110725789821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1267,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7799474696818113938}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2883801535136657731}
+        m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
+        m_MethodName: StartButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2883801535136657731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1278,6 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 3048053029042072592, guid: decc539d3fd8196449848daa9bf5f5e5, type: 3}
 --- !u!1 &5465236562660178768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,10 +1587,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1535346221659453008}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 5750050111347682588, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1593,6 +1608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 5750050111347682588, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
 --- !u!1 &5749057684669480194
 GameObject:
   m_ObjectHideFlags: 0
@@ -1717,10 +1733,10 @@ MonoBehaviour:
       - m_Target: {fileID: 5682097747134152051}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 3980847467072075622, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1738,6 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 4629600845965652655, guid: aefdedaabd6e54a4799a99d01475b313, type: 3}
 --- !u!1 &6185171473880532258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,10 +1954,10 @@ MonoBehaviour:
       - m_Target: {fileID: 598808813648815807}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 3980847467072075622, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1958,6 +1975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 3980847467072075622, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
 --- !u!1 &6508181593171869075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2045,7 +2063,6 @@ GameObject:
   - component: {fileID: 5510899133406205902}
   - component: {fileID: 1523754450960566827}
   - component: {fileID: 1090903910444403806}
-  - component: {fileID: 6859455813764083848}
   m_Layer: 5
   m_Name: Baculo
   m_TagString: Untagged
@@ -2154,7 +2171,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6859455813764083848}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -2166,18 +2183,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6859455813764083848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6867830624039011700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6964592093639101281
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,10 +2547,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1955189877297528234}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 41474253319616787, guid: 7a68c96f4828fec41beadaf617d4daba, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2563,6 +2568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 41474253319616787, guid: 7a68c96f4828fec41beadaf617d4daba, type: 3}
 --- !u!1 &7627305416900892894
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,10 +2843,10 @@ MonoBehaviour:
       - m_Target: {fileID: 8702897720898159456}
         m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
         m_MethodName: StartButton
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 4579135076551866807, guid: cecfcd6603fb9f743a843396bcf61907, type: 3}
-          m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2858,6 +2864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3a512ffe854cfa45980275d852d9cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 4579135076551866807, guid: cecfcd6603fb9f743a843396bcf61907, type: 3}
 --- !u!1 &8726536981068310290
 GameObject:
   m_ObjectHideFlags: 0

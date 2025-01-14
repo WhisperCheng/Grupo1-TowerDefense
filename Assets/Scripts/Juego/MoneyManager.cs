@@ -36,4 +36,8 @@ public class MoneyManager : MonoBehaviour
     {
         gems += money;
     }
+    public int GetMoney()
+    {
+        return gems;
+    }
 }

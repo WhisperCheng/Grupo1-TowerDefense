@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         {
             // TODO: Perder partida
             Debug.Log("Partida perdida");
+            this.enabled = false;
         }
     }
 
