@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Respawn Enemigos")]
     public Transform respawnEnemigos;
+
+    [Header("Controles Jugador")]
+    public PlayerInput playerControls;
 
     [Header("Tags Globales")]
     public string tagCorazonDelBosque;
@@ -47,7 +51,7 @@ public class GameManager : MonoBehaviour
     //[Header("Tags de enemigos")]
     //public List<string> listaTagEnemigos;
 
-    private int forestHearthAmount = 0;
+    public int ForestHearthAmount { get; set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +61,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (forestHearthAmount <= 0)
+        if (ForestHearthAmount <= 0)
         {
             // TODO: Perder partida
             Debug.Log("Partida perdida");
@@ -77,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     public void addForestHearth()
     {
-        forestHearthAmount++;
+        ForestHearthAmount++;
     }
 
     /*public int getForestHearthAmount()

@@ -27,7 +27,7 @@ public class RangoTorres : MonoBehaviour
 
                 if (torre != null)
                 {
-                    rangoTorre = 2 * torre.range; 
+                    rangoTorre = 2 * torre.GetRange(); 
                     rangeIndicator.transform.position = gameObjTorreCopiada.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     rangeIndicator.gameObject.SetActive(true); 
@@ -44,7 +44,7 @@ public class RangoTorres : MonoBehaviour
                 {
                     rangeIndicator.gameObject.SetActive(true);
                     GameObject gameObjTorre = golpeRayo.collider.gameObject;
-                    rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().range;
+                    rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().GetRange();
                     rangeIndicator.transform.position = gameObjTorre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     torreApuntada = true;

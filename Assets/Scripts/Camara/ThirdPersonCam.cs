@@ -21,9 +21,6 @@ public class ThirdPersonCam : MonoBehaviour
     [Range(0.1f, 10f)]
     [SerializeField] private float _smoothPlayerTurnSpeed = 4f;
 
-    [Header("Controles")]
-    public PlayerInput playerInput;
-
     private Vector2 _moveDirection;
     private Vector2 _lookDirection;
     private Vector2 _oldLookDirection;
@@ -50,6 +47,7 @@ public class ThirdPersonCam : MonoBehaviour
         orientation.forward = viewDir.normalized;
 
         // Leer input para luego apuntar a la dirección deseada
+        PlayerInput playerInput = GameManager.Instance.playerControls;
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
         // suavizar rotación continuamente
@@ -65,6 +63,7 @@ public class ThirdPersonCam : MonoBehaviour
 
     private void RotatePlayerObj()
     {
+        PlayerInput playerInput = GameManager.Instance.playerControls;
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
         if (_moveDirection != Vector2.zero)
         {

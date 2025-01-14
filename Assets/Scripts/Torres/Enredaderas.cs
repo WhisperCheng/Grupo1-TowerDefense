@@ -2,14 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enredaderas : MonoBehaviour
+public class Enredaderas : StaticTower
 {
     // Variables
     private float originalSpeed;
     [SerializeField] private float speedPercentage;
-    [SerializeField] private float cooldown = 2f;
     [SerializeField] private float damage = 10f;
     private Dictionary<Collider, float> damageTimers = new Dictionary<Collider, float>();
+
+    public override GameObject GetFromPool() { return VineTrapPool.Instance.GetVineTrap(); }
+    public override void ReturnToPool() { VineTrapPool.Instance.ReturnVineTrap(this.gameObject); }
+
+    public override GameObject RestoreToDefault()
+    {
+        damageTimers = new Dictionary<Collider, float>();
+        return gameObject;
+    }
 
     private void Update()
     {
@@ -17,6 +25,12 @@ public class Enredaderas : MonoBehaviour
 
         foreach (Collider enemy in keys)
         {
+            if (enemy == null || !enemy.gameObject.activeInHierarchy)
+            {
+                damageTimers.Remove(enemy);
+                continue;
+            } // Eliminar de la lista en caso de que se haya enviado de la pool
+
             if (damageTimers[enemy] > 0)
             {
                 damageTimers[enemy] -= Time.deltaTime;
@@ -38,7 +52,8 @@ public class Enredaderas : MonoBehaviour
 
             if (!damageTimers.ContainsKey(collision))
             {
-                damageTimers.Add(collision, 0f);
+                //damageTimers.Add(collision, 0f);
+                damageTimers.Add(collision, enemy.speed);
             }
         }
     }

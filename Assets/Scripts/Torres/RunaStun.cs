@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RunaStun : MonoBehaviour
+public class RunaStun : StaticTower
 {
     private bool canAttack = true;
     [SerializeField] private float duration = 3f;
-    [SerializeField] private float cooldown = 2f;
-    [SerializeField] private float range = 10f;
 
     private Dictionary<NavMeshAgent, float> stunnedEnemies = new Dictionary<NavMeshAgent, float>();
 
     void Update()
     {
-        
+
     }
 
     private void EnemyDetection()
@@ -40,7 +38,7 @@ public class RunaStun : MonoBehaviour
         }
 
         enemy.speed = 0; // Aplicar el stun
-        Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
+        //Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
 
         yield return new WaitForSeconds(duration);
 
@@ -49,7 +47,7 @@ public class RunaStun : MonoBehaviour
         {
             enemy.speed = stunnedEnemies[enemyNavMesh];
             stunnedEnemies.Remove(enemyNavMesh);
-            Debug.Log($"Enemigo {enemyNavMesh.name} destunneado");
+            //Debug.Log($"Enemigo {enemyNavMesh.name} destunneado");
         }
     }
 
@@ -57,7 +55,7 @@ public class RunaStun : MonoBehaviour
     {
         if (collision.CompareTag(GameManager.Instance.tagEnemigos) && canAttack && !collision.isTrigger)
         {
-            canAttack = false; 
+            canAttack = false;
             EnemyDetection();
             StartCoroutine(ResetCooldown());
         }
@@ -69,9 +67,16 @@ public class RunaStun : MonoBehaviour
         canAttack = true;
     }
 
-    private void OnDrawGizmosSelected()
+    protected override void OnDrawGizmosSelected()
     {
+        base.OnDrawGizmosSelected();
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, range);
     }
+
+    public override void ReturnToPool() { RuneTrapPool.Instance.ReturnRuneTrap(gameObject); }
+
+    public override GameObject RestoreToDefault() { return gameObject; }
+
+    public override GameObject GetFromPool() { return RuneTrapPool.Instance.GetRuneTrap(); }
 }

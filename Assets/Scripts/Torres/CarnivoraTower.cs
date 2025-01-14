@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarnivoraTower : Tower, IDamageable
+public class CarnivoraTower : LivingTower, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
@@ -114,7 +114,7 @@ public class CarnivoraTower : Tower, IDamageable
 
         animator.SetBool("AttackMode", _attackMode);
     }
-    public override void OnAttack() // Al atacar se resetean los parámetros booleanos a su estado normal
+    public void OnAttack() // Al atacar se resetean los parámetros booleanos a su estado normal
     {
         if (_canAttack && _attackMode && !locked && currentTarget != null)
         {

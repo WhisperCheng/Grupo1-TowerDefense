@@ -15,7 +15,8 @@ public class LeanTweenIntro : MonoBehaviour
 
     void Start()
     {
-        LeanTween.moveY(logoImage.GetComponent<RectTransform>(), 0, 2.7f).setDelay(0.5f).setEase(LeanTweenType.easeInOutBack).setOnComplete(BajarAlpha);
+        LeanTween.moveY(logoImage.GetComponent<RectTransform>(), 0, 2.7f)
+            .setDelay(0.5f).setEase(LeanTweenType.easeInOutBack).setOnComplete(BajarAlpha);
 
 
     }

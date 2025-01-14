@@ -49,6 +49,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
     {
         this.gameObject.SetActive(false);
         Destroy(this.gameObject);
+        GameManager.Instance.ForestHearthAmount--;
         // TODO: Efecto de partículas, llamar al GameManager para actualizar la info del corazón del bosque
     }
 

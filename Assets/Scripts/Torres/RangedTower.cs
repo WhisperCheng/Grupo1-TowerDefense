@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RangedTower : Tower, IDamageable
+public abstract class RangedTower : LivingTower, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
@@ -143,7 +143,7 @@ public abstract class RangedTower : Tower, IDamageable
         animator.SetBool("AttackMode", _attackMode); // Dejar de reproducir animación de atacar
     }
 
-    public override void OnAttack()
+    public void OnAttack()
     {
         if (_canAttack && _attackMode && _currentCooldown <= 0 && !locked && currentTarget != null)
         {

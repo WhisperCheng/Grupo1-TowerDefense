@@ -6,10 +6,7 @@ using UnityEngine.InputSystem;
 public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager Instance { get; private set; }
-
-    public PlayerInput playerInput;
     public GameObject buildUI;
-    public GameObject buildButtons;
     public GameObject crossHead;
 
     public bool activeBuildUI;
@@ -70,9 +67,8 @@ public class GameUIManager : MonoBehaviour
         activeBuildUI = false; // Ocultar crosshead
         crossHead.SetActive(false); //
         LeanTween.cancel(buildUI); // reset de las animaciones
-        LeanTween.cancel(buildButtons); //
         LeanTween.moveY(buildUI, -70f, time).setEaseInOutSine(); // Mostrar menú de botones
-        LeanTween.moveLocalY(buildButtons, -74f, time).setEaseInOutSine(); // 
+        //LeanTween.moveLocalY(buildButtons, -74f, time).setEaseInOutSine(); // 
     }
 
     public void ShowBuildUI(float time)
@@ -80,8 +76,7 @@ public class GameUIManager : MonoBehaviour
         activeBuildUI = true; // Ocultar crosshead
         crossHead.SetActive(true); //
         LeanTween.cancel(buildUI); // reset de las animaciones
-        LeanTween.cancel(buildButtons); //
         LeanTween.moveY(buildUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
-        LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
+        //LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
     }
 }

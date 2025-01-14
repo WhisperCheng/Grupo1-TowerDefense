@@ -11,8 +11,6 @@ public class PlaceManager : MonoBehaviour
 {
     public static PlaceManager Instance { get; private set; }
 
-    public PlayerInput playerInput;
-
     public GameObject marcador;
     [Header("Partículas de construcción")]
     public GameObject particulasConstruccion;
@@ -45,8 +43,8 @@ public class PlaceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerInput.actions.FindActionMap("Player").Enable();
-        playerInput.actions.FindActionMap("UI").Enable(); // por defecto está desactivado ya que solo
+        GameManager.Instance.playerControls.actions.FindActionMap("Player").Enable();
+        GameManager.Instance.playerControls.actions.FindActionMap("UI").Enable(); // por defecto está desactivado ya que solo
         // se puede por defecto tener un action map activado a la vez, pero se puede bypasear
         // haciendo esto
         //https://youtu.be/NZBAr_V7r0M?t=153

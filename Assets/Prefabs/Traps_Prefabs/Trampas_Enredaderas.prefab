@@ -176,8 +176,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5963b62c5210d85498adaf9a73c4019a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedPercentage: 30
+  range: 10
+  rotationSpeed: 5
+  money: 10
+  rotationPart: {fileID: 0}
+  rotationModelDegrees: 0
   cooldown: 1
+  locked: 1
+  placed: 0
+  speedPercentage: 30
   damage: 5
 --- !u!135 &1636836365898822542
 SphereCollider:

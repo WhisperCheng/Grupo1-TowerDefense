@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ToconBrain))]
-public class ToconTower : Tower
+public class ToconTower : LivingTower
 {
     [Header("Spawn Setas Aliadas")]
     [SerializeField] private Transform spawn;
@@ -37,7 +37,6 @@ public class ToconTower : Tower
     public override void TakeDamage(float damageAmount) { } // Lo mismo con TakeDamage y OnDamageTaken y otras funciones
     protected override void OnDamageTaken() { }
     public override float GetHealth() { return 0; }
-    public override void OnAttack() { }
     public override void Init()
     {
         base.Init();

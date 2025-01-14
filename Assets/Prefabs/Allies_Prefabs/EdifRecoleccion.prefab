@@ -5490,6 +5490,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8132468573261822829}
   - component: {fileID: 2975374494472844423}
+  - component: {fileID: 3048053029042072592}
   m_Layer: 0
   m_Name: EdifRecoleccion
   m_TagString: Untagged
@@ -5506,9 +5507,9 @@ Transform:
   m_GameObject: {fileID: 8103724110885376634}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 34.46}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5564692339303595167}
   - {fileID: 6160613178373972155}
@@ -5537,6 +5538,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3048053029042072592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103724110885376634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba139d95e828c6442944c62fb443e1bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  money: 100
+  range: 0
+  towerRadiusSize: 3
+  rotationPart: {fileID: 0}
+  rotationModelDegrees: 0
+  cooldown: 1
+  locked: 1
+  placed: 0
 --- !u!1 &8291704402861993617
 GameObject:
   m_ObjectHideFlags: 0
