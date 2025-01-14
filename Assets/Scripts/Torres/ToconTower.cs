@@ -127,4 +127,12 @@ public class ToconTower : LivingTower
     {
         return AllyTowerPool.Instance.GetAllyTower();
     }
+
+    protected override void OnDrawGizmosSelected()
+    {
+        base.OnDrawGizmosSelected();
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, range);
+
+    }
 }
