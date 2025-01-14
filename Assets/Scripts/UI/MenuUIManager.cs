@@ -11,7 +11,7 @@ public class MenuUIManager : MonoBehaviour
     [Header("Animation Parameters")]
     [SerializeField] private LeanTweenType easeInScale;
     [SerializeField] private float animationInTime;
-    [SerializeField] private float animationTimer;
+    [SerializeField] public float animationTimer;
     [SerializeField] Vector2 initialPosition;
     [SerializeField] Vector2 finalPosition;
 
