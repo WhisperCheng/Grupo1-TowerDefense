@@ -32,4 +32,8 @@ public class MoneyManager : MonoBehaviour
     {
         gems -= money;
     }
+    public void AddMoney (int money)
+    {
+        gems += money;
+    }
 }
