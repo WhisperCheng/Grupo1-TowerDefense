@@ -5454,6 +5454,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 592377117}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &596155112 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+  m_PrefabInstance: {fileID: 954344073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &625748148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7307,6 +7318,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sellingPercentageAmount: 50
+  sellingTowerTime: 0
+  upgradingTowerTime: 0
+  spriteTowerInteractions: {fileID: 596155112}
 --- !u!1 &765945895
 GameObject:
   m_ObjectHideFlags: 0
@@ -8695,6 +8709,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1301695275}
     m_Modifications:
+    - target: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_FillClockwise
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 332111851695952117, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8754,6 +8780,10 @@ PrefabInstance:
     - target: {fileID: 4308127474789912292, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4533337353337842379, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_Name
+      value: SpriteTowerInteractions
       objectReference: {fileID: 0}
     - target: {fileID: 4749166190431706525, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
