@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     [Header("Layers Globales")]
     public int layerEnemigos;
     public int layerAliados;
+    public int layerTorres;
     public int layerJugador;
     public int layerUI;
     public int layerPath;

@@ -4723,6 +4723,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 887089920}
   m_SourcePrefab: {fileID: 100100000, guid: 341e51ffcacc4a3419e517763508953d, type: 3}
+--- !u!1 &503624537 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4533337353337842379, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+  m_PrefabInstance: {fileID: 954344073}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &505492738 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8719739787567930251, guid: 341e51ffcacc4a3419e517763508953d, type: 3}
@@ -5459,12 +5464,27 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
   m_PrefabInstance: {fileID: 954344073}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 503624537}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &596155115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 503624537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0.3584906, b: 0.07110283, a: 0.78431374}
+  m_EffectDistance: {x: -0.6, y: -0.6}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &625748148
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7244,11 +7264,12 @@ MonoBehaviour:
   tagPath: Path
   layerEnemigos: 10
   layerAliados: 9
+  layerTorres: 12
   layerJugador: 7
   layerUI: 5
   layerPath: 8
   layerTerreno: 6
-  layerCorazon: 0
+  layerCorazon: 13
   colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
 --- !u!114 &762121835
 MonoBehaviour:
@@ -7318,7 +7339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sellingPercentageAmount: 50
-  sellingTowerTime: 0
+  sellingTowerTime: 1
   upgradingTowerTime: 0
   spriteTowerInteractions: {fileID: 596155112}
 --- !u!1 &765945895
@@ -9020,7 +9041,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4533337353337842379, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 596155115}
   m_SourcePrefab: {fileID: 100100000, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
 --- !u!1001 &962214497
 PrefabInstance:
