@@ -1,23 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuUIManager : MonoBehaviour
 {
-    [Header("Animation Object")]
-    [SerializeField] private GameObject animationObject;
+    public static MenuUIManager Instance { get; private set; }
+
 
     [Header("Animation Parameters")]
     [SerializeField] private LeanTweenType easeInScale;
-    [SerializeField] private float animationInTime;
-    [SerializeField] public float animationTimer;
     [SerializeField] Vector2 initialPosition;
     [SerializeField] Vector2 finalPosition;
-
-    public void ExecuteAnimation()
+    private void Awake()
     {
-        
-        LeanTween.move(gameObject, (finalPosition), animationTimer).setEase(LeanTweenType.easeInBack);
+        // If there is an instance, and it's not me, delete myself.
+
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+
+    internal void ExecuteAnimation(GameObject gameObject, float delay, Vector2 finalPos)
+    {
+        LeanTween.move(gameObject, finalPos, delay -0.5f).setEase(LeanTweenType.easeInBack);
+
     }
 }
