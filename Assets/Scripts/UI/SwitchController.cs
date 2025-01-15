@@ -9,24 +9,20 @@ public class SwitchController : MonoBehaviour
     GameObject currentSwitchable;
     [SerializeField]
     GameObject targetSwitchable;
-    [SerializeField]
-    public MenuUIManager menuUIManager;
-
     public static bool timeToChange;
-
-    private void Start()
-    {
-        timeToChange = false;
-    }
+    [SerializeField]
+    private float delay = 0.6f;
+    [SerializeField] Vector2 finalPos;
 
     public void Switch()
     {
-        StartCoroutine(SwitchAfterAnimation(menuUIManager.animationTimer));
-       
+        StartCoroutine(SwitchAfterAnimation(delay));
+        MenuUIManager.Instance.ExecuteAnimation(gameObject, delay, finalPos);
+
     }
-     private IEnumerator SwitchAfterAnimation(float delay)
+    private IEnumerator SwitchAfterAnimation(float delay)
     {
-        yield return new WaitForSeconds(delay); 
+        yield return new WaitForSeconds(delay);
         targetSwitchable.SetActive(true);
         currentSwitchable.SetActive(false);
     }
