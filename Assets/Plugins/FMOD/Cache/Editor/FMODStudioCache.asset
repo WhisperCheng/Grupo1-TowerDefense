@@ -1,5 +1,29 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8434809296580737807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter://Fragor
+  m_EditorClassIdentifier: 
+  Name: Fragor
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 257857195
+    data2: 2980764992
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-7751682806750094819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,11 +39,110 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638720368946465061
+  lastModified: 638725714242042134
   FileSizes:
   - Name: Desktop
-    Value: 760
+    Value: 898
   Exists: 1
+--- !u!114 &-6777541634545393935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: Assets/FMOD/Tower Defense/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: 
+  lastModified: 638725714242091965
+  FileSizes:
+  - Name: Desktop
+    Value: 494
+  Exists: 1
+--- !u!114 &-5483291510440914159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Hub
+  m_EditorClassIdentifier: 
+  Path: event:/Hub
+  Guid:
+    Data1: 1665223015
+    Data2: 1125273745
+    Data3: -1710659703
+    Data4: 1459794006
+  Banks:
+  - {fileID: 6764802151169257708}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 32710
+--- !u!114 &-3903485788749854559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Gameplay/Fragor
+  m_EditorClassIdentifier: 
+  Name: Fragor
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 257857195
+    data2: 2980764992
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-2179248425836092325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Gameplay
+  m_EditorClassIdentifier: 
+  Path: event:/Gameplay
+  Guid:
+    Data1: -1262472068
+    Data2: 1273317634
+    Data3: 1306392718
+    Data4: -1581602345
+  Banks:
+  - {fileID: 6764802151169257708}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -3903485788749854559}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 34287
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,13 +158,17 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -7751682806750094819}
   - {fileID: 6764802151169257708}
-  EditorEvents: []
+  - {fileID: -6777541634545393935}
+  EditorEvents:
+  - {fileID: 7279214337045221306}
+  - {fileID: -5483291510440914159}
+  - {fileID: -2179248425836092325}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6764802151169257708}
   StringsBanks:
   - {fileID: -7751682806750094819}
-  cacheTime: 638720368946465061
+  cacheTime: 638725714242091965
   cacheVersion: 131622
 --- !u!114 &6764802151169257708
 MonoBehaviour:
@@ -58,8 +185,39 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638720368946455053
+  lastModified: 638725714242032169
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 5980992
   Exists: 1
+--- !u!114 &7279214337045221306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: 
+  Guid:
+    Data1: -1262472068
+    Data2: 1273317634
+    Data3: 1306392718
+    Data4: -1581602345
+  Banks:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8434809296580737807}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 34287
