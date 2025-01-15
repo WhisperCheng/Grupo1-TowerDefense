@@ -47,6 +47,7 @@ public class BasicEnemyAI : EnemyAI
     }
 
     public override float GetHealth() { return _currentHealth; }
+    public override float GetMaxHealth() { return _maxHealth; }
 
     protected override void UpdateCurrentCooldown()
     {

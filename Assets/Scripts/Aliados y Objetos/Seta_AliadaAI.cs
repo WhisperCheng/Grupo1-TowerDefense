@@ -161,6 +161,7 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
         }
     }
     public float GetHealth() { return vida; }
+    public float GetMaxHealth() { return _maxHealth; }
 
     public GameObject RestoreToDefault()
     {

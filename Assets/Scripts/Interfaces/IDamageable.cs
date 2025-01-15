@@ -9,5 +9,6 @@ public interface IDamageable
     public void Die();
     public void TakeDamage(float damageAmount);
     public float GetHealth();
+    public float GetMaxHealth();
     //public void RestoreHealth();
 }

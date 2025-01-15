@@ -15,7 +15,7 @@ public abstract class RangedTower : LivingTower, IDamageable
 
     [Header("Proyectil")]
     [SerializeField] protected Transform shooterSource;
-    [Range(0,100)]
+    [Range(0, 100)]
     [SerializeField] protected float shootingSpeed;
 
     protected float _currentHealth;
@@ -58,7 +58,7 @@ public abstract class RangedTower : LivingTower, IDamageable
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
-            
+
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
     }
@@ -79,7 +79,7 @@ public abstract class RangedTower : LivingTower, IDamageable
     protected override void EnemyDetection()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
-       
+
         if (colliders.Length > 0)
         {
             bool insideRange = false;
@@ -153,7 +153,7 @@ public abstract class RangedTower : LivingTower, IDamageable
 
     public virtual void ShootProyectileEvent()
     {
-        if(currentTarget != null)
+        if (currentTarget != null)
         {
             _attackMode = false;
             animator.SetBool("AttackMode", false);
@@ -176,8 +176,6 @@ public abstract class RangedTower : LivingTower, IDamageable
         }
     }
 
-    public override float GetHealth()
-    {
-        return _currentHealth;
-    }
+    public override float GetHealth() { return _currentHealth; }
+    public override float GetMaxHealth() { return _maxHealth; }
 }

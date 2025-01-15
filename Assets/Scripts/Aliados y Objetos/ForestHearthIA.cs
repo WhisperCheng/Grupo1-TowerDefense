@@ -6,7 +6,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
-     private HealthBar _healthBar;
+    private HealthBar _healthBar;
 
     private float _currentHealth;
     private float _maxHealth;
@@ -19,7 +19,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public override void Init()
@@ -53,8 +53,6 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
         // TODO: Efecto de partículas, llamar al GameManager para actualizar la info del corazón del bosque
     }
 
-    public float GetHealth()
-    {
-        return _currentHealth;
-    }
+    public float GetHealth() { return _currentHealth; }
+    public float GetMaxHealth() { return _maxHealth; }
 }

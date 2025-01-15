@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(ToconBrain))]
-public class ToconTower : LivingTower
+public class ToconTower : StaticTower
 {
     [Header("Spawn Setas Aliadas")]
     [SerializeField] private Transform spawn;
@@ -32,11 +32,7 @@ public class ToconTower : LivingTower
             EnemyDetection();
         }
     }
-
-    public override void Die() { } // El tocón no tiene vida, pero los enemigos sí, por lo que nunca va a morir
-    public override void TakeDamage(float damageAmount) { } // Lo mismo con TakeDamage y OnDamageTaken y otras funciones
     protected override void OnDamageTaken() { }
-    public override float GetHealth() { return 0; }
     public override void Init()
     {
         base.Init();
@@ -44,7 +40,7 @@ public class ToconTower : LivingTower
         currentTarget = null;
         _hasEnemyAssigned = false;
     }
-    protected override void EnemyDetection()
+    protected void EnemyDetection()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, _enemyMask);
 
@@ -86,7 +82,7 @@ public class ToconTower : LivingTower
             _hasEnemyAssigned = false;
             //_attackMode = false;
         }
-        
+
         if (currentTarget == null) // Si no tiene un enemigo asignado entonces las setas se irán a su casa
         {
             _hasEnemyAssigned = false;
@@ -119,14 +115,11 @@ public class ToconTower : LivingTower
         {
             Init();
         }
-        
+
         return gameObject;
     }
 
-    public override GameObject GetFromPool()
-    {
-        return AllyTowerPool.Instance.GetAllyTower();
-    }
+    public override GameObject GetFromPool() { return AllyTowerPool.Instance.GetAllyTower(); }
 
     protected override void OnDrawGizmosSelected()
     {

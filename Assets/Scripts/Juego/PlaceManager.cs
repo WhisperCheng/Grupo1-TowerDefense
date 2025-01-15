@@ -23,6 +23,8 @@ public class PlaceManager : MonoBehaviour
     public Color selectionColor;
     public float maxPlaceDistance;
 
+    protected float _currentSellTime;
+
     GameObject particulasCopia;
 
     MaterialPropertyBlock materialesSeleccionPropertyBlock;

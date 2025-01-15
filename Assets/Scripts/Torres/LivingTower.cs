@@ -9,6 +9,7 @@ public abstract class LivingTower : Tower, IDamageable
     protected abstract void EnemyDetection();
     public abstract void TakeDamage(float damageAmount);
     public abstract float GetHealth();
+    public abstract float GetMaxHealth();
     public abstract void Die();
 
     protected virtual void LookRotation()

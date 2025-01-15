@@ -139,6 +139,7 @@ public class CarnivoraTower : LivingTower, IDamageable
     }
     public override void Die() { ReturnToPool(); }
     public override float GetHealth() { return health; }
+    public override float GetMaxHealth() { return _maxHealth; }
     public override void ReturnToPool()
     {
         if (_initialized && _loaded)

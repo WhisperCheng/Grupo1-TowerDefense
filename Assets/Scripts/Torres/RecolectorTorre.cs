@@ -27,9 +27,18 @@ public class RecolectorTorre : StaticTower
 
     public void AddGemsEvent()
     {
-        MoneyManager.Instance.AddMoney(recolectMoneyAmount);
-        _currentCooldown = cooldown;
-        Debug.Log(MoneyManager.Instance.GetMoney());
+        if (!locked)
+        {
+            MoneyManager.Instance.AddMoney(recolectMoneyAmount);
+            _currentCooldown = cooldown;
+            Debug.Log(MoneyManager.Instance.GetMoney());
+        }
+    }
+
+    public override void UnlockTower()
+    {
+        _animator.Play("Idle Gem", 0, 0);
+        base.UnlockTower();
     }
 
     // Start is called before the first frame update

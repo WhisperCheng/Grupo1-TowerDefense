@@ -13,10 +13,8 @@ public class Player : MonoBehaviour, IDamageable
         //throw new System.NotImplementedException();
     }
 
-    public float GetHealth()
-    {
-        return _currentHealth;
-    }
+    public float GetHealth() { return _currentHealth; }
+    public float GetMaxHealth() { return _maxHealth; }
 
     public void TakeDamage(float damageAmount)
     {
@@ -43,6 +41,6 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
