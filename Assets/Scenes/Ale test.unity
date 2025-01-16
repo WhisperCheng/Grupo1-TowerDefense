@@ -5521,7 +5521,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 954344073}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -7382,7 +7382,8 @@ MonoBehaviour:
   sellingPercentageAmount: 50
   sellingTowerTime: 1
   upgradingTowerTime: 0
-  spriteTowerInteractions: {fileID: 596155112}
+  spriteTowerSelling: {fileID: 596155112}
+  spriteTowerBoosting: {fileID: 921166367}
 --- !u!1 &765945895
 GameObject:
   m_ObjectHideFlags: 0
@@ -8647,6 +8648,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4111116904279595642, guid: 60d65e4eed2ca444d9a5224665294248, type: 3}
   m_PrefabInstance: {fileID: 121154868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &921166367 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3951596497529940917, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+  m_PrefabInstance: {fileID: 954344073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &931217845 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8719739787567930251, guid: 341e51ffcacc4a3419e517763508953d, type: 3}
@@ -8771,6 +8783,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1301695275}
     m_Modifications:
+    - target: {fileID: 223956098636508734, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 332111851695952117, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8802,6 +8818,10 @@ PrefabInstance:
     - target: {fileID: 1014396984736861776, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404544199902374169, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1566644681150894131, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8821,6 +8841,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2664039619230273798, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3951596497529940917, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4164941809385376426, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
@@ -12918,6 +12942,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: f7c5a54f-8faa-4a43-83c5-dff1cca05a4e
     m_ActionName: Player/VenderTorre[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 762121837}
+        m_TargetAssemblyTypeName: TowerInteractionManager, Assembly-CSharp
+        m_MethodName: BoostTower
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eed55452-da38-4c42-933f-5fbe8ca297ec
+    m_ActionName: Player/VenderTorre1[/Keyboard/f]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -19839,7 +19879,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037086484}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 3.509326e-10, y: 0.9999678, z: 0.008028402, w: -0.00000004370998}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

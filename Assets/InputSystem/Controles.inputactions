@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BoostearTorre",
+                    "type": "Button",
+                    "id": "eed55452-da38-4c42-933f-5fbe8ca297ec",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -333,6 +342,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "VenderTorre",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d87163b6-875a-4bab-8d2f-b61b6b0755ec",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "BoostearTorre",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

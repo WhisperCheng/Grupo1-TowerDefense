@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,12 @@ public class TowerInteractionManager : MonoBehaviour
     public float sellingTowerTime;
     public float upgradingTowerTime;
 
-    public Image spriteTowerInteractions;
+    public Image spriteTowerSelling;
+    public Image spriteTowerBoosting;
 
     private bool sellingButtonPressed;
+    private bool boostingButtonPressed;
+    private bool canBoostCurrentTower;
 
     public static TowerInteractionManager Instance { get; private set; }
     private void Awake()
@@ -31,53 +35,111 @@ public class TowerInteractionManager : MonoBehaviour
         }
     }
 
+    protected interface IConsumer
+    {
+        void accept();
+    }
+
     public void SellTower(InputAction.CallbackContext ctx)
     {
-        // To keep the state in a boolean. // Cambia sellingButtonPressed a true si está siendo presionado, y a false si deja de estarlo
-        sellingButtonPressed = (!ctx.started || ctx.performed) ^ ctx.canceled;
+        spriteTowerSelling.fillAmount = 0;
+        if (!boostingButtonPressed)
+            sellingButtonPressed = ButtonPressed(ctx, spriteTowerSelling); // To keep the state in a boolean. 
+        // Cambia sellingButtonPressed a true si está siendo presionado, y a false si deja de estarlo
+    }
+
+    public void BoostTower(InputAction.CallbackContext ctx)
+    {
+        spriteTowerBoosting.fillAmount = 0;
+        if (ctx.started && !ctx.performed) // Cuando se presiona la tecla
+        {   // Se comprueba si se puede boostear la torre a la que se está apuntando
+            canBoostCurrentTower = CanBoostCurrentTower();
+            Debug.Log(canBoostCurrentTower);
+        }
+
+        if (!sellingButtonPressed && canBoostCurrentTower)
+            boostingButtonPressed = ButtonPressed(ctx, spriteTowerBoosting); // To keep the state in a boolean. 
+        // Cambia boostingButtonPressed a true si está siendo presionado, y a false si deja de estarlo,
+        // y solo si se puede boostear la torre a la que se está apuntando
+    }
+
+    private bool ButtonPressed(InputAction.CallbackContext ctx, Image spriteImage)
+    {
+        // To keep the state in a boolean. // Cambia sellingButtonPressed a true si está siendo presionado,
+        bool buttonPressed = (!ctx.started || ctx.performed) ^ ctx.canceled; //  y a false si deja de estarlo
 
         // When the key is pressed down.
         if (ctx.started && !ctx.performed)
         {
-            spriteTowerInteractions.enabled = true;
-            Debug.Log("A");
+            spriteImage.enabled = true;
         }
 
         // When the key is lifted up.
         if (ctx.canceled && !ctx.performed) // Si se levanta la tecla antes de tiempo
         {
-            spriteTowerInteractions.fillAmount = 0;
-            Debug.Log("B");
-            spriteTowerInteractions.enabled = false;
+            spriteImage.fillAmount = 0;
+            spriteImage.enabled = false;
         }
-        // https://stackoverflow.com/questions/75216584/detect-when-key-lifted-new-unity-input-system
+        return buttonPressed;
+    }
+
+    private bool CanBoostCurrentTower()
+    {
+        Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
+
+        bool collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
+            1 << GameManager.Instance.layerTorres);
+        if (collidingWithTower) // Detectando la torre con la que se está chocando al presionar la tecla
+        {
+            IBoosteable torreBoosteable = golpeRayo.collider.gameObject.GetComponent<IBoosteable>();
+            
+            if (torreBoosteable != null)
+            {
+                int currentLvl = torreBoosteable.CurrentBoostLevel();
+                int MaxLvl = torreBoosteable.MaxBoostLevel();
+                if (currentLvl <= MaxLvl && torreBoosteable.HaEnoughMoneyForNextBoost())
+                { // Si no se ha alcanzado el nivel máximo y tiene suficiente dinero para boostear, retorna true
+                    return true;
+                }
+            }
+        }
+        return false; // Si no retorna false
     }
 
     private void SellWhenTimeCompleted()
+    { InteractUntilTimeCompleted(false, spriteTowerSelling, new Action<RaycastHit>(Sell), sellingTowerTime); }
+
+    private void BoostWhenTimeCompleted()
+    { InteractUntilTimeCompleted(!canBoostCurrentTower, spriteTowerBoosting,
+        new Action<RaycastHit>(Boost), sellingTowerTime); }
+
+    private void InteractUntilTimeCompleted(bool ignore, Image fillingImage, Action<RaycastHit> method, float actionTime)
     {
-        Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
-        
-        bool collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
-            1 << GameManager.Instance.layerTorres);
-        if (collidingWithTower && golpeRayo.collider.CompareTag("Tower")) // Si el raycast choca con una torre
+        if (!ignore)
         {
-            
-            spriteTowerInteractions.fillAmount += Time.deltaTime / sellingTowerTime; // Añadir tiempo
-            if (spriteTowerInteractions.fillAmount >= 1) // Si llega al final del tiempo, se vende la torre añadiendo dinero
+            Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
+
+            bool collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
+                1 << GameManager.Instance.layerTorres);
+
+            if (collidingWithTower && golpeRayo.collider.CompareTag("Tower")) // Si el raycast choca con una torre
             {
-                Sell(golpeRayo);
+                fillingImage.fillAmount += Time.deltaTime / sellingTowerTime; // Añadir tiempo
+                if (fillingImage.fillAmount >= 1) // Si llega al final del tiempo, se vende la torre añadiendo dinero
+                {
+                    method.Invoke(golpeRayo); // Se vende o boostea, dependiendo del tipo de Action que haya recibido
+                }                                   // la función
             }
-        }
-        else // Si el raycast deja de chocar con una torre, restaurar el contador a 0
-        {
-            spriteTowerInteractions.fillAmount = 0;
+            else // Si el raycast deja de chocar con una torre, restaurar el contador a 0
+            {
+                fillingImage.fillAmount = 0;
+            }
         }
     }
 
     private void Sell(RaycastHit golpeRayo)
     {
         Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
-
         IDamageable torreDamageable = torre.GetComponent<IDamageable>();
         float proporcionDineroVida = 1;
         if (torreDamageable != null)
@@ -89,21 +151,48 @@ public class TowerInteractionManager : MonoBehaviour
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
         torre.ReturnToPool();
-        spriteTowerInteractions.fillAmount = 0;
+        spriteTowerSelling.fillAmount = 0;
+    }
+
+    private void Boost(RaycastHit golpeRayo)
+    {
+        Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
+        IBoosteable torreDamageable = torre.GetComponent<IBoosteable>();
+        if (torreDamageable != null && torreDamageable.HaEnoughMoneyForNextBoost())
+        {
+            MoneyManager.Instance.RemoveMoney(Mathf.RoundToInt(torreDamageable.NextBoostMoney()));
+            torreDamageable.Boost();
+            canBoostCurrentTower = false;
+        }
+        
+        spriteTowerBoosting.fillAmount = 0;
     }
 
     private void Update()
     {
+        /*bool collidingWithTower;
+        if (sellingButtonPressed || boostingButtonPressed)
+        {
+            Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
+
+            collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
+                1 << GameManager.Instance.layerTorres);
+        }*/
+
         if (sellingButtonPressed) // Si se presiona el boton de vender, empieza a comprobar si el raycast está chocando con una torre
-        { 
+        {
             SellWhenTimeCompleted();
+        }
+        if (boostingButtonPressed)
+        {
+            BoostWhenTimeCompleted();
         }
     }
 
     private void Start()
     {
-        spriteTowerInteractions.fillAmount = 0;
-        spriteTowerInteractions.enabled = false;
+        spriteTowerSelling.fillAmount = 0;
+        spriteTowerSelling.enabled = false;
     }
 
 }
