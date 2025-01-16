@@ -2,17 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class RangedTowerProyectile : MonoBehaviour
+public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
 {
     [Header("Variables proyectil")]
-    [SerializeField] private float damage;
-    [SerializeField] private float proyectileAttackRadius;
-    [SerializeField] private float automaticReturnToPoolTime;
+    [SerializeField] protected float damage;
+    protected float originalDamage;
+    [SerializeField] protected float proyectileAttackRadius;
+    [SerializeField] protected float automaticReturnToPoolTime;
 
     protected bool inPool = true;
 
     protected abstract void OnImpactEffects(Collider[] collisions);
     protected abstract void ReturnToPool();
+
+    protected virtual void Start()
+    {
+        originalDamage = damage;
+    }
+
+    public void AddDamage(float damage) { this.damage += damage; }
     private void OnCollisionEnter(Collision collision)
     {
         bool doAttack = collision.gameObject.tag == GameManager.Instance.tagEnemigos || collision.gameObject.tag != GameManager.Instance.tagPlayer;

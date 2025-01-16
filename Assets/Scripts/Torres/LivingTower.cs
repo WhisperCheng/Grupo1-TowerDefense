@@ -2,15 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LivingTower : Tower, IDamageable
+public abstract class LivingTower : Tower, IDamageable, IBoosteable
 {
     [Header("Rotación y detección de enemigos")]
     public float rotationSpeed = 5f;
+
+    [Header("Lista de mejoras y precios")]
+    [SerializeField] protected List<BoostInfo> boostPrices;
+    protected int _boostIndex = -1;
     protected abstract void EnemyDetection();
     public abstract void TakeDamage(float damageAmount);
     public abstract float GetHealth();
     public abstract float GetMaxHealth();
     public abstract void Die();
+
+    public override void Init()
+    {
+        base.Init();
+        _boostIndex = -1;
+    }
+    public virtual void Boost()
+    {
+        //throw new System.NotImplementedException();
+
+        if (NextBoostMoney() != -1) // Mientras hayan boosts disponibles
+        {
+            cooldown = _originalCooldown - boostPrices[_boostIndex + 1].cooldownReducer;
+            _boostIndex++;
+            if (cooldown < 0)
+                cooldown = 0;
+            Debug.Log("Boost");
+        }
+    }
+    public bool HaEnoughMoneyForNextBoost()
+    { // Si el dinero que hay es mayor o igual al precio de la siguiente mejora
+        return MoneyManager.Instance.GetMoney() >= NextBoostMoney() && NextBoostMoney() != -1;
+    }
+    public int MaxBoostLevel() { return boostPrices.Count - 1; }
+
+    public int CurrentBoostLevel() { return _boostIndex; }
+
+    public int NextBoostMoney()
+    {
+        if (_boostIndex <= MaxBoostLevel()) { return boostPrices[_boostIndex+1].price; } // Si existe un siguiente boost, se retorna el precio
+        return -1; // Si no hay siguientes boost, se retorna -1
+    }
 
     protected virtual void LookRotation()
     {

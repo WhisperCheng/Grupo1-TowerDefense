@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAnimatable
+public interface IProyectile
 {
-    public void AnimateWalking();
+    public void AddDamage(float damage);
 }

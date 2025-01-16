@@ -18,6 +18,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
 
     [Header("Cooldown")] //Ataque
     [SerializeField] protected float cooldown = 1f;
+    protected float _originalCooldown;
     protected float _currentCooldown;
 
     //protected List<GameObject> currentTargets = new List<GameObject>();
@@ -57,6 +58,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
         _enemyMask = 1 << GameManager.Instance.layerEnemigos;
         _currentCooldown = cooldown; // Reset del cooldown, simulando que desde que se coloque la torre se va preparando hasta poder atacar
         _initialized = true;
+        _originalCooldown = cooldown;
     }
 
     public virtual void UnlockTower()

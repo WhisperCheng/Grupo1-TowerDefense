@@ -14,6 +14,7 @@ public class PoisonYewProyectile : RangedTowerProyectile
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero; // Reset de las fuezas y velocidad del proyectil
         inPool = true;
+        damage = originalDamage;
         PoisonYewProjectilePool.Instance.ReturnPoisonYewProjectile(this.gameObject);
     }
 

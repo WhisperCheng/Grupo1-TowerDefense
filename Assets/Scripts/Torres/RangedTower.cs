@@ -18,10 +18,6 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
     [Range(0, 100)]
     [SerializeField] protected float shootingSpeed;
 
-    [Header("Lista de mejoras y precios")]
-    [SerializeField] protected List<int> boostPrices;
-    protected int _boostIndex;
-
     protected float _currentHealth;
     protected float _maxHealth;
     protected float _maxSpeed;
@@ -137,8 +133,8 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
 
     public override void Init()
     {
+        base.Init();
         animator = GetComponent<Animator>();
-        _boostIndex = 0;
         _currentHealth = health;
         _maxHealth = health;
         _currentCooldown = cooldown;
@@ -182,28 +178,5 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
     }
     public override float GetHealth() { return _currentHealth; }
     public override float GetMaxHealth() { return _maxHealth; }
-
-    public void Boost()
-    {
-        //throw new System.NotImplementedException();
-        Debug.Log("Boost");
-    }
-
-    public bool HaEnoughMoneyForNextBoost()
-    { // Si el dinero que hay es mayor o igual al precio de la siguiente mejora
-        return MoneyManager.Instance.GetMoney() >= NextBoostMoney() && NextBoostMoney() != -1;
-    }
-
-    public int MaxBoostLevel() { return boostPrices.Count - 1; }
-
-    public int CurrentBoostLevel() { return boostPrices[_boostIndex]; }
-
-    public int NextBoostMoney()
-    {
-        if (_boostIndex <= MaxBoostLevel())
-        { // Si existe un siguiente boost, se retorna el precio
-            return boostPrices[_boostIndex];
-        }
-        return -1; // Si no hay siguientes boost, se retorna -1
-    }
+    
 }

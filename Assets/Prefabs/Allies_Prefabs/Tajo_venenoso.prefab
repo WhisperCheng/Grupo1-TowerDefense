@@ -851,12 +851,18 @@ MonoBehaviour:
   locked: 1
   placed: 0
   rotationSpeed: 5
+  boostPrices:
+  - price: 60
+    damageAddition: 5
+    cooldownReducer: 0.75
+  - price: 90
+    damageAddition: 10
+    cooldownReducer: 2
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}
   shooterSource: {fileID: 3700682981131548956}
   shootingSpeed: 20
-  boostPrices: 020000000400000082000000
 --- !u!65 &2092488931615787901
 BoxCollider:
   m_ObjectHideFlags: 0

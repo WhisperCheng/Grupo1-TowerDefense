@@ -54,7 +54,6 @@ public class TowerInteractionManager : MonoBehaviour
         if (ctx.started && !ctx.performed) // Cuando se presiona la tecla
         {   // Se comprueba si se puede boostear la torre a la que se está apuntando
             canBoostCurrentTower = CanBoostCurrentTower();
-            Debug.Log(canBoostCurrentTower);
         }
 
         if (!sellingButtonPressed && canBoostCurrentTower)

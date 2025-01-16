@@ -11,6 +11,13 @@ public class RoseTower : RangedTower
         if (currentTarget != null)
         {
             GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
+            IProyectile proyectil = proyectile.GetComponent<IProyectile>();
+            bool hasSomeBoostApplied = _boostIndex != -1;
+            if (boostPrices.Count > 0 && proyectil != null && hasSomeBoostApplied) // Añadir daño extra a los proyectiles según las mejoras
+            {
+                proyectile.GetComponent<IProyectile>().AddDamage(boostPrices[_boostIndex].damageAddition);
+            }
+
             // Para apuntar hacia el centro del enemigo
             NavMeshAgent agent = currentTarget.GetComponent<NavMeshAgent>();
             float offsetYTargetPosition = (agent != null ? agent.height / 2 : 0);
