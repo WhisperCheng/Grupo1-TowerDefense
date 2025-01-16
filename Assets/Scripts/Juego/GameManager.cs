@@ -72,13 +72,7 @@ public class GameManager : MonoBehaviour
 
     private void ConfigureMaterialPropertyBlocks()
     {
-        // -- Veneno --
-        materialPropertyVeneno = new MaterialPropertyBlock();
-        materialPropertyVeneno.SetColor("_BaseColor", colorVeneno);
-        materialPropertyVeneno.SetColor("_Color", colorVeneno); // por si el material no tiene el toon shader
-        // Sombras
-        materialPropertyVeneno.SetColor("_1st_ShadeColor", colorVeneno);
-        materialPropertyVeneno.SetColor("_2nd_ShadeColor", colorVeneno);
+        materialPropertyVeneno = ColorUtils.CreateToonShaderPropertyBlock(colorVeneno);
     }
 
     public void addForestHearth()

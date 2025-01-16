@@ -52,13 +52,9 @@ public class PlaceManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         // Materiales Seleccionados
-        materialesSeleccionPropertyBlock = new MaterialPropertyBlock();
-        materialesSeleccionPropertyBlock.SetColor("_BaseColor", selectionColor);
-        materialesSeleccionPropertyBlock.SetColor("_Color", selectionColor); // por si el material no tiene el toon shader
+        materialesSeleccionPropertyBlock = ColorUtils.CreateToonShaderPropertyBlock(selectionColor);
         materialesSeleccionPropertyBlock.SetFloat("_Tweak_transparency", -(1 - selectionColor.a));
-        // Sombras
-        materialesSeleccionPropertyBlock.SetColor("_1st_ShadeColor", selectionColor);
-        materialesSeleccionPropertyBlock.SetColor("_2nd_ShadeColor", selectionColor);
+        // Modificar transparencia
     }
 
     // Update is called once per frame
@@ -96,24 +92,7 @@ public class PlaceManager : MonoBehaviour
 
     private void SetPreviewMode(bool previewMode)
     {
-        Transform[] childs = torre.GetComponentsInChildren<Transform>();
-        for (int i = 0; i < childs.Length; i++)
-        {
-            Transform child = childs[i];
-            Renderer rend = child.gameObject.GetComponent<Renderer>();
-            if (rend != null)
-            {
-                if (previewMode) // Si se está en modo selección, se cambia el PropertyBlock de materiales al de materiales seleccionados
-                {
-                    rend.SetPropertyBlock(materialesSeleccionPropertyBlock);
-                }
-                else // Y si deja de estarlo, se quita el PropertyBlock de materiales seleccionados
-                {
-                    rend.SetPropertyBlock(null);
-                }
-            }
-        }
-
+        ColorUtils.ChangeObjectMaterialColors(torre.gameObject, materialesSeleccionPropertyBlock, previewMode);
 
         if (!previewMode && torre.placed) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
         {  torre.UnlockTower(); } // lo que permite atacar y rotar hacia los enemigos
