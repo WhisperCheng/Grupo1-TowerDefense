@@ -14,7 +14,7 @@ public class RoundManager : MonoBehaviour
 
 	public float countdownInicial = 3f;
 
-	private float countdown = 2f;
+	private float countdown = 3f;
 
 	//public Text waveCountdownText;
 
@@ -22,8 +22,9 @@ public class RoundManager : MonoBehaviour
 
 	private int waveIndex = -1; // Para valor de inicio, el waveindex será -1
 
-	private bool started = false;
+	private bool waveInProgress = false;
 	private bool finishedAllSpawnings = false;
+	private bool finishedCurrentWaveTrigger = false;
 
 	public static RoundManager Instance { get; private set; }
     private void Awake()
@@ -40,6 +41,7 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+		countdown = countdownInicial;
 		Debug.Log("Empezando partida en " + countdownInicial + " seg");
 	}
 
@@ -57,38 +59,35 @@ public class RoundManager : MonoBehaviour
 			this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
 		}
 
-        if (!started && waveIndex == 0) // Si se inicia por primera vez, se asigna el countdown inicial
-        {
-			countdown = countdownInicial;
-			started = true;
-		}
-
 		//Debug
-		if(waveIndex >= 0 && waveIndex < waves.Length-1 && enemiesAlive == 0 && countdown == waves[waveIndex].restTimeUnitNextWave)
-        {
-			Debug.Log("Iniciando siguiente oleada en " + waves[waveIndex].restTimeUnitNextWave + " seg");
-        }
+		if (waveIndex >= 0 && waveIndex < waves.Length - 1 && enemiesAlive == 0 && finishedCurrentWaveTrigger)
+		{
+			if (waveInProgress) waveInProgress = false; // Al terminar la oleada, se pone started a false para iniciar el proceso del countdown
+			Debug.Log("Iniciando siguiente oleada en " + countdown + " seg");
+			finishedCurrentWaveTrigger = false; // Se vuelve false para no volver a entrar en la condición hasta
+		}                                                           //  la siguiente vez que se vuelva a terminar la oleada
 
 		if (countdown <= 0f && enemiesAlive == 0 /*&& !HasSpawningEnded()*/ && waveIndex < waves.Length-1)
 		{
 			waveIndex++;
 			Debug.Log("Empezando oleada nº " + (waveIndex+1));
 			StartWave();
-			//countdown = timeBetweenWaves;
+			waveInProgress = true;
 			return;
 		}
 
-		countdown -= Time.deltaTime;
+		if (enemiesAlive == 0 && !waveInProgress) // Si se han muerto todos los enemigos de la oleada y no hay rondas activas
+		{
+			// Se empieza a correr el contador hasta llegar a 0
+			countdown -= Time.deltaTime;
 
-		countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
-
-		//waveCountdownText.text = string.Format("{0:00.00}", countdown);
+			countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+			//waveCountdownText.text = string.Format("{0:00.00}", countdown);
+		}
 	}
 
 	public void StartWave()
 	{
-		//PlayerStats.Rounds++;
-
 		Wave wave = waves[waveIndex];
 
 		// Iterar a través de los enemigos de cada ronda para iniciar el spawn de cada uno
@@ -98,6 +97,7 @@ public class RoundManager : MonoBehaviour
 			StartCoroutine(SpawnEnemy(item));
 		}
 		countdown = waves[waveIndex].restTimeUnitNextWave; // Reset del countdown para cuando terminen de morir todos los enemigos
+		Debug.Log(countdown);
 	}
 	IEnumerator SpawnEnemy(KeyValuePair<InterfaceReference<IPoolable, EnemyAI>, WaveUnitInfo> enemyInfo) {
 		WaveUnitInfo info = enemyInfo.Value;
@@ -145,7 +145,8 @@ public class RoundManager : MonoBehaviour
 			if (!enemyDictionary.Value.FinishedSpawning)
 				result = false;
 		}
-		if (result && waveIndex == waves.Length-1)
+		finishedCurrentWaveTrigger = result; // Se cambia el trigger de haber terminado la oleada para su posterior uso
+		if (result && waveIndex == waves.Length-1)          //  No se cambiará hasta haber destruido a todos los enemigos
 			finishedAllSpawnings = true;
 	}
 
