@@ -69,6 +69,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
 
     public bool IsLocked() { return locked; }
     public float GetRange() { return range; }
+    public float GetTowerRadiusSize() { return towerRadiusSize; }
 
     public void SetLoaded(bool loaded) { _loaded = loaded; }
 
