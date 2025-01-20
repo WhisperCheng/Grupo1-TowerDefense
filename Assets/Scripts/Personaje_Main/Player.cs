@@ -7,7 +7,7 @@ public class Player : MonoBehaviour, IDamageable
     public float _health;
     private float _currentHealth;
     private float _maxHealth;
-    private HealthBar _healthBar;
+    public HealthBar _healthBar;
     public void Die()
     {
         //throw new System.NotImplementedException();
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        _healthBar = GetComponentInChildren<HealthBar>();
+        //_healthBar = GetComponentInChildren<HealthBar>();
         _currentHealth = _health;
         _maxHealth = _health;
     }
