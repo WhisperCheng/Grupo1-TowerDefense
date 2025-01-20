@@ -45,6 +45,7 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
                         damageableEntity.TakeDamage(damage);
                     }
                 }
+                Debug.Log(col);
             }
         }
         OnImpactEffects(enemies);

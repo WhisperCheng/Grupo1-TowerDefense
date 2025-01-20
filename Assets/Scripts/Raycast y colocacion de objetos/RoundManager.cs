@@ -149,5 +149,4 @@ public class RoundManager : MonoBehaviour
 		if (result && waveIndex == waves.Length-1)          //  No se cambiará hasta haber destruido a todos los enemigos
 			finishedAllSpawnings = true;
 	}
-
 }
