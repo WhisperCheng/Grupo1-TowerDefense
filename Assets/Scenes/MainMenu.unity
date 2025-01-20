@@ -1897,7 +1897,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
     m_TableEntryReference:
-      m_KeyId: 727983678107648
+      m_KeyId: 61032840638464
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -4086,6 +4086,7 @@ GameObject:
   - component: {fileID: 622693263}
   - component: {fileID: 622693262}
   - component: {fileID: 622693261}
+  - component: {fileID: 622693265}
   m_Layer: 5
   m_Name: tutorial Card
   m_TagString: Untagged
@@ -4157,7 +4158,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 622693263}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 622693265}
+        m_TargetAssemblyTypeName: LevelChanges, Assembly-CSharp
+        m_MethodName: OpenTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &622693262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4222,6 +4235,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 622693259}
   m_CullTransparentMesh: 1
+--- !u!114 &622693265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622693259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bb1458bb802034992222f751cf3bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &623404064
 GameObject:
   m_ObjectHideFlags: 0
@@ -10717,6 +10742,7 @@ GameObject:
   - component: {fileID: 1622054527}
   - component: {fileID: 1622054526}
   - component: {fileID: 1622054525}
+  - component: {fileID: 1622054529}
   m_Layer: 5
   m_Name: Level 1 Card
   m_TagString: Untagged
@@ -10788,7 +10814,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1622054527}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1622054529}
+        m_TargetAssemblyTypeName: LevelChanges, Assembly-CSharp
+        m_MethodName: OpenLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1622054526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10853,6 +10891,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622054523}
   m_CullTransparentMesh: 1
+--- !u!114 &1622054529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1622054523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bb1458bb802034992222f751cf3bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1632738218
 GameObject:
   m_ObjectHideFlags: 0
