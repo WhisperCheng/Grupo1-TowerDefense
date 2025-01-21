@@ -187,6 +187,8 @@ public class CarnivoraTower : LivingTower, IDamageable
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, range);
         attackBox.DrawGizmos(attackBoxHolder);
     }
 }
