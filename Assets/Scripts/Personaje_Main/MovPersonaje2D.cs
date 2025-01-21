@@ -42,8 +42,10 @@ public class MovPersonaje2D : MonoBehaviour
     private Vector3 _movCharacter;
     private float _velocityZ = 0.0f;
     private float _velocityX = 0.0f;
+    private float _velocityM = 0.0f;
     private int _velocityZHash;
     private int _velocityXHash;
+    private int _velocityMHash;
 
     private Vector2 _moveDirection;
     private Vector2 _smoothedMoveDirection;
@@ -59,6 +61,7 @@ public class MovPersonaje2D : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _velocityZHash = Animator.StringToHash("VelZ");
         _velocityXHash = Animator.StringToHash("VelX");
+        _velocityMHash = Animator.StringToHash("VelM");
         _currentMaxVelocity = _maximumWalkVelocity;
 
         //playerInput = GetComponent<PlayerInput>();
@@ -131,6 +134,8 @@ public class MovPersonaje2D : MonoBehaviour
             _moveDirection.x * currentRawMaxVelocity, Time.deltaTime * _acceleration * smoothAmount);
         _velocityZ = Mathf.Lerp(_velocityZ,
             _moveDirection.y * currentRawMaxVelocity, Time.deltaTime * _acceleration * smoothAmount);
+        _velocityM = Mathf.Lerp(_velocityM,
+           _moveDirection.magnitude * currentRawMaxVelocity, Time.deltaTime * _acceleration * smoothAmount);
 
         /// Si la velocidad es menor que 0.001 pasarla directamente a 0 para no estar
         ///  suavizando números más pequeños
@@ -145,6 +150,7 @@ public class MovPersonaje2D : MonoBehaviour
 
         _animatorController.SetFloat(_velocityZHash, _velocityX);
         _animatorController.SetFloat(_velocityXHash, _velocityZ);
+        _animatorController.SetFloat(_velocityMHash, _velocityM);
     }
 
     // Aplicar gravedad al personaje
