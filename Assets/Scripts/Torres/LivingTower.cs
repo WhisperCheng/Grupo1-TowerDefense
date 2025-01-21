@@ -10,6 +10,7 @@ public abstract class LivingTower : Tower, IDamageable, IBoosteable
     [Header("Lista de mejoras y precios")]
     [SerializeField] protected List<BoostInfo> boostPrices;
     protected int _boostIndex = -1;
+    protected int _originalMoney = 0;
     protected abstract void EnemyDetection();
     public abstract void TakeDamage(float damageAmount);
     public abstract float GetHealth();
@@ -20,6 +21,7 @@ public abstract class LivingTower : Tower, IDamageable, IBoosteable
     {
         base.Init();
         _boostIndex = -1;
+        _originalMoney = money;
     }
     public virtual void Boost()
     {
@@ -27,12 +29,16 @@ public abstract class LivingTower : Tower, IDamageable, IBoosteable
         {
             _boostIndex++;
             cooldown = _originalCooldown - boostPrices[_boostIndex].cooldownReducer;
-            if (cooldown < 0)
+
+            money += _originalMoney; // Se suma al precio lo que costaba al principio y luego si se
+                                                         // vende la torre se devuelve esta suma dividida a la mitad, ya que se 
+            if (cooldown < 0)                               // ha añadido el dinero de la mejora
                 cooldown = 0;
+            
             Debug.Log("Boost");
         }
     }
-    public bool HaEnoughMoneyForNextBoost()
+    public bool HasEnoughMoneyForNextBoost()
     { // Si el dinero que hay es mayor o igual al precio de la siguiente mejora
         return MoneyManager.Instance.GetMoney() >= NextBoostMoney() && NextBoostMoney() != -1;
     }

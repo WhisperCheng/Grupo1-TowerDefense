@@ -38,6 +38,7 @@ public class TowerInteractionManager : MonoBehaviour
     public void SellTower(InputAction.CallbackContext ctx)
     {
         spriteTowerSelling.fillAmount = 0;
+        Debug.Log(boostingButtonPressed);
         if (!boostingButtonPressed)
             sellingButtonPressed = ButtonPressed(ctx, spriteTowerSelling); // To keep the state in a boolean. 
         // Cambia sellingButtonPressed a true si está siendo presionado, y a false si deja de estarlo
@@ -91,7 +92,7 @@ public class TowerInteractionManager : MonoBehaviour
             {
                 int currentLvl = torreBoosteable.CurrentBoostLevel();
                 int MaxLvl = torreBoosteable.MaxBoostLevel();
-                if (currentLvl <= MaxLvl && torreBoosteable.HaEnoughMoneyForNextBoost())
+                if (currentLvl <= MaxLvl && torreBoosteable.HasEnoughMoneyForNextBoost())
                 { // Si no se ha alcanzado el nivel máximo y tiene suficiente dinero para boostear, retorna true
                     return true;
                 }
@@ -136,17 +137,18 @@ public class TowerInteractionManager : MonoBehaviour
     private void Sell(RaycastHit golpeRayo)
     {
         Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
-        IDamageable torreBoosteable = torre.GetComponent<IDamageable>();
+        IDamageable torreDamageable = torre.GetComponent<IDamageable>();
         float proporcionDineroVida = 1;
-        if (torreBoosteable != null)
+        if (torreDamageable != null)
         {
-            float vidaActual = torreBoosteable.GetHealth();
-            float vidaOriginal = torreBoosteable.GetMaxHealth();
+            float vidaActual = torreDamageable.GetHealth();
+            float vidaOriginal = torreDamageable.GetMaxHealth();
             proporcionDineroVida = vidaActual / vidaOriginal;
         }
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
         torre.ReturnToPool();
+        sellingButtonPressed = false;
         spriteTowerSelling.fillAmount = 0;
     }
 
@@ -154,11 +156,12 @@ public class TowerInteractionManager : MonoBehaviour
     {
         Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
         IBoosteable torreBoosteable = torre.GetComponent<IBoosteable>();
-        if (torreBoosteable != null && torreBoosteable.HaEnoughMoneyForNextBoost())
+        if (torreBoosteable != null && torreBoosteable.HasEnoughMoneyForNextBoost())
         {
             MoneyManager.Instance.RemoveMoney(Mathf.RoundToInt(torreBoosteable.NextBoostMoney()));
             torreBoosteable.Boost();
             canBoostCurrentTower = false;
+            boostingButtonPressed = false;
         }
 
         spriteTowerBoosting.fillAmount = 0;

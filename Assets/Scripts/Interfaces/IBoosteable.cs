@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IBoosteable
 {
     public void Boost();
-    public bool HaEnoughMoneyForNextBoost();
+    public bool HasEnoughMoneyForNextBoost();
     public int MaxBoostLevel();
     public int CurrentBoostLevel();
     public int NextBoostMoney();

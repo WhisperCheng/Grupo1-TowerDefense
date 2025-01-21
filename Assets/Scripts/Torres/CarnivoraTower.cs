@@ -163,6 +163,7 @@ public class CarnivoraTower : LivingTower, IDamageable
             _hasEnemyAssigned = false;
             _attackMode = false;
             currentTarget = null;
+            money = _originalMoney;
         }
         CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
     }
@@ -178,6 +179,7 @@ public class CarnivoraTower : LivingTower, IDamageable
             _attackMode = false;
             _canAttack = false;
             animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar
+            money = _originalMoney;
         }
         return this.gameObject;
     }
