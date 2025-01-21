@@ -23,12 +23,10 @@ public abstract class LivingTower : Tower, IDamageable, IBoosteable
     }
     public virtual void Boost()
     {
-        //throw new System.NotImplementedException();
-
         if (NextBoostMoney() != -1) // Mientras hayan boosts disponibles
         {
-            cooldown = _originalCooldown - boostPrices[_boostIndex + 1].cooldownReducer;
             _boostIndex++;
+            cooldown = _originalCooldown - boostPrices[_boostIndex].cooldownReducer;
             if (cooldown < 0)
                 cooldown = 0;
             Debug.Log("Boost");
@@ -44,7 +42,7 @@ public abstract class LivingTower : Tower, IDamageable, IBoosteable
 
     public int NextBoostMoney()
     {
-        if (_boostIndex <= MaxBoostLevel()) { return boostPrices[_boostIndex+1].price; } // Si existe un siguiente boost, se retorna el precio
+        if (_boostIndex < MaxBoostLevel()) { return boostPrices[_boostIndex+1].price; } // Si existe un siguiente boost, se retorna el precio
         return -1; // Si no hay siguientes boost, se retorna -1
     }
 

@@ -35,11 +35,6 @@ public class TowerInteractionManager : MonoBehaviour
         }
     }
 
-    protected interface IConsumer
-    {
-        void accept();
-    }
-
     public void SellTower(InputAction.CallbackContext ctx)
     {
         spriteTowerSelling.fillAmount = 0;
@@ -91,7 +86,7 @@ public class TowerInteractionManager : MonoBehaviour
         if (collidingWithTower) // Detectando la torre con la que se está chocando al presionar la tecla
         {
             IBoosteable torreBoosteable = golpeRayo.collider.gameObject.GetComponent<IBoosteable>();
-            
+
             if (torreBoosteable != null)
             {
                 int currentLvl = torreBoosteable.CurrentBoostLevel();
@@ -109,8 +104,10 @@ public class TowerInteractionManager : MonoBehaviour
     { InteractUntilTimeCompleted(false, spriteTowerSelling, new Action<RaycastHit>(Sell), sellingTowerTime); }
 
     private void BoostWhenTimeCompleted()
-    { InteractUntilTimeCompleted(!canBoostCurrentTower, spriteTowerBoosting,
-        new Action<RaycastHit>(Boost), sellingTowerTime); }
+    {
+        InteractUntilTimeCompleted(!canBoostCurrentTower, spriteTowerBoosting,
+          new Action<RaycastHit>(Boost), sellingTowerTime);
+    }
 
     private void InteractUntilTimeCompleted(bool ignore, Image fillingImage, Action<RaycastHit> method, float actionTime)
     {
@@ -139,12 +136,12 @@ public class TowerInteractionManager : MonoBehaviour
     private void Sell(RaycastHit golpeRayo)
     {
         Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
-        IDamageable torreDamageable = torre.GetComponent<IDamageable>();
+        IDamageable torreBoosteable = torre.GetComponent<IDamageable>();
         float proporcionDineroVida = 1;
-        if (torreDamageable != null)
+        if (torreBoosteable != null)
         {
-            float vidaActual = torreDamageable.GetHealth();
-            float vidaOriginal = torreDamageable.GetMaxHealth();
+            float vidaActual = torreBoosteable.GetHealth();
+            float vidaOriginal = torreBoosteable.GetMaxHealth();
             proporcionDineroVida = vidaActual / vidaOriginal;
         }
         float divisorPrecio = sellingPercentageAmount / 100;
@@ -156,28 +153,19 @@ public class TowerInteractionManager : MonoBehaviour
     private void Boost(RaycastHit golpeRayo)
     {
         Tower torre = golpeRayo.collider.gameObject.GetComponent<Tower>();
-        IBoosteable torreDamageable = torre.GetComponent<IBoosteable>();
-        if (torreDamageable != null && torreDamageable.HaEnoughMoneyForNextBoost())
+        IBoosteable torreBoosteable = torre.GetComponent<IBoosteable>();
+        if (torreBoosteable != null && torreBoosteable.HaEnoughMoneyForNextBoost())
         {
-            MoneyManager.Instance.RemoveMoney(Mathf.RoundToInt(torreDamageable.NextBoostMoney()));
-            torreDamageable.Boost();
+            MoneyManager.Instance.RemoveMoney(Mathf.RoundToInt(torreBoosteable.NextBoostMoney()));
+            torreBoosteable.Boost();
             canBoostCurrentTower = false;
         }
-        
+
         spriteTowerBoosting.fillAmount = 0;
     }
 
     private void Update()
     {
-        /*bool collidingWithTower;
-        if (sellingButtonPressed || boostingButtonPressed)
-        {
-            Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
-
-            collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
-                1 << GameManager.Instance.layerTorres);
-        }*/
-
         if (sellingButtonPressed) // Si se presiona el boton de vender, empieza a comprobar si el raycast está chocando con una torre
         {
             SellWhenTimeCompleted();
@@ -193,5 +181,4 @@ public class TowerInteractionManager : MonoBehaviour
         spriteTowerSelling.fillAmount = 0;
         spriteTowerSelling.enabled = false;
     }
-
 }

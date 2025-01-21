@@ -91,6 +91,7 @@ public abstract class Tower : LivingEntityAI, IPoolable
         //Gizmos.DrawWireSphere(transform.position, range);
         if (currentTarget != null)
             Gizmos.DrawLine(currentTarget.transform.position, currentTarget.transform.position + Vector3.up * 7);
+        Gizmos.DrawWireSphere(transform.position, towerRadiusSize);
         //Gizmos.color = Color.gray;
         //Gizmos.DrawWireSphere(transform.position, towerRadiusSize);
     }

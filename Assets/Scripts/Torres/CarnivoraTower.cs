@@ -10,6 +10,7 @@ public class CarnivoraTower : LivingTower, IDamageable
 
     [Header("Ataque")] //Ataque
     public float attackDamage;
+    private float _originalAttackDamage;
     public AttackBox attackBox;
     public Transform attackBoxHolder;
 
@@ -46,9 +47,19 @@ public class CarnivoraTower : LivingTower, IDamageable
         base.UpdateCurrentCooldown();
         animator.SetFloat("Cooldown", _currentCooldown);
     }
+
+    public override void Boost()
+    {
+        if (NextBoostMoney() != -1) // Mientras hayan boosts disponibles
+        {
+            attackDamage += boostPrices[_boostIndex + 1].damageAddition;
+        }
+        base.Boost();
+    }
     public override void Init()
     {
         base.Init();
+        _originalAttackDamage = attackDamage;
         _hasEnemyAssigned = false;
         animator = GetComponent<Animator>();
         _currentHealth = health;
@@ -145,6 +156,7 @@ public class CarnivoraTower : LivingTower, IDamageable
         if (_initialized && _loaded)
         {
             locked = true;
+            attackDamage = _originalAttackDamage;
             _currentHealth = health; // Restaurar la salud del caballero al valor máximo
             _healthBar = GetComponentInChildren<HealthBar>();
             _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
