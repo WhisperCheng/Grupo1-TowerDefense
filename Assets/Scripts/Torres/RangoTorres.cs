@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RangoTorres : MonoBehaviour
 {
+    //UI
+    public GameObject ventaPanel;
+    //IN GAME
     public Transform marcador; 
     public GameObject rangeIndicator;
     private float rangoTorre;
@@ -30,7 +34,7 @@ public class RangoTorres : MonoBehaviour
                     rangoTorre = 2 * torre.GetRange(); 
                     rangeIndicator.transform.position = gameObjTorreCopiada.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
-                    rangeIndicator.gameObject.SetActive(true); 
+                    rangeIndicator.gameObject.SetActive(true);
                     torreApuntada = true;
                 }
             }
@@ -47,6 +51,7 @@ public class RangoTorres : MonoBehaviour
                     rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().GetRange();
                     rangeIndicator.transform.position = gameObjTorre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
+                    ventaPanel.gameObject.SetActive(true);
                     torreApuntada = true;
                 }
             }
@@ -55,6 +60,7 @@ public class RangoTorres : MonoBehaviour
         if (!torreApuntada)
         {
             rangeIndicator.gameObject.SetActive(false);
+            ventaPanel.gameObject.SetActive(false);
         }
     }
 }
