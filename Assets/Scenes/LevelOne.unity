@@ -1672,7 +1672,7 @@ MonoBehaviour:
     m_SpeedMode: 0
     m_MaxSpeed: 1.5
     m_AccelTime: 0.5
-    m_DecelTime: 0.2
+    m_DecelTime: 0.05
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
@@ -2268,9 +2268,9 @@ MonoBehaviour:
   _velocidadGravedad: 1
   _gravedadMagnitud: -9.81
   _gravedadMultiplicador: 2.5
-  _acceleration: 4
-  _maximumWalkVelocity: 4
-  _maximumRunVelocity: 10
+  _acceleration: 6
+  _maximumWalkVelocity: 5
+  _maximumRunVelocity: 13
   _smoothingMoveSpeed: 0.2
   _slopeForce: 1000
   _slopeForceRayLength: 0.26
@@ -2393,7 +2393,7 @@ MonoBehaviour:
   marcador: {fileID: 1005272595}
   proyectilPrefab: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
   puntoDisparo: {fileID: 118766656}
-  velocidadProyectil: 30
+  velocidadProyectil: 50
 --- !u!114 &762121833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2406,6 +2406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f76447b1aed1ed4fb2f3c49878279d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ventaPanel: {fileID: 0}
   marcador: {fileID: 1005272596}
   rangeIndicator: {fileID: 7631775977964394383, guid: faf7560b620702c4cbd52715de9999ad, type: 3}
 --- !u!114 &762121834
@@ -2464,7 +2465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06b3d66b4b83e634f8a9cd72ebb256e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gems: 200
+  gems: 600
 --- !u!114 &762121836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2490,10 +2491,10 @@ MonoBehaviour:
       - Key:
           _underlyingValue: {fileID: 9101717700536509563, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
         Value:
-          initialWait: 8
-          countPerRound: 8
+          initialWait: 0
+          countPerRound: 4
           spawnRate: 1
-          spawnRateMultiplier: 0.88
+          spawnRateMultiplier: 1
     restTimeUnitNextWave: 1
   - enemies:
       _serializedList:
