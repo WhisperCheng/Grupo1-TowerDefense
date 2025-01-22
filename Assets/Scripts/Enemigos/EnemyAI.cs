@@ -237,6 +237,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             _currentHealth -= damageAmount;
             OnDamageTaken();
 
+            //FMOD
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.hitmarker, this.transform.position);
+
+
             // Actualizar barra de vida
             _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
             if (_currentHealth <= 0)

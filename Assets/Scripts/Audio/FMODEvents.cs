@@ -9,6 +9,17 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Music")]
     [field: SerializeField] public EventReference music { get; private set; }
 
+    [field: Header("Magic Attack")]
+    [field: SerializeField] public EventReference magicAttack { get; private set; }
+
+    [field: Header("Magic Impact")]
+    [field: SerializeField] public EventReference magicImpact { get; private set; }
+
+    [field: Header("Rose Shoot")]
+    [field: SerializeField] public EventReference roseShoot { get; private set; }
+
+    [field: Header("Hitmarker")]
+    [field: SerializeField] public EventReference hitmarker { get; private set; }
 
     public static FMODEvents instance {  get; private set; }
 

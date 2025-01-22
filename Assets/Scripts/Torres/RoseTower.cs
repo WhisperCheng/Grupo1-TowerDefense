@@ -12,6 +12,10 @@ public class RoseTower : RangedTower
         {
             GameObject proyectile = ThornRoseProjectilePool.Instance.GetThornRoseProjectile();
             IProyectile proyectil = proyectile.GetComponent<IProyectile>();
+
+            //FMOD
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.roseShoot, this.transform.position);
+
             bool hasSomeBoostApplied = _boostIndex != -1;
             if (boostPrices.Count > 0 && proyectil != null && hasSomeBoostApplied) // Añadir daño extra a los proyectiles según las mejoras
             {

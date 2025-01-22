@@ -39,10 +39,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638726127577864111
+  lastModified: 638731736311224455
   FileSizes:
   - Name: Desktop
-    Value: 898
+    Value: 1226
   Exists: 1
 --- !u!114 &-6777541634545393935
 MonoBehaviour:
@@ -59,11 +59,38 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638726127577864111
+  lastModified: 638731749635974438
   FileSizes:
   - Name: Desktop
-    Value: 494
+    Value: 51008
   Exists: 1
+--- !u!114 &-6092495546421226048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/miniKnightAttack
+  m_EditorClassIdentifier: 
+  Path: event:/miniKnightAttack
+  Guid:
+    Data1: 13831199
+    Data2: 1336191381
+    Data3: 885827715
+    Data4: -1737813729
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5483291510440914159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +118,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 32710
+--- !u!114 &-5300780897114922407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BombPlant
+  m_EditorClassIdentifier: 
+  Path: event:/BombPlant
+  Guid:
+    Data1: 1144501459
+    Data2: 1078513061
+    Data3: 179653272
+    Data4: -1503977280
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4414690777717329341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/magicAttack
+  m_EditorClassIdentifier: 
+  Path: event:/magicAttack
+  Guid:
+    Data1: -531017859
+    Data2: 1305282010
+    Data3: -1133960032
+    Data4: -56124990
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-4173780007692435303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ShootPlant
+  m_EditorClassIdentifier: 
+  Path: event:/ShootPlant
+  Guid:
+    Data1: -763623714
+    Data2: 1112606505
+    Data3: 492024762
+    Data4: 1965072727
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3903485788749854559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +251,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 34287
+--- !u!114 &-1996843267690073361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/magicImpact
+  m_EditorClassIdentifier: 
+  Path: event:/magicImpact
+  Guid:
+    Data1: 197239081
+    Data2: 1206915157
+    Data3: -922385737
+    Data4: 110963780
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,13 +298,74 @@ MonoBehaviour:
   - {fileID: 7279214337045221306}
   - {fileID: -5483291510440914159}
   - {fileID: -2179248425836092325}
+  - {fileID: -4414690777717329341}
+  - {fileID: -1996843267690073361}
+  - {fileID: 5426629173389562723}
+  - {fileID: -4173780007692435303}
+  - {fileID: -6092495546421226048}
+  - {fileID: 3917580287681223809}
+  - {fileID: -5300780897114922407}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6764802151169257708}
   StringsBanks:
   - {fileID: -7751682806750094819}
-  cacheTime: 638726127577864111
+  cacheTime: 638731749635974438
   cacheVersion: 131622
+--- !u!114 &3917580287681223809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/BitePlant
+  m_EditorClassIdentifier: 
+  Path: event:/BitePlant
+  Guid:
+    Data1: 628321143
+    Data2: 1099661226
+    Data3: -978694740
+    Data4: -791419456
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &5426629173389562723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GetHit
+  m_EditorClassIdentifier: 
+  Path: event:/GetHit
+  Guid:
+    Data1: -428231110
+    Data2: 1148912107
+    Data3: 2044012461
+    Data4: 84188769
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &6764802151169257708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +381,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638726127577844168
+  lastModified: 638731736311214487
   FileSizes:
   - Name: Desktop
     Value: 5980992

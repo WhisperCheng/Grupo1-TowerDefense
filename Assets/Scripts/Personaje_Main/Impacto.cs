@@ -1,6 +1,9 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+[RequireComponent(typeof(StudioEventEmitter))] 
 
 public class Impacto : MonoBehaviour
 {
@@ -10,18 +13,31 @@ public class Impacto : MonoBehaviour
     [SerializeField] private GameObject trail2;
     private TrailRenderer TrailRenderer;
     private TrailRenderer TrailRenderer2;
+
+    //FMOD
+    private StudioEventEmitter emitter;
+
     private void Start()
     {
         TrailRenderer = trail.GetComponent<TrailRenderer>();
         TrailRenderer2 = trail2.GetComponent<TrailRenderer>();
+
+
+        //FMOD emitter parameters
+        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.magicImpact, this.gameObject);
+        emitter.OverrideAttenuation = true;
+        emitter.OverrideMinDistance = 1;
+        emitter.OverrideMaxDistance = 100;
     }
     void OnCollisionEnter(Collision collision)
     {
         GameObject impacto = MagicImpactPool.Instance.GetMagicImpact();
         impacto.transform.position = transform.position;
-
+        
         // Retornar el proyectil a la pool
         MagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
+
+        
 
         // Limpiar los Trail Renderers
         if (TrailRenderer != null)
@@ -38,6 +54,8 @@ public class Impacto : MonoBehaviour
             TrailRenderer2.enabled = true;
         }
 
+        //FMOD
+        emitter.Play();
     }
 
 }
