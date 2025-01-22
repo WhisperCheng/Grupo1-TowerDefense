@@ -11,13 +11,18 @@ public class TowerInteractionManager : MonoBehaviour
     [Range(0, 100)]
     public float sellingPercentageAmount;
 
-    [Header("Tiempo de esperas")]
+    [Header("Tiempos de espera")]
     public float sellingTowerTime;
     public float upgradingTowerTime;
 
     [Header("Imágenes de progreso de mejora y venta")]
     public Image spriteTowerSelling;
     public Image spriteTowerBoosting;
+
+    [Header("Partículas de venta y mejora")]
+    public ParticleSystem sellParticles;
+    public ParticleSystem boostParticles;
+    public GameObject particlesParent;
 
     private bool sellingButtonPressed;
     private bool boostingButtonPressed;
@@ -39,7 +44,6 @@ public class TowerInteractionManager : MonoBehaviour
     public void SellTower(InputAction.CallbackContext ctx)
     {
         spriteTowerSelling.fillAmount = 0;
-        Debug.Log(boostingButtonPressed);
         if (!boostingButtonPressed)
             sellingButtonPressed = ButtonPressed(ctx, spriteTowerSelling); // To keep the state in a boolean. 
         // Cambia sellingButtonPressed a true si está siendo presionado, y a false si deja de estarlo
@@ -148,9 +152,36 @@ public class TowerInteractionManager : MonoBehaviour
         }
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
-        torre.ReturnToPool();
+        // Efecto partículas venta
+        ParticleSystem pSysSelling =
+        PlaceManager.Instance.StartParticleGameObjEffect(sellParticles, torre.gameObject.transform.position);
+        pSysSelling.gameObject.transform.parent = particlesParent.transform; // Asignando padre
+
+        // Calcular el centro de la torre y cambiar la posición de las partículas a ese centro
+        pSysSelling.transform.position = GetGameObjectCenter(torre.gameObject);
+
+        torre.ReturnToPool(); // Retornar a la pool
         sellingButtonPressed = false;
         spriteTowerSelling.fillAmount = 0;
+    }
+
+    private Vector3 GetGameObjectCenter(GameObject gObj)
+    {
+        float lowestChild = 0;
+        float highestChild = 0;
+        foreach (Transform child in gObj.transform)
+        {
+            if (child.position.y < lowestChild)
+            {
+                lowestChild = child.position.y;
+            }
+            if (child.position.y > highestChild)
+            {
+                highestChild = child.position.y;
+            }
+        }
+        float centerY = (lowestChild + highestChild) / 2;
+        return gObj.transform.position + gObj.transform.up * centerY;
     }
 
     private void Boost(RaycastHit golpeRayo)
@@ -164,7 +195,6 @@ public class TowerInteractionManager : MonoBehaviour
             canBoostCurrentTower = false;
             boostingButtonPressed = false;
         }
-
         spriteTowerBoosting.fillAmount = 0;
     }
 

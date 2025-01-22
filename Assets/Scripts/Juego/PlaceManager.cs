@@ -7,13 +7,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.AI;
 
 public class PlaceManager : MonoBehaviour
-
 {
     public static PlaceManager Instance { get; private set; }
 
     public GameObject marcador;
     [Header("Partículas de construcción")]
-    public GameObject particulasConstruccion;
+    public ParticleSystem particulasConstruccion;
+    public GameObject particlesParent;
 
     private static Tower torre;
     private Button currentButton;
@@ -25,7 +25,7 @@ public class PlaceManager : MonoBehaviour
 
     protected float _currentSellTime;
 
-    GameObject particulasCopia;
+    //GameObject particulasCopia;
 
     MaterialPropertyBlock materialesSeleccionPropertyBlock;
 
@@ -181,6 +181,16 @@ public class PlaceManager : MonoBehaviour
             }
         }
     }
+    public ParticleSystem StartParticleGameObjEffect(ParticleSystem pSys, Vector3 position)
+    {
+        GameObject particulasCopia = Instantiate(pSys.gameObject);
+        particulasCopia.transform.position = position;
+        ParticleSystem pConstruccion = particulasCopia.GetComponent<ParticleSystem>();
+        pConstruccion.Play();
+        float destroyTime = pConstruccion.main.duration + pConstruccion.main.startLifetime.constant;
+        Destroy(particulasCopia, destroyTime);
+        return pConstruccion;
+    }
 
     public void OnClickPlaceTower(InputAction.CallbackContext ctx)
     {
@@ -191,9 +201,9 @@ public class PlaceManager : MonoBehaviour
                 ReturnInstanceCopy();
                 return;
             }
-            particulasCopia = Instantiate(particulasConstruccion);
-            particulasCopia.transform.position = torre.transform.position;
-            particulasCopia.GetComponent<ParticleSystem>().Play();
+
+            ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
+            pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 
             ToggleTowerCollisions(torre, true);
             torre.placed = true;
