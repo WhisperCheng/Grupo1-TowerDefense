@@ -152,17 +152,24 @@ public class TowerInteractionManager : MonoBehaviour
         }
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
-        // Efecto partículas venta
-        ParticleSystem pSysSelling =
-        PlaceManager.Instance.StartParticleGameObjEffect(sellParticles, torre.gameObject.transform.position);
-        pSysSelling.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 
-        // Calcular el centro de la torre y cambiar la posición de las partículas a ese centro
-        pSysSelling.transform.position = GetGameObjectCenter(torre.gameObject);
+        // Efecto partículas venta
+        PerformParticleAction(sellParticles, torre.gameObject);
 
         torre.ReturnToPool(); // Retornar a la pool
         sellingButtonPressed = false;
         spriteTowerSelling.fillAmount = 0;
+    }
+
+    // Crea un efecto de partículas en el centro del gameObject especificado
+    private void PerformParticleAction(ParticleSystem pSys, GameObject center)
+    {
+        ParticleSystem pSysAction =
+        PlaceManager.Instance.StartParticleGameObjEffect(pSys, center.gameObject.transform.position);
+        pSysAction.gameObject.transform.parent = particlesParent.transform; // Asignando padre
+
+        // Calcular el centro de la torre y cambiar la posición de las partículas a ese centro
+        pSysAction.transform.position = GetGameObjectCenter(center.gameObject);
     }
 
     private Vector3 GetGameObjectCenter(GameObject gObj)
@@ -194,6 +201,9 @@ public class TowerInteractionManager : MonoBehaviour
             torreBoosteable.Boost();
             canBoostCurrentTower = false;
             boostingButtonPressed = false;
+
+            // Efecto partículas boost
+            PerformParticleAction(boostParticles, torre.gameObject);
         }
         spriteTowerBoosting.fillAmount = 0;
     }
