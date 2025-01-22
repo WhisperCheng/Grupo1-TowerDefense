@@ -114,8 +114,33 @@ public class PlaceManager : MonoBehaviour
         {
             Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
             RaycastHit golpeRayo;
-            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, (1 << GameManager.Instance.layerTerreno));
-            if (colisionConRayo)
+            int terrainMask = 1 << GameManager.Instance.layerTerreno; // Detecta todo el terreno
+            int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco; // Detecta los bordes de fuera del camino u obstáculos de decoración
+            int pathMask = 1 << GameManager.Instance.layerTerreno; // Detecta solo los caminos por donde pasan los enemigos
+           
+            bool validCollision = false;
+
+            if (torre.CompareTag(GameManager.Instance.tagTorresCamino))
+            {
+                bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask);
+                Collider[] outsidePathCols = Physics.OverlapSphere(torre.transform.position, torre.GetTowerRadiusSize(),
+                    areaDecoMask);
+                validCollision = (colisionConRayo && outsidePathCols.Length == 0) ? true : false;
+                // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
+            }
+            else
+            {
+                bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
+                Collider[] pathCols = Physics.OverlapSphere(torre.transform.position, torre.GetTowerRadiusSize(),
+                   pathMask);
+                Debug.Log(pathCols.Length);
+                validCollision = (colisionConRayo && pathCols.Length == 0) ? true : false;
+                // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
+            }
+
+            //colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
+            Debug.Log(validCollision);
+            if (validCollision)
             {
                 if (!torre.gameObject.activeSelf)
                 {
@@ -208,7 +233,6 @@ public class PlaceManager : MonoBehaviour
             ToggleTowerCollisions(torre, true);
             torre.placed = true;
             SetPreviewMode(false);
-
             objetoSiendoArrastrado = false;
             torre = null; // se "elimina" la referencia del objeto para que al hacer click derecho
                           // no se vuelva a eliminar

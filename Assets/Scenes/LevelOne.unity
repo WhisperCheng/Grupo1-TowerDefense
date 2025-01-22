@@ -2477,6 +2477,8 @@ MonoBehaviour:
   tagPlayer: Player
   tagTerreno: Terreno
   tagPath: Path
+  tagTorresCamino: PathTower
+  tagTorres: Tower
   layerEnemigos: 10
   layerAliados: 9
   layerTorres: 12
@@ -2485,6 +2487,7 @@ MonoBehaviour:
   layerPath: 8
   layerTerreno: 6
   layerCorazon: 13
+  layerAreaDeco: 14
   colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
 --- !u!114 &762121835
 MonoBehaviour:
@@ -4692,10 +4695,6 @@ PrefabInstance:
     - target: {fileID: 2248694050146199156, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
       propertyPath: m_Name
       value: Escenario
-      objectReference: {fileID: 0}
-    - target: {fileID: 6686350386555052459, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_Name
-      value: Terreno
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

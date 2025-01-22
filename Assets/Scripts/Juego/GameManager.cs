@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     public string tagPlayer;
     public string tagTerreno;
     public string tagPath;
+    public string tagTorresCamino;
+    public string tagTorres;
 
     [Header("Layers Globales")]
     public int layerEnemigos;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour
     public int layerPath;
     public int layerTerreno;
     public int layerCorazon;
+    public int layerAreaDeco;
 
     [Header("Colores")]
     public Color colorVeneno;
