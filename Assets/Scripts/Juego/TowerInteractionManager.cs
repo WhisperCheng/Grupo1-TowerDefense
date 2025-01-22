@@ -15,6 +15,7 @@ public class TowerInteractionManager : MonoBehaviour
     public float sellingTowerTime;
     public float upgradingTowerTime;
 
+    [Header("Imágenes de progreso de mejora y venta")]
     public Image spriteTowerSelling;
     public Image spriteTowerBoosting;
 
@@ -107,7 +108,7 @@ public class TowerInteractionManager : MonoBehaviour
     private void BoostWhenTimeCompleted()
     {
         InteractUntilTimeCompleted(!canBoostCurrentTower, spriteTowerBoosting,
-          new Action<RaycastHit>(Boost), sellingTowerTime);
+          new Action<RaycastHit>(Boost), upgradingTowerTime);
     }
 
     private void InteractUntilTimeCompleted(bool ignore, Image fillingImage, Action<RaycastHit> method, float actionTime)
@@ -121,7 +122,7 @@ public class TowerInteractionManager : MonoBehaviour
 
             if (collidingWithTower && golpeRayo.collider.CompareTag("Tower")) // Si el raycast choca con una torre
             {
-                fillingImage.fillAmount += Time.deltaTime / sellingTowerTime; // Añadir tiempo
+                fillingImage.fillAmount += Time.deltaTime / actionTime; // Añadir tiempo
                 if (fillingImage.fillAmount >= 1) // Si llega al final del tiempo, se vende la torre añadiendo dinero
                 {
                     method.Invoke(golpeRayo); // Se vende o boostea, dependiendo del tipo de Action que haya recibido
