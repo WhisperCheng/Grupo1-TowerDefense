@@ -117,17 +117,17 @@ public class PlaceManager : MonoBehaviour
             int terrainMask = 1 << GameManager.Instance.layerTerreno; // Detecta todo el terreno
             int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco; // Detecta los bordes de fuera del camino u obstáculos de decoración
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
-           /*
+           
             bool validCollision = false;
-
+            bool colisionConRayo = false;
             if (torre.CompareTag(GameManager.Instance.tagTorresCamino))
             {
                 Collider[] outsidePathCols = null;
-                bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask);
+                colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask);
+                Debug.Log(colisionConRayo);
                 if (colisionConRayo)
                 {
-                    outsidePathCols = Physics.OverlapSphere(torre.transform.position, torre.GetTowerRadiusSize(),
-                    areaDecoMask);
+                    outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), areaDecoMask);
                 }
                     
                 validCollision = (colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0) ? true : false;
@@ -136,25 +136,20 @@ public class PlaceManager : MonoBehaviour
             else
             {
                 Collider[] pathCols = null;
-                bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
+                colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
                 if (colisionConRayo)
                 {
-                    pathCols = Physics.OverlapSphere(golpeRayo.transform.position, torre.GetTowerRadiusSize(), pathMask);
-                    foreach (Collider s in pathCols)
-                    {
-                        Debug.Log(s);
-                    }
-                    Debug.Log(pathCols.Length);
+                    pathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathMask);
                 }
                 
                 validCollision = (colisionConRayo && pathCols != null && pathCols.Length == 0) ? true : false;
                 // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
-            }*/
+            }
 
-            bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
+            //bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
             //Debug.Log(validCollision);
             //if (validCollision)
-            if (colisionConRayo)
+            if (validCollision)
             {
                 if (!torre.gameObject.activeSelf)
                 {
