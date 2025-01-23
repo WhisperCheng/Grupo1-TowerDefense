@@ -32,12 +32,16 @@ public class Proyectil : MonoBehaviour
         AudioManager.instance.PlayOneShot(FMODEvents.instance.magicAttack, this.transform.position);
 
         Vector3 destino;
-        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, 1 << GameManager.Instance.layerPath))
+        int pathMask = 1 << GameManager.Instance.layerPath;
+        int terrainMask = 1 << GameManager.Instance.layerTerreno;
+        int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco;
+        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask))
         {
             destino = golpeRayo.point;
         }
         else
         {
+            Debug.Log("s");
             destino = rayo.GetPoint(100f);
         }
 
