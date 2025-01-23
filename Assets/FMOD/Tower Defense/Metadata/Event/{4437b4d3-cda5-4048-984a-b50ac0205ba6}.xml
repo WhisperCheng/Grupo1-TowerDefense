@@ -5,7 +5,7 @@
 			<value>BombPlant</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{febea522-fad0-4f83-bb3e-ec0bcb1f4449}</destination>
@@ -96,6 +96,7 @@
 	<object class="MixerBusEffectChain" id="{f5b6aa3f-7ac1-43da-b504-59b5458ebb2c}">
 		<relationship name="effects">
 			<destination>{2576da71-cdf1-4063-8de7-ba560416e040}</destination>
+			<destination>{9c23252f-1969-46b3-930f-aab8e36b0f4d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ea3049d2-fb0d-41e3-94c3-a70b0883dd6a}" />
@@ -106,4 +107,5 @@
 	</object>
 	<object class="MixerBusFader" id="{49d7024d-83e8-433b-8400-8170659a1adb}" />
 	<object class="MixerBusFader" id="{2576da71-cdf1-4063-8de7-ba560416e040}" />
+	<object class="SpatialiserEffect" id="{9c23252f-1969-46b3-930f-aab8e36b0f4d}" />
 </objects>

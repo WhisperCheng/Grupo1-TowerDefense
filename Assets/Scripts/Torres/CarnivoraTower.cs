@@ -1,9 +1,17 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(StudioEventEmitter))]
+
+
 public class CarnivoraTower : LivingTower, IDamageable
 {
+
+    //FMOD
+    private StudioEventEmitter emitter;
+
     [Header("Vida")] // Vida
     public float health;
     protected HealthBar _healthBar;
@@ -30,6 +38,10 @@ public class CarnivoraTower : LivingTower, IDamageable
     void Start()
     {
         Init();
+
+        //FMOD
+        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.carnivorousShoot, this.gameObject);
+
     }
 
     void Update()
@@ -183,8 +195,9 @@ public class CarnivoraTower : LivingTower, IDamageable
         }
         return this.gameObject;
     }
-    public void TowerAttackEvent() { if (currentTarget != null) _canAttack = true; }
+    public void TowerAttackEvent() { if (currentTarget != null) _canAttack = true; emitter.Play(); }
 
+  
     // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
     protected void ManageCombat()
     {
@@ -197,6 +210,8 @@ public class CarnivoraTower : LivingTower, IDamageable
         { // Si se ataca con éxito a los enemigos dentro del área de ataque, se resetea el cooldown
             _currentCooldown = cooldown;
         }
+
+
     }
     protected override void OnDrawGizmosSelected()
     {

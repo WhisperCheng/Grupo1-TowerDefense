@@ -5,7 +5,7 @@
 			<value>miniKnightAttack</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{febea522-fad0-4f83-bb3e-ec0bcb1f4449}</destination>
@@ -96,6 +96,7 @@
 	<object class="MixerBusEffectChain" id="{e3cad390-f51d-4c6a-9f78-947e74815555}">
 		<relationship name="effects">
 			<destination>{0a54cd12-48a5-4a62-92e4-817b0bdaf4ca}</destination>
+			<destination>{dcb0110d-7781-4f74-b959-4e6e6279778b}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c23c1255-7ad5-429e-a781-dc33b6500578}" />
@@ -106,4 +107,5 @@
 	</object>
 	<object class="MixerBusFader" id="{a259aad7-8120-4885-bd77-8d7c7806b20b}" />
 	<object class="MixerBusFader" id="{0a54cd12-48a5-4a62-92e4-817b0bdaf4ca}" />
+	<object class="SpatialiserEffect" id="{dcb0110d-7781-4f74-b959-4e6e6279778b}" />
 </objects>

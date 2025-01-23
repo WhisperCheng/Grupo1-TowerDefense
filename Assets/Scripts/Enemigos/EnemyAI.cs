@@ -1,3 +1,4 @@
+using FMODUnity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,8 +7,14 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [SelectionBase]
+
+[RequireComponent(typeof(StudioEventEmitter))]
+
 public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisonable
 {
+    //FMOD
+    private StudioEventEmitter emitter;
+
     protected float poisonedTime = 0;
     protected NavMeshAgent _agent;
     // Variables
@@ -69,6 +76,9 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     {
         _originalSpeed = speed;
         Init();
+
+        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.hitmarker, this.gameObject);
+
     }
     public override void Init()
     {
@@ -238,13 +248,14 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             OnDamageTaken();
 
             //FMOD
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.hitmarker, this.transform.position);
+            emitter.Play();
 
 
             // Actualizar barra de vida
             _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
             if (_currentHealth <= 0)
             {
+                emitter.Play();
                 Die();
             }
         }

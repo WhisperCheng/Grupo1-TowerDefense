@@ -689,6 +689,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4279822961977691105}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 159735908840483102}
   m_SourcePrefab: {fileID: 100100000, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
 --- !u!4 &4649543179063663829 stripped
 Transform:
@@ -791,6 +794,37 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.48, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &159735908840483102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514692920454964661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -763623714
+      Data2: 1112606505
+      Data3: 492024762
+      Data4: 1965072727
+    Path: event:/ShootPlant
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 50
 --- !u!4 &9034665835644337935 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}

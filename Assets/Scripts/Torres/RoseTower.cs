@@ -1,10 +1,16 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(StudioEventEmitter))]
+
 public class RoseTower : RangedTower
 {
+    //FMOD
+    private StudioEventEmitter emitter;
+
     public override void ShootProyectileEvent()
     {
         base.ShootProyectileEvent();
@@ -14,7 +20,8 @@ public class RoseTower : RangedTower
             IProyectile proyectil = proyectile.GetComponent<IProyectile>();
 
             //FMOD
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.roseShoot, this.transform.position);
+            emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.roseShoot, this.gameObject);
+            emitter.Play();
 
             bool hasSomeBoostApplied = _boostIndex != -1;
             if (boostPrices.Count > 0 && proyectil != null && hasSomeBoostApplied) // Añadir daño extra a los proyectiles según las mejoras

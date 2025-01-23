@@ -5,7 +5,7 @@
 			<value>BitePlant</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{febea522-fad0-4f83-bb3e-ec0bcb1f4449}</destination>
@@ -96,6 +96,7 @@
 	<object class="MixerBusEffectChain" id="{3afa6df9-8f50-4f78-bdf0-fae2c55c7113}">
 		<relationship name="effects">
 			<destination>{1c56c061-4899-427a-8c25-0d42622a9639}</destination>
+			<destination>{a8f71bf4-3e01-4547-ae3d-592fd79fe488}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{5c413900-a079-475c-b3be-ae10e47ec1c5}" />
@@ -106,4 +107,5 @@
 	</object>
 	<object class="MixerBusFader" id="{303f2d47-0343-4cea-bd64-961e1e0bc5ae}" />
 	<object class="MixerBusFader" id="{1c56c061-4899-427a-8c25-0d42622a9639}" />
+	<object class="SpatialiserEffect" id="{a8f71bf4-3e01-4547-ae3d-592fd79fe488}" />
 </objects>
