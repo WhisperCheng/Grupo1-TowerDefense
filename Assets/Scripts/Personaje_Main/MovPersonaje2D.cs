@@ -14,6 +14,11 @@ public class MovPersonaje2D : MonoBehaviour
     [Header("Animaciones")]
     private CharacterController _characterController;
     [SerializeField] private Animator _animatorController;
+    [SerializeField] private ParticleSystem _MoveParticles;
+    [SerializeField] private ParticleSystem _MoveParticlesStars;
+    [SerializeField] private float _ParticleEmission = 25f;
+    [SerializeField] private float _ParticleEmissionStars = 25f;
+    [SerializeField] private float _MovParticleStopTime = 1f;
 
     [Header("Controles")]
     [SerializeField] private PlayerInput playerInput;
@@ -146,6 +151,20 @@ public class MovPersonaje2D : MonoBehaviour
         if (_velocityZ < 0.001f && _velocityZ > -0.001f)
         {
             _velocityZ = 0f;
+        }
+
+        var particlescount = _MoveParticles.emission;
+        var particlescountstars = _MoveParticlesStars.emission;
+
+        if (_velocityM > _MovParticleStopTime)
+        {
+            particlescountstars.rateOverTime = _ParticleEmissionStars;
+            particlescount.rateOverTime = _ParticleEmission;
+        }
+        else
+        {
+            particlescount.rateOverTime = 0f;
+            particlescountstars.rateOverTime = 0f;
         }
 
         _animatorController.SetFloat(_velocityZHash, _velocityX);
