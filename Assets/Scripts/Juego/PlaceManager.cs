@@ -124,7 +124,6 @@ public class PlaceManager : MonoBehaviour
             {
                 Collider[] outsidePathCols = null;
                 colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask);
-                Debug.Log(colisionConRayo);
                 if (colisionConRayo)
                 {
                     outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), areaDecoMask);

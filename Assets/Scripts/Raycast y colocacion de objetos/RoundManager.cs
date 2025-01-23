@@ -2,6 +2,7 @@ using AYellowpaper;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.AI;
 
 public class RoundManager : MonoBehaviour
@@ -14,6 +15,8 @@ public class RoundManager : MonoBehaviour
 
 	public float countdownInicial = 3f;
 
+	public bool tutorialMode = false;
+
 	private float countdown = 3f;
 
 	//public Text waveCountdownText;
@@ -23,7 +26,7 @@ public class RoundManager : MonoBehaviour
 	private int waveIndex = -1; // Para valor de inicio, el waveindex será -1
 
 	private bool waveInProgress = false;
-	private bool finishedAllSpawnings = false;
+	private bool finishedLastRoundSpawnings = false;
 	private bool finishedCurrentWaveTrigger = false;
 
 	public static RoundManager Instance { get; private set; }
@@ -47,12 +50,16 @@ public class RoundManager : MonoBehaviour
 
     void Update()
 	{
+        if (!tutorialMode)
+        {
+
+        }
 		if (enemiesAlive > 0)
 		{
 			return;
 		}
 
-		if (finishedAllSpawnings && enemiesAlive == 0)
+		if (finishedLastRoundSpawnings && enemiesAlive == 0)
 		{
 			Debug.Log("Fin");
 			//gameManager.WinLevel();
@@ -69,22 +76,43 @@ public class RoundManager : MonoBehaviour
 
 		if (countdown <= 0f && enemiesAlive == 0 /*&& !HasSpawningEnded()*/ && waveIndex < waves.Length-1)
 		{
-			waveIndex++;
-			Debug.Log("Empezando oleada nº " + (waveIndex+1));
-			StartWave();
-			waveInProgress = true;
+			InitializeNewWave();
 			return;
 		}
 
 		if (enemiesAlive == 0 && !waveInProgress) // Si se han muerto todos los enemigos de la oleada y no hay rondas activas
 		{
-			// Se empieza a correr el contador hasta llegar a 0
-			countdown -= Time.deltaTime;
+            if (!float.IsInfinity(countdown)) // Si el tiempo de espera no es infinito se resta tiempo
+            {
+				// Se empieza a correr el contador hasta llegar a 0
+				countdown -= Time.deltaTime;
 
-			countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
-			//waveCountdownText.text = string.Format("{0:00.00}", countdown);
-		}
+				countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
+                //waveCountdownText.text = string.Format("{0:00.00}", countdown);
+            } // Si es infinito entonces al presionar ña G se llamará al evento , que automáticamente reseteará el contador
+		}																							// a 0 e iniciará la ronda
 	}
+
+	private void ManageNormalRounds()
+    {
+
+    }
+
+	private void InitializeNewWave()
+    {
+		waveIndex++;
+		Debug.Log("Empezando oleada nº " + (waveIndex + 1));
+		StartWave();
+		waveInProgress = true;
+	}
+
+	public void StartRoundAfterInfiniteRest(InputAction.CallbackContext ctx)
+    {
+        if (!waveInProgress && enemiesAlive == 0 && ctx.performed && float.IsInfinity(countdown))
+        {
+			countdown = 0.25f; // 0.5 segundos de espera para no comenzar la ronda muy de golpe
+		}
+    }
 
 	public void StartWave()
 	{
@@ -147,6 +175,6 @@ public class RoundManager : MonoBehaviour
 		}
 		finishedCurrentWaveTrigger = result; // Se cambia el trigger de haber terminado la oleada para su posterior uso
 		if (result && waveIndex == waves.Length-1)          //  No se cambiará hasta haber destruido a todos los enemigos
-			finishedAllSpawnings = true;
+			finishedLastRoundSpawnings = true;
 	}
 }
