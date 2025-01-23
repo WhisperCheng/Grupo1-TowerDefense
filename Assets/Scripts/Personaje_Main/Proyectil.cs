@@ -2,6 +2,7 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Proyectil : MonoBehaviour
 {
@@ -35,14 +36,16 @@ public class Proyectil : MonoBehaviour
         int pathMask = 1 << GameManager.Instance.layerPath;
         int terrainMask = 1 << GameManager.Instance.layerTerreno;
         int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco;
-        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask))
+        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask) 
+            && !golpeRayo.transform.CompareTag(GameManager.Instance.tagPuentes))
         {
             destino = golpeRayo.point;
         }
         else
         {
-            Debug.Log("s");
-            destino = rayo.GetPoint(100f);
+            // Pos + bordes para apuntar exactamente al centro de la mira
+            rayo = Camera.main.ScreenPointToRay(marcador.transform.position + marcador.GetComponent<Image>().sprite.bounds.extents);
+            destino = rayo.GetPoint(10000);
         }
 
         // Crea el proyectil 

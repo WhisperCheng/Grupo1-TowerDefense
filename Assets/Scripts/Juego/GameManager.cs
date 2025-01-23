@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public string tagPath;
     public string tagTorresCamino;
     public string tagTorres;
+    public string tagPuentes;
 
     [Header("Layers Globales")]
     public int layerEnemigos;
