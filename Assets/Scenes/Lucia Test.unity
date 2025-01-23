@@ -5367,6 +5367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 100
+  _healthBar: {fileID: 0}
 --- !u!1001 &747156282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11654,6 +11655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f76447b1aed1ed4fb2f3c49878279d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ventaPanel: {fileID: 0}
   marcador: {fileID: 1290205140}
   rangeIndicator: {fileID: 7631775977964394383, guid: faf7560b620702c4cbd52715de9999ad, type: 3}
 --- !u!114 &2022868386
@@ -11705,6 +11707,9 @@ MonoBehaviour:
   upgradingTowerTime: 0
   spriteTowerSelling: {fileID: 1868888533}
   spriteTowerBoosting: {fileID: 409951482}
+  sellParticles: {fileID: 0}
+  boostParticles: {fileID: 0}
+  particlesParent: {fileID: 0}
 --- !u!114 &2022868389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11774,6 +11779,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   marcador: {fileID: 1290205139}
   particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  particlesParent: {fileID: 0}
   objetoSiendoArrastrado: 0
   bloqueoDisparo: 0
   selectionColor: {r: 0, g: 1, b: 0, a: 1}
@@ -11813,6 +11819,8 @@ MonoBehaviour:
   tagPlayer: Player
   tagTerreno: Terreno
   tagPath: Path
+  tagTorresCamino: 
+  tagTorres: 
   layerEnemigos: 10
   layerAliados: 9
   layerTorres: 12
@@ -11821,6 +11829,7 @@ MonoBehaviour:
   layerPath: 8
   layerTerreno: 6
   layerCorazon: 13
+  layerAreaDeco: 0
   colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
 --- !u!4 &2022868393
 Transform:
