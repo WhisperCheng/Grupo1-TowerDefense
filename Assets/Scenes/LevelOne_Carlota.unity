@@ -6511,7 +6511,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marcador: {fileID: 1005272595}
-  particulasConstruccion: {fileID: 4131055280005910679, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  particulasConstruccion: {fileID: 5277578244355317099, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  particlesParent: {fileID: 0}
   objetoSiendoArrastrado: 0
   bloqueoDisparo: 0
   selectionColor: {r: 0, g: 1, b: 0, a: 1}
@@ -6545,6 +6546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildUI: {fileID: 334664713}
   crossHead: {fileID: 1005272595}
+  textMoney: {fileID: 987152648}
   activeBuildUI: 1
   menusTransitionTime: 0.5
 --- !u!114 &762121832
@@ -6613,6 +6615,8 @@ MonoBehaviour:
   tagPlayer: Player
   tagTerreno: Terreno
   tagPath: Path
+  tagTorresCamino: 
+  tagTorres: 
   layerEnemigos: 10
   layerAliados: 9
   layerTorres: 12
@@ -6621,6 +6625,7 @@ MonoBehaviour:
   layerPath: 8
   layerTerreno: 6
   layerCorazon: 13
+  layerAreaDeco: 0
   colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
 --- !u!114 &762121835
 MonoBehaviour:
@@ -6694,6 +6699,9 @@ MonoBehaviour:
   upgradingTowerTime: 0
   spriteTowerSelling: {fileID: 596155112}
   spriteTowerBoosting: {fileID: 921166367}
+  sellParticles: {fileID: 0}
+  boostParticles: {fileID: 0}
+  particlesParent: {fileID: 0}
 --- !u!1001 &767485476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8247,6 +8255,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 040d94d054ec7e24ab107208a252541c, type: 3}
+--- !u!114 &987152648 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3861355580493686340, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+  m_PrefabInstance: {fileID: 954344073}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &988886465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13431,7 +13450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 70354242141aaf34cb622c57b1a7c0f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 282b521acfe1eb148beaf2a6efe4f6a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

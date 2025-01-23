@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager Instance { get; private set; }
     public GameObject buildUI;
     public GameObject crossHead;
+    public TMP_Text textMoney;
 
     public bool activeBuildUI;
     public float menusTransitionTime = 0.5f;
@@ -42,7 +45,7 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateMoney();
     }
 
     public void OnToggleBuildUI(InputAction.CallbackContext ctx)
@@ -78,5 +81,9 @@ public class GameUIManager : MonoBehaviour
         LeanTween.cancel(buildUI); // reset de las animaciones
         LeanTween.moveY(buildUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
         //LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
+    }
+    public void UpdateMoney()
+    {
+        textMoney.text = "X" + MoneyManager.Instance.GetMoney();
     }
 }
