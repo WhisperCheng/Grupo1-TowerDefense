@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class BasicEnemyAI : EnemyAI
+public abstract class BasicEnemyAI : EnemyAI
 {
     public AttackBox attackBox;
+
+    protected abstract void ReturnEnemyGameObjectToPool();
 
     void Update()
     {
@@ -43,6 +45,7 @@ public class BasicEnemyAI : EnemyAI
         GameObject deathParticles = EnemyDeathParticlesPool.Instance.GetEnemyDeathParticles();
         deathParticles.transform.position = transform.position;
         deathParticles.GetComponent<ParticleSystem>().Play();
+        // SONIDO : Muerte
         base.Die();
     }
 
@@ -67,10 +70,9 @@ public class BasicEnemyAI : EnemyAI
         ColorUtils.ChangeObjectMaterialColors(gameObject, null); // Volver a aplicar el color normal si ha sido envenenado
 
         // Llamamos a la pool para devolver al caballero
-        MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
+        //MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
+        ReturnEnemyGameObjectToPool();
     }
-
-    public override GameObject GetFromPool() { return MiniKnightPool.Instance.GetMiniKnight(); }
 
     public override GameObject RestoreToDefault()
     {

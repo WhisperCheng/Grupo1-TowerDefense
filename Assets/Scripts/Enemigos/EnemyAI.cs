@@ -223,6 +223,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         if (_attackMode) // Si está únicamente en modo de ataque (cuando hay un rival dentro de la hitbox de ataque,
         {               // activar el booleano de hacer daño)
             _canDamage = true;
+            OnAttack();
         }
         else
         {

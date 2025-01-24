@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.956
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       propertyPath: m_LocalRotation.w
@@ -497,7 +497,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       insertIndex: 1
-      addedObject: {fileID: 9101717700536509563}
+      addedObject: {fileID: 4682636771535508984}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       insertIndex: 2
       addedObject: {fileID: 7258662094469348518}
@@ -527,7 +527,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
   m_PrefabInstance: {fileID: 4806228123316486620}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9101717700536509563
+--- !u!114 &4682636771535508984
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -536,10 +536,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5652667148767116429}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9576bf466bfbbbb42a17d5d906435f99, type: 3}
+  m_Script: {fileID: 11500000, guid: 238821d4b85a44b409fbfe390dce94ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actionRadio: 2
+  actionRadio: 2.16
   checkWaypointProximityDistance: 3
   _onFocusAcceleration: 30
   speed: 3.5
@@ -589,7 +589,7 @@ MonoBehaviour:
   OnAnimationTriggered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9101717700536509563}
+      - m_Target: {fileID: 4682636771535508984}
         m_TargetAssemblyTypeName: EnemyAI, Assembly-CSharp
         m_MethodName: AttackEvent
         m_Mode: 1
