@@ -7,7 +7,6 @@ using FMODUnity;
 
 public class PoisonYewProyectile : RangedTowerProyectile
 {
-
     //FMOD
     private StudioEventEmitter emitter;
 
@@ -16,10 +15,13 @@ public class PoisonYewProyectile : RangedTowerProyectile
     public float poisonInterval;
     public float poisonDuration;
 
-    //He añadido esta función porque si no el sonido sonaba muy tarde, una vez la explosión ya se había hecho, revisar si esto trae problemas de implementación - sergio
-    private new void Start()
+    //He añadido esta función porque si no el sonido sonaba muy tarde, una vez la explosión ya se había hecho,
+    // revisar si esto trae problemas de implementación - sergio
+    protected override void Start()
     {
-        //Esta linea lo que hace es definir el sonido que va a sonar, básicamente, por lo general puede ir con el mismo emitter.play, pero si se puede definir lo antes posible mejor
+        base.Start();
+        //Esta linea lo que hace es definir el sonido que va a sonar, básicamente, por lo general puede ir con el
+        //mismo emitter.play, pero si se puede definir lo antes posible mejor
         emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.bombardierExplosion, this.gameObject);
     }
     protected override void ReturnToPool()
