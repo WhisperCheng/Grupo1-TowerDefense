@@ -11,6 +11,7 @@ public class GameUIManager : MonoBehaviour
     public GameObject buildUI;
     public GameObject crossHead;
     public TMP_Text textMoney;
+    private string textMoneyOriginal;
 
     public bool activeBuildUI;
     public float menusTransitionTime = 0.5f;
@@ -31,7 +32,7 @@ public class GameUIManager : MonoBehaviour
     void Start()
     {
         //activeObjectUI = true;
-
+        textMoneyOriginal = textMoney.text;
         if (activeBuildUI)
         {
             ShowBuildUI(0);
@@ -84,6 +85,6 @@ public class GameUIManager : MonoBehaviour
     }
     public void UpdateMoney()
     {
-        textMoney.text = "X" + MoneyManager.Instance.GetMoney();
+        textMoney.text = textMoneyOriginal + " " + MoneyManager.Instance.GetMoney();
     }
 }
