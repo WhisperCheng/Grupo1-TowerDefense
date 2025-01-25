@@ -10,7 +10,7 @@ public class RoseProyectile : RangedTowerProyectile
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero; // Reset de las fuezas y velocidad del proyectil
         inPool = true;
-        damage = originalDamage;
+        _extraDamage = 0;
         ThornRoseProjectilePool.Instance.ReturnThornRoseProjectile(this.gameObject);
     }
 

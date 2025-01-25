@@ -59,6 +59,8 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
             _attackMode = false;
             currentTarget = null;
             money = _originalMoney;
+            _boostIndex = -1;
+            cooldown = _originalCooldown;
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
     }

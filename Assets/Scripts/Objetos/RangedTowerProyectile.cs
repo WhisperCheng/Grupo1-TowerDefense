@@ -6,7 +6,7 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
 {
     [Header("Variables proyectil")]
     [SerializeField] protected float damage;
-    protected float originalDamage;
+    protected float _extraDamage;
     [SerializeField] protected float proyectileAttackRadius;
     [SerializeField] protected float automaticReturnToPoolTime;
 
@@ -17,10 +17,9 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
 
     protected virtual void Start()
     {
-        originalDamage = damage;
-    }
 
-    public void AddDamage(float damage) { this.damage += damage; }
+    }
+    public void AddDamage(float damage) { _extraDamage = damage; }
     private void OnCollisionEnter(Collision collision)
     {
         bool doAttack = collision.gameObject.tag == GameManager.Instance.tagEnemigos || collision.gameObject.tag != GameManager.Instance.tagPlayer;
@@ -42,10 +41,10 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
                     IDamageable damageableEntity = col.gameObject.GetComponent<IDamageable>();
                     if (damageableEntity != null && damageableEntity.GetHealth() > 0)
                     {
-                        damageableEntity.TakeDamage(damage);
+                        damageableEntity.TakeDamage(damage + _extraDamage);
+                        Debug.Log("EXTRA" + _extraDamage + "s" + (damage+_extraDamage));
                     }
                 }
-                Debug.Log(col);
             }
         }
         OnImpactEffects(enemies);

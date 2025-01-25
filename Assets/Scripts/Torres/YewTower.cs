@@ -10,12 +10,12 @@ public class YewTower : RangedTower
         base.ShootProyectileEvent();
         if (currentTarget != null)
         {
+            Debug.Log(_boostIndex);
             GameObject proyectile = PoisonYewProjectilePool.Instance.GetPoisonYewProjectile();
             IProyectile proyectil = proyectile.GetComponent<IProyectile>();
             bool hasSomeBoostApplied = _boostIndex != -1;
             if (boostPrices.Count > 0 && proyectil != null && hasSomeBoostApplied) // Añadir daño extra a los proyectiles según las mejoras
             {
-                Debug.Log(boostPrices[_boostIndex].damageAddition);
                 proyectil.AddDamage(boostPrices[_boostIndex].damageAddition);
             }
 
