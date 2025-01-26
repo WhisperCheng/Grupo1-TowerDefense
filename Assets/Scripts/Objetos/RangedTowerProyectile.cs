@@ -42,7 +42,6 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
                     if (damageableEntity != null && damageableEntity.GetHealth() > 0)
                     {
                         damageableEntity.TakeDamage(damage + _extraDamage);
-                        Debug.Log("EXTRA" + _extraDamage + "s" + (damage+_extraDamage));
                     }
                 }
             }
