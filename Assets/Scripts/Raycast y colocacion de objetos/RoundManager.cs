@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.Localization.Settings;
+using FMOD.Studio;
+using Unity.VisualScripting;
 
 public class RoundManager : MonoBehaviour
 {
@@ -29,6 +31,12 @@ public class RoundManager : MonoBehaviour
     private bool waveInProgress = false;
     private bool finishedLastRoundSpawnings = false;
     private bool finishedCurrentWaveTrigger = false;
+
+    //FMOD, es el valor que activa o desactiva instrumentos dependiendo del momento de la ronda 
+    private float fragorValue = 0f;
+   //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
+    private bool fragorRoundMax = false;
+
 
     public static RoundManager Instance { get; private set; }
     private void Awake()
@@ -78,6 +86,12 @@ public class RoundManager : MonoBehaviour
             InitializeNewWave();
             return;
         }
+
+        //FMOD
+        MusicOnWave();//Función que se llama para activar la música caotica en mtiad de la ronda
+        AudioManager.instance.musicEventInstance.setParameterByName("Fragor", fragorValue);//se coge el parametro de FMOD llamado "fragor" y hacemos que unity lo reconozca
+        Debug.Log("fragor " + fragorValue);//Debug para chequeos
+
     }
 
     private void UpdateCountdown()
@@ -99,6 +113,17 @@ public class RoundManager : MonoBehaviour
                 newWaveInText.text = comingWaveText;
                 waveCountdownText.text = string.Format("{0:00.00}", countdown) + " s";
                 waveCountdownText.fontSize = 36;
+
+                //FMOD,Al acabar una ronda, el fragor deberá estar a mayor de 80, pues con esto lo reseteo a 0 para poder subirlo a 60 en la linea 123
+                if (fragorValue > 80f)
+                {
+                    fragorValue = 0f;
+                }
+
+                //FMOD,La logica sería: "Cuando hay un timer que avance el fragor hasta 60 progresivamente, está calculado para unos 10 segundos de timer
+                fragorValue = Mathf.Clamp(fragorValue + 7.2f * Time.deltaTime, 0f, 60f);
+
+
             } // Si es infinito entonces al presionar la G se llamará al evento , que automáticamente reseteará el contador
             else                                                                                    // a 0 e iniciará la ronda
             { // Se cambia el texto para indicar que hay que presionar la tecla G para continuar 
@@ -106,6 +131,12 @@ public class RoundManager : MonoBehaviour
                 "_PresionarGNuevaOleada", lang);
                 waveCountdownText.text = waitingForGText;
                 waveCountdownText.fontSize = 20;
+
+                
+                //FMOD,Como no hay timer no se puede ajustar de manera progresiva, así que esto está bien así
+                fragorValue = 60f;
+
+
             }
         }
         else
@@ -116,7 +147,6 @@ public class RoundManager : MonoBehaviour
             string activeWaveText =
             LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
             waveCountdownText.text = activeWaveText;
-
         }
     }
 
@@ -131,6 +161,9 @@ public class RoundManager : MonoBehaviour
         Debug.Log("Empezando oleada nº " + (waveIndex + 1));
         StartWave();
         waveInProgress = true;
+
+        
+
     }
 
     public void StartRoundAfterInfiniteRest(InputAction.CallbackContext ctx)
@@ -143,16 +176,20 @@ public class RoundManager : MonoBehaviour
 
     public void StartWave()
     {
-        Wave wave = waves[waveIndex];
+        //FMOD, En teoría, cuando empieza una ronda, el fragor debería cruzar el umbral de 80
+        fragorRoundMax = true;
 
+        Wave wave = waves[waveIndex];
         // Iterar a través de los enemigos de cada ronda para iniciar el spawn de cada uno
         // de ellos, dada la información de spawn que tiene cada uno
-        foreach (var item in wave.enemies)
+       
+            foreach (var item in wave.enemies)
         {
             StartCoroutine(SpawnEnemy(item));
         }
         countdown = waves[waveIndex].restTimeUnitNextWave; // Reset del countdown para cuando terminen de morir todos los enemigos
         Debug.Log(countdown);
+
     }
     IEnumerator SpawnEnemy(KeyValuePair<InterfaceReference<IPoolable, EnemyAI>, WaveUnitInfo> enemyInfo)
     {
@@ -205,4 +242,20 @@ public class RoundManager : MonoBehaviour
         if (result && waveIndex == waves.Length - 1)          //  No se cambiará hasta haber destruido a todos los enemigos
             finishedLastRoundSpawnings = true;
     }
+
+    //FMOD, función que en teoría se encarga de aumentar el valor del fragor a 80
+    private void MusicOnWave()
+    {
+        if (fragorRoundMax)
+        {
+            fragorValue = Mathf.Clamp(fragorValue + 30f * Time.deltaTime, 60f, 100f);
+
+            if (fragorValue > 81f)
+            {
+                fragorRoundMax = false;
+            }
+        }
+
+    }
+
 }

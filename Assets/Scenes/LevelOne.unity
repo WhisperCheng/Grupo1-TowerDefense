@@ -2659,7 +2659,7 @@ MonoBehaviour:
           countPerRound: 2
           spawnRate: 5
           spawnRateMultiplier: 1
-    restTimeUnitNextWave: Infinity
+    restTimeUnitNextWave: 10
   - enemies:
       _serializedList:
       - Key:
@@ -2671,7 +2671,7 @@ MonoBehaviour:
           spawnRateMultiplier: 0.92
     restTimeUnitNextWave: 2
   spawnPoint: {fileID: 1049932252}
-  countdownInicial: 3
+  countdownInicial: Infinity
   tutorialMode: 0
   waveCountdownText: {fileID: 288741249}
   newWaveInText: {fileID: 1110149597}
