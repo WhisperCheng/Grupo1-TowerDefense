@@ -10,6 +10,120 @@ using UnityEngine.InputSystem;
 public class TutorialController : MonoBehaviour
 {
     [Header("UI Elements")]
+    public GameObject tutorialCanvas;          // Panel del tutorial
+    public TextMeshProUGUI tutorialMessageText; // Texto del mensaje del tutorial
+    public TextMeshProUGUI instructionText;     // Texto fijo: "Presiona Enter para continuar"
+
+    [Header("Tutorial Data")]
+    public List<TutorialModule> tutorialModules; // Lista de m贸dulos en el Inspector
+    private int currentModuleIndex = 0;         // 脥ndice del m贸dulo actual
+    private int currentMessageIndex = 0;        // 脥ndice del mensaje dentro del m贸dulo
+    private bool isMessageActive = false;       // Indica si hay un mensaje en pantalla
+
+    [Header("Input")]
+    public InputActionReference continueAction; // Acci贸n para avanzar
+
+    private void OnEnable()
+    {
+        continueAction.action.Enable();
+        continueAction.action.performed += OnContinueAction;
+    }
+
+    private void OnDisable()
+    {
+        continueAction.action.performed -= OnContinueAction;
+        continueAction.action.Disable();
+    }
+
+    private void Start()
+    {
+        tutorialCanvas.SetActive(false); // Asegurar que el canvas est谩 oculto al inicio
+        StartCoroutine(LoadInstruction()); // Cargar el texto fijo de "Presiona Enter para continuar"
+    }
+
+    private IEnumerator LoadInstruction()
+    {
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TutorialTable", "InstructionKey");
+        yield return localizedString;
+        instructionText.text = localizedString.Result;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            ActivateModule();
+        }
+    }
+
+    private void ActivateModule()
+    {
+        if (currentModuleIndex < tutorialModules.Count)
+        {
+            PauseGame();
+            ShowMessage();
+        }
+    }
+
+    private void ShowMessage()
+    {
+        if (currentModuleIndex < tutorialModules.Count)
+        {
+            var module = tutorialModules[currentModuleIndex];
+
+            if (currentMessageIndex < module.messages.Count)
+            {
+                StartCoroutine(DisplayLocalizedMessage(module.messages[currentMessageIndex]));
+                currentMessageIndex++;
+            }
+            else
+            {
+                currentMessageIndex = 0;
+                currentModuleIndex++;
+                ResumeGame();
+            }
+        }
+    }
+
+    private IEnumerator DisplayLocalizedMessage(LocalizedString key)
+    {
+        var localizedString = key.GetLocalizedStringAsync();
+        yield return localizedString;
+
+        tutorialMessageText.text = localizedString.Result;
+        tutorialCanvas.SetActive(true);
+        isMessageActive = true;
+    }
+
+    private void OnContinueAction(InputAction.CallbackContext ctx)
+    {
+        if (isMessageActive)
+        {
+            tutorialCanvas.SetActive(false);
+            isMessageActive = false;
+            ShowMessage();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
+}
+
+[System.Serializable]
+public class TutorialModule
+{
+    public string moduleName;             // Nombre del m贸dulo (visible en el Inspector)
+    public List<LocalizedString> messages; // Lista de mensajes localizados
+}
+
+    /*[Header("UI Elements")]
     public GameObject TutorialCanvas;   //Ventana flotante con info del tutorial
     public TextMeshProUGUI tutorialMessageText;//Texto del mensaje del tutorial
     public TextMeshProUGUI instructionText;    //Texto fijo
@@ -19,7 +133,7 @@ public class TutorialController : MonoBehaviour
     [Header("Localization")]
     public string localizationTableName;    //Nombre de la tabla de localizacion del juego
     public string[] messageKeys;            //Claves de los mensajes en el orden en el que deben mostrarse
-    public string instructionKey;           // Clave del mensaje de instrucci髇 fijo
+    public string instructionKey;           // Clave del mensaje de instrucci锟絥 fijo
 
     private int currentMessageIndex = 0;        //Indice del mensaje actual
     private bool isMessageActive = false;   //Indicador de mensajes activos
@@ -91,11 +205,11 @@ public class TutorialController : MonoBehaviour
         isMessageActive = true;
 
         //Si tiene un icono relacionado, activarlo y resaltarlo
-        /*if (unlockedItemIcon != null && iconHighlightFrame != null)
+        //if (unlockedItemIcon != null && iconHighlightFrame != null)
         {
             unlockedItemIcon.gameObject.SetActive(true);
             iconHighlightFrame.SetActive(true);
-        }*/
+        }//
     }
 
     private void OnContinueAction(InputAction.CallbackContext ctx)
@@ -122,5 +236,5 @@ public class TutorialController : MonoBehaviour
     private void ResumeTutorial()
     {
         Time.timeScale = 1f; // Reestablece el paso del tiempo en el juego
-    }
-}
+    }*/
+

@@ -1,0 +1,314 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2753904828752654533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8053800586736153032}
+  - component: {fileID: 6970510146218909697}
+  - component: {fileID: 4172608742255116431}
+  - component: {fileID: 3252526366039643314}
+  - component: {fileID: 4026100113801441524}
+  - component: {fileID: 6810751128504462967}
+  - component: {fileID: 5703879404138419673}
+  - component: {fileID: 475640261729090622}
+  - component: {fileID: 4907196815313383494}
+  - component: {fileID: 4899101449927672578}
+  - component: {fileID: 7202802160393248479}
+  m_Layer: 0
+  m_Name: Managers (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &8053800586736153032
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.032591257, y: 0.9777096, z: -0.4593021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6970510146218909697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01573c201b85ef459aeae5c3ddfe80a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  respawnEnemigos: {fileID: 0}
+  playerControls: {fileID: 0}
+  tagCorazonDelBosque: ForestHearth
+  tagEnemigos: Enemy
+  tagAliados: Ally
+  tagWaypoints: Waypoint
+  tagPlayer: Player
+  tagTerreno: Terreno
+  tagPath: Path
+  tagTorresCamino: PathTower
+  tagTorres: Tower
+  tagPuentes: Bridge
+  layerEnemigos: 10
+  layerAliados: 9
+  layerTorres: 12
+  layerJugador: 7
+  layerUI: 5
+  layerPath: 8
+  layerTerreno: 6
+  layerCorazon: 13
+  layerAreaDeco: 14
+  colorVeneno: {r: 0.6179246, g: 1, b: 0.6179246, a: 1}
+--- !u!114 &4172608742255116431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd573ee3846fdba4b95812478df94d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marcador: {fileID: 0}
+  particulasConstruccion: {fileID: 5277578244355317099, guid: c75e4992221528b42936701e456ec8c7, type: 3}
+  particlesParent: {fileID: 0}
+  objetoSiendoArrastrado: 0
+  bloqueoDisparo: 0
+  selectionColor: {r: 0, g: 1, b: 0, a: 1}
+  maxPlaceDistance: 20
+--- !u!114 &3252526366039643314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2036a5c853de33e40a5e8d783b595529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waves:
+  - enemies:
+      _serializedList:
+      - Key:
+          _underlyingValue: {fileID: 4682636771535508984, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
+        Value:
+          initialWait: 1
+          countPerRound: 4
+          spawnRate: 1
+          spawnRateMultiplier: 1
+      - Key:
+          _underlyingValue: {fileID: 4682636771535508984, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
+        Value:
+          initialWait: 1
+          countPerRound: 4
+          spawnRate: 1
+          spawnRateMultiplier: 1
+      - Key:
+          _underlyingValue: {fileID: 5805685688353858208, guid: 84e246213e2831a4f855a90a87c95054, type: 3}
+        Value:
+          initialWait: 2
+          countPerRound: 2
+          spawnRate: 5
+          spawnRateMultiplier: 1
+    restTimeUnitNextWave: Infinity
+  - enemies:
+      _serializedList:
+      - Key:
+          _underlyingValue: {fileID: 4682636771535508984, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
+        Value:
+          initialWait: 0
+          countPerRound: 20
+          spawnRate: 1
+          spawnRateMultiplier: 0.92
+    restTimeUnitNextWave: 2
+  spawnPoint: {fileID: 0}
+  countdownInicial: 3
+  tutorialMode: 0
+--- !u!114 &4026100113801441524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b3d66b4b83e634f8a9cd72ebb256e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gems: 600
+--- !u!114 &6810751128504462967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9fb6027f6d1b6f4da137111dc339c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sellingPercentageAmount: 50
+  sellingTowerTime: 1
+  upgradingTowerTime: 1
+  spriteTowerSelling: {fileID: 0}
+  spriteTowerBoosting: {fileID: 0}
+  sellParticles: {fileID: 6764781336615330605, guid: 3124263303b1458498f7132257f034f0, type: 3}
+  boostParticles: {fileID: 156725501374074146, guid: 93b043d128b4e6040a914ab99d4e57ad, type: 3}
+  particlesParent: {fileID: 0}
+--- !u!114 &5703879404138419673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d10c62a32da3e98468f227dfbb896929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildUI: {fileID: 0}
+  crossHead: {fileID: 0}
+  textMoney: {fileID: 0}
+  activeBuildUI: 1
+  menusTransitionTime: 0.5
+--- !u!114 &475640261729090622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f195ad4e6858bc4883f1a15ed8133af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  marcador: {fileID: 0}
+  proyectilPrefab: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
+  puntoDisparo: {fileID: 0}
+  velocidadProyectil: 50
+--- !u!114 &4907196815313383494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f76447b1aed1ed4fb2f3c49878279d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ventaPanel: {fileID: 0}
+  marcador: {fileID: 0}
+  rangeIndicator: {fileID: 7631775977964394383, guid: faf7560b620702c4cbd52715de9999ad, type: 3}
+--- !u!114 &4899101449927672578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7ce067eda2c6ef4491165e16279e497, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7202802160393248479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2753904828752654533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42dd020fc01feee4c9816ba57d7bd5c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <music>k__BackingField:
+    Guid:
+      Data1: -1262472068
+      Data2: 1273317634
+      Data3: 1306392718
+      Data4: -1581602345
+    Path: event:/Gameplay
+  <magicAttack>k__BackingField:
+    Guid:
+      Data1: -531017859
+      Data2: 1305282010
+      Data3: -1133960032
+      Data4: -56124990
+    Path: event:/magicAttack
+  <magicImpact>k__BackingField:
+    Guid:
+      Data1: 197239081
+      Data2: 1206915157
+      Data3: -922385737
+      Data4: 110963780
+    Path: event:/magicImpact
+  <bombardierExplosion>k__BackingField:
+    Guid:
+      Data1: 1144501459
+      Data2: 1078513061
+      Data3: 179653272
+      Data4: -1503977280
+    Path: event:/BombPlant
+  <roseShoot>k__BackingField:
+    Guid:
+      Data1: -763623714
+      Data2: 1112606505
+      Data3: 492024762
+      Data4: 1965072727
+    Path: event:/ShootPlant
+  <carnivorousShoot>k__BackingField:
+    Guid:
+      Data1: 628321143
+      Data2: 1099661226
+      Data3: -978694740
+      Data4: -791419456
+    Path: event:/BitePlant
+  <hitmarker>k__BackingField:
+    Guid:
+      Data1: -428231110
+      Data2: 1148912107
+      Data3: 2044012461
+      Data4: 84188769
+    Path: event:/GetHit

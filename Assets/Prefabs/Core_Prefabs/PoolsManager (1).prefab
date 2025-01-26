@@ -1,0 +1,305 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5026020293277281682
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7834385549305747001}
+  - component: {fileID: 6251515297969922493}
+  - component: {fileID: 420111927594759247}
+  - component: {fileID: 6550817210938050658}
+  - component: {fileID: 1099964789923677005}
+  - component: {fileID: 1963695509436961019}
+  - component: {fileID: 8554115603240483745}
+  - component: {fileID: 5911974424907013400}
+  - component: {fileID: 6422753930324760413}
+  - component: {fileID: 3327877492251543602}
+  - component: {fileID: 5576638590437093134}
+  - component: {fileID: 3908092472907915720}
+  - component: {fileID: 80837308358814376}
+  - component: {fileID: 6706019939516495953}
+  - component: {fileID: 2881834648913739045}
+  - component: {fileID: 7831661086845327415}
+  - component: {fileID: 8010653244635141434}
+  - component: {fileID: 1748232208839175985}
+  m_Layer: 0
+  m_Name: PoolsManager (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7834385549305747001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.032591257, y: 0.9777096, z: -0.4593021}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6251515297969922493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b2e3f64bc307624ea8cc0fafff26723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicImpactPrefab: {fileID: 4315008008740801804, guid: d866cb095268ca84ca07e609e2968fb6, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &420111927594759247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c119288f63a6548aa849917d63f059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicProjectilePrefab: {fileID: 0}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &6550817210938050658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dc1a32d25abd7041b2d4cc94afb6342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornRoseProjectilePrefab: {fileID: 5025218883541089872, guid: 57c69045f531c6745902a3551222c15f, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &1099964789923677005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5043f2a1b9ee937478bf77b86eb371d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniKnightPrefab: {fileID: 5652667148767116429, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
+  poolSize: 15
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &1963695509436961019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20fb9ac06ab11cc4f86a7a61b103444c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carnivorousPlantPrefab: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &8554115603240483745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51866a9e6761c94fb932104e9156096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thornRosePrefab: {fileID: 8514692920454964661, guid: c08e725860d9faa47805d131f013fc75, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &5911974424907013400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd325d1b1c1cd6341b20b4c50465028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonYewProjectilePrefab: {fileID: 6911511816760255790, guid: bf5f7fcaed486cf47b62604822dcb6bf, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &6422753930324760413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa82c8c0de3859346bb94586381cbdc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonYewPrefab: {fileID: 7136894658829570167, guid: 7a68c96f4828fec41beadaf617d4daba, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &3327877492251543602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d33d738dea648344947d8c488c5b628, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyTowerPrefab: {fileID: 8982227011800996231, guid: cecfcd6603fb9f743a843396bcf61907, type: 3}
+  poolSize: 10
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &5576638590437093134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ae4fc1852ed4f488c5fa62f8fa0055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyPrefab: {fileID: 6438163909396371309, guid: 7f3cf194ddd1fb343b0a6c86adaef934, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &3908092472907915720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1e68ea7650cce14b942fc576bf7c866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyDeathParticlesPrefab: {fileID: 4131055280005910679, guid: a84047d24282dcd49869bb507ea640fb, type: 3}
+  poolSize: 20
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &80837308358814376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df203939749703d4e97eb213c0b7a6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poisonYewImpactParticlesPrefab: {fileID: 4003119222778307783, guid: 02e02f28fbfc50149a2ed80e725a882c, type: 3}
+  poolSize: 5
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &6706019939516495953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c983a23cba341f74a90a092c461b8ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  runeTrapPrefab: {fileID: 2920500601078650268, guid: fae98853c52bcd842a7e4c288d5defff, type: 3}
+  poolSize: 10
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &2881834648913739045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51bfab0f8862c834e9acc4347ab442d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spikeTrapPrefab: {fileID: 3352635105912841538, guid: aefdedaabd6e54a4799a99d01475b313, type: 3}
+  poolSize: 10
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &7831661086845327415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35698619f018ff84793c79584f319dde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vineTrapPrefab: {fileID: 1505292329734927531, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
+  poolSize: 10
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &8010653244635141434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22f1b78be34263a4a87334b7bdbb2bcc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourceTowerPrefab: {fileID: 8103724110885376634, guid: decc539d3fd8196449848daa9bf5f5e5, type: 3}
+  poolSize: 10
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &1748232208839175985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026020293277281682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b39f537ee1374594db0bdf7c0ad99034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axeTankPrefab: {fileID: 1036845498593026936, guid: 84e246213e2831a4f855a90a87c95054, type: 3}
+  poolSize: 5
+  grandParentName: ObjectPoolsObjects
