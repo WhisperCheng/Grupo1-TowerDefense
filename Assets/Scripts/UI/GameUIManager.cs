@@ -10,9 +10,11 @@ public class GameUIManager : MonoBehaviour
     public static GameUIManager Instance { get; private set; }
     public GameObject buildUI;
     public GameObject crossHead;
+    public GameObject menuPause;
     public TMP_Text textMoney;
     private string textMoneyOriginal;
 
+    public bool activeMenuPause;
     public bool activeBuildUI;
     public float menusTransitionTime = 0.5f;
 
@@ -65,7 +67,21 @@ public class GameUIManager : MonoBehaviour
         }
         activeBuildUI = !activeBuildUI;
     }
-
+    public void OnClickGameMenu (InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed)
+        {
+            if (activeMenuPause)
+            {
+                OpenGameMenu();
+            }
+            else
+            {
+                CloseGameMenu();
+            }
+        }
+        activeMenuPause = !activeMenuPause;
+    }
     public void HideBuildUI(float time)
     {
         activeBuildUI = false; // Ocultar crosshead
@@ -83,8 +99,24 @@ public class GameUIManager : MonoBehaviour
         LeanTween.moveY(buildUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
         //LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
     }
+
     public void UpdateMoney()
     {
         textMoney.text = textMoneyOriginal + " " + MoneyManager.Instance.GetMoney();
+    }
+
+    void OpenGameMenu()
+    {
+        //añadir leAntween y esa vaina loquísima
+        activeMenuPause = true;
+        menuPause.SetActive(true);
+        Time.timeScale = 0f;
+    }
+    void CloseGameMenu()
+    {
+        //añadir leAntween y esa vaina loca
+        activeMenuPause = false;
+        menuPause.SetActive(false);
+        Time.timeScale = 1f;
     }
 }
