@@ -6,10 +6,13 @@ using TMPro;
 
 public class Credits : MonoBehaviour
 {
-    public TMP_Text textCredits;
+    Vector3 startPos;
+    int finalPos = 814;
+    [SerializeField] int speed = 700;
     // Start is called before the first frame update
     void Start()
     {
+        startPos = transform.position;
         //Lucía María Alemán Marrero
         //Carlota Carballo Falcón
         //Omar Chávez González
@@ -26,19 +29,10 @@ public class Credits : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*textCredits.text = "Concept artist Lucía María Alemán Marrero" +
-            "Game Designer Sergio Delgado Salas" +
-            "Main Programmer David Alejandro Hernández Alonso" +
-            "GUI Designer Idayra Inmaculada Pérez Delgado" +
-            "Sound Designer Conservatorio S/C de Tenerife" +
-            "Sound Engineer Sergio Delgado Salas" +
-            "Particle Designer Omar Chávez González" +
-            "GUI Integrators Carlota Carballo Falcón Ángel Jesús Garnica Paz Idayra Inmaculada Pérez Delgado" +
-            "Modeling Artists Lucía María Alemán Marrero Carlota Carballo Falcón Omar Chávez González Sergio Delgado Salas" +
-            "Iván Domínguez Díaz Ángel Jesús Garnica Paz David Alejandro Hernández Alonso Idayra Inmaculada Pérez Delgado" +
-            "Programmer Lucía María Alemán Marrero Carlota Carballo Falcón Omar Chávez González Sergio Delgado Salas" +
-            "Iván Domínguez Díaz Ángel Jesús Garnica Paz David Alejandro Hernández Alonso Idayra Inmaculada Pérez Delgado"+
-            "Animator Lucía María Alemán Marrero Carlota Carballo Falcón Omar Chávez González Sergio Delgado Salas" +
-            "Iván Domínguez Díaz Ángel Jesús Garnica Paz David Alejandro Hernández Alonso Idayra Inmaculada Pérez Delgado";*/
+        transform.Translate(Vector2.up * Time.deltaTime * speed);
+        if (transform.position.y > finalPos)
+        {
+            transform.position = startPos;
+        }
     }
 }
