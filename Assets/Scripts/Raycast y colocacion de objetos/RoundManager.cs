@@ -22,6 +22,7 @@ public class RoundManager : MonoBehaviour
     public bool tutorialMode = false;
 
     private float countdown = 3f;
+    public float transitionBetweenInfiniteRounds = 0.5f;
 
     public TextMeshProUGUI waveCountdownText;
     public TextMeshProUGUI newWaveInText;
@@ -34,9 +35,9 @@ public class RoundManager : MonoBehaviour
 
     //FMOD, es el valor que activa o desactiva instrumentos dependiendo del momento de la ronda 
     private float fragorValue = 0f;
-   //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
+    private float initialFragorValue = 0f;
+    //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
     private bool fragorRoundMax = false;
-
 
     public static RoundManager Instance { get; private set; }
     private void Awake()
@@ -60,7 +61,10 @@ public class RoundManager : MonoBehaviour
     void Update()
     {
         UpdateCountdown();
-
+        //FMOD
+        MusicOnWave();//Función que se llama para activar la música caotica en mitad de la ronda
+        AudioManager.instance.musicEventInstance.setParameterByName("Fragor", fragorValue);//se coge el parametro de FMOD llamado "fragor"
+                                                                                           //y hacemos que unity lo reconozca
         if (enemiesAlive > 0)
         {
             return;
@@ -86,12 +90,6 @@ public class RoundManager : MonoBehaviour
             InitializeNewWave();
             return;
         }
-
-        //FMOD
-        MusicOnWave();//Función que se llama para activar la música caotica en mtiad de la ronda
-        AudioManager.instance.musicEventInstance.setParameterByName("Fragor", fragorValue);//se coge el parametro de FMOD llamado "fragor" y hacemos que unity lo reconozca
-        Debug.Log("fragor " + fragorValue);//Debug para chequeos
-
     }
 
     private void UpdateCountdown()
@@ -107,23 +105,12 @@ public class RoundManager : MonoBehaviour
                 countdown = Mathf.Clamp(countdown, 0f, Mathf.Infinity);
 
                 newWaveInText.gameObject.SetActive(true);
-                
+
                 string comingWaveText = LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table",
                 "_NuevaOleada", lang);
                 newWaveInText.text = comingWaveText;
                 waveCountdownText.text = string.Format("{0:00.00}", countdown) + " s";
                 waveCountdownText.fontSize = 36;
-
-                //FMOD,Al acabar una ronda, el fragor deberá estar a mayor de 80, pues con esto lo reseteo a 0 para poder subirlo a 60 en la linea 123
-                if (fragorValue > 80f)
-                {
-                    fragorValue = 0f;
-                }
-
-                //FMOD,La logica sería: "Cuando hay un timer que avance el fragor hasta 60 progresivamente, está calculado para unos 10 segundos de timer
-                fragorValue = Mathf.Clamp(fragorValue + 7.2f * Time.deltaTime, 0f, 60f);
-
-
             } // Si es infinito entonces al presionar la G se llamará al evento , que automáticamente reseteará el contador
             else                                                                                    // a 0 e iniciará la ronda
             { // Se cambia el texto para indicar que hay que presionar la tecla G para continuar 
@@ -131,12 +118,7 @@ public class RoundManager : MonoBehaviour
                 "_PresionarGNuevaOleada", lang);
                 waveCountdownText.text = waitingForGText;
                 waveCountdownText.fontSize = 20;
-
-                
-                //FMOD,Como no hay timer no se puede ajustar de manera progresiva, así que esto está bien así
-                fragorValue = 60f;
-
-
+                newWaveInText.gameObject.SetActive(false);
             }
         }
         else
@@ -161,16 +143,13 @@ public class RoundManager : MonoBehaviour
         Debug.Log("Empezando oleada nº " + (waveIndex + 1));
         StartWave();
         waveInProgress = true;
-
-        
-
     }
 
     public void StartRoundAfterInfiniteRest(InputAction.CallbackContext ctx)
     {
         if (!waveInProgress && enemiesAlive == 0 && ctx.performed && float.IsInfinity(countdown))
         {
-            countdown = 0.25f; // 0.5 segundos de espera para no comenzar la ronda muy de golpe
+            countdown = transitionBetweenInfiniteRounds; // 0.5 segundos de espera para no comenzar la ronda muy de golpe
         }
     }
 
@@ -182,12 +161,12 @@ public class RoundManager : MonoBehaviour
         Wave wave = waves[waveIndex];
         // Iterar a través de los enemigos de cada ronda para iniciar el spawn de cada uno
         // de ellos, dada la información de spawn que tiene cada uno
-       
-            foreach (var item in wave.enemies)
+
+        foreach (var item in wave.enemies)
         {
             StartCoroutine(SpawnEnemy(item));
         }
-        countdown = waves[waveIndex].restTimeUnitNextWave; // Reset del countdown para cuando terminen de morir todos los enemigos
+        countdown = waves[waveIndex].restTimeUntilNextWave; // Reset del countdown para cuando terminen de morir todos los enemigos
         Debug.Log(countdown);
 
     }
@@ -256,6 +235,61 @@ public class RoundManager : MonoBehaviour
             }
         }
 
-    }
+        if (enemiesAlive == 0 && !waveInProgress)
+        {
+            if (!float.IsInfinity(countdown))
+            {
+                //FMOD,Al acabar una ronda, el fragor deberá estar a mayor de 80, pues con esto lo reseteo a 0 para poder subirlo a 60 en la linea 125
+                if (fragorValue > 80f)
+                {
+                    fragorValue = 0f;
+                }
 
+                float maxValue = 79f;
+                // FMOD,La logica sería: "Cuando hay un timer que avance el fragor hasta 60 progresivamente,
+                // está calculado para el tiempo establecido del timer
+                float waitTransitionTime = 0;
+
+                // Si el tiempo de espera de la espera inicial o de la espera de la siguiente ronda es infinito, se asigna el tiempo de transición
+                // por defecto definido en el roundmanager (transitionBetweenInfiniteRounds), de lo contrario se asigna el tiempo correspondiente
+                // de la siguiente ronda (a excepción de la primera ronda donde trabaja igual solo que si el tiempo de espera inicial no es infinito
+                // se asigna el coundown inicial al no haber un countdown de ronda previo por definir)
+                if (waveIndex == -1)
+                {
+                    if (countdownInicial == Mathf.Infinity)
+                    {
+                        waitTransitionTime = transitionBetweenInfiniteRounds;
+                        initialFragorValue = 60;
+                    }
+                    else
+                    {
+                        waitTransitionTime = countdownInicial;
+                    }
+                }
+                else
+                {
+                    if (waves[waveIndex].restTimeUntilNextWave == Mathf.Infinity)
+                    {
+                        waitTransitionTime = transitionBetweenInfiniteRounds;
+                    }
+                    else
+                    {
+                        waitTransitionTime = waves[waveIndex].restTimeUntilNextWave;
+                    }
+                }
+                //waitTransitionTime = waveIndex != -1 ? waves[waveIndex].restTimeUntilNextWave : waves[0].restTimeUntilNextWave;
+                // Si se ha empezado las rondas, se hace la transición, pero si no la hace con el valor
+                float progressProportion = 1 / waitTransitionTime; // TODO TODAVÍA NO FUNCIONA DEL TODO BIEN, SEGUIR CORRIGIENDO
+                fragorValue = Mathf.Clamp(fragorValue + (maxValue * Time.deltaTime / waitTransitionTime)* progressProportion, 0f, maxValue);
+                Debug.Log(fragorValue + " test");
+            }
+            else
+            {
+                //FMOD,Como no hay timer no se puede ajustar de manera progresiva, así que esto está bien así
+                fragorValue = 60f;
+                initialFragorValue = fragorValue;
+            }
+            //Debug.Log("fragor " + fragorValue);//Debug para chequeos
+        }
+    }
 }
