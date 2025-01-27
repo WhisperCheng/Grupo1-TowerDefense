@@ -2528,7 +2528,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildUI: {fileID: 334664713}
   crossHead: {fileID: 1005272595}
+  menuPause: {fileID: 0}
   textMoney: {fileID: 1665845371}
+  activeMenuPause: 0
   activeBuildUI: 1
   menusTransitionTime: 0.5
 --- !u!114 &762121832
@@ -2671,11 +2673,14 @@ MonoBehaviour:
           spawnRateMultiplier: 0.92
     restTimeUntilNextWave: 0
   spawnPoint: {fileID: 1049932252}
-  countdownInicial: Infinity
+  countdownInicial: 10
   tutorialMode: 0
   transitionBetweenInfiniteRounds: 4
   waveCountdownText: {fileID: 288741249}
   newWaveInText: {fileID: 1110149597}
+  minFragorValueOnRests: 0
+  maxFragorValue: 79.9
+  musicTransitionTime: 2
 --- !u!114 &762121837
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -33,9 +33,15 @@ public class RoundManager : MonoBehaviour
     private bool finishedLastRoundSpawnings = false;
     private bool finishedCurrentWaveTrigger = false;
 
-    //FMOD, es el valor que activa o desactiva instrumentos dependiendo del momento de la ronda 
+    [Header("Valores de Fragor (Música entre rondas)")]
+    //FMOD, es el valor que activa o desactiva instrumentos dependiendo del momento de la ronda
+    [Range(0, 100f)]
+    public float minFragorValueOnRests = 0f;
+    [Range(0, 100f)]
+    public float maxFragorValue = 79f;
+    public float musicTransitionTime = 2;
     private float fragorValue = 0f;
-    private float initialFragorValue = 0f;
+
     //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
     private bool fragorRoundMax = false;
 
@@ -167,7 +173,6 @@ public class RoundManager : MonoBehaviour
             StartCoroutine(SpawnEnemy(item));
         }
         countdown = waves[waveIndex].restTimeUntilNextWave; // Reset del countdown para cuando terminen de morir todos los enemigos
-        Debug.Log(countdown);
 
     }
     IEnumerator SpawnEnemy(KeyValuePair<InterfaceReference<IPoolable, EnemyAI>, WaveUnitInfo> enemyInfo)
@@ -227,7 +232,7 @@ public class RoundManager : MonoBehaviour
     {
         if (fragorRoundMax)
         {
-            fragorValue = Mathf.Clamp(fragorValue + 30f * Time.deltaTime, 60f, 100f);
+            fragorValue = Mathf.Clamp(fragorValue + 4f * Time.deltaTime, 0, 100f);
 
             if (fragorValue > 81f)
             {
@@ -239,14 +244,19 @@ public class RoundManager : MonoBehaviour
         {
             if (!float.IsInfinity(countdown))
             {
-                //FMOD,Al acabar una ronda, el fragor deberá estar a mayor de 80, pues con esto lo reseteo a 0 para poder subirlo a 60 en la linea 125
-                if (fragorValue > 80f)
+                //FMOD,Al acabar una ronda, el fragor deberá estar a mayor de 80, pues con esto lo reseteo a 0 para poder subirlo
+                // al valor establecido en la linea 293
+                if (fragorValue > 80f) // Aquí entraría solo a partir desde quese termina la primera ronda
                 {
-                    fragorValue = 0f;
+                    float time = 2f;
+                    //fragorValue = minFragorValueOnRests; // Reemplazar valor sin suavizado
+
+                    LeanTween.value(gameObject, fragorValue, minFragorValueOnRests, time).setEaseLinear()
+                        .setOnUpdate((float val) => { fragorValue = val; });
+                    // Transición suavizada de la música al terminar la ronda
                 }
 
-                float maxValue = 79f;
-                // FMOD,La logica sería: "Cuando hay un timer que avance el fragor hasta 60 progresivamente,
+                // FMOD,La logica sería: "Cuando hay un timer que avance el fragor hasta el mínimo establecido progresivamente,
                 // está calculado para el tiempo establecido del timer
                 float waitTransitionTime = 0;
 
@@ -259,7 +269,6 @@ public class RoundManager : MonoBehaviour
                     if (countdownInicial == Mathf.Infinity)
                     {
                         waitTransitionTime = transitionBetweenInfiniteRounds;
-                        initialFragorValue = 60;
                     }
                     else
                     {
@@ -277,17 +286,15 @@ public class RoundManager : MonoBehaviour
                         waitTransitionTime = waves[waveIndex].restTimeUntilNextWave;
                     }
                 }
-                //waitTransitionTime = waveIndex != -1 ? waves[waveIndex].restTimeUntilNextWave : waves[0].restTimeUntilNextWave;
-                // Si se ha empezado las rondas, se hace la transición, pero si no la hace con el valor
-                float progressProportion = 1 / waitTransitionTime; // TODO TODAVÍA NO FUNCIONA DEL TODO BIEN, SEGUIR CORRIGIENDO
-                fragorValue = Mathf.Clamp(fragorValue + (maxValue * Time.deltaTime / waitTransitionTime)* progressProportion, 0f, maxValue);
-                Debug.Log(fragorValue + " test");
+
+                // Si se ha empezado las rondas, se hace la transición
+                fragorValue = Mathf.Clamp(fragorValue + ((maxFragorValue - minFragorValueOnRests)
+                    * (Time.deltaTime / (waitTransitionTime))), 0, maxFragorValue);
             }
             else
             {
                 //FMOD,Como no hay timer no se puede ajustar de manera progresiva, así que esto está bien así
-                fragorValue = 60f;
-                initialFragorValue = fragorValue;
+                fragorValue = minFragorValueOnRests;
             }
             //Debug.Log("fragor " + fragorValue);//Debug para chequeos
         }
