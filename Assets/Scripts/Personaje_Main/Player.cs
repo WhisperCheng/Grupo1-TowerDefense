@@ -8,6 +8,8 @@ public class Player : MonoBehaviour, IDamageable
     private float _currentHealth;
     private float _maxHealth;
     public HealthBar _healthBar;
+
+
     public void Die()
     {
         //throw new System.NotImplementedException();

@@ -6,9 +6,12 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using TMPro;
 using UnityEngine.InputSystem;
+using System.ComponentModel;
 
 public class TutorialController : MonoBehaviour
 {
+    public static TutorialController instance { get; private set; }
+
     [Header("UI Elements")]
     public GameObject tutorialCanvas;          // Panel del tutorial
     public TextMeshProUGUI tutorialMessageText; // Texto del mensaje del tutorial
@@ -35,6 +38,18 @@ public class TutorialController : MonoBehaviour
         continueAction.action.Disable();
     }
 
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
     private void Start()
     {
         tutorialCanvas.SetActive(false); // Asegurar que el canvas está oculto al inicio
@@ -48,15 +63,16 @@ public class TutorialController : MonoBehaviour
         instructionText.text = localizedString.Result;
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Tutorial"))
         {
+            Debug.Log("Estas reconociendo el contacto");
             ActivateModule();
         }
-    }
+    }*/
 
-    private void ActivateModule()
+    public void ActivateModule()
     {
         if (currentModuleIndex < tutorialModules.Count)
         {
