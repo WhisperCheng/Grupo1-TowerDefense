@@ -4,6 +4,7 @@ using UnityEngine;
 using FMODUnity;
 using System.Dynamic;
 using FMOD.Studio;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -42,8 +43,19 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeMusic(FMODEvents.instance.music);
-        
+        //Esto no es precisamente optimo ni escalable sin embargo, no hay tiempo para investigar mejores maneras
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // Condicional según el nombre de la escena
+        if (currentScene == "LevelOne")
+        {
+           InitializeMusic(FMODEvents.instance.music);
+        }
+        else if (currentScene == "MainMenu")
+        {
+           InitializeMusic(FMODEvents.instance.musicMenu);
+        }
+       
     }
     private void Update()
     {

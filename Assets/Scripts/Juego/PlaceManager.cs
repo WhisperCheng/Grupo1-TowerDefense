@@ -80,6 +80,8 @@ public class PlaceManager : MonoBehaviour
                 SetPreviewMode(true);
                 bloqueoDisparo = true;
                 objetoSiendoArrastrado = true;
+
+
             }
         }
     }
@@ -131,6 +133,8 @@ public class PlaceManager : MonoBehaviour
 
                 validCollision = (colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0) ? true : false;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
+
+
             }
             else
             {
@@ -270,6 +274,9 @@ public class PlaceManager : MonoBehaviour
                 GameUIManager.Instance.crossHead.SetActive(false);
             }
             EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
+
+            //FMOD
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.buildPlant, this.transform.position);
         }
     }
     public void OnRightClickPlaceTower(InputAction.CallbackContext ctx)

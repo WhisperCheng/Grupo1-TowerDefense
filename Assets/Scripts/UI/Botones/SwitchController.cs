@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static ISwitchStates;
+using FMODUnity;
 
 public class SwitchController : MonoBehaviour
 {
@@ -20,7 +21,11 @@ public class SwitchController : MonoBehaviour
         StartCoroutine(SwitchAfterAnimation(delay));
         MenuUIManager.Instance.ExecuteAnimation(gameObject, delay, finalPos, animationButton);
 
+        //AudioManager.instance.PlayOneShot(FMODEvents.instance.menuClick, this.transform.position);
+
     }
+
+
     private IEnumerator SwitchAfterAnimation(float delay)
     {
         yield return new WaitForSeconds(delay);

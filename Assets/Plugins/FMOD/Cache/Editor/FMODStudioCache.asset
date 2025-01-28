@@ -39,10 +39,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638736799474635343
+  lastModified: 638736930792584515
   FileSizes:
   - Name: Desktop
-    Value: 1310
+    Value: 1460
   Exists: 1
 --- !u!114 &-6777541634545393935
 MonoBehaviour:
@@ -59,10 +59,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638736799493645213
+  lastModified: 638736930793103126
   FileSizes:
   - Name: Desktop
-    Value: 1289280
+    Value: 1298624
   Exists: 1
 --- !u!114 &-6770194421895750758
 MonoBehaviour:
@@ -145,6 +145,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 32710
+--- !u!114 &-4260650733278679936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/BuildPlant
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/BuildPlant
+  Guid:
+    Data1: 1978836216
+    Data2: 1279823217
+    Data3: 245637519
+    Data4: -158130446
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3903485788749854559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,12 +306,15 @@ MonoBehaviour:
   - {fileID: 3750928053180218792}
   - {fileID: -3541974948519175510}
   - {fileID: -6770194421895750758}
+  - {fileID: 8142626768494800221}
+  - {fileID: 5721623104750717740}
+  - {fileID: -4260650733278679936}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6764802151169257708}
   StringsBanks:
   - {fileID: -7751682806750094819}
-  cacheTime: 638736799493645213
+  cacheTime: 638736930793103126
   cacheVersion: 131622
 --- !u!114 &3636654235021752969
 MonoBehaviour:
@@ -340,6 +370,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &5721623104750717740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Enemies/BigKnightAttack
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Enemies/BigKnightAttack
+  Guid:
+    Data1: -1987557050
+    Data2: 1293048360
+    Data3: -1764701552
+    Data4: -1700157151
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &6764802151169257708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +412,7 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638736799474475880
+  lastModified: 638736930792574551
   FileSizes:
   - Name: Desktop
     Value: 5980992
@@ -445,3 +502,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 34287
+--- !u!114 &8142626768494800221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/MenuClick
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/MenuClick
+  Guid:
+    Data1: 613947156
+    Data2: 1104815984
+    Data3: -1013841219
+    Data4: -537218669
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
