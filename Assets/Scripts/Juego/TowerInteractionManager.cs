@@ -169,26 +169,7 @@ public class TowerInteractionManager : MonoBehaviour
         pSysAction.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 
         // Calcular el centro de la torre y cambiar la posición de las partículas a ese centro
-        pSysAction.transform.position = GetGameObjectCenter(center.gameObject);
-    }
-
-    private Vector3 GetGameObjectCenter(GameObject gObj)
-    {
-        float lowestChild = 0;
-        float highestChild = 0;
-        foreach (Transform child in gObj.transform)
-        {
-            if (child.position.y < lowestChild)
-            {
-                lowestChild = child.position.y;
-            }
-            if (child.position.y > highestChild)
-            {
-                highestChild = child.position.y;
-            }
-        }
-        float centerY = (lowestChild + highestChild) / 2;
-        return gObj.transform.position + gObj.transform.up * centerY;
+        pSysAction.transform.position = PlaceManager.Instance.GetGameObjectCenter(center.gameObject);
     }
 
     private void Boost(RaycastHit golpeRayo)

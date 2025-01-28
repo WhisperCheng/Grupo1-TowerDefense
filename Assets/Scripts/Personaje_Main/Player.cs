@@ -5,19 +5,32 @@ using Cinemachine;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    public float _health;
-    private float _currentHealth;
-    private float _maxHealth;
+    [Header("Vida")]
+    public float health;
+
+    [Header("Barra de vida y Jugador")]
     public HealthBar _healthBar;
     public GameObject playerModel;
-    private TimerMuerte timer;
+
+    [Header("Cámara")]
     public CinemachineFreeLook virtualCamera;
+
+    [Header("Partículas")]
+    public ParticleSystem respawnParticles;
+    public ParticleSystem deathParticles;
+    public GameObject particlesParent;
+   
+    private float _currentHealth;
+    private float _maxHealth;
+
+    private TimerMuerte timer;
 
     public void Die()
     {
         //throw new System.NotImplementedException();
-        timer.DiedPlayerTimer();
-        // Desaparecer temporalmente
+        timer.ActivateRespawnTimer(); // Desaparecer temporalmente + mostrar UI espera de respawn
+        ParticleSystem particulas = InstantiateParticlesOnPlayer(deathParticles);
+        particulas.transform.position += Vector3.up * 0.1f; // Subir partículas ligeramente del suelo
     }
 
     public float GetHealth() { return _currentHealth; }
@@ -42,17 +55,27 @@ public class Player : MonoBehaviour, IDamageable
 
         gameObject.transform.position = destination.transform.position;
         //virtualCamera.PreviousStateIsValid = false;
-        //CinemachineCore.Instance.OnTargetObjectWarped(transform, delta);
-        //virtualCamera.OnTargetObjectWarped(transform, delta);
-
+        virtualCamera.OnTargetObjectWarped(transform, delta);
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth = _maxHealth);
+        ParticleSystem particulas = InstantiateParticlesOnPlayer(respawnParticles);
+        // Calcular el centro del jugador y cambiar la posición de las partículas a ese centro
+        particulas.transform.position = PlaceManager.Instance.GetGameObjectCenter(gameObject);
     }
+    private ParticleSystem InstantiateParticlesOnPlayer(ParticleSystem pSys)
+    {
+        ParticleSystem pSysAction =
+       PlaceManager.Instance.StartParticleGameObjEffect(pSys, gameObject.transform.position);
+        pSysAction.gameObject.transform.parent = particlesParent.transform; // Asignando padre
+       
+        return pSysAction;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         //_healthBar = GetComponentInChildren<HealthBar>();
-        _currentHealth = _health;
-        _maxHealth = _health;
+        _currentHealth = health;
+        _maxHealth = health;
         timer = gameObject.GetComponent<TimerMuerte>();
         timer.Player = this;
     }

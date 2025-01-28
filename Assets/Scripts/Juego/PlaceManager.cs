@@ -63,7 +63,7 @@ public class PlaceManager : MonoBehaviour
         ManageTowerPlacement();
     }
 
-    public void OnPointerClick(PointerEventData eventData){GenerateTower();}
+    public void OnPointerClick(PointerEventData eventData) { GenerateTower(); }
 
     public void GenerateTower() // Genera el tipo de torre designada
     {
@@ -95,7 +95,7 @@ public class PlaceManager : MonoBehaviour
         ColorUtils.ChangeObjectMaterialColors(torre.gameObject, materialesSeleccionPropertyBlock, previewMode);
 
         if (!previewMode && torre.placed) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
-        {  torre.UnlockTower(); } // lo que permite atacar y rotar hacia los enemigos
+        { torre.UnlockTower(); } // lo que permite atacar y rotar hacia los enemigos
     }
 
     public void RotateCurrentTower(InputAction.CallbackContext context)
@@ -117,7 +117,7 @@ public class PlaceManager : MonoBehaviour
             int terrainMask = 1 << GameManager.Instance.layerTerreno; // Detecta todo el terreno
             int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco; // Detecta los bordes de fuera del camino u obstáculos de decoración
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
-           
+
             bool validCollision = false;
             bool colisionConRayo = false;
             if (torre.CompareTag(GameManager.Instance.tagTorresCamino))
@@ -128,7 +128,7 @@ public class PlaceManager : MonoBehaviour
                 {
                     outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), areaDecoMask);
                 }
-                    
+
                 validCollision = (colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0) ? true : false;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
             }
@@ -140,7 +140,7 @@ public class PlaceManager : MonoBehaviour
                 {
                     pathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathMask);
                 }
-                
+
                 validCollision = (colisionConRayo && pathCols != null && pathCols.Length == 0) ? true : false;
                 // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
             }
@@ -223,6 +223,25 @@ public class PlaceManager : MonoBehaviour
         float destroyTime = pConstruccion.main.duration + pConstruccion.main.startLifetime.constant;
         Destroy(particulasCopia, destroyTime);
         return pConstruccion;
+    }
+
+    public Vector3 GetGameObjectCenter(GameObject gObj)
+    {
+        float lowestChild = 0;
+        float highestChild = 0;
+        foreach (Transform child in gObj.transform)
+        {
+            if (child.position.y < lowestChild)
+            {
+                lowestChild = child.position.y;
+            }
+            if (child.position.y > highestChild)
+            {
+                highestChild = child.position.y;
+            }
+        }
+        float centerY = (lowestChild + highestChild) / 2;
+        return gObj.transform.position + gObj.transform.up * centerY;
     }
 
     public void OnClickPlaceTower(InputAction.CallbackContext ctx)

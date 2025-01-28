@@ -131,7 +131,8 @@ public class MovPersonaje2D : MonoBehaviour
             slopeFix = Vector3.down * _slopeForce * Time.deltaTime;
         }
 
-        _characterController.Move((mov + slopeFix) * Time.deltaTime);
+        if(_characterController.enabled) // Solo se moverá el personaje si el componente está habilitado, evitando en caso contrario
+        _characterController.Move((mov + slopeFix) * Time.deltaTime);                                           // warnings por consola
 
         /// SUAVIZADO DE TRANSICIONES
         float smoothAmount = (runPressed ? 1.3f : 1f);
@@ -151,6 +152,10 @@ public class MovPersonaje2D : MonoBehaviour
         if (_velocityZ < 0.001f && _velocityZ > -0.001f)
         {
             _velocityZ = 0f;
+        }
+        if (_velocityM < 0.001f && _velocityM > -0.001f)
+        {
+            _velocityM = 0f;
         }
 
         var particlescount = _MoveParticles.emission;

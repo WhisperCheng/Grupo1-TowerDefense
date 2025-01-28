@@ -29,31 +29,31 @@ public class TimerMuerte : MonoBehaviour
         }
         if (cooldown.fillAmount <= 0)
         {
-            ReturnPlayer();
             coolingDown = false;
         }
     }
-    public void DiedPlayerTimer()
+    public void ActivateRespawnTimer()
     {
         panelDied.SetActive(true);
         coolingDown = true;
-        StartCoroutine(ReturnPlayerWaiting());
+        cooldown.fillAmount = 1; // Reset del relleno de la imagen
+        StartCoroutine(ReespawnPlayerAfterWaiting());
         Player.playerModel.SetActive(false);
         Player.GetComponent<CharacterController>().enabled = false;
     }
 
-    private IEnumerator ReturnPlayerWaiting()
+    private IEnumerator ReespawnPlayerAfterWaiting()
     {
         yield return new WaitForSeconds(timer);
         ReturnPlayer();
+        yield return null;
     }
 
-    public void ReturnPlayer()
+    private void ReturnPlayer()
     {
         Player.ReSpawn(respawnPoint);
         Player.GetComponent<CharacterController>().enabled = true;
         Player.playerModel.SetActive(true);
-        
         panelDied.SetActive(false);
     }
 }
