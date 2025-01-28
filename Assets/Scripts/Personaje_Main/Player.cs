@@ -29,9 +29,13 @@ public class Player : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             Die();
+            TimerMuerte.instance.DiedPlayerTimer();
         }
     }
-
+    public void Revive()
+    {
+        _healthBar.UpdateHealthBar(_maxHealth = 100, _currentHealth = 100);
+    }
     // Start is called before the first frame update
     void Start()
     {
