@@ -10,6 +10,18 @@ public class AudioManager : MonoBehaviour
 
     public EventInstance musicEventInstance;
     private List<StudioEventEmitter> eventEmitters;
+    [Header("Volume")]
+    [Range(0, 1)]
+    [SerializeField] public float masterVolume = 1;
+    [Range(0, 1)]
+    [SerializeField] public float musicVolume = 1;
+    [Range(0, 1)]
+    [SerializeField] public float SFXVolume = 1;
+
+
+    private Bus masterBus;
+    private Bus musicBus;
+    private Bus SFXBus;
     public static AudioManager instance { get; private set; }
 
 
@@ -20,7 +32,11 @@ public class AudioManager : MonoBehaviour
             Debug.LogError("Found more than one Audio Manager in the scene.");
         }
         instance = this;
-        eventEmitters = new List<StudioEventEmitter>(); 
+        eventEmitters = new List<StudioEventEmitter>();
+
+        masterBus = RuntimeManager.GetBus("bus:/");
+        musicBus = RuntimeManager.GetBus("bus:Music/");
+        SFXBus = RuntimeManager.GetBus("bus:SFXMusic/");
     }
 
     private void Start()
@@ -28,7 +44,12 @@ public class AudioManager : MonoBehaviour
         InitializeMusic(FMODEvents.instance.music);
         
     }
-
+    private void Update()
+    {
+        masterBus.setVolume(masterVolume);
+        musicBus.setVolume(musicVolume);
+        SFXBus.setVolume(SFXVolume);
+    }
     public EventInstance CreateInstance (EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
