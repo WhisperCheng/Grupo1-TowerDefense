@@ -27,7 +27,12 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Hitmarker")]
     [field: SerializeField] public EventReference hitmarker { get; private set; }
 
- 
+    [field: Header("ForestAmbience")]
+    [field: SerializeField] public EventReference forestAmbience { get; private set; }
+
+    [field: Header("MusicMenu")]
+    [field: SerializeField] public EventReference musicMenu { get; private set; }
+
 
 
     public static FMODEvents instance {  get; private set; }

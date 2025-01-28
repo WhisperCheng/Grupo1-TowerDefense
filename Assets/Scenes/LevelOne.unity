@@ -2837,42 +2837,56 @@ MonoBehaviour:
       Data2: 1305282010
       Data3: -1133960032
       Data4: -56124990
-    Path: event:/magicAttack
+    Path: event:/SFX/Player/MagicAttack
   <magicImpact>k__BackingField:
     Guid:
       Data1: 197239081
       Data2: 1206915157
       Data3: -922385737
       Data4: 110963780
-    Path: event:/magicImpact
+    Path: event:/SFX/Player/MagicImpact
   <bombardierExplosion>k__BackingField:
     Guid:
       Data1: 1144501459
       Data2: 1078513061
       Data3: 179653272
       Data4: -1503977280
-    Path: event:/BombPlant
+    Path: event:/SFX/Plants/BombPlant
   <roseShoot>k__BackingField:
     Guid:
       Data1: -763623714
       Data2: 1112606505
       Data3: 492024762
       Data4: 1965072727
-    Path: event:/ShootPlant
+    Path: event:/SFX/Plants/ShootPlant
   <carnivorousShoot>k__BackingField:
     Guid:
       Data1: 628321143
       Data2: 1099661226
       Data3: -978694740
       Data4: -791419456
-    Path: event:/BitePlant
+    Path: event:/SFX/Plants/BitePlant
   <hitmarker>k__BackingField:
     Guid:
       Data1: -428231110
       Data2: 1148912107
       Data3: 2044012461
       Data4: 84188769
-    Path: event:/GetHit
+    Path: event:/SFX/GetHit
+  <forestAmbience>k__BackingField:
+    Guid:
+      Data1: 2108720902
+      Data2: 1086849331
+      Data3: 991334804
+      Data4: 1072331203
+    Path: event:/SFX/ForestProximity
+  <musicMenu>k__BackingField:
+    Guid:
+      Data1: 1665223015
+      Data2: 1125273745
+      Data3: -1710659703
+      Data4: 1459794006
+    Path: event:/Hub
 --- !u!114 &762121839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3713,7 +3727,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188749066}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000010591215, y: 0.9979178, z: -0.06449935, w: -0.000000016386457}
+  m_LocalRotation: {x: -0.0000000028193594, y: 0.9979178, z: -0.06449942, w: -0.00000004362037}
   m_LocalPosition: {x: 0, y: -0.00000047683716, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4878,7 +4892,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543022616}
   serializedVersion: 2
-  m_LocalRotation: {x: -1.2460752e-16, y: 0.9981459, z: -0.060866885, w: 4.7770456e-16}
+  m_LocalRotation: {x: -0.0000000026605789, y: 0.9981459, z: -0.060866952, w: -0.000000043630344}
   m_LocalPosition: {x: 0, y: -0.00000047683716, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5729,7 +5743,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037086484}
   serializedVersion: 2
-  m_LocalRotation: {x: -3.0445792e-16, y: 0.9999678, z: 0.008028372, w: 3.884892e-16}
+  m_LocalRotation: {x: 3.509326e-10, y: 0.9999678, z: 0.008028402, w: -0.00000004370998}
   m_LocalPosition: {x: 0, y: -0.00000047683716, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

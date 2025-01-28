@@ -39,10 +39,10 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638731736311224455
+  lastModified: 638736799474635343
   FileSizes:
   - Name: Desktop
-    Value: 1226
+    Value: 1310
   Exists: 1
 --- !u!114 &-6777541634545393935
 MonoBehaviour:
@@ -59,12 +59,12 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638732652685635549
+  lastModified: 638736799493645213
   FileSizes:
   - Name: Desktop
-    Value: 52384
+    Value: 1289280
   Exists: 1
---- !u!114 &-6092495546421226048
+--- !u!114 &-6770194421895750758
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,14 +74,41 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/miniKnightAttack
+  m_Name: event:/SFX/Plants/ShootPlant
   m_EditorClassIdentifier: 
-  Path: event:/miniKnightAttack
+  Path: event:/SFX/Plants/ShootPlant
   Guid:
-    Data1: 13831199
-    Data2: 1336191381
-    Data3: 885827715
-    Data4: -1737813729
+    Data1: -763623714
+    Data2: 1112606505
+    Data3: 492024762
+    Data4: 1965072727
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5532555049802396952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Plants/BitePlant
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Plants/BitePlant
+  Guid:
+    Data1: 628321143
+    Data2: 1099661226
+    Data3: -978694740
+    Data4: -791419456
   Banks:
   - {fileID: -6777541634545393935}
   IsStream: 0
@@ -118,87 +145,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 32710
---- !u!114 &-5300780897114922407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/BombPlant
-  m_EditorClassIdentifier: 
-  Path: event:/BombPlant
-  Guid:
-    Data1: 1144501459
-    Data2: 1078513061
-    Data3: 179653272
-    Data4: -1503977280
-  Banks:
-  - {fileID: -6777541634545393935}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-4414690777717329341
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/magicAttack
-  m_EditorClassIdentifier: 
-  Path: event:/magicAttack
-  Guid:
-    Data1: -531017859
-    Data2: 1305282010
-    Data3: -1133960032
-    Data4: -56124990
-  Banks:
-  - {fileID: -6777541634545393935}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-4173780007692435303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/ShootPlant
-  m_EditorClassIdentifier: 
-  Path: event:/ShootPlant
-  Guid:
-    Data1: -763623714
-    Data2: 1112606505
-    Data3: 492024762
-    Data4: 1965072727
-  Banks:
-  - {fileID: -6777541634545393935}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
 --- !u!114 &-3903485788749854559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +169,33 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
+--- !u!114 &-3541974948519175510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Plants/BombPlant
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Plants/BombPlant
+  Guid:
+    Data1: 1144501459
+    Data2: 1078513061
+    Data3: 179653272
+    Data4: -1503977280
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-2179248425836092325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +224,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 34287
---- !u!114 &-1996843267690073361
+--- !u!114 &-1325182753670886384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -261,14 +234,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/magicImpact
+  m_Name: event:/SFX/GetHit
   m_EditorClassIdentifier: 
-  Path: event:/magicImpact
+  Path: event:/SFX/GetHit
   Guid:
-    Data1: 197239081
-    Data2: 1206915157
-    Data3: -922385737
-    Data4: 110963780
+    Data1: -428231110
+    Data2: 1148912107
+    Data3: 2044012461
+    Data4: 84188769
   Banks:
   - {fileID: -6777541634545393935}
   IsStream: 0
@@ -298,21 +271,22 @@ MonoBehaviour:
   - {fileID: 7279214337045221306}
   - {fileID: -5483291510440914159}
   - {fileID: -2179248425836092325}
-  - {fileID: -4414690777717329341}
-  - {fileID: -1996843267690073361}
-  - {fileID: 5426629173389562723}
-  - {fileID: -4173780007692435303}
-  - {fileID: -6092495546421226048}
-  - {fileID: 3917580287681223809}
-  - {fileID: -5300780897114922407}
+  - {fileID: 6909360612437150220}
+  - {fileID: 3636654235021752969}
+  - {fileID: 7091545253768193104}
+  - {fileID: -1325182753670886384}
+  - {fileID: -5532555049802396952}
+  - {fileID: 3750928053180218792}
+  - {fileID: -3541974948519175510}
+  - {fileID: -6770194421895750758}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6764802151169257708}
   StringsBanks:
   - {fileID: -7751682806750094819}
-  cacheTime: 638732652685635549
+  cacheTime: 638736799493645213
   cacheVersion: 131622
---- !u!114 &3917580287681223809
+--- !u!114 &3636654235021752969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -322,14 +296,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/BitePlant
+  m_Name: event:/SFX/Enemies/miniKnightAttack
   m_EditorClassIdentifier: 
-  Path: event:/BitePlant
+  Path: event:/SFX/Enemies/miniKnightAttack
   Guid:
-    Data1: 628321143
-    Data2: 1099661226
-    Data3: -978694740
-    Data4: -791419456
+    Data1: 13831199
+    Data2: 1336191381
+    Data3: 885827715
+    Data4: -1737813729
   Banks:
   - {fileID: -6777541634545393935}
   IsStream: 0
@@ -339,7 +313,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &5426629173389562723
+--- !u!114 &3750928053180218792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,18 +323,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/GetHit
+  m_Name: event:/SFX/Player/MagicAttack
   m_EditorClassIdentifier: 
-  Path: event:/GetHit
+  Path: event:/SFX/Player/MagicAttack
   Guid:
-    Data1: -428231110
-    Data2: 1148912107
-    Data3: 2044012461
-    Data4: 84188769
+    Data1: -531017859
+    Data2: 1305282010
+    Data3: -1133960032
+    Data4: -56124990
   Banks:
   - {fileID: -6777541634545393935}
   IsStream: 0
-  Is3D: 1
+  Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
@@ -381,11 +355,65 @@ MonoBehaviour:
   Path: Assets/FMOD/Tower Defense/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638731736311214487
+  lastModified: 638736799474475880
   FileSizes:
   - Name: Desktop
     Value: 5980992
   Exists: 1
+--- !u!114 &6909360612437150220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ForestProximity
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/ForestProximity
+  Guid:
+    Data1: 2108720902
+    Data2: 1086849331
+    Data3: 991334804
+    Data4: 1072331203
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 95121
+--- !u!114 &7091545253768193104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/MagicImpact
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/MagicImpact
+  Guid:
+    Data1: 197239081
+    Data2: 1206915157
+    Data3: -922385737
+    Data4: 110963780
+  Banks:
+  - {fileID: -6777541634545393935}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &7279214337045221306
 MonoBehaviour:
   m_ObjectHideFlags: 0

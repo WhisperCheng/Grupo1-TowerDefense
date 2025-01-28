@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 
     public EventInstance musicEventInstance;
     private List<StudioEventEmitter> eventEmitters;
+
     [Header("Volume")]
     [Range(0, 1)]
     [SerializeField] public float masterVolume = 1;
