@@ -20,6 +20,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     // Variables
     //public Transform hearth;
     [Header("Variables Enemigo IA")]
+    public int dropMoney;
     public float actionRadio;
     public float checkWaypointProximityDistance = 3;
     public float _onFocusAcceleration = 30;
@@ -54,7 +55,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected bool _canDamage = false;
     protected bool _finishedWaypoints = false;
     protected bool _initialized = false;
-    
+
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
 
@@ -86,7 +87,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         _currentHealth = health; // Inicializar/Restaurar la salud del caballero al valor máximo
         _maxHealth = health;
         _currentCooldown = cooldown;
-        
+
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         speed = _originalSpeed;
@@ -126,8 +127,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public virtual void Die()
     {
         // Cada enemigo ejecuta su funcion de volver a la pool
-        RoundManager.enemiesAlive--;
+        if (RoundManager.enemiesAlive > 0)
+            RoundManager.enemiesAlive--;
         ReturnToPool();
+        MoneyManager.Instance.AddMoney(dropMoney);
     }
 
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de
@@ -139,10 +142,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
 
         // Se obtiene al jugador más cercano
-        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(_agent, listaChoques, transform.position, null, 
+        Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(_agent, listaChoques, transform.position, null,
             true, reachAttackRange);
         if (nearestRival != null)
-            // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
+        // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
 
@@ -158,7 +161,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                 Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, null);
                 if (hearth != null && _destination != hearth.position) _destination = hearth.position;
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
-            } else // Si no, va yendo de waypoint en waypoint hasta llegar al final
+            }
+            else // Si no, va yendo de waypoint en waypoint hasta llegar al final
             {
                 if (_attackMode)
                 {
@@ -166,7 +170,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                 }
                 Transform nearestWaypoint = EntityUtils.GetNearestWayPoint(transform.position);
                 // Vuelve a tomar la ruta de los waypoints (waypoint actual)
-                
+
                 int nearestWaypointIndex = Array.FindIndex(GameManager.Instance.wayPoints, i => (nearestWaypoint.position == i.transform.position));
 
                 // Si entra dentro del radio de acción para detectar el waypoint más cercano,
@@ -180,7 +184,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                         UpdateWayPointDestination(++nearestWaypointIndex);
                     }
                 }
-                
+
                 if (!_finishedWaypoints)
                 {
                     Vector3 dest = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
@@ -202,7 +206,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         if (_currentWaypointIndex >= GameManager.Instance.wayPoints.Length)
         {
             _finishedWaypoints = true;
-        } else
+        }
+        else
         {
             _finishedWaypoints = false;
         }
