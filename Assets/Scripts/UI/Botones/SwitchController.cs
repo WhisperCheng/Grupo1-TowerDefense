@@ -13,11 +13,12 @@ public class SwitchController : MonoBehaviour
     [SerializeField]
     private float delay = 0.6f;
     [SerializeField] Vector2 finalPos;
+    [SerializeField] private LeanTweenType animationButton;
 
     public void Switch()
     {
         StartCoroutine(SwitchAfterAnimation(delay));
-        MenuUIManager.Instance.ExecuteAnimation(gameObject, delay, finalPos);
+        MenuUIManager.Instance.ExecuteAnimation(gameObject, delay, finalPos, animationButton);
 
     }
     private IEnumerator SwitchAfterAnimation(float delay)

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 
 public class OptionsController : MonoBehaviour
@@ -22,6 +24,10 @@ public class OptionsController : MonoBehaviour
     [SerializeField]
     private VolumeType volumeType;
     private Slider volumeSlider;
+
+    [SerializeField] private Slider sensitiveSlider;
+    [SerializeField] private Slider smoothnessSlider;
+    
     public static OptionsController instance { get; private set; }
 
     private void Awake()
@@ -88,13 +94,14 @@ public class OptionsController : MonoBehaviour
                 Debug.LogWarning("Volume type no supported" + volumeType);
                 break;
         }
+        PlayerPrefs.SetFloat("volume", volume);
     }
-    /*public void ChangeSensitive(float sensitive)
+    public void ChangeSensitive(float sensitive)
     {
 
+        sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
+        smoothnessSlider.value = ThirdPersonCam.instance._smoothCameraTurnSpeed;
+        PlayerPrefs.SetFloat("sensitive", sensitive);
     }
-     
-     
-     */
 }
 

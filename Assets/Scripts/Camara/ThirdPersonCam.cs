@@ -15,18 +15,31 @@ public class ThirdPersonCam : MonoBehaviour
 
     [Header("Giro de cámara")]
     [Range(0f, 80f)]
-    [SerializeField] private float _turnSpeed = 30f;
+    [SerializeField] public float _turnSpeed = 30f;
     [Range(0f, 60f)]
-    [SerializeField] private float _smoothCameraTurnSpeed = 4f;
+    [SerializeField] public float _smoothCameraTurnSpeed = 4f;
     [Range(0.1f, 10f)]
     [SerializeField] private float _smoothPlayerTurnSpeed = 4f;
 
     private Vector2 _moveDirection;
     private Vector2 _lookDirection;
     private Vector2 _oldLookDirection;
+
+    public static ThirdPersonCam instance;
     //private Vector2 _smoothedMoveSpeed; // sin uso, funciona como ref
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        if (instance != this && instance != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
     void Start()
     {
         //freelookCamera.ForceCameraPosition(Vector3.zero, Quaternion.Euler(Vector3.zero));
