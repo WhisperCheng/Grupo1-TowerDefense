@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -8,11 +9,15 @@ public class Player : MonoBehaviour, IDamageable
     private float _currentHealth;
     private float _maxHealth;
     public HealthBar _healthBar;
-
+    public GameObject playerModel;
+    private TimerMuerte timer;
+    public CinemachineFreeLook virtualCamera;
 
     public void Die()
     {
         //throw new System.NotImplementedException();
+        timer.DiedPlayerTimer();
+        // Desaparecer temporalmente
     }
 
     public float GetHealth() { return _currentHealth; }
@@ -29,12 +34,18 @@ public class Player : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             Die();
-            TimerMuerte.instance.DiedPlayerTimer();
         }
     }
-    public void Revive()
+    public void ReSpawn(Transform destination)
     {
-        _healthBar.UpdateHealthBar(_maxHealth = 100, _currentHealth = 100);
+        var delta = destination.position - gameObject.transform.position;
+
+        gameObject.transform.position = destination.transform.position;
+        //virtualCamera.PreviousStateIsValid = false;
+        //CinemachineCore.Instance.OnTargetObjectWarped(transform, delta);
+        //virtualCamera.OnTargetObjectWarped(transform, delta);
+
+        _healthBar.UpdateHealthBar(_maxHealth, _currentHealth = _maxHealth);
     }
     // Start is called before the first frame update
     void Start()
@@ -42,6 +53,8 @@ public class Player : MonoBehaviour, IDamageable
         //_healthBar = GetComponentInChildren<HealthBar>();
         _currentHealth = _health;
         _maxHealth = _health;
+        timer = gameObject.GetComponent<TimerMuerte>();
+        timer.Player = this;
     }
 
     // Update is called once per frame

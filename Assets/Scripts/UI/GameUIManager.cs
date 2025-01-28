@@ -12,6 +12,7 @@ public class GameUIManager : MonoBehaviour
     public GameObject crossHead;
     public GameObject menuPause;
     public TMP_Text textMoney;
+    
     private string textMoneyOriginal;
 
     public bool activeMenuPause;

@@ -64,7 +64,7 @@ public class ThirdPersonCam : MonoBehaviour
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
 
         // suavizar rotación continuamente
-        _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothCameraTurnSpeed) * Time.smoothDeltaTime); 
+        _lookDirection.x = Mathf.Lerp(_oldLookDirection.x, _lookDirection.x, (60.1f - _smoothCameraTurnSpeed) * Time.smoothDeltaTime);
         // Rotamos en el eje Y, se rota suavizado
         if (_lookDirection.x != 0) // si se está moviendo el ratón se ejecuta código
         {
