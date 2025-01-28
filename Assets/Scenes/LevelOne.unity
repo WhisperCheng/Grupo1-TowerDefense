@@ -1234,6 +1234,7 @@ GameObject:
   - component: {fileID: 274398085}
   - component: {fileID: 274398088}
   - component: {fileID: 274398089}
+  - component: {fileID: 274398090}
   m_Layer: 0
   m_Name: PoolsManager
   m_TagString: Untagged
@@ -1299,7 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thornRoseProjectilePrefab: {fileID: 5025218883541089872, guid: 57c69045f531c6745902a3551222c15f, type: 3}
-  poolSize: 20
+  poolSize: 10
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398076
 MonoBehaviour:
@@ -1314,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poisonYewProjectilePrefab: {fileID: 6911511816760255790, guid: bf5f7fcaed486cf47b62604822dcb6bf, type: 3}
-  poolSize: 20
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398077
 MonoBehaviour:
@@ -1329,7 +1330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   miniKnightPrefab: {fileID: 5652667148767116429, guid: f978c9bdadeba3747ba49f1122c6f330, type: 3}
-  poolSize: 15
+  poolSize: 40
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398078
 MonoBehaviour:
@@ -1344,7 +1345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carnivorousPlantPrefab: {fileID: 4708666523404283934, guid: c8765ab28e9b633488465fd43aa00979, type: 3}
-  poolSize: 20
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398079
 MonoBehaviour:
@@ -1359,7 +1360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thornRosePrefab: {fileID: 8514692920454964661, guid: c08e725860d9faa47805d131f013fc75, type: 3}
-  poolSize: 20
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398080
 MonoBehaviour:
@@ -1374,7 +1375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poisonYewPrefab: {fileID: 7136894658829570167, guid: 7a68c96f4828fec41beadaf617d4daba, type: 3}
-  poolSize: 20
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398081
 MonoBehaviour:
@@ -1389,7 +1390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allyTowerPrefab: {fileID: 8982227011800996231, guid: cecfcd6603fb9f743a843396bcf61907, type: 3}
-  poolSize: 10
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398082
 MonoBehaviour:
@@ -1404,7 +1405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allyPrefab: {fileID: 6438163909396371309, guid: 7f3cf194ddd1fb343b0a6c86adaef934, type: 3}
-  poolSize: 20
+  poolSize: 15
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398083
 MonoBehaviour:
@@ -1419,7 +1420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyDeathParticlesPrefab: {fileID: 4131055280005910679, guid: a84047d24282dcd49869bb507ea640fb, type: 3}
-  poolSize: 20
+  poolSize: 10
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398084
 MonoBehaviour:
@@ -1449,7 +1450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vineTrapPrefab: {fileID: 1505292329734927531, guid: a5d60dd6c6e11ec4682f683d3d70cd4a, type: 3}
-  poolSize: 10
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398086
 MonoBehaviour:
@@ -1464,7 +1465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spikeTrapPrefab: {fileID: 3352635105912841538, guid: aefdedaabd6e54a4799a99d01475b313, type: 3}
-  poolSize: 10
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398087
 MonoBehaviour:
@@ -1479,7 +1480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runeTrapPrefab: {fileID: 2920500601078650268, guid: fae98853c52bcd842a7e4c288d5defff, type: 3}
-  poolSize: 10
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398088
 MonoBehaviour:
@@ -1494,7 +1495,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceTowerPrefab: {fileID: 8103724110885376634, guid: decc539d3fd8196449848daa9bf5f5e5, type: 3}
-  poolSize: 10
+  poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!114 &274398089
 MonoBehaviour:
@@ -1509,6 +1510,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axeTankPrefab: {fileID: 1036845498593026936, guid: 84e246213e2831a4f855a90a87c95054, type: 3}
+  poolSize: 5
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &274398090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34e5e304a9b4b3944b605ee01293e19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maceTankPrefab: {fileID: 965759445110306419, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
   poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!4 &287948402 stripped
@@ -1909,6 +1925,67 @@ Transform:
   - {fileID: 480421580}
   m_Father: {fileID: 517066493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &468113952
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 444943449070202057, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 965759445110306419, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_Name
+      value: EnemigoTanqueMaza
+      objectReference: {fileID: 0}
+    - target: {fileID: 965759445110306419, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
 --- !u!1 &480421579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 284284562573118152, guid: 6e35f76bbc3c53d4a845d70baec76fa2, type: 3}
@@ -2661,6 +2738,13 @@ MonoBehaviour:
           countPerRound: 2
           spawnRate: 5
           spawnRateMultiplier: 1
+      - Key:
+          _underlyingValue: {fileID: 1363061266282639453, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+        Value:
+          initialWait: 1
+          countPerRound: 4
+          spawnRate: 1
+          spawnRateMultiplier: 1
     restTimeUntilNextWave: 20
   - enemies:
       _serializedList:
@@ -2673,7 +2757,7 @@ MonoBehaviour:
           spawnRateMultiplier: 0.92
     restTimeUntilNextWave: 0
   spawnPoint: {fileID: 1049932252}
-  countdownInicial: 10
+  countdownInicial: Infinity
   tutorialMode: 0
   transitionBetweenInfiniteRounds: 4
   waveCountdownText: {fileID: 288741249}
@@ -6114,3 +6198,4 @@ SceneRoots:
   - {fileID: 246383135}
   - {fileID: 5595048477663143300}
   - {fileID: 137113138}
+  - {fileID: 468113952}
