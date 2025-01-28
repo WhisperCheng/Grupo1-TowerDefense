@@ -90,7 +90,6 @@ public class TutorialController : MonoBehaviour
             {
                 //Mostrar el mensaje actual y avanzar al siguiente
                 StartCoroutine(DisplayLocalizedMessage(module.messages[currentMessageIndex]));
-                //currentMessageIndex++;
             }
             else
             {
