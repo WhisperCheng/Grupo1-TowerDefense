@@ -5423,7 +5423,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationButton: 0
+  finalPosition: {x: 0, y: 0}
   originalScale: {x: 0.5, y: 0.5, z: 10}
+  hasInitialAnimation: 0
+  animationDuration: 0.5
 --- !u!1 &794700629
 GameObject:
   m_ObjectHideFlags: 0
@@ -6860,6 +6863,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1014842488}
   - component: {fileID: 1014842490}
+  - component: {fileID: 1014842491}
   - component: {fileID: 1014842489}
   m_Layer: 5
   m_Name: Music Slider
@@ -6960,7 +6964,34 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1014842491}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1014842491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1014842487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c39366099820948a07c08c3337db3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: {fileID: 0}
+  panelBrightness: {fileID: 0}
+  volumeType: 1
 --- !u!1 &1019269425
 GameObject:
   m_ObjectHideFlags: 0
@@ -7477,7 +7508,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationButton: 14
+  finalPosition: {x: 0, y: 0}
   originalScale: {x: 1, y: 1, z: 0}
+  hasInitialAnimation: 0
+  animationDuration: 0.5
 --- !u!1 &1202617113
 GameObject:
   m_ObjectHideFlags: 0
@@ -7488,6 +7522,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1202617114}
   - component: {fileID: 1202617116}
+  - component: {fileID: 1202617117}
   - component: {fileID: 1202617115}
   m_Layer: 5
   m_Name: Master Slider
@@ -7588,7 +7623,34 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1202617117}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1202617117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202617113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c39366099820948a07c08c3337db3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: {fileID: 0}
+  panelBrightness: {fileID: 0}
+  volumeType: 0
 --- !u!1 &1220054555
 GameObject:
   m_ObjectHideFlags: 0
@@ -8754,6 +8816,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brightness: {fileID: 167643906}
   panelBrightness: {fileID: 704469321}
+  volumeType: 0
 --- !u!4 &1355917530
 Transform:
   m_ObjectHideFlags: 0
@@ -11534,6 +11597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798515296}
   - component: {fileID: 1798515298}
+  - component: {fileID: 1798515299}
   - component: {fileID: 1798515297}
   m_Layer: 5
   m_Name: SFX Slider
@@ -11634,7 +11698,34 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1798515299}
+        m_TargetAssemblyTypeName: OptionsController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1798515299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798515295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97c39366099820948a07c08c3337db3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brightness: {fileID: 0}
+  panelBrightness: {fileID: 0}
+  volumeType: 2
 --- !u!1 &1810499975
 GameObject:
   m_ObjectHideFlags: 0

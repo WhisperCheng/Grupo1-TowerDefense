@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class TimerMuerte : MonoBehaviour
 {
+    public static TimerMuerte instance { get; private set; }
     //GAMEOBJECTS
+    public GameObject panelDied;
     public Image cooldown;
-    //public  diedText;
     bool coolingDown;
     [SerializeField] float timer = 20f;
     // Start is called before the first frame update
@@ -19,14 +20,23 @@ public class TimerMuerte : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (coolingDown == true)
         {
             cooldown.fillAmount -= 1f / timer * Time.deltaTime;
         }
+        if (cooldown.fillAmount <= 0)
+        {
+            ReturnPlayer();
+            coolingDown = false;
+        }
     }
-    public void MuertePlayerTimer()
+    public void DiedPlayerTimer()
     {
+        panelDied.SetActive(true);
         coolingDown = true;
+    }
+    public void ReturnPlayer()
+    {
+        panelDied.SetActive(false);
     }
 }

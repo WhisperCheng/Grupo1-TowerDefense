@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 public class TutorialController : MonoBehaviour
 {
+    //Singleton: Hace el script accesible
     public static TutorialController instance { get; private set; }
 
     [Header("UI Elements")]
@@ -28,18 +29,21 @@ public class TutorialController : MonoBehaviour
 
     private void OnEnable()
     {
+        //Habilita la deteccion de la tecla Continuar
         continueAction.action.Enable();
         continueAction.action.performed += OnContinueAction;
     }
 
     private void OnDisable()
     {
+        //Desabilita la accion cuando el objeto de desactiva
         continueAction.action.performed -= OnContinueAction;
         continueAction.action.Disable();
     }
 
     private void Awake()
     {
+        //Implementar singleton para evitar duplicados
         if (instance != null && instance != this)
         {
             Destroy(this);
@@ -52,10 +56,11 @@ public class TutorialController : MonoBehaviour
 
     private void Start()
     {
-        tutorialCanvas.SetActive(false); // Asegurar que el canvas está oculto al inicio
-        StartCoroutine(LoadInstruction()); // Cargar el texto fijo de "Presiona Enter para continuar"
+        tutorialCanvas.SetActive(false);    // Asegurar que el canvas está oculto al inicio
+        StartCoroutine(LoadInstruction());  // Cargar el texto fijo de "Presiona Enter para continuar"
     }
 
+    //Carga de la instruccion de continue
     private IEnumerator LoadInstruction()
     {
         var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TutorialTable", "InstructionKey");
@@ -63,44 +68,41 @@ public class TutorialController : MonoBehaviour
         instructionText.text = localizedString.Result;
     }
 
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Tutorial"))
-        {
-            Debug.Log("Estas reconociendo el contacto");
-            ActivateModule();
-        }
-    }*/
-
+    //Activa el modulo de tutorial (Contenedor de mensajes) cuando el jugador entra en el trigger designado
     public void ActivateModule()
     {
         if (currentModuleIndex < tutorialModules.Count)
         {
-            PauseGame();
-            ShowMessage();
+            PauseGame();                //Pausa el juego
+            currentMessageIndex = 0;    //Reinicia la secuencia de mensajes
+            ShowMessage();              //Muestra el mensaje que corresponde
         }
     }
 
+    // Muestra un mensaje del módulo actual. Si ya se mostraron todos los mensajes, avanza al siguiente módulo.
     private void ShowMessage()
     {
         if (currentModuleIndex < tutorialModules.Count)
         {
-            var module = tutorialModules[currentModuleIndex];
+            var module = tutorialModules[currentModuleIndex];   //Obtener módulo actual
 
             if (currentMessageIndex < module.messages.Count)
             {
+                //Mostrar el mensaje actual y avanzar al siguiente
                 StartCoroutine(DisplayLocalizedMessage(module.messages[currentMessageIndex]));
-                currentMessageIndex++;
+                //currentMessageIndex++;
             }
             else
             {
+                //Si se mostraron todos los mensajes, avanzar al siguiente modulo
                 currentMessageIndex = 0;
                 currentModuleIndex++;
-                ResumeGame();
+                ResumeGame(); //Regresar al juego
             }
         }
     }
 
+    // Obtiene el texto localizado del mensaje y lo muestra en pantalla.
     private IEnumerator DisplayLocalizedMessage(LocalizedString key)
     {
         var localizedString = key.GetLocalizedStringAsync();
@@ -111,146 +113,35 @@ public class TutorialController : MonoBehaviour
         isMessageActive = true;
     }
 
+    // Maneja la acción de "continuar" cuando el jugador presiona la tecla.
     private void OnContinueAction(InputAction.CallbackContext ctx)
     {
         if (isMessageActive)
         {
             tutorialCanvas.SetActive(false);
             isMessageActive = false;
+            currentMessageIndex++; // Avanzar al siguiente mensaje dentro del módulo
             ShowMessage();
         }
     }
 
+    //Pausar juego mientras se muestran mensajes de tutorial
     private void PauseGame()
     {
         Time.timeScale = 0f;
     }
 
+    //Reanudar juego despues de interactuar con el tutorial
     private void ResumeGame()
     {
         Time.timeScale = 1f;
     }
 }
 
+// Clase para almacenar los datos de cada módulo del tutorial.
 [System.Serializable]
 public class TutorialModule
 {
     public string moduleName;             // Nombre del módulo (visible en el Inspector)
     public List<LocalizedString> messages; // Lista de mensajes localizados
 }
-
-    /*[Header("UI Elements")]
-    public GameObject TutorialCanvas;   //Ventana flotante con info del tutorial
-    public TextMeshProUGUI tutorialMessageText;//Texto del mensaje del tutorial
-    public TextMeshProUGUI instructionText;    //Texto fijo
-    //public Image unlockedItemIcon;      //Imagen del icono desbloqueado
-    //public GameObject iconHighlightFrame;//Marco iluminado que identifica el elemento destacado
-
-    [Header("Localization")]
-    public string localizationTableName;    //Nombre de la tabla de localizacion del juego
-    public string[] messageKeys;            //Claves de los mensajes en el orden en el que deben mostrarse
-    public string instructionKey;           // Clave del mensaje de instrucci�n fijo
-
-    private int currentMessageIndex = 0;        //Indice del mensaje actual
-    private bool isMessageActive = false;   //Indicador de mensajes activos
-
-    [Header("Input")]
-    public InputActionReference continueAction; //Accion de continuar
-
-    private void OnEnable()
-    {
-        //Vincular el evento de entrada
-        continueAction.action.Enable();
-        continueAction.action.performed += OnContinueAction;
-    }
-
-    private void OnDisable()
-    {
-        continueAction.action.performed -= OnContinueAction;
-        continueAction.action.Disable();
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        //Comprobar que todo esta desactivado al inicio
-        TutorialCanvas.SetActive(false);
-        //iconHighlightFrame.SetActive(false);
-        //unlockedItemIcon.gameObject.SetActive(false);
-        //Cargar texto fijo de instruccion
-        StartCoroutine(LoadInstruction());
-        //Mostrar el siguiente mensaje del tutorial
-        ShowNextMessage();
-    }
-
-    private IEnumerator LoadInstruction()
-    {
-        //Cargar texto fijo de instruccion
-        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(localizationTableName, instructionKey);
-        yield return localizedString;
-
-        //Configurar texto
-        instructionText.text = localizedString.Result;
-    }
-
-    public void ShowNextMessage() 
-    {
-        if (currentMessageIndex < messageKeys.Length)
-        {
-            PauseTutorial();
-            StartCoroutine(DisplayLocalizedMessage(messageKeys[currentMessageIndex]));
-            currentMessageIndex++;
-        }
-        else
-        {
-            ResumeTutorial();
-        }
-    }
-
-    private IEnumerator DisplayLocalizedMessage(string key)
-    {
-        //Cargar el mensaje localizado
-        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(localizationTableName, key);
-        yield return localizedString;
-
-        //Mostrar el mensaje en la UI
-        tutorialMessageText.text = localizedString.Result;
-
-        //Activar la ventana modal
-        TutorialCanvas.SetActive(true);
-        isMessageActive = true;
-
-        //Si tiene un icono relacionado, activarlo y resaltarlo
-        //if (unlockedItemIcon != null && iconHighlightFrame != null)
-        {
-            unlockedItemIcon.gameObject.SetActive(true);
-            iconHighlightFrame.SetActive(true);
-        }//
-    }
-
-    private void OnContinueAction(InputAction.CallbackContext ctx)
-    {
-        if (isMessageActive)
-        {
-            //Desactivar la ventana modal y sus elementos
-            TutorialCanvas.SetActive(false);
-            //iconHighlightFrame.SetActive(false);
-            //unlockedItemIcon.gameObject.SetActive(false);
-
-            isMessageActive = false;
-
-            //Mostrar el siguiente mensaje
-            ShowNextMessage();
-        }
-    }
-
-    private void PauseTutorial()
-    {
-        Time.timeScale = 0f; //Pausa el paso del tiempo en el juego
-    }
-
-    private void ResumeTutorial()
-    {
-        Time.timeScale = 1f; // Reestablece el paso del tiempo en el juego
-    }*/
-
