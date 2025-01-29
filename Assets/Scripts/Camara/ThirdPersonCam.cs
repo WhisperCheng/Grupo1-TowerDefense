@@ -56,8 +56,8 @@ public class ThirdPersonCam : MonoBehaviour
     private void RotateOrientation()
     {
         // Apuntar hacia delante
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
+        //Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        //orientation.forward = viewDir.normalized; // Esto hacía que el personaje diera vueltas en círculos al ir hacia los lados
 
         // Leer input para luego apuntar a la dirección deseada
         PlayerInput playerInput = GameManager.Instance.playerControls;
@@ -72,6 +72,8 @@ public class ThirdPersonCam : MonoBehaviour
             orientation.transform.Rotate(0, addRotation, 0); // rotación con suavizado
             _oldLookDirection.x = _lookDirection.x;
         }
+        //orientation.rotation = Quaternion.Euler(orientation.rotation.x, freelookCamera.m_XAxis.Value, orientation.rotation.z);
+       // orientation.transform.Rotate(0, freelookCamera.m_XAxis.ax, 0); // rotación con suavizado
     }
 
     private void RotatePlayerObj()

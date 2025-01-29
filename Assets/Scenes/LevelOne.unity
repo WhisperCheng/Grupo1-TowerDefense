@@ -694,6 +694,7 @@ MonoBehaviour:
   virtualCamera: {fileID: 0}
   respawnParticles: {fileID: 0}
   deathParticles: {fileID: 0}
+  hitParticles: {fileID: 0}
   particlesParent: {fileID: 0}
 --- !u!4 &246383135
 Transform:
@@ -1623,6 +1624,9 @@ MonoBehaviour:
   buildUI: {fileID: 334664713}
   crossHead: {fileID: 1005272595}
   menuPause: {fileID: 0}
+  menuSound: {fileID: 0}
+  menuBrightness: {fileID: 0}
+  menuControl: {fileID: 0}
   textMoney: {fileID: 1665845371}
   activeMenuPause: 0
   activeBuildUI: 1
@@ -5018,50 +5022,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[11].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[16].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121830}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[17].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[18].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[18].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[19].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
-    - target: {fileID: 5286815964307272583, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ActionEvents.Array.data[20].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 762121828}
     - target: {fileID: 7402260248173554210, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5101,10 +5061,6 @@ PrefabInstance:
     - target: {fileID: 7402260248173554210, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7402260248173554210, guid: 9f42b0a75116de34fb1f66fe2b7c87fb, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
