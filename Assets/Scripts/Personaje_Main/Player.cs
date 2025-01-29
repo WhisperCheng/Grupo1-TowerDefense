@@ -18,6 +18,7 @@ public class Player : MonoBehaviour, IDamageable
     [Header("Partículas")]
     public ParticleSystem respawnParticles;
     public ParticleSystem deathParticles;
+    public ParticleSystem hitParticles;
     public GameObject particlesParent;
    
     private float _currentHealth;
@@ -41,7 +42,8 @@ public class Player : MonoBehaviour, IDamageable
         // Daño
         _currentHealth -= damageAmount;
         //OnDamageTaken();
-
+        ParticleSystem hit = InstantiateParticlesOnPlayer(hitParticles);
+        hit.transform.position += Vector3.up * 1.1f;
         // Actualizar barra de vida
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth);
         if (_currentHealth <= 0)
