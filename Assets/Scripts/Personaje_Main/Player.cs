@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Cinemachine;
 
 public class Player : MonoBehaviour, IDamageable
 {
     [Header("Vida")]
     public float health;
+
+    [Header("Cooldown")]
+    public float cooldown;
+    private float _currentCooldown;
 
     [Header("Barra de vida y Jugador")]
     public HealthBar _healthBar;
@@ -20,6 +25,9 @@ public class Player : MonoBehaviour, IDamageable
     public ParticleSystem deathParticles;
     public ParticleSystem hitParticles;
     public GameObject particlesParent;
+
+    private ProyectilFabric proyectilFabric;
+    private bool canShoot = false;
    
     private float _currentHealth;
     private float _maxHealth;
@@ -71,6 +79,28 @@ public class Player : MonoBehaviour, IDamageable
        
         return pSysAction;
     }
+    public void ShootProyectile(InputAction.CallbackContext ctx)
+    {
+        if (canShoot && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
+        {
+            proyectilFabric.LanzarProyectil();
+            canShoot = false;
+        }
+    }
+
+    private void ManageCooldown()
+    {
+        if (!canShoot)
+        {
+            _currentCooldown -= Time.deltaTime;
+
+            if (_currentCooldown <= 0)
+            {
+                canShoot = true;
+                _currentCooldown = cooldown;
+            }
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -78,6 +108,7 @@ public class Player : MonoBehaviour, IDamageable
         //_healthBar = GetComponentInChildren<HealthBar>();
         _currentHealth = health;
         _maxHealth = health;
+        proyectilFabric = GetComponent<ProyectilFabric>();
         timer = gameObject.GetComponent<TimerMuerte>();
         timer.Player = this;
     }
@@ -85,6 +116,6 @@ public class Player : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-
+        ManageCooldown();
     }
 }

@@ -2,9 +2,10 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class Proyectil : MonoBehaviour
+public class ProyectilFabric : MonoBehaviour
 {
     public GameObject marcador; 
     public GameObject proyectilPrefab; 
@@ -13,18 +14,15 @@ public class Proyectil : MonoBehaviour
 
     private void Start()
     {
-
+        
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !PlaceManager.Instance.bloqueoDisparo) 
-        {
-            LanzarProyectil();
-        }
+        
     }
 
-    void LanzarProyectil()
+    public void LanzarProyectil()
     {
         Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
         RaycastHit golpeRayo;
@@ -36,8 +34,11 @@ public class Proyectil : MonoBehaviour
         int pathMask = 1 << GameManager.Instance.layerPath;
         int terrainMask = 1 << GameManager.Instance.layerTerreno;
         int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco;
-        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask) 
-            && !golpeRayo.transform.CompareTag(GameManager.Instance.tagPuentes))
+        int enemyMask = 1 << GameManager.Instance.layerEnemigos;
+        int towerMask = 1 << GameManager.Instance.layerTorres;
+        int hearthMask = 1 << GameManager.Instance.layerCorazon;
+        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask | enemyMask
+            | towerMask | hearthMask) && !golpeRayo.transform.CompareTag(GameManager.Instance.tagPuentes))
         {
             destino = golpeRayo.point;
         }
@@ -55,5 +56,4 @@ public class Proyectil : MonoBehaviour
         Vector3 direccion = (destino - puntoDisparo.position).normalized;
         proyectil.GetComponent<Rigidbody>().velocity = direccion * velocidadProyectil;
     }
-    
 }
