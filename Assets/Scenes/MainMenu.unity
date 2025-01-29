@@ -1651,7 +1651,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193959664}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -6273,6 +6273,7 @@ GameObject:
   - component: {fileID: 936245805}
   - component: {fileID: 936245804}
   - component: {fileID: 936245803}
+  - component: {fileID: 936245806}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -6295,10 +6296,10 @@ RectTransform:
   - {fileID: 375993530}
   m_Father: {fileID: 193959665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -285, y: -115.88669}
+  m_SizeDelta: {x: 221.89539, y: 67.3962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &936245803
 MonoBehaviour:
@@ -6382,6 +6383,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936245801}
   m_CullTransparentMesh: 1
+--- !u!114 &936245806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936245801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd4dddeb3b67f349894464f440fadeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  hoverScaleFactor: 1.1
+  animationDuration: 0.2
+  delay: 1
+  finalPosition: {x: -0.05230713, y: -115.8867}
+  animationType: 4
+  hadInitialAnimation: 1
+  finalAnimation: 0
 --- !u!1 &942563308
 GameObject:
   m_ObjectHideFlags: 0
@@ -7874,6 +7895,7 @@ GameObject:
   - component: {fileID: 1220054558}
   - component: {fileID: 1220054557}
   - component: {fileID: 1220054560}
+  - component: {fileID: 1220054561}
   m_Layer: 5
   m_Name: Start Button
   m_TagString: Untagged
@@ -7896,10 +7918,10 @@ RectTransform:
   - {fileID: 1300578745}
   m_Father: {fileID: 193959665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -285, y: 116.301895}
+  m_SizeDelta: {x: 221.89539, y: 67.3962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1220054557
 MonoBehaviour:
@@ -8010,6 +8032,26 @@ MonoBehaviour:
   currentSwitchable: {fileID: 1536266201}
   targetSwitchable: {fileID: 903603793}
   delay: 0
+--- !u!114 &1220054561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220054555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd4dddeb3b67f349894464f440fadeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  hoverScaleFactor: 1.1
+  animationDuration: 0.2
+  delay: 0.7
+  finalPosition: {x: -0.05230713, y: 116.3019}
+  animationType: 4
+  hadInitialAnimation: 1
+  finalAnimation: 0
 --- !u!1 &1222169205
 GameObject:
   m_ObjectHideFlags: 0
@@ -9903,6 +9945,7 @@ GameObject:
   - component: {fileID: 1524400965}
   - component: {fileID: 1524400964}
   - component: {fileID: 1524400963}
+  - component: {fileID: 1524400967}
   - component: {fileID: 1524400966}
   m_Layer: 5
   m_Name: Options Button
@@ -9926,10 +9969,10 @@ RectTransform:
   - {fileID: 43531658}
   m_Father: {fileID: 193959665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -285, y: 38.9057}
+  m_SizeDelta: {x: 221.89539, y: 67.3962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1524400963
 MonoBehaviour:
@@ -10040,6 +10083,26 @@ MonoBehaviour:
   currentSwitchable: {fileID: 1536266201}
   targetSwitchable: {fileID: 1919770777}
   delay: 0
+--- !u!114 &1524400967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1524400961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd4dddeb3b67f349894464f440fadeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  hoverScaleFactor: 1.1
+  animationDuration: 0.2
+  delay: 0.8
+  finalPosition: {x: -0.05230713, y: 38.9057}
+  animationType: 4
+  hadInitialAnimation: 1
+  finalAnimation: 0
 --- !u!1 &1536266201
 GameObject:
   m_ObjectHideFlags: 0
@@ -10155,6 +10218,7 @@ GameObject:
   - component: {fileID: 1561007729}
   - component: {fileID: 1561007728}
   - component: {fileID: 1561007727}
+  - component: {fileID: 1561007731}
   - component: {fileID: 1561007730}
   m_Layer: 5
   m_Name: Credits Button
@@ -10178,10 +10242,10 @@ RectTransform:
   - {fileID: 171163574}
   m_Father: {fileID: 193959665}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -285, y: -38.49051}
+  m_SizeDelta: {x: 221.89539, y: 67.3962}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1561007727
 MonoBehaviour:
@@ -10292,6 +10356,26 @@ MonoBehaviour:
   currentSwitchable: {fileID: 1536266201}
   targetSwitchable: {fileID: 1419618595}
   delay: 0
+--- !u!114 &1561007731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1561007725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd4dddeb3b67f349894464f440fadeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalScale: {x: 0, y: 0, z: 0}
+  hoverScaleFactor: 1.1
+  animationDuration: 0.2
+  delay: 0.9
+  finalPosition: {x: -0.05230713, y: -38.49051}
+  animationType: 4
+  hadInitialAnimation: 1
+  finalAnimation: 0
 --- !u!1 &1573749601
 GameObject:
   m_ObjectHideFlags: 0
