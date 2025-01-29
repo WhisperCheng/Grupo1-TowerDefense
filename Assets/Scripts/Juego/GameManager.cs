@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
     }
+
     [Header("WayPoints")]
     public GameObject[] wayPoints;
 
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public string tagTorresCamino;
     public string tagTorres;
     public string tagPuentes;
+    public string tagInteractableUI;
 
     [Header("Layers Globales")]
     public int layerEnemigos;

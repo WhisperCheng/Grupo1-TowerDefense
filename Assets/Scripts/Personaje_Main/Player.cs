@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using UnityEngine.EventSystems;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -24,13 +25,18 @@ public class Player : MonoBehaviour, IDamageable
     public ParticleSystem respawnParticles;
     public ParticleSystem deathParticles;
     public ParticleSystem hitParticles;
+    public ParticleSystem shootProyectileParticles;
     public GameObject particlesParent;
 
     private ProyectilFabric proyectilFabric;
     private bool canShoot = false;
+    private bool isShowingCrosier = false;
+    private bool isHoveringOverAButton = false;
    
     private float _currentHealth;
     private float _maxHealth;
+
+    public Animator animator;
 
     private TimerMuerte timer;
 
@@ -79,13 +85,29 @@ public class Player : MonoBehaviour, IDamageable
        
         return pSysAction;
     }
-    public void ShootProyectile(InputAction.CallbackContext ctx)
+    public void TryShootProyectile(InputAction.CallbackContext ctx)
     {
-        if (canShoot && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
-        {
+        if (!UIUtils.IsPointerOverUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton 
+            && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
+        { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara
             proyectilFabric.LanzarProyectil();
             canShoot = false;
         }
+    }
+
+    public void ShowCrosier()
+    {
+        isShowingCrosier = true;
+        _currentCooldown = cooldown;
+    }
+
+    public void HideCrosier()
+    {
+        isShowingCrosier = false;
+    }
+    public bool CheckIfIsShowingCrosier()
+    {
+        return isShowingCrosier;
     }
 
     private void ManageCooldown()
@@ -117,5 +139,6 @@ public class Player : MonoBehaviour, IDamageable
     void Update()
     {
         ManageCooldown();
+        animator.SetBool("ataque", isShowingCrosier);
     }
 }
