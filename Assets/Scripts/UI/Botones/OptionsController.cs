@@ -55,7 +55,7 @@ public class OptionsController : MonoBehaviour
     private void Update()
     {
        
-        switch (volumeType)
+        /*switch (volumeType)
         {
             case VolumeType.MASTER:
                 volumeSlider.value = AudioManager.instance.masterVolume;
@@ -69,13 +69,15 @@ public class OptionsController : MonoBehaviour
             default:
                 Debug.LogWarning("Volume type no supported" + volumeType);
                 break;
-        }
+        }*/
     }
     public void ChangeBrightness(float value)
     {
         brightness.value = value;
+        float alpha = 1f - value;
+        alpha = Mathf.Clamp(alpha, 0f, 1f);
         PlayerPrefs.SetFloat("brightness", value);
-        panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, value);
+        panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, alpha);
     }
     public void ChangeVolume(float volume)
     {
@@ -100,7 +102,6 @@ public class OptionsController : MonoBehaviour
     {
 
         sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
-        smoothnessSlider.value = ThirdPersonCam.instance._smoothCameraTurnSpeed;
         PlayerPrefs.SetFloat("sensitive", sensitive);
     }
 }

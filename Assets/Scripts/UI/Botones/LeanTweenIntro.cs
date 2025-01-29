@@ -15,20 +15,16 @@ public class LeanTweenIntro : MonoBehaviour
 
     void Start()
     {
-        LeanTween.moveY(logoImage.GetComponent<RectTransform>(), 0, 2.7f)
-            .setDelay(0.5f).setEase(LeanTweenType.easeInOutBack).setOnComplete(BajarAlpha);
-
+        LeanTween.moveY(logoImage.GetComponent<RectTransform>(), 0, 2.7f).setDelay(0.5f).setEase(LeanTweenType.easeInOutBack).setOnComplete(BajarAlpha);
+        languageCanvas.GetComponent<CanvasGroup>();
+        languageCanvas.SetActive(false);
     }
     
     private void BajarAlpha()
     {    
-        LeanTween.alpha(introCanvas.GetComponent<RectTransform>(), 0f, 1f).setDelay(0.75f).setOnComplete(ActivateTheGameMenu);
+        LeanTween.alpha(introCanvas.GetComponent<RectTransform>(), 0f, 1f).setDelay(0.75f);
         introCanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-    }
-
-    private void ActivateTheGameMenu()
-    {
-        SwitchController.timeToChange = true;
+        languageCanvas.SetActive(true);
     }
 }
 
