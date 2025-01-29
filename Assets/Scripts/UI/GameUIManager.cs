@@ -12,15 +12,14 @@ public class GameUIManager : MonoBehaviour
     public GameObject buildUI;
     public GameObject crossHead;
     public GameObject menuPause;
-    public GameObject menuSound;
-    public GameObject menuBrightness;
-    public GameObject menuControl;
+    public GameObject[] panelsMenu; 
     public TMP_Text textMoney;
     
     private string textMoneyOriginal;
 
     public bool activeMenuPause;
     public bool activeBuildUI;
+    bool otherPanelActive;
     public float menusTransitionTime = 0.5f;
 
     public void Awake()
@@ -76,11 +75,11 @@ public class GameUIManager : MonoBehaviour
     {
         if (ctx.performed)
         {
-            if (activeMenuPause)
+            if (activeMenuPause && !otherPanelActive)
             {
                 OpenGameMenu();
             }
-            else
+            else if (!otherPanelActive)
             {
                 CloseGameMenu();
             }
@@ -92,7 +91,7 @@ public class GameUIManager : MonoBehaviour
         activeBuildUI = false; // Ocultar crosshead
         crossHead.SetActive(false); //
         LeanTween.cancel(buildUI); // reset de las animaciones
-        LeanTween.moveY(buildUI, -70f, time).setEaseInOutSine(); // Mostrar menú de botones
+        LeanTween.moveY(buildUI, -80f, time).setEaseInOutSine(); // Mostrar menú de botones
         //LeanTween.moveLocalY(buildButtons, -74f, time).setEaseInOutSine(); // 
     }
 
@@ -113,8 +112,6 @@ public class GameUIManager : MonoBehaviour
     void OpenGameMenu()
     {
         //añadir leAntween y esa vaina loquísima
-        //Hacer que se desenfoque el fondo con Post processing > Depth Of Field > Focal Length
-        //Bajar/subir el sistema de rondas y los botones de abajo
         activeMenuPause = true;
         menuPause.SetActive(true);
         Time.timeScale = 0f;
@@ -122,34 +119,36 @@ public class GameUIManager : MonoBehaviour
     void CloseGameMenu()
     {
         //añadir leAntween y esa vaina loca
-        if (activeMenuPause == true)
-        {
-            activeMenuPause = false;
-            menuPause.SetActive(false);
-            Time.timeScale = 1f;
-        }
+        activeMenuPause = false;
+        menuPause.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    void GamePostProcessingMenu()
+    {
+        //Hacer que se desenfoque el fondo con Post processing > Depth Of Field > Focal Length
+        //Bajar/subir el sistema de rondas y los botones de abajo
     }
     void GameMenuDesactivate()
     {
-        menuPause.SetActive(false);
-
+        Time.timeScale = 0f;
+        otherPanelActive = true;
     }
     public void SoundButton()
     {
-        menuPause.SetActive(false);
-        menuSound.SetActive(true);
+        GameMenuDesactivate();
+        panelsMenu[0].SetActive(true);
     }
     public void BrightnessButton()
     {
-        menuPause.SetActive(false);
-        menuBrightness.SetActive(true);
+        GameMenuDesactivate();
+        panelsMenu[1].SetActive(true);
     }
     public void ControlButton()
     {
-        menuPause.SetActive(false);
-        menuControl.SetActive(true);
+        GameMenuDesactivate();
+        panelsMenu[2].SetActive(true);
     }
-    public void ReStartGame()
+    public void StartGame()
     {
         CloseGameMenu();
     }
@@ -159,9 +158,11 @@ public class GameUIManager : MonoBehaviour
     }
     public void AcceptButton()
     {
-        menuSound.SetActive(false);
-        menuBrightness.SetActive(false);
-        menuControl.SetActive(false);
-        activeMenuPause = true;
+        foreach (var panels in panelsMenu)
+        {
+            panels.SetActive(false);
+            otherPanelActive = false;
+            OpenGameMenu();
+        }
     }
 }
