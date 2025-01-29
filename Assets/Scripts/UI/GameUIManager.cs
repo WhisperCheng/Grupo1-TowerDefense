@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class GameUIManager : MonoBehaviour
     public GameObject buildUI;
     public GameObject crossHead;
     public GameObject menuPause;
+    public GameObject menuSound;
+    public GameObject menuBrightness;
+    public GameObject menuControl;
     public TMP_Text textMoney;
     
     private string textMoneyOriginal;
@@ -119,5 +123,36 @@ public class GameUIManager : MonoBehaviour
         activeMenuPause = false;
         menuPause.SetActive(false);
         Time.timeScale = 1f;
+    }
+    public void SoundButton()
+    {
+        Debug.Log("Sepulsa");
+        menuPause.SetActive(false);
+        menuSound.SetActive(true);
+    }
+    public void BrightnessButton()
+    {
+        menuPause.SetActive(false);
+        menuBrightness.SetActive(true);
+    }
+    public void ControlButton()
+    {
+        menuPause.SetActive(false);
+        menuControl.SetActive(true);
+    }
+    public void ReStartGame()
+    {
+        CloseGameMenu();
+    }
+    public void BackToPrincipalMenu()
+    {
+        SceneManager.LoadScene("MainTutorial");
+    }
+    public void AcceptButton()
+    {
+        menuSound.SetActive(false);
+        menuBrightness.SetActive(false);
+        menuControl.SetActive(false);
+        activeMenuPause = true;
     }
 }
