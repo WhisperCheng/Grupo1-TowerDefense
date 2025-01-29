@@ -687,10 +687,12 @@ MonoBehaviour:
   cooldown: 0
   _healthBar: {fileID: 0}
   playerModel: {fileID: 0}
+  shootingSource: {fileID: 0}
   virtualCamera: {fileID: 0}
   respawnParticles: {fileID: 0}
   deathParticles: {fileID: 0}
   hitParticles: {fileID: 0}
+  shootProyectileParticles: {fileID: 0}
   particlesParent: {fileID: 0}
   animator: {fileID: 0}
 --- !u!4 &246383135
@@ -769,6 +771,7 @@ GameObject:
   - component: {fileID: 274398088}
   - component: {fileID: 274398089}
   - component: {fileID: 274398090}
+  - component: {fileID: 274398091}
   m_Layer: 0
   m_Name: PoolsManager
   m_TagString: Untagged
@@ -1059,6 +1062,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maceTankPrefab: {fileID: 965759445110306419, guid: c0a57105628a7a9409930b79fbbcef29, type: 3}
+  poolSize: 5
+  grandParentName: ObjectPoolsObjects
+--- !u!114 &274398091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e95267d64a180e4e915a769799fff7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magicParticlePrefab: {fileID: 7893929974232480197, guid: 85e9b957ee1b242499f49bcb027b6bad, type: 3}
   poolSize: 5
   grandParentName: ObjectPoolsObjects
 --- !u!4 &287948402 stripped
@@ -4006,38 +4024,6 @@ PrefabInstance:
     - target: {fileID: 2248694050146199156, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
       propertyPath: m_Name
       value: Escenario
-      objectReference: {fileID: 0}
-    - target: {fileID: 3204050197922699626, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 3681345162372035025, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 4941726101359183127, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 6985380752615429431, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 7440787121138699668, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 8016690569845516932, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 8290307824797617846, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
-      objectReference: {fileID: 0}
-    - target: {fileID: 8467211270964498607, guid: 41659ae89275b8e4b976847b0b6aa60b, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 65399
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

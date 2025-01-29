@@ -9,7 +9,7 @@ public static class UIUtils
     //private static int UILayer = LayerMask.NameToLayer("UI");
 
     //Returns 'true' if we touched or hovering on Unity UI element.
-    public static bool IsPointerOverUIElement()
+    public static bool IsPointerOverInteractableUIElement()
     {
         return IsPointerOverUIElement(GetEventSystemRaycastResults());
     }

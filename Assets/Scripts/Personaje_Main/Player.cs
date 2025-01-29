@@ -17,6 +17,7 @@ public class Player : MonoBehaviour, IDamageable
     [Header("Barra de vida y Jugador")]
     public HealthBar _healthBar;
     public GameObject playerModel;
+    public GameObject shootingSource;
 
     [Header("Cámara")]
     public CinemachineFreeLook virtualCamera;
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour, IDamageable
     public ParticleSystem respawnParticles;
     public ParticleSystem deathParticles;
     public ParticleSystem hitParticles;
-    public ParticleSystem shootProyectileParticles;
+    //public ParticleSystem shootProyectileParticles;
     public GameObject particlesParent;
 
     private ProyectilFabric proyectilFabric;
@@ -87,11 +88,14 @@ public class Player : MonoBehaviour, IDamageable
     }
     public void TryShootProyectile(InputAction.CallbackContext ctx)
     {
-        if (!UIUtils.IsPointerOverUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton 
+        if (!UIUtils.IsPointerOverInteractableUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton 
             && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
         { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara
             proyectilFabric.LanzarProyectil();
             canShoot = false;
+            GameObject particles = ShootingMagicParticlesPool.Instance.GetMagicShootingParticle();
+            particles.transform.position = shootingSource.transform.position;
+            particles.GetComponent<ParticleSystem>().Play();
         }
     }
 

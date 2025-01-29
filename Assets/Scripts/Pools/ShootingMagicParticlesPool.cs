@@ -32,12 +32,12 @@ public class ShootingMagicParticlesPool : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
         SetupPool();
     }
 
-    void SetupPool()
+    private void SetupPool()
     {
 
         pool = new Stack<GameObject>();
@@ -45,33 +45,32 @@ public class ShootingMagicParticlesPool : MonoBehaviour
         parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject impact = Instantiate(magicParticlePrefab);
-            impact.transform.parent = parent.transform;
-            impact.SetActive(false);
-            pool.Push(impact);
+            GameObject shootingParticle = Instantiate(magicParticlePrefab);
+            shootingParticle.transform.parent = parent.transform;
+            shootingParticle.SetActive(false);
+            pool.Push(shootingParticle);
         }
     }
 
-    public GameObject GetMagicImpact()
+    public GameObject GetMagicShootingParticle()
     {
         if (pool.Count == 0)
         {
-            Debug.LogWarning("Pool de impactos vacía. Creando nuevo objeto de impacto.");
-            GameObject newImpact = Instantiate(magicParticlePrefab);
-            newImpact.transform.parent = parent.transform; 
-            return newImpact;
+            GameObject newShootingParticle = Instantiate(magicParticlePrefab);
+            newShootingParticle.transform.parent = parent.transform; 
+            return newShootingParticle;
         }
 
-        GameObject impact = pool.Pop();
-        impact.SetActive(true);
-        return impact;
+        GameObject shootingParticle = pool.Pop();
+        shootingParticle.SetActive(true);
+        return shootingParticle;
     }
 
-    public void ReturnMagicImpact(GameObject returnedImpact)
+    public void ReturnMagicShootingParticle(GameObject returnedShootingParticle)
     {
         // Desactivar y devolver a la pool
-        returnedImpact.SetActive(false);
-        pool.Push(returnedImpact);
+        returnedShootingParticle.SetActive(false);
+        pool.Push(returnedShootingParticle);
     }
 }
 
