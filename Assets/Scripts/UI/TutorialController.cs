@@ -46,7 +46,7 @@ public class TutorialController : MonoBehaviour
         //Implementar singleton para evitar duplicados
         if (instance != null && instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
@@ -63,7 +63,7 @@ public class TutorialController : MonoBehaviour
     //Carga de la instruccion de continue
     private IEnumerator LoadInstruction()
     {
-        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("TutorialTable", "InstructionKey");
+        var localizedString = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("Localization Table", "_PresionarGTutoText");
         yield return localizedString;
         instructionText.text = localizedString.Result;
     }
@@ -93,10 +93,7 @@ public class TutorialController : MonoBehaviour
             }
             else
             {
-                //Si se mostraron todos los mensajes, avanzar al siguiente modulo
-                currentMessageIndex = 0;
-                currentModuleIndex++;
-                ResumeGame(); //Regresar al juego
+                EndModule();
             }
         }
     }
@@ -120,8 +117,24 @@ public class TutorialController : MonoBehaviour
             tutorialCanvas.SetActive(false);
             isMessageActive = false;
             currentMessageIndex++; // Avanzar al siguiente mensaje dentro del módulo
-            ShowMessage();
+            if (currentMessageIndex < tutorialModules[currentModuleIndex].messages.Count)
+            {
+                ShowMessage();
+            }
+            else
+            {
+                EndModule();
+            }
         }
+    }
+
+    //Terminar el modulo actual y pasar al siguiente
+    private void EndModule() 
+    {
+        tutorialCanvas.SetActive(false);
+        ResumeGame();
+        currentModuleIndex++;
+        currentMessageIndex = 0;
     }
 
     //Pausar juego mientras se muestran mensajes de tutorial

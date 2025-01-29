@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class TutorialTrigger : MonoBehaviour
 {
+    //Asegura que el trigger se activa solo una vez
+    private bool hasActivated = false;
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Tutorial"))
+        if (other.CompareTag("Player") && !hasActivated)
         {
-            Debug.Log("Estas reconociendo el contacto");
+            Debug.Log("Estas reconociendo el contacto" + gameObject.name);
+            hasActivated = true;
             TutorialController.instance.ActivateModule();
-            Destroy(other.gameObject);
+            Destroy(gameObject);
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
