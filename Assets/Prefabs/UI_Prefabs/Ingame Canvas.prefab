@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 8880157202813847420}
   m_Layer: 5
   m_Name: RosaLanzaEspinas
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 9028666441726699807}
   m_Layer: 5
   m_Name: Runas
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2326,7 +2326,7 @@ GameObject:
   - component: {fileID: 7825872898205594560}
   m_Layer: 5
   m_Name: Topo
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2658,7 +2658,7 @@ GameObject:
   - component: {fileID: 1363808003095029465}
   m_Layer: 5
   m_Name: PlantaCarnivora
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2858,7 +2858,7 @@ GameObject:
   - component: {fileID: 5682097747134152051}
   m_Layer: 5
   m_Name: Espigas
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3095,7 +3095,7 @@ GameObject:
   - component: {fileID: 4799831418195833540}
   m_Layer: 5
   m_Name: Enredaderas
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3329,9 +3329,10 @@ GameObject:
   - component: {fileID: 1523754450960566827}
   - component: {fileID: 1090903910444403806}
   - component: {fileID: 4640704063849505380}
+  - component: {fileID: 8988079640507358267}
   m_Layer: 5
   m_Name: Baculo
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3417,7 +3418,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.07058824, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -3437,13 +3438,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TowerButton, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 8988079640507358267}
+        m_TargetAssemblyTypeName: BastonButton, Assembly-CSharp
+        m_MethodName: SetHoldingCrosier
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3464,6 +3465,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0.71721756, g: 0.36832502, b: 0.8773585, a: 1}
   m_EffectDistance: {x: -2.22, y: -2.22}
   m_UseGraphicAlpha: 1
+--- !u!114 &8988079640507358267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867830624039011700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38a0caf2dd035b409cb8d785d2b9e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6964592093639101281
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,7 +3733,7 @@ GameObject:
   - component: {fileID: 1955189877297528234}
   m_Layer: 5
   m_Name: TajoVenenoso
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4032,7 +4045,7 @@ GameObject:
   - component: {fileID: 8702897720898159456}
   m_Layer: 5
   m_Name: EdifTropas
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4676,7 +4689,7 @@ GameObject:
   - component: {fileID: 646628358716515298}
   m_Layer: 5
   m_Name: PlaceableObjectsPanel
-  m_TagString: Untagged
+  m_TagString: InteractibleUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
