@@ -113,6 +113,8 @@ public class GameUIManager : MonoBehaviour
     void OpenGameMenu()
     {
         //añadir leAntween y esa vaina loquísima
+        //Hacer que se desenfoque el fondo con Post processing > Depth Of Field > Focal Length
+        //Bajar/subir el sistema de rondas y los botones de abajo
         activeMenuPause = true;
         menuPause.SetActive(true);
         Time.timeScale = 0f;
@@ -120,13 +122,20 @@ public class GameUIManager : MonoBehaviour
     void CloseGameMenu()
     {
         //añadir leAntween y esa vaina loca
-        activeMenuPause = false;
+        if (activeMenuPause == true)
+        {
+            activeMenuPause = false;
+            menuPause.SetActive(false);
+            Time.timeScale = 1f;
+        }
+    }
+    void GameMenuDesactivate()
+    {
         menuPause.SetActive(false);
-        Time.timeScale = 1f;
+
     }
     public void SoundButton()
     {
-        Debug.Log("Sepulsa");
         menuPause.SetActive(false);
         menuSound.SetActive(true);
     }
