@@ -17,28 +17,47 @@ public class AnimationButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     [SerializeField] private float delay = 0.6f;
     [SerializeField] private Vector2 finalPosition;
     [SerializeField] private LeanTweenType animationType;
-    //[SerializeField] private GameObject canvas;
     public bool hadInitialAnimation = false;
-    public bool hadFinalAnimation = false;
+
+    [Header("Final Animation")]
+    public bool finalAnimation = false; 
 
     private void Start()
     {
-        //canvas.SetActive(false);
-        hadInitialAnimation = false; 
-        hadFinalAnimation = false;
+        hadInitialAnimation = false;
+
         originalScale = transform.localScale;
+        StartCoroutine(DelayedInitialAnimation(2f));
+
+         Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.AddListener(OnButtonClick);
+        }
+    }
+
+    private IEnumerator DelayedInitialAnimation(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         ExecuteInitialAnimation();
+    }
+       private void OnButtonClick()
+    {
+        ExecuteFinalAnimation(); 
     }
     public void ExecuteInitialAnimation()
     {
         hadInitialAnimation = true;
         LeanTween.moveLocal(gameObject, finalPosition, delay).setEase(animationType);
     }
+
     public void ExecuteFinalAnimation()
     {
-        hadFinalAnimation = true;
-        LeanTween.moveLocal(gameObject, finalPosition, delay).setEase(animationType);
+
+            LeanTween.moveLocal(gameObject, finalPosition, delay).setEase(animationType);
+        
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         LeanTween.scale(gameObject, originalScale * hoverScaleFactor, animationDuration).setEase(LeanTweenType.easeOutQuad);
@@ -48,5 +67,4 @@ public class AnimationButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
     {
         LeanTween.scale(gameObject, originalScale, animationDuration).setEase(LeanTweenType.easeOutQuad);
     }
-
 }
