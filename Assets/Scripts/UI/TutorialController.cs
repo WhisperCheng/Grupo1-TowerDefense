@@ -75,16 +75,16 @@ public class TutorialController : MonoBehaviour
         {
             PauseGame();                //Pausa el juego
             currentMessageIndex = 0;    //Reinicia la secuencia de mensajes
-            ShowMessage();              //Muestra el mensaje que corresponde
+            StartMessages();              //Muestra el mensaje que corresponde
         }
     }
 
     // Muestra un mensaje del módulo actual. Si ya se mostraron todos los mensajes, avanza al siguiente módulo.
-    private void ShowMessage()
+    private void StartMessages()
     {
         if (currentModuleIndex < tutorialModules.Count)
         {
-            var module = tutorialModules[currentModuleIndex];   //Obtener módulo actual
+            TutorialModule module = tutorialModules[currentModuleIndex];   //Obtener módulo actual
 
             if (currentMessageIndex < module.messages.Count)
             {
@@ -119,7 +119,8 @@ public class TutorialController : MonoBehaviour
             currentMessageIndex++; // Avanzar al siguiente mensaje dentro del módulo
             if (currentMessageIndex < tutorialModules[currentModuleIndex].messages.Count)
             {
-                ShowMessage();
+                Debug.Log(currentModuleIndex);
+                StartMessages();
             }
             else
             {
