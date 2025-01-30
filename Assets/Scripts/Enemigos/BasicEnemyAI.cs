@@ -28,6 +28,8 @@ public abstract class BasicEnemyAI : EnemyAI
         _canDamage = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
         if (attackDone)
         { // Si se ataca con éxito a los enemigos dentro del área de ataque, se resetea el cooldown
+             // TODO //if (_destination) { Die(); }
+            
             _currentCooldown = cooldown;
         }
     }
