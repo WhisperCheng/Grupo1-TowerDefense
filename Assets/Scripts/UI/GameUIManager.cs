@@ -9,12 +9,19 @@ using UnityEngine.SceneManagement;
 public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager Instance { get; private set; }
+    public RectTransform mainCanvas;
     public GameObject buildUI;
     public GameObject crossHead;
     public GameObject menuPause;
-    public GameObject[] panelsMenu; 
+    public GameObject[] panelsMenu;
     public TMP_Text textMoney;
-    
+
+    [Header("Parámetros UI Juego")]
+    public float hideToolbarCoordinates;
+    public float showToolbarCoordinates;
+
+    public Vector3 CanvasProportion { get; private set; }
+
     private string textMoneyOriginal;
 
     public bool activeMenuPause;
@@ -52,6 +59,7 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CanvasProportion = mainCanvas.localScale; // Proporción de la escala del canvas
         UpdateMoney();
     }
 
@@ -71,7 +79,7 @@ public class GameUIManager : MonoBehaviour
         }
         activeBuildUI = !activeBuildUI;
     }
-    public void OnClickGameMenu (InputAction.CallbackContext ctx)
+    public void OnClickGameMenu(InputAction.CallbackContext ctx)
     {
         if (ctx.performed)
         {
@@ -88,20 +96,19 @@ public class GameUIManager : MonoBehaviour
     }
     public void HideBuildUI(float time)
     {
-        activeBuildUI = false; // Ocultar crosshead
-        crossHead.SetActive(false); //
-        LeanTween.cancel(buildUI); // reset de las animaciones
-        LeanTween.moveY(buildUI, -80f, time).setEaseInOutSine(); // Mostrar menú de botones
-        //LeanTween.moveLocalY(buildButtons, -74f, time).setEaseInOutSine(); // 
+        ToggleBuildUI(false, hideToolbarCoordinates, time);
     }
-
     public void ShowBuildUI(float time)
     {
-        activeBuildUI = true; // Ocultar crosshead
-        crossHead.SetActive(true); //
-        LeanTween.cancel(buildUI); // reset de las animaciones
-        LeanTween.moveY(buildUI, 40.5f, time).setEaseInOutSine(); // Mostrar menú de botones
-        //LeanTween.moveLocalY(buildButtons, 0f, time).setEaseInOutSine(); //
+        ToggleBuildUI(true, showToolbarCoordinates, time);
+    }
+    private void ToggleBuildUI(bool value, float verticalMovement, float time)
+    {
+        activeBuildUI = value; // Alternar crosshead
+        crossHead.SetActive(value);
+        LeanTween.cancel(buildUI); // Reset de las animaciones
+        // Esconder/Mostrar menú de botones con movimiento relativo a la escala del canvas
+        LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
     public void UpdateMoney()
