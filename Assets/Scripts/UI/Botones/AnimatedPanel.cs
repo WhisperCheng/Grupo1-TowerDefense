@@ -16,13 +16,15 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private float animationDuration = 0.1f;
     [SerializeField] private float delay = 0.6f;
     [SerializeField] private float buttonsDelay = 0.6f;
-    [SerializeField] private Vector2 panelFinalPosition;
-    [SerializeField] private Vector2 buttonsRelativeFinalPosition;
+    [SerializeField] private float buttonsAnimationDuration = 0.6f;
+    [SerializeField] private Vector2 buttonsInitialPosition;
+    [SerializeField] private Vector2 panelLocalFinalPosition;
+    [SerializeField] private Vector2 buttonsLocalFinalPosition;
     [SerializeField] private LeanTweenType animationType;
     [SerializeField] private List<Button> buttons;
-    public bool hadInitialAnimation = false;
 
-    [Header("Final Animation")]
+    [Header("Animations")]
+    public bool hadInitialAnimation = false;
     public bool finalAnimation = false;
 
     private void Start()
@@ -50,7 +52,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         foreach (Button btn in buttons)
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
-            rect.position = new Vector3(-200, rect.position.y, 0);
+            rect.position = new Vector3(buttonsInitialPosition.x, buttonsInitialPosition.y + rect.position.y, 0);
         }
     }
 
@@ -60,7 +62,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             if (btn != null)
             {
-                ExecuteInitialAnimation(btn, buttonsRelativeFinalPosition);
+                ExecuteInitialAnimation(btn, buttonsLocalFinalPosition);
                 
             }
             yield return new WaitForSeconds(delay);
@@ -73,13 +75,14 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void ExecuteInitialAnimation(Button button, Vector3 finalPos)
     {
         RectTransform rect = button.GetComponent<RectTransform>();
-        LeanTween.moveX(button.gameObject, button.transform.position.x + finalPos.x, buttonsDelay);
-        LeanTween.moveY(button.gameObject, button.transform.position.y  + finalPos.y, buttonsDelay);
+        LeanTween.moveLocal(button.gameObject, rect.localPosition + finalPos, buttonsAnimationDuration).setEase(animationType);
     }
 
     public void ExecuteFinalAnimation()
     {
-        LeanTween.moveLocal(gameObject, panelFinalPosition, delay).setEase(animationType);
+        RectTransform rect = gameObject.GetComponent<RectTransform>();
+        Vector3 panelFinalPos = panelLocalFinalPosition; // Esto es solo para convertir el Vector2 a Vector3
+        LeanTween.moveLocal(gameObject, rect.localPosition + panelFinalPos, delay).setEase(animationType);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

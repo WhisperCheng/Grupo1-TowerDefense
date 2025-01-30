@@ -20,14 +20,16 @@ public class GameUIManager : MonoBehaviour
     public float hideToolbarCoordinates;
     public float showToolbarCoordinates;
 
-    public Vector3 CanvasProportion { get; private set; }
-
-    private string textMoneyOriginal;
-
     public bool activeMenuPause;
     public bool activeBuildUI;
     public bool otherPanelActive;
     public float menusTransitionTime = 0.5f;
+
+    public Vector3 CanvasProportion { get; private set; }
+
+    private Vector3 buildUIInitialPos;
+
+    private string textMoneyOriginal;
 
     public void Awake()
     {
@@ -44,6 +46,9 @@ public class GameUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        RectTransform buildUIRT = buildUI.GetComponent<RectTransform>();
+        buildUIInitialPos = buildUIRT.TransformPoint(new Vector2(0, buildUIRT.rect.yMax));
+        Debug.Log(buildUIInitialPos);
         //activeObjectUI = true;
         textMoneyOriginal = textMoney.text;
         if (activeBuildUI)
@@ -108,7 +113,8 @@ public class GameUIManager : MonoBehaviour
         crossHead.SetActive(value);
         LeanTween.cancel(buildUI); // Reset de las animaciones
         // Esconder/Mostrar menú de botones con movimiento relativo a la escala del canvas
-        LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
+        LeanTween.moveLocalY(buildUI, buildUIInitialPos.y + verticalMovement, time).setEaseInOutSine();
+        Debug.Log(buildUIInitialPos.y + verticalMovement);
     }
 
     public void UpdateMoney()
