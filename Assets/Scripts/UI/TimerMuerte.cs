@@ -26,6 +26,7 @@ public class TimerMuerte : MonoBehaviour
         if (coolingDown == true)
         {
             cooldown.fillAmount -= 1f / timer * Time.deltaTime;
+            GameUIManager.Instance.otherPanelActive = true;
         }
         if (cooldown.fillAmount <= 0)
         {
