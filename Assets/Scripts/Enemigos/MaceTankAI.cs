@@ -7,7 +7,7 @@ using UnityEngine;
 public class MaceTankAI : BasicEnemyAI
 {
 
-    private StudioEventEmitter emitter;
+    private StudioEventEmitter emitterAttack;
     public override GameObject GetFromPool() { return MaceTankPool.Instance.GetMaceTank(); }
 
     protected override void ReturnEnemyGameObjectToPool() { MaceTankPool.Instance.ReturnMaceTank(this.gameObject); }
@@ -16,7 +16,7 @@ public class MaceTankAI : BasicEnemyAI
     {
         base.OnAttack();
         //FMOD
-        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.bigKnightHit, this.gameObject);
-        emitter.Play();
+        emitterAttack = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.bigKnightHit, this.gameObject);
+        emitterAttack.Play();
     }
 }

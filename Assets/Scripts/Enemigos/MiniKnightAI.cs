@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class MiniKnightAI : BasicEnemyAI
 {
-    private StudioEventEmitter emitter;
+    private StudioEventEmitter emitterAttack;
 
 
     public override GameObject GetFromPool() { return MiniKnightPool.Instance.GetMiniKnight(); }
@@ -19,7 +19,7 @@ public class MiniKnightAI : BasicEnemyAI
     {
         base.OnAttack();
         //FMOD
-        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.miniKnightHit, this.gameObject);
-        emitter.Play();
+        emitterAttack = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.miniKnightHit, this.gameObject);
+        emitterAttack.Play();
     }
 }

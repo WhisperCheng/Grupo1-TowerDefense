@@ -7,7 +7,7 @@ using UnityEngine;
 public class AxeTankAI : BasicEnemyAI
 {
 
-    private StudioEventEmitter emitter;
+    private StudioEventEmitter emitterAttack;
     public override GameObject GetFromPool() { return AxeTankPool.Instance.GetAxeTank(); }
 
     protected override void ReturnEnemyGameObjectToPool() { AxeTankPool.Instance.ReturnAxeTank(this.gameObject); }
@@ -16,7 +16,7 @@ public class AxeTankAI : BasicEnemyAI
     {
         base.OnAttack();
         //FMOD
-        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.bigKnightHit, this.gameObject);
-        emitter.Play();
+        emitterAttack = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.bigKnightHit, this.gameObject);
+        emitterAttack.Play();
     }
 }
