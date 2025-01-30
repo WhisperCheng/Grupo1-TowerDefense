@@ -11,7 +11,7 @@ using System.ComponentModel;
 public class TutorialController : MonoBehaviour
 {
     //Singleton: Hace el script accesible
-    public static TutorialController instance { get; private set; }
+    public static TutorialController Instance { get; private set; }
 
     [Header("UI Elements")]
     public GameObject tutorialCanvas;          // Panel del tutorial
@@ -44,13 +44,13 @@ public class TutorialController : MonoBehaviour
     private void Awake()
     {
         //Implementar singleton para evitar duplicados
-        if (instance != null && instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
         }
     }
 
@@ -84,16 +84,17 @@ public class TutorialController : MonoBehaviour
     {
         if (currentModuleIndex < tutorialModules.Count)
         {
-            TutorialModule module = tutorialModules[currentModuleIndex];   //Obtener módulo actual
+            TutorialModule module = tutorialModules[currentModuleIndex]; //Obtener módulo actual
 
             if (currentMessageIndex < module.messages.Count)
             {
                 //Mostrar el mensaje actual y avanzar al siguiente
                 StartCoroutine(DisplayLocalizedMessage(module.messages[currentMessageIndex]));
+                currentMessageIndex++; // Avanzar al siguiente mensaje dentro del módulo
             }
             else
             {
-                EndModule();
+                EndModule(); // Aquí solo entraría en el caso de que no hubieran mensajes en el módulo, en teoría
             }
         }
     }
@@ -104,28 +105,26 @@ public class TutorialController : MonoBehaviour
         var localizedString = key.GetLocalizedStringAsync();
         yield return localizedString;
 
-        tutorialMessageText.text = localizedString.Result;
-        tutorialCanvas.SetActive(true);
+        tutorialCanvas.SetActive(true); // Hay que mostrar el canvas para que pueda cambiar el texto
         isMessageActive = true;
+        tutorialMessageText.text = localizedString.Result;
     }
 
     // Maneja la acción de "continuar" cuando el jugador presiona la tecla.
     private void OnContinueAction(InputAction.CallbackContext ctx)
     {
-        if (isMessageActive)
+        if (isMessageActive && ctx.performed)
         {
-            tutorialCanvas.SetActive(false);
-            isMessageActive = false;
-            currentMessageIndex++; // Avanzar al siguiente mensaje dentro del módulo
             if (currentMessageIndex < tutorialModules[currentModuleIndex].messages.Count)
             {
-                Debug.Log(currentModuleIndex);
+                
                 StartMessages();
             }
             else
             {
                 EndModule();
             }
+            isMessageActive = false;
         }
     }
 

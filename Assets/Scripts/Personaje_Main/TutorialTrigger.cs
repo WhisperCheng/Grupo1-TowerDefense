@@ -13,7 +13,7 @@ public class TutorialTrigger : MonoBehaviour
         {
             Debug.Log("Estas reconociendo el contacto" + gameObject.name);
             hasActivated = true;
-            TutorialController.instance.ActivateModule();
+            TutorialController.Instance.ActivateModule();
             Destroy(gameObject);
         }
     }
