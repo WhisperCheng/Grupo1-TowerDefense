@@ -27,7 +27,8 @@ public class GameUIManager : MonoBehaviour
 
     public Vector3 CanvasProportion { get; private set; }
 
-    private Vector3 buildUIInitialPos;
+    private Vector3 bottomHotbarPos;
+    private RectTransform canvasRT;
 
     private string textMoneyOriginal;
 
@@ -46,9 +47,8 @@ public class GameUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RectTransform buildUIRT = buildUI.GetComponent<RectTransform>();
-        buildUIInitialPos = buildUIRT.TransformPoint(new Vector2(0, buildUIRT.rect.yMax));
-        Debug.Log(buildUIInitialPos);
+        canvasRT = mainCanvas.GetComponent<RectTransform>();
+
         //activeObjectUI = true;
         textMoneyOriginal = textMoney.text;
         if (activeBuildUI)
@@ -112,9 +112,13 @@ public class GameUIManager : MonoBehaviour
         activeBuildUI = value; // Alternar crosshead
         crossHead.SetActive(value);
         LeanTween.cancel(buildUI); // Reset de las animaciones
+
         // Esconder/Mostrar menú de botones con movimiento relativo a la escala del canvas
-        LeanTween.moveLocalY(buildUI, buildUIInitialPos.y + verticalMovement, time).setEaseInOutSine();
-        Debug.Log(buildUIInitialPos.y + verticalMovement);
+
+        //bottomHotbarPos = canvasRT.TransformDirection(new Vector2(0, canvasRT.rect.yMin));
+        //LeanTween.moveLocalY(buildUI, bottomHotbarPos.y + verticalMovement, time).setEaseInOutSine();
+        // Se puede de esta otra manera, pero la segunda da menos problemas
+        LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
     public void UpdateMoney()
