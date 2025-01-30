@@ -5,7 +5,7 @@
 			<value>BigKnightAttack</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{e7d2ae27-bf78-4b4e-913a-de7ab0ca7925}</destination>
@@ -56,7 +56,7 @@
 			<destination>{c9a8abf6-473f-4e31-a996-7e1609948301}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{8b560cf5-ec28-4592-b2f0-60defdbb1ff6}</destination>
+			<destination>{20757c5b-805e-45eb-833c-9ff139b16ead}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{f2a37c37-6675-462d-bbc1-41186d6689a8}" />
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{2c332de3-9c85-479d-81c4-b8a482c8284f}">
+		<property name="volume">
+			<value>-6</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{40b2b201-e55c-4d54-bf19-4af9973a63ee}</destination>
 		</relationship>
@@ -96,6 +99,7 @@
 	<object class="MixerBusEffectChain" id="{40b2b201-e55c-4d54-bf19-4af9973a63ee}">
 		<relationship name="effects">
 			<destination>{b962dc11-d8b9-446c-979a-6998c5b63dd0}</destination>
+			<destination>{6f138bb6-6e47-48ab-802c-6a9f77155e0c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{1b7650cf-cb3a-4208-9545-d9ef862199f6}" />
@@ -106,4 +110,5 @@
 	</object>
 	<object class="MixerBusFader" id="{86c34a57-26eb-430e-b96d-4d2e0c3450ac}" />
 	<object class="MixerBusFader" id="{b962dc11-d8b9-446c-979a-6998c5b63dd0}" />
+	<object class="SpatialiserEffect" id="{6f138bb6-6e47-48ab-802c-6a9f77155e0c}" />
 </objects>
