@@ -133,8 +133,6 @@ public class PlaceManager : MonoBehaviour
 
                 validCollision = (colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0) ? true : false;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
-
-
             }
             else
             {

@@ -38,7 +38,7 @@ public class ProyectilFabric : MonoBehaviour
         int towerMask = 1 << GameManager.Instance.layerTorres;
         int hearthMask = 1 << GameManager.Instance.layerCorazon;
         if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask | enemyMask
-            | towerMask | hearthMask) && !golpeRayo.transform.CompareTag(GameManager.Instance.tagPuentes))
+            | towerMask | hearthMask))
         {
             destino = golpeRayo.point;
         }
