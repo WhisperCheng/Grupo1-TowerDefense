@@ -41,8 +41,9 @@ public class RangoTorres : MonoBehaviour
         }
         else
         {
+            int towerMask = 1 << GameManager.Instance.layerTorres;
             Ray rayo = Camera.main.ScreenPointToRay(marcador.position);
-            if (Physics.Raycast(rayo, out RaycastHit golpeRayo))
+            if (Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance, towerMask))
             {
                 if (golpeRayo.collider.CompareTag(GameManager.Instance.tagTorres) 
                     || golpeRayo.collider.CompareTag(GameManager.Instance.tagTorresCamino))
