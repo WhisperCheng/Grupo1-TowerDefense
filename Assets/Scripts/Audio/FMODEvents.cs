@@ -31,6 +31,17 @@ public class FMODEvents : MonoBehaviour
     [field: Header("buildPlant")]
     [field: SerializeField] public EventReference buildPlant { get; private set; }
 
+    [field: Header("runeStun")]
+    [field: SerializeField] public EventReference runeStun { get; private set; }
+
+    [field: Header("mushroomAttack")]
+    [field: SerializeField] public EventReference mushroomAttack { get; private set; }
+
+    [field: Header("MiniEnemyHit")]
+    [field: SerializeField] public EventReference miniKnightHit { get; private set; }
+
+    [field: Header("BigEnemyHit")]
+    [field: SerializeField] public EventReference bigKnightHit { get; private set; }
 
     [field: Header("ForestAmbience")]
     [field: SerializeField] public EventReference forestAmbience { get; private set; }

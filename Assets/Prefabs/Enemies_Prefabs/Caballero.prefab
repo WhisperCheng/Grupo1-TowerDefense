@@ -516,6 +516,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
       insertIndex: -1
       addedObject: {fileID: 988029707141775649}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6228438415014131225}
   m_SourcePrefab: {fileID: 100100000, guid: 389cbf86ce91ad449bbdb565b7979927, type: 3}
 --- !u!4 &4988192326317303351 stripped
 Transform:
@@ -539,6 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238821d4b85a44b409fbfe390dce94ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropMoney: 0
   actionRadio: 5.85
   checkWaypointProximityDistance: 3
   _onFocusAcceleration: 30
@@ -692,6 +696,37 @@ MonoBehaviour:
       Data3: 2044012461
       Data4: 84188769
     Path: event:/SFX/GetHit
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &-6228438415014131225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5652667148767116429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 13831199
+      Data2: 1336191381
+      Data3: 885827715
+      Data4: -1737813729
+    Path: event:/SFX/Enemies/miniKnightAttack
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0

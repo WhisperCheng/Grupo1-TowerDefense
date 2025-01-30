@@ -1,9 +1,16 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(StudioEventEmitter))]
+
 public class MiniKnightAI : BasicEnemyAI
 {
+    private StudioEventEmitter emitter;
+
+
     public override GameObject GetFromPool() { return MiniKnightPool.Instance.GetMiniKnight(); }
 
     protected override void ReturnEnemyGameObjectToPool() { MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject); }
@@ -11,6 +18,8 @@ public class MiniKnightAI : BasicEnemyAI
     public override void OnAttack()
     {
         base.OnAttack();
-        // SONIDO : Ataque
+        //FMOD
+        emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.miniKnightHit, this.gameObject);
+        emitter.Play();
     }
 }

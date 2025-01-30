@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -42,6 +43,8 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
 
     private int _velocityHash;
 
+
+
     public override void Init()
     {
         _initialized = true;
@@ -58,6 +61,8 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
         _velocityHash = Animator.StringToHash("VelMagnitud");
         Init();
         _maxVelocity = _navAgent.speed;
+
+
     }
 
     void Update()
@@ -93,6 +98,8 @@ public class Seta_AliadaAI : LivingEntityAI, IDamageable, IPoolable
         if (_attackMode) // Si está únicamente en modo de ataque (cuando hay un rival dentro de la hitbox de ataque,
         {               // activar el booleano de hacer daño)
             _canDamage = true;
+
+
         }
         else
         {
