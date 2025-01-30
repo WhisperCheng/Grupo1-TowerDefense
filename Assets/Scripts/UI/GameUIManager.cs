@@ -26,7 +26,7 @@ public class GameUIManager : MonoBehaviour
 
     public bool activeMenuPause;
     public bool activeBuildUI;
-    bool otherPanelActive;
+    public bool otherPanelActive;
     public float menusTransitionTime = 0.5f;
 
     public void Awake()
@@ -121,6 +121,7 @@ public class GameUIManager : MonoBehaviour
         //añadir leAntween y esa vaina loquísima
         activeMenuPause = true;
         menuPause.SetActive(true);
+        PostProcessingControl.Instance.PostProcessingVolumeOn();
         Time.timeScale = 0f;
     }
     void CloseGameMenu()
@@ -128,12 +129,8 @@ public class GameUIManager : MonoBehaviour
         //añadir leAntween y esa vaina loca
         activeMenuPause = false;
         menuPause.SetActive(false);
+        PostProcessingControl.Instance.PostProcessingVolumeOff();
         Time.timeScale = 1f;
-    }
-    void GamePostProcessingMenu()
-    {
-        //Hacer que se desenfoque el fondo con Post processing > Depth Of Field > Focal Length
-        //Bajar/subir el sistema de rondas y los botones de abajo
     }
     void GameMenuDesactivate()
     {
