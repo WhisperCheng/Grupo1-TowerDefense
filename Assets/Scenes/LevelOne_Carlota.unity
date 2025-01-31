@@ -6369,7 +6369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   brightness: {fileID: 1524765266}
-  panelBrightness: {fileID: 1048493856}
+  panelBrightness: {fileID: 1069932877}
   volumeType: 0
   sensitiveSlider: {fileID: 1134777106}
   smoothnessSlider: {fileID: 0}
@@ -8425,17 +8425,6 @@ Transform:
   - {fileID: 743838362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1048493856 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2307368804304277716, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
-  m_PrefabInstance: {fileID: 1859464100}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1049667807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8856,6 +8845,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0000002, y: 1.8, z: 2.3}
   m_Center: {x: 0, y: 0, z: 0.14999998}
+--- !u!114 &1069932877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8662464609959376643, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+  m_PrefabInstance: {fileID: 1859464100}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1079921060
 GameObject:
   m_ObjectHideFlags: 3
@@ -15097,6 +15097,34 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 762121838}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeBrightness
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: OptionsController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757513441625054371, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3784394818138530632, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -15160,6 +15188,10 @@ PrefabInstance:
     - target: {fileID: 7400111169089201426, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8662464609959376643, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
+      propertyPath: m_Color.a
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8696176796915225223, guid: 0162d2528ffc7824f9fc3358871a8c94, type: 3}
       propertyPath: m_AnchorMax.y

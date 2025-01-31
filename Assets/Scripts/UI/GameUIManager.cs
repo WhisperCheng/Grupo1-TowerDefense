@@ -96,10 +96,12 @@ public class GameUIManager : MonoBehaviour
             if (activeMenuPause && !otherPanelActive)
             {
                 OpenGameMenu();
+                Cursor.lockState = CursorLockMode.None;
             }
             else if (!otherPanelActive)
             {
                 CloseGameMenu();
+                Cursor.lockState = CursorLockMode.Locked;
             }
         }
         activeMenuPause = !activeMenuPause;
@@ -174,6 +176,7 @@ public class GameUIManager : MonoBehaviour
     public void ReLoadGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1f;
     }
     public void BackToPrincipalMenu()
     {

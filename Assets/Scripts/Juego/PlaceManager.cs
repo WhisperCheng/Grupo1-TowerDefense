@@ -49,7 +49,7 @@ public class PlaceManager : MonoBehaviour
         // se puede por defecto tener un action map activado a la vez, pero se puede bypasear
         // haciendo esto
         //https://youtu.be/NZBAr_V7r0M?t=153
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
         // Materiales Seleccionados
         materialesSeleccionPropertyBlock = ColorUtils.CreateToonShaderPropertyBlock(selectionColor);
