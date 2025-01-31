@@ -31,6 +31,7 @@ public class TimerMuerte : MonoBehaviour
         if (cooldown.fillAmount <= 0)
         {
             coolingDown = false;
+            GameUIManager.Instance.otherPanelActive = false;
         }
     }
     public void ActivateRespawnTimer()
