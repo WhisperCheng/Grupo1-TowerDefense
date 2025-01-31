@@ -6236,6 +6236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b01573c201b85ef459aeae5c3ddfe80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelWin: {fileID: 0}
+  panelLose: {fileID: 0}
   wayPoints:
   - {fileID: 1803136528}
   - {fileID: 1969032344}
@@ -6372,7 +6374,6 @@ MonoBehaviour:
   panelBrightness: {fileID: 1069932877}
   volumeType: 0
   sensitiveSlider: {fileID: 0}
-  smoothnessSlider: {fileID: 0}
 --- !u!1001 &767485476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7339,8 +7340,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5145294779463234126, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5449397013676275605, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7135763405847881204, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7627303951031679629, guid: 3c1f2b6f98a59df4d8e7d86285339d42, type: 3}

@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameObject panelWin;
+    public GameObject panelLose;
 
     private void Awake() // Patrón Singleton
     {
@@ -75,6 +76,8 @@ public class GameManager : MonoBehaviour
         if (ForestHearthAmount <= 0)
         {
             // TODO: Perder partida
+            panelLose.SetActive(true);
+            Time.timeScale = 0f;
             Debug.Log("Partida perdida");
             this.enabled = false;
         }
@@ -93,7 +96,6 @@ public class GameManager : MonoBehaviour
     {
         panelWin.SetActive(true);
         Time.timeScale = 0f;
-
     }
 
     /*public int getForestHearthAmount()
