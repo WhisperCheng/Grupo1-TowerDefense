@@ -10,6 +10,9 @@ public class AudioManager : MonoBehaviour
 {
 
     public EventInstance musicEventInstance;
+
+    private List<EventInstance> eventInstances;
+
     private List<StudioEventEmitter> eventEmitters;
 
     [Header("Volume")]
@@ -35,6 +38,7 @@ public class AudioManager : MonoBehaviour
         }
         instance = this;
         eventEmitters = new List<StudioEventEmitter>();
+        eventInstances = new List<EventInstance>();
 
         masterBus = RuntimeManager.GetBus("bus:/");
         musicBus = RuntimeManager.GetBus("bus:/Music");
@@ -66,6 +70,7 @@ public class AudioManager : MonoBehaviour
     public EventInstance CreateInstance (EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+        eventInstances.Add(eventInstance);
         return eventInstance;
     }
 
@@ -97,6 +102,13 @@ public class AudioManager : MonoBehaviour
 
     private void CleanUp()
     {
+
+        foreach (EventInstance eventInstance in eventInstances)
+        {
+            eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            eventInstance.release();
+
+        }
 
         foreach (StudioEventEmitter emitter in eventEmitters)
         {
