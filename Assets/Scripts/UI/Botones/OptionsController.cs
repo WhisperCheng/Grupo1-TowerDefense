@@ -26,7 +26,6 @@ public class OptionsController : MonoBehaviour
     private Slider volumeSlider;
 
     [SerializeField] private Slider sensitiveSlider;
-    [SerializeField] private Slider smoothnessSlider;
     
     public static OptionsController instance { get; private set; }
 
@@ -48,16 +47,17 @@ public class OptionsController : MonoBehaviour
 
     void Start()
     {
-        brightness.value = PlayerPrefs.GetFloat("brightness", 0.7f);
-        panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, brightness.value);
+         brightness.value = PlayerPrefs.GetFloat("brightness", 0.7f);
+        UpdateBrightnessPanel(brightness.value);
+        brightness.onValueChanged.AddListener(ChangeBrightness);
     }
 
     private void Update()
     {
        
-        /*switch (volumeType)
+        switch (volumeType)
         {
-            case VolumeType.MASTER:
+           /* case VolumeType.MASTER:
                 volumeSlider.value = AudioManager.instance.masterVolume;
                 break;
             case VolumeType.MUSIC:
@@ -68,16 +68,14 @@ public class OptionsController : MonoBehaviour
                 break;
             default:
                 Debug.LogWarning("Volume type no supported" + volumeType);
-                break;
-        }*/
+                break;*/
+        }
     }
     public void ChangeBrightness(float value)
     {
-        brightness.value = value;
-        float alpha = 1f - value;
-        alpha = Mathf.Clamp(alpha, 0f, 1f);
+
         PlayerPrefs.SetFloat("brightness", value);
-        panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, alpha);
+        UpdateBrightnessPanel(value);
     }
     public void ChangeVolume(float volume)
     {
@@ -103,6 +101,12 @@ public class OptionsController : MonoBehaviour
 
         sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
         PlayerPrefs.SetFloat("sensitive", sensitive);
+    }
+    private void UpdateBrightnessPanel(float value)
+    {
+        float alpha = 1f - value;
+        alpha = Mathf.Clamp(alpha, 0f, 1f);
+        panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, alpha);
     }
 }
 
