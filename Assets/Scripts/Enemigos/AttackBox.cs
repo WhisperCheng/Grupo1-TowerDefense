@@ -10,6 +10,7 @@ public class AttackBox
 
 
     public bool AttackModeBool { get; private set; }
+    public GameObject AttackedEntity { get; private set; }
     public bool CanAttackOrDamageBool { get; private set; }
     public AttackBox() { }
 
@@ -45,6 +46,7 @@ public class AttackBox
                     if (canAttackOrDamageBool)
                     {
                         damageableEntity.TakeDamage(damage);
+                        AttackedEntity = col.gameObject;
                         CanAttackOrDamageBool = false;
                         AttackModeBool = false; // Reset del bool para hacer daño y del de modo de ataque
                         //CurrentCooldown = cooldown; // Reset del cooldown
@@ -54,6 +56,7 @@ public class AttackBox
                 else
                 {
                     animator.ResetTrigger("Attack");
+                    Debug.Log(col.gameObject);
                 }
             }
         }

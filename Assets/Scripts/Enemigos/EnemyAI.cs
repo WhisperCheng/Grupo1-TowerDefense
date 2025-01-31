@@ -53,9 +53,11 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
 
     protected bool _attackMode = false;
     protected bool _canDamage = false;
+    protected bool _dropMoney = true;
     protected bool _finishedWaypoints = false;
     protected bool _initialized = false;
-
+    //protected bool _attackingForestHeart = false; // Se usa para saber en un momento determinado si está atacando al corazón del bosque
+                                                  // para luego hacer que el enemigo al golpearlo se muera
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
 
@@ -84,10 +86,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public override void Init()
     {
         _initialized = true;
-        _currentHealth = health; // Inicializar/Restaurar la salud del caballero al valor máximo
+        _currentHealth = health; // Inicializar/Restaurar la salud del enemigo al valor máximo
         _maxHealth = health;
         _currentCooldown = cooldown;
-
+        _dropMoney = true;
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         speed = _originalSpeed;
@@ -98,7 +100,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         OnAssignDestination(_destination);
         _currentCooldown = 0f;
         animatorController = GetComponent<Animator>();
-        //attackingList = new List<Collider>();
         _defaultAcceleration = _agent.acceleration;
     }
     protected virtual void UpdateCurrentCooldown()
@@ -130,7 +131,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         if (RoundManager.enemiesAlive > 0)
             RoundManager.enemiesAlive--;
         ReturnToPool();
-        MoneyManager.Instance.AddMoney(dropMoney);
+        if (_dropMoney)
+            MoneyManager.Instance.AddMoney(dropMoney);
     }
 
     /// Si es necesario, las clases herederas podrán usar estos métodos para implementar variaciones de
@@ -148,7 +150,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
-
             _agent.acceleration = _onFocusAcceleration; // Cambiar la aceleración de rotación del enemigo
             var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
@@ -159,7 +160,10 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
                 Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, null);
-                if (hearth != null && _destination != hearth.position) _destination = hearth.position;
+                if (hearth != null && _destination != hearth.position)
+                {
+                    _destination = hearth.position;
+                }
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
             }
             else // Si no, va yendo de waypoint en waypoint hasta llegar al final
