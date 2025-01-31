@@ -11,6 +11,7 @@ public class GameUIManager : MonoBehaviour
     public static GameUIManager Instance { get; private set; }
     public RectTransform mainCanvas;
     public GameObject buildUI;
+    public GameObject roundUI;
     public GameObject crossHead;
     public GameObject menuPause;
     public GameObject[] panelsMenu;
@@ -67,6 +68,10 @@ public class GameUIManager : MonoBehaviour
         CanvasProportion = mainCanvas.localScale; // Proporción de la escala del canvas
         UpdateMoney();
     }
+    public void UpdateMoney()
+    {
+        textMoney.text = textMoneyOriginal + " " + MoneyManager.Instance.GetMoney();
+    }
 
     public void OnToggleBuildUI(InputAction.CallbackContext ctx)
     {
@@ -121,16 +126,13 @@ public class GameUIManager : MonoBehaviour
         LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
-    public void UpdateMoney()
-    {
-        textMoney.text = textMoneyOriginal + " " + MoneyManager.Instance.GetMoney();
-    }
-
     void OpenGameMenu()
     {
         //añadir leAntween y esa vaina loquísima
         activeMenuPause = true;
         menuPause.SetActive(true);
+        buildUI.SetActive(false);
+        roundUI.SetActive(false);
         PostProcessingControl.Instance.PostProcessingVolumeOn();
         Time.timeScale = 0f;
     }
@@ -139,6 +141,8 @@ public class GameUIManager : MonoBehaviour
         //añadir leAntween y esa vaina loca
         activeMenuPause = false;
         menuPause.SetActive(false);
+        buildUI.SetActive(true);
+        roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
         Time.timeScale = 1f;
     }
@@ -147,24 +151,29 @@ public class GameUIManager : MonoBehaviour
         Time.timeScale = 0f;
         otherPanelActive = true;
     }
-    public void SoundButton()
+    public void ControlButton()
     {
         GameMenuDesactivate();
         panelsMenu[0].SetActive(true);
     }
-    public void BrightnessButton()
+    public void SoundButton()
     {
         GameMenuDesactivate();
         panelsMenu[1].SetActive(true);
     }
-    public void ControlButton()
+    public void BrightnessButton()
     {
         GameMenuDesactivate();
         panelsMenu[2].SetActive(true);
     }
+
     public void StartGame()
     {
         CloseGameMenu();
+    }
+    public void ReLoadGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void BackToPrincipalMenu()
     {
