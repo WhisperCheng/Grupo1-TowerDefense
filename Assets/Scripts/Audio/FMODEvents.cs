@@ -54,6 +54,12 @@ public class FMODEvents : MonoBehaviour
     [field: Header("MenuClick")]
     [field: SerializeField] public EventReference menuClick { get; private set; }
 
+    [field: Header("MenuWin")]
+    [field: SerializeField] public EventReference menuWin { get; private set; }
+
+    [field: Header("MenuLose")]
+    [field: SerializeField] public EventReference menuLose { get; private set; }
+
 
 
     public static FMODEvents instance {  get; private set; }
