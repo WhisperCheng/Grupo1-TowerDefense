@@ -137,10 +137,16 @@ public class PlaceManager : MonoBehaviour
             if (torre.CompareTag(GameManager.Instance.tagTorresCamino)) // Si es una torre de camino
             {
                 Collider[] outsidePathCols = null;
-                colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask);
+                colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, pathMask | terrainMask);
+                // Para hacer que funcione si fuera necesario en zonas donde el path está enterrado ligeramente, usar RayCastAll
                 if (colisionConRayo)
                 {
-                    outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathBordersMask);
+                    // Si se está apuntando a un camino, podrá darse la posibilidad de que si se pueda colocar si no está cerca
+                    // de un borde u otra cosa, pero si se está apuntando al terreno entonces outsidePathCols será nulo
+                    // y la colisión no será válida, aunque aún así como colisionConRayo estará a true servirá para
+                    // mostrar la planta de color rojo en lugar de hacer que desaparezca e indicar que no se puede poner
+                    if (golpeRayo.transform.gameObject.layer == GameManager.Instance.layerPath)
+                        outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathBordersMask);
                 }
 
                 validCollision = colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0;
