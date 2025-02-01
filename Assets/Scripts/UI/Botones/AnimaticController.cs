@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Playables;
 
 public class AnimaticController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class AnimaticController : MonoBehaviour
 
     private bool isFading = true;
 
+
+    public PlayableDirector timeline;
     private void Start()
     {
             
@@ -40,7 +43,14 @@ public class AnimaticController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-           LevelChanges.OpenMainMenu();
+
+                if (timeline != null)
+                {
+                    timeline.Stop(); 
+                }
+                LevelChanges.OpenMainMenu();
         }
     }
 }
+
+

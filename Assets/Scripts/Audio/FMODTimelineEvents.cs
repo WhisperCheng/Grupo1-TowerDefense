@@ -47,6 +47,7 @@ public class FMODTimelineMusic : MonoBehaviour
     private void OnDestroy()
     {
         // Libera la instancia cuando termine la cinemática
+        musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         musicInstance.release();
     }
 }
