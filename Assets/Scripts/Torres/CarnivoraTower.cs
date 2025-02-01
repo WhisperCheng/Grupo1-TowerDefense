@@ -177,6 +177,7 @@ public class CarnivoraTower : LivingTower, IDamageable
             _attackMode = false;
             currentTarget = null;
             money = _originalMoney;
+            _boostIndex = -1;
             RemoveExistentCrowns();
         }
         CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
