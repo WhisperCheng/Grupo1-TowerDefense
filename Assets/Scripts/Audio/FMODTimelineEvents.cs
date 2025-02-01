@@ -38,7 +38,6 @@ public class FMODTimelineMusic : MonoBehaviour
     }
 
 
-
     public void StopMusic()
     {
         // Detiene la música con fade out
