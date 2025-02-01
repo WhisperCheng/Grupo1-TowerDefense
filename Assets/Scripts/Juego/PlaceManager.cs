@@ -21,13 +21,16 @@ public class PlaceManager : MonoBehaviour
     public bool objetoSiendoArrastrado = false;
     public bool bloqueoDisparo = false;
     public Color selectionColor;
+    public Color invalidSelectionColor;
     public float maxPlaceDistance;
 
     protected float _currentSellTime;
+    protected bool _canPlaceTower = false;
 
     //GameObject particulasCopia;
 
-    MaterialPropertyBlock materialesSeleccionPropertyBlock;
+    MaterialPropertyBlock m_SeleccionPropertyBlock;
+    MaterialPropertyBlock m_SeleccionInvalidaPropertyBlock;
 
     private void Awake()
     {
@@ -52,9 +55,13 @@ public class PlaceManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         // Materiales Seleccionados
-        materialesSeleccionPropertyBlock = ColorUtils.CreateToonShaderPropertyBlock(selectionColor);
-        materialesSeleccionPropertyBlock.SetFloat("_Tweak_transparency", -(1 - selectionColor.a));
-        // Modificar transparencia
+        m_SeleccionPropertyBlock = ColorUtils.CreateToonShaderPropertyBlock(selectionColor);
+        m_SeleccionPropertyBlock.SetFloat("_Tweak_transparency", -(1 - selectionColor.a));  // Modificar transparencia
+
+
+        // Materiales invalidos
+        m_SeleccionInvalidaPropertyBlock = ColorUtils.CreateToonShaderPropertyBlock(invalidSelectionColor);
+        m_SeleccionInvalidaPropertyBlock.SetFloat("_Tweak_transparency", -(1 - selectionColor.a)); // Modificar transparencia
     }
 
     // Update is called once per frame
@@ -71,17 +78,14 @@ public class PlaceManager : MonoBehaviour
         if (MoneyManager.Instance.gems >= torre.Money)
         {
             if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
-                                         // hasta que no se coloque
-            {
+            {                                                               // hasta que no se coloque
                 torre = torre.GetComponent<IPoolable>().GetFromPool().GetComponent<Tower>();
-
+                ManageTowerPlacement();
                 // Esto es para que al colocarlo no se buguee con el raycast todo el rato, hasta que se termine de colocar
                 ToggleTowerCollisions(torre, false);
                 SetPreviewMode(true);
                 bloqueoDisparo = true;
                 objetoSiendoArrastrado = true;
-
-
             }
         }
     }
@@ -94,10 +98,16 @@ public class PlaceManager : MonoBehaviour
 
     private void SetPreviewMode(bool previewMode)
     {
-        ColorUtils.ChangeObjectMaterialColors(torre.gameObject, materialesSeleccionPropertyBlock, previewMode);
+        ColorUtils.ChangeObjectMaterialColors(torre.gameObject, m_SeleccionPropertyBlock, previewMode);
 
         if (!previewMode && torre.placed) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
-        { torre.UnlockTower(); } // lo que permite atacar y rotar hacia los enemigos
+        { torre.UnlockTower();} // lo que permite atacar y rotar hacia los enemigos
+    }
+
+    private void UpdateCurrentMode(MaterialPropertyBlock m_propertyBlock, bool updateCanBePlacedStatus)
+    {
+        _canPlaceTower = updateCanBePlacedStatus;
+        ColorUtils.ChangeObjectMaterialColors(torre.gameObject, m_propertyBlock, true);
     }
 
     public void RotateCurrentTower(InputAction.CallbackContext context)
@@ -121,8 +131,6 @@ public class PlaceManager : MonoBehaviour
             int pathBordersMask = 1 << GameManager.Instance.layerPathBordes; // Detecta obstáculos de decoración
             int towersMask = 1 << GameManager.Instance.layerTorres | 1 << GameManager.Instance.layerTrap; // Detecta las torres cercanas
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
-
-            
 
             bool validCollision = false;
             bool colisionConRayo = false;
@@ -152,9 +160,10 @@ public class PlaceManager : MonoBehaviour
             }
 
             Collider[] towersInsideSizeRadius = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), towersMask);
-            bool areTowersInsideSizeRadius = towersInsideSizeRadius.Length > 0 ;
-            
-            if (validCollision && !areTowersInsideSizeRadius)
+            bool areTowersInsideSizeRadius = towersInsideSizeRadius.Length > 0;
+
+            // Aquí es donde se actualiza la posición
+            if (validCollision && !areTowersInsideSizeRadius) // Se comprueba si se puede colocar la torre
             {
                 if (!torre.gameObject.activeSelf)
                 {
@@ -163,10 +172,20 @@ public class PlaceManager : MonoBehaviour
                 torre.gameObject.transform.position = golpeRayo.point;
                 torre.SetLoaded(true); // Se establece que la torre ya ha sido cargada en el mundo. Útil para vereficar posteriormente
                 // si todos los componentes han sido cargados y poder volver a enviar a la torre a la pool con los componentes ya inicializados
+                UpdateCurrentMode(m_SeleccionPropertyBlock, true);
             }
-            else
+            else // Si la torre no se puede colocar entonces se pone en color rojo
             {
-                if (torre.gameObject.activeSelf)
+                if (colisionConRayo)
+                {
+                    if (!torre.gameObject.activeSelf)
+                    {
+                        torre.gameObject.SetActive(true);
+                    }
+                    torre.gameObject.transform.position = golpeRayo.point;
+                    UpdateCurrentMode(m_SeleccionInvalidaPropertyBlock, false);
+                }
+                else
                 {
                     torre.gameObject.SetActive(false);
                 }
@@ -254,12 +273,13 @@ public class PlaceManager : MonoBehaviour
     {
         if (objetoSiendoArrastrado && ctx.performed)
         {
-            if (!torre.gameObject.activeSelf)
+            if (!_canPlaceTower)
             {
                 ReturnInstanceCopy();
                 return;
             }
 
+            ManageTowerPlacement();
             ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
             pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 
