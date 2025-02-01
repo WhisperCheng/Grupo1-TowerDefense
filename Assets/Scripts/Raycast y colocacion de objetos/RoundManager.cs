@@ -79,7 +79,7 @@ public class RoundManager : MonoBehaviour
         if (finishedLastRoundSpawnings && enemiesAlive == 0)
         {
             Debug.Log("Fin");
-            GameManager.Instance.WinLevel(); 
+            GameUIManager.Instance.WinLevel();
             this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
         }
 

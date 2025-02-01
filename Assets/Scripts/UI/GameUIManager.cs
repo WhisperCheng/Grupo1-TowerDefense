@@ -13,6 +13,8 @@ public class GameUIManager : MonoBehaviour
     public GameObject buildUI;
     public GameObject roundUI;
     public GameObject crossHead;
+    public GameObject panelWin;
+    public GameObject panelLose;
     public GameObject menuPause;
     public GameObject[] panelsMenu;
     public TMP_Text textMoney;
@@ -190,5 +192,13 @@ public class GameUIManager : MonoBehaviour
             otherPanelActive = false;
             OpenGameMenu();
         }
+    }
+    public void WinLevel()
+    {
+        panelWin.SetActive(true);
+    }
+    public void LoseLevel()
+    {
+        panelLose.SetActive(true);
     }
 }
