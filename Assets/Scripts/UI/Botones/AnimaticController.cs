@@ -40,7 +40,7 @@ public class AnimaticController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-           LevelChanges.OpenAnimatic();
+           LevelChanges.OpenMainMenu();
         }
     }
 }

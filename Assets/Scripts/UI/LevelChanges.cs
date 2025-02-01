@@ -21,4 +21,8 @@ public class LevelChanges : MonoBehaviour
     {
         SceneManager.LoadScene("Animatica");
     }
+    public static void OpenMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
