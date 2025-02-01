@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static ISwitchStates;
-using FMODUnity;
+using UnityEngine.SceneManagement;
 
 public class SwitchController : MonoBehaviour
 {
     [SerializeField] private GameObject currentSwitchable; 
     [SerializeField] private GameObject targetSwitchable;  
     [SerializeField] private float delay = 0.6f;           
+
 
     public void Switch()
     {
