@@ -8,17 +8,14 @@ using UnityEngine.UI;
 
 public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public static AnimatedPanel Instance { get; private set; }
-
-    [Header("Animation Parameters")]
+   public static AnimatedPanel Instance { get; private set; }
+       [Header("Animation Parameters")]
     [SerializeField] private Vector3 originalScale;
     [SerializeField] private float hoverScaleFactor = 1.1f;
     [SerializeField] private float animationDuration = 0.1f;
-    [SerializeField] private float delay = 0.6f;
     [SerializeField] private float buttonsDelay = 0.6f;
     [SerializeField] private float buttonsAnimationDuration = 0.6f;
-    [SerializeField] private Vector2 buttonsInitialPosition;
-    [SerializeField] private Vector2 panelLocalFinalPosition;
+    [SerializeField] private Vector3 buttonsInitialPosition;
     [SerializeField] private Vector2 buttonsLocalFinalPosition;
     [SerializeField] private LeanTweenType animationType;
     [SerializeField] private List<Button> buttons;
@@ -29,20 +26,19 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void Start()
     {
-        //hadInitialAnimation = false;
-
         PositionButtonsOnStart();
 
         originalScale = transform.localScale;
 
-        if(hadInitialAnimation)
-        StartCoroutine(DelayedInitialAnimation(buttonsDelay));
+        if (hadInitialAnimation)
+            StartCoroutine(DelayedInitialAnimation(buttonsDelay));
 
         foreach (Button btn in buttons)
         {
             if (btn != null)
             {
-                btn.onClick.AddListener(OnButtonClick);
+                
+                btn.onClick.AddListener(() => OnButtonClick());
             }
         }
     }
@@ -52,7 +48,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         foreach (Button btn in buttons)
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
-            rect.position = new Vector3(buttonsInitialPosition.x, buttonsInitialPosition.y + rect.position.y, 0);
+            rect.position = new Vector3(rect.position.x + buttonsInitialPosition.x, rect.position.y, rect.position.z);
         }
     }
 
@@ -63,26 +59,33 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             if (btn != null)
             {
                 ExecuteInitialAnimation(btn, buttonsLocalFinalPosition);
-                
             }
             yield return new WaitForSeconds(delay);
         }
     }
+
     private void OnButtonClick()
     {
-        ExecuteFinalAnimation();
+      
+        foreach (Button btn in buttons)
+        {
+            if (btn != null)
+            {
+                ExecuteFinalAnimation(btn, buttonsLocalFinalPosition);
+            }
+        }
     }
+
     public void ExecuteInitialAnimation(Button button, Vector3 finalPos)
     {
         RectTransform rect = button.GetComponent<RectTransform>();
         LeanTween.moveLocal(button.gameObject, rect.localPosition + finalPos, buttonsAnimationDuration).setEase(animationType);
     }
 
-    public void ExecuteFinalAnimation()
+    public void ExecuteFinalAnimation(Button button, Vector3 finalPos)
     {
-        RectTransform rect = gameObject.GetComponent<RectTransform>();
-        Vector3 panelFinalPos = panelLocalFinalPosition; // Esto es solo para convertir el Vector2 a Vector3
-        LeanTween.moveLocal(gameObject, rect.localPosition + panelFinalPos, delay).setEase(animationType);
+        RectTransform rect = button.GetComponent<RectTransform>();
+        LeanTween.moveLocal(button.gameObject, rect.localPosition - finalPos, buttonsAnimationDuration).setEase(animationType);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
