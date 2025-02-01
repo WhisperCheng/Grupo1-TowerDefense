@@ -34,7 +34,7 @@ public class Pinchos : StaticTower
         {
             IDamageable damageableEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
             damageableEntity.TakeDamage(damage);
-            life -= damageOnUsed;
+            life -= damageOnUsed; // Quitar vida a la trampa
             if (life <= 0)
             {
                 ReturnToPool();
