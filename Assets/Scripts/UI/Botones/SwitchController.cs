@@ -13,6 +13,9 @@ public class SwitchController : MonoBehaviour
     public void Switch()
     {
            StartCoroutine(SwitchAfterAnimation(delay));
+
+           AudioManager.instance.PlayOneShot(FMODEvents.instance.menuClick, this.transform.position);
+
     }
 
     private IEnumerator SwitchAfterAnimation(float delay)
