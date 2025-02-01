@@ -59,7 +59,7 @@ public class AudioManager : MonoBehaviour
         {
            InitializeMusic(FMODEvents.instance.musicMenu);
         }
-       
+
     }
     private void Update()
     {
