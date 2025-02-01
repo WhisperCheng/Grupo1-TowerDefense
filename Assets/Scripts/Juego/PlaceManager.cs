@@ -149,6 +149,7 @@ public class PlaceManager : MonoBehaviour
                         outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathBordersMask);
                 }
 
+               // Debug.Log(colisionConRayo + "-" + outsidePathCols + "-" + outsidePathCols?.Length);
                 validCollision = colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
             }
@@ -161,7 +162,7 @@ public class PlaceManager : MonoBehaviour
                     pathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathMask | areaDecoMask);
                 }
 
-                validCollision = (colisionConRayo && pathCols != null && pathCols.Length == 0) ? true : false;
+                validCollision = colisionConRayo && pathCols != null && pathCols.Length == 0;
                 // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
             }
 
@@ -182,19 +183,21 @@ public class PlaceManager : MonoBehaviour
             }
             else // Si la torre no se puede colocar entonces se pone en color rojo
             {
+                
                 if (colisionConRayo)
                 {
                     if (!torre.gameObject.activeSelf)
                     {
                         torre.gameObject.SetActive(true);
                     }
+                    torre.SetLoaded(true);
                     torre.gameObject.transform.position = golpeRayo.point;
-                    UpdateCurrentMode(m_SeleccionInvalidaPropertyBlock, false);
                 }
                 else
                 {
                     torre.gameObject.SetActive(false);
                 }
+                UpdateCurrentMode(m_SeleccionInvalidaPropertyBlock, false);
             }
         }
     }
@@ -284,8 +287,7 @@ public class PlaceManager : MonoBehaviour
                 ReturnInstanceCopy();
                 return;
             }
-
-            ManageTowerPlacement();
+            //ManageTowerPlacement();
             ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
             pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 
@@ -318,11 +320,11 @@ public class PlaceManager : MonoBehaviour
 
     private void ReturnInstanceCopy()
     {
+        
         SetPreviewMode(false);
         ToggleTowerCollisions(torre, true);
         objetoSiendoArrastrado = false;
         StartCoroutine(DesbloquearDisparo());
-        //Destroy(torreCopiada);
         torre.GetComponent<IPoolable>().ReturnToPool();
     }
 
