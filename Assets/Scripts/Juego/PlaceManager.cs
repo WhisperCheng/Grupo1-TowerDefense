@@ -118,7 +118,10 @@ public class PlaceManager : MonoBehaviour
             RaycastHit golpeRayo;
             int terrainMask = 1 << GameManager.Instance.layerTerreno; // Detecta todo el terreno
             int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco; // Detecta los bordes de fuera del camino u obstáculos de decoración
+            int towersMask = 1 << GameManager.Instance.layerTorres | 1 << GameManager.Instance.layerTrap; // Detecta las torres cercanas
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
+
+            
 
             bool validCollision = false;
             bool colisionConRayo = false;
@@ -147,10 +150,10 @@ public class PlaceManager : MonoBehaviour
                 // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
             }
 
-            //bool colisionConRayo = Physics.Raycast(rayo, out golpeRayo, maxPlaceDistance, terrainMask);
-            //Debug.Log(validCollision);
-            //if (validCollision)
-            if (validCollision)
+            Collider[] towersInsideSizeRadius = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), towersMask);
+            bool areTowersInsideSizeRadius = towersInsideSizeRadius.Length > 0 ;
+            
+            if (validCollision && !areTowersInsideSizeRadius)
             {
                 if (!torre.gameObject.activeSelf)
                 {

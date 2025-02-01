@@ -24,30 +24,10 @@ public class ProyectilFabric : MonoBehaviour
 
     public void LanzarProyectil()
     {
-        Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
-        RaycastHit golpeRayo;
-
         //FMOD
         AudioManager.instance.PlayOneShot(FMODEvents.instance.magicAttack, this.transform.position);
 
-        Vector3 destino;
-        int pathMask = 1 << GameManager.Instance.layerPath;
-        int terrainMask = 1 << GameManager.Instance.layerTerreno;
-        int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco;
-        int enemyMask = 1 << GameManager.Instance.layerEnemigos;
-        int towerMask = 1 << GameManager.Instance.layerTorres;
-        int hearthMask = 1 << GameManager.Instance.layerCorazon;
-        if (Physics.Raycast(rayo, out golpeRayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask | enemyMask
-            | towerMask | hearthMask))
-        {
-            destino = golpeRayo.point;
-        }
-        else
-        {
-            // Pos + bordes para apuntar exactamente al centro de la mira
-            rayo = Camera.main.ScreenPointToRay(marcador.transform.position + marcador.GetComponent<Image>().sprite.bounds.extents);
-            destino = rayo.GetPoint(10000);
-        }
+        Vector3 destino = GetClosestImpactPoint();
 
         // Crea el proyectil 
         //GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
@@ -55,5 +35,44 @@ public class ProyectilFabric : MonoBehaviour
         proyectil.transform.position = puntoDisparo.position;
         Vector3 direccion = (destino - puntoDisparo.position).normalized;
         proyectil.GetComponent<Rigidbody>().velocity = direccion * velocidadProyectil;
+    }
+
+    private Vector3 GetClosestImpactPoint()
+    {
+        Vector3 destino;
+
+        Ray rayo = Camera.main.ScreenPointToRay(marcador.transform.position);
+
+        int pathMask = 1 << GameManager.Instance.layerPath;
+        int terrainMask = 1 << GameManager.Instance.layerTerreno;
+        int areaDecoMask = 1 << GameManager.Instance.layerAreaDeco;
+        int enemyMask = 1 << GameManager.Instance.layerEnemigos;
+        int towerMask = 1 << GameManager.Instance.layerTorres;
+        int hearthMask = 1 << GameManager.Instance.layerCorazon;
+
+        RaycastHit[] hits = Physics.RaycastAll(rayo, Mathf.Infinity, pathMask | terrainMask | areaDecoMask | enemyMask
+            | towerMask | hearthMask);
+
+        RaycastHit currentHit;
+        currentHit = new RaycastHit();
+        currentHit.distance = Mathf.Infinity;
+        foreach (RaycastHit hit in hits) // Se recorren todas las colisiones y se obtiene la más cercana que no tenga
+        {                                                                                // el tag de cajas de puente
+            if (hit.distance < currentHit.distance && !hit.transform.CompareTag(GameManager.Instance.tagPuentes))
+            {
+                currentHit = hit;
+            }
+        }
+        if (currentHit.distance != Mathf.Infinity) // Si se ha encontrado algo con lo que apuntar
+        {
+            destino = currentHit.point;
+        }
+        else // Si no se lanza hacia el infinito mirando hacia delante
+        {
+            // Pos + bordes para apuntar exactamente al centro de la mira
+            rayo = Camera.main.ScreenPointToRay(marcador.transform.position + marcador.GetComponent<Image>().sprite.bounds.extents);
+            destino = rayo.GetPoint(10000);
+        }
+        return destino;
     }
 }
