@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2028058739172334620}
   m_LocalEulerAnglesHint: {x: 38.494, y: 0, z: 0}
+--- !u!1 &5374087455023892077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6482782574579803973}
+  m_Layer: 12
+  m_Name: CrownHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6482782574579803973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5374087455023892077}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.002, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 705206078456999437}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &557063232633687606
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,15 +210,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a935071301480b0429728d071419f844, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.42932105
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a935071301480b0429728d071419f844, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20833516
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a935071301480b0429728d071419f844, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -42.45342
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a935071301480b0429728d071419f844, type: 3}
       propertyPath: m_LocalRotation.w
@@ -806,6 +837,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8353933893196853562, guid: a935071301480b0429728d071419f844, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3700682981131548956}
+    - targetCorrespondingSourceObject: {fileID: -1872552956561833173, guid: a935071301480b0429728d071419f844, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6482782574579803973}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a935071301480b0429728d071419f844, type: 3}
       insertIndex: -1
@@ -820,6 +854,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5890864083379375244}
   m_SourcePrefab: {fileID: 100100000, guid: a935071301480b0429728d071419f844, type: 3}
+--- !u!4 &705206078456999437 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1872552956561833173, guid: a935071301480b0429728d071419f844, type: 3}
+  m_PrefabInstance: {fileID: 8055319263661419814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2028058739172334620 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8353933893196853562, guid: a935071301480b0429728d071419f844, type: 3}
@@ -850,6 +889,11 @@ MonoBehaviour:
   cooldown: 5
   locked: 1
   placed: 0
+  _crownData: {fileID: 11400000, guid: a066b4982c5f2d5488a12327995b07f5, type: 2}
+  crownHolder: {fileID: 5374087455023892077}
+  crownElevation: 0.005
+  animationTime: 2
+  animationType: 16
   rotationSpeed: 5
   boostPrices:
   - price: 60

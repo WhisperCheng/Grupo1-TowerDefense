@@ -25,8 +25,9 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
     protected bool _attackMode = false;
     protected bool _canAttack = true;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         base.Init();
         Init();
     }
@@ -61,6 +62,7 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
             money = _originalMoney;
             _boostIndex = -1;
             cooldown = _originalCooldown;
+            RemoveExistentCrowns();
             // Importante: usar el metodo base. para luego hacer override en cada instancia y añadir el retorno a la pool
         }
     }

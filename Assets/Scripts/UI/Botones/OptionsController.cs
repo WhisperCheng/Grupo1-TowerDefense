@@ -55,8 +55,8 @@ public class OptionsController : MonoBehaviour
     private void Update()
     {
        
-        switch (volumeType)
-        {
+        //switch (volumeType)
+        //{
            /* case VolumeType.MASTER:
                 volumeSlider.value = AudioManager.instance.masterVolume;
                 break;
@@ -69,7 +69,7 @@ public class OptionsController : MonoBehaviour
             default:
                 Debug.LogWarning("Volume type no supported" + volumeType);
                 break;*/
-        }
+        //}
     }
     public void ChangeBrightness(float value)
     {

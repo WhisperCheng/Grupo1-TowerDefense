@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public string tagTorres;
     public string tagPuentes;
     public string tagInteractableUI;
+    public string tagCoronas;
 
     [Header("Layers Globales")]
     public int layerEnemigos;

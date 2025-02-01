@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4649543179063663829}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5866315336091585665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 25274835407883767}
+  m_Layer: 12
+  m_Name: CrownHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &25274835407883767
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5866315336091585665}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.5684618, z: -0.49599886}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1866082443744703352}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &8857223432581765348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -673,6 +704,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       insertIndex: 0
       addedObject: {fileID: 2485703362857438851}
+    - targetCorrespondingSourceObject: {fileID: 7137789590910512028, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 25274835407883767}
     - targetCorrespondingSourceObject: {fileID: 4210112674444559409, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7416417893040733242}
@@ -693,6 +727,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 159735908840483102}
   m_SourcePrefab: {fileID: 100100000, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
+--- !u!4 &1866082443744703352 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7137789590910512028, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
+  m_PrefabInstance: {fileID: 8857223432581765348}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4649543179063663829 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4210112674444559409, guid: 319d9e21b710c7143b7da301412a48e3, type: 3}
@@ -720,9 +759,14 @@ MonoBehaviour:
   towerRadiusSize: 1.8
   rotationPart: {fileID: 9034665835644337935}
   rotationModelDegrees: 180
-  cooldown: 1
+  cooldown: 1.5
   locked: 1
   placed: 0
+  _crownData: {fileID: 11400000, guid: a066b4982c5f2d5488a12327995b07f5, type: 2}
+  crownHolder: {fileID: 5866315336091585665}
+  crownElevation: 0.3
+  animationTime: 2
+  animationType: 16
   rotationSpeed: 5
   boostPrices:
   - price: 50
@@ -730,7 +774,7 @@ MonoBehaviour:
     cooldownReducer: 0.75
   - price: 75
     damageAddition: 10
-    cooldownReducer: 2
+    cooldownReducer: 1
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}

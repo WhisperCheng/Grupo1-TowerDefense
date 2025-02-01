@@ -35,8 +35,9 @@ public class CarnivoraTower : LivingTower, IDamageable
     protected bool _attackMode = false;
     protected bool _canAttack = true;
     
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         Init();
 
         //FMOD
@@ -176,6 +177,7 @@ public class CarnivoraTower : LivingTower, IDamageable
             _attackMode = false;
             currentTarget = null;
             money = _originalMoney;
+            RemoveExistentCrowns();
         }
         CarnivorousPlantPool.Instance.ReturnCarnivorousPlant(this.gameObject);
     }
