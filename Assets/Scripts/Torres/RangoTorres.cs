@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +14,10 @@ public class RangoTorres : MonoBehaviour
     public GameObject rangeIndicator;
     private float rangoTorre;
     private bool torreApuntada = false;
+    public TextMeshProUGUI boostPriceText;
+    private float boostPrice;
+    public TextMeshProUGUI sellPriceText;
+    private float sellPrice;
 
     private void Start()
     {
@@ -51,6 +57,10 @@ public class RangoTorres : MonoBehaviour
                 {
                     rangeIndicator.gameObject.SetActive(true);
                     GameObject gameObjTorre = golpeRayo.collider.gameObject;
+                    boostPrice = gameObjTorre.GetComponent<LivingTower>().NextBoostMoney();
+                    boostPriceText.text = boostPrice.ToString();
+                    sellPrice = gameObjTorre.GetComponent<Tower>().Money * (TowerInteractionManager.Instance.sellingPercentageAmount / 100f);
+                    sellPriceText.text = sellPrice.ToString();
                     rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().GetRange();
                     rangeIndicator.transform.position = gameObjTorre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
