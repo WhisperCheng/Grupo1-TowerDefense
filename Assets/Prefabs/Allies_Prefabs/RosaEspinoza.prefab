@@ -754,12 +754,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8edb4ac5db3f1f4478c3f243918fe702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 25
-  range: 12
+  money: 100
+  range: 11
   towerRadiusSize: 0.94
   rotationPart: {fileID: 9034665835644337935}
   rotationModelDegrees: 180
-  cooldown: 1.5
+  cooldown: 1
   locked: 1
   placed: 0
   _crownData: {fileID: 11400000, guid: a066b4982c5f2d5488a12327995b07f5, type: 2}
@@ -769,12 +769,12 @@ MonoBehaviour:
   animationType: 16
   rotationSpeed: 5
   boostPrices:
-  - price: 50
+  - price: 190
     damageAddition: 5
-    cooldownReducer: 0.75
-  - price: 75
+    cooldownReducer: 0.25
+  - price: 230
     damageAddition: 10
-    cooldownReducer: 1
+    cooldownReducer: 0.25
   health: 100
   _particulasMuerte: {fileID: 0}
   _particulasGolpe: {fileID: 0}
@@ -893,6 +893,14 @@ PrefabInstance:
     - target: {fileID: 1163856174243809695, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Color.r
       value: 0.09463448
+      objectReference: {fileID: 0}
+    - target: {fileID: 1163856174243809695, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755173061497556508, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2982751831873505322, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Name
@@ -1041,6 +1049,10 @@ PrefabInstance:
     - target: {fileID: 9076607696775440892, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Color.r
       value: 0.12135646
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076607696775440892, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

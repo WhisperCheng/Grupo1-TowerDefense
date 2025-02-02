@@ -354,15 +354,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b70be71842120149a613636b4586143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropMoney: 30
+  dropMoney: 80
   actionRadio: 7
   checkWaypointProximityDistance: 3
   _onFocusAcceleration: 30
-  speed: 1.5
+  speed: 2
   ignoreTagList:
   - Enemy
-  health: 200
-  attackDamage: 30
+  health: 500
+  attackDamage: 45
   cooldown: 1
   reachAttackRange: 4
   attackBox:
@@ -558,6 +558,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 444943449070202057}
     m_Modifications:
+    - target: {fileID: 1163856174243809695, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1755173061497556508, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2982751831873505322, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -673,6 +681,10 @@ PrefabInstance:
     - target: {fileID: 8012203226858134566, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 9076607696775440892, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
