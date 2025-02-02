@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
    public static AnimatedPanel Instance { get; private set; }
-       [Header("Animation Parameters")]
+
+    [Header("Animation Parameters")]
     [SerializeField] private Vector3 originalScale;
     [SerializeField] private float hoverScaleFactor = 1.1f;
     [SerializeField] private float animationDuration = 0.1f;
@@ -24,7 +25,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool hadInitialAnimation = false;
     public bool finalAnimation = false;
 
-    private void Start()
+    private void OnEnable()
     {
         PositionButtonsOnStart();
 
@@ -37,7 +38,6 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             if (btn != null)
             {
-                
                 btn.onClick.AddListener(() => OnButtonClick());
             }
         }
@@ -66,7 +66,6 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private void OnButtonClick()
     {
-      
         foreach (Button btn in buttons)
         {
             if (btn != null)
