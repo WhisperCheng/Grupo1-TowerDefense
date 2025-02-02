@@ -53,11 +53,7 @@ public class AttackBox
                         result = true;
                     }
                 }
-                else
-                {
-                    animator.ResetTrigger("Attack");
-                    Debug.Log(col.gameObject);
-                }
+                else { animator.ResetTrigger("Attack"); }
             }
         }
         else

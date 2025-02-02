@@ -287,7 +287,7 @@ public class PlaceManager : MonoBehaviour
                 ReturnInstanceCopy();
                 return;
             }
-            //ManageTowerPlacement();
+            ManageTowerPlacement();
             ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
             pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
 

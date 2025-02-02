@@ -47,7 +47,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected float _maxHealth;
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
-    protected float _originalSpeed;
+    public float MaxSpeed { get { return _maxSpeed; } }
+    //protected float _originalSpeed;
 
     //protected List<Collider> attackingList;
 
@@ -57,7 +58,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected bool _finishedWaypoints = false;
     protected bool _initialized = false;
     //protected bool _attackingForestHeart = false; // Se usa para saber en un momento determinado si está atacando al corazón del bosque
-                                                  // para luego hacer que el enemigo al golpearlo se muera
+    // para luego hacer que el enemigo al golpearlo se muera
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
 
@@ -77,7 +78,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
     {
-        _originalSpeed = speed;
+        //_originalSpeed = speed;
+        _maxSpeed = speed;
         Init();
 
         emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.hitmarker, this.gameObject);
@@ -92,9 +94,9 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         _dropMoney = true;
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
-        speed = _originalSpeed;
-        _maxSpeed = _originalSpeed;
-        _agent.speed = _originalSpeed;
+        speed = _maxSpeed;
+        //_maxSpeed = _originalSpeed;
+        _agent.speed = _maxSpeed;
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
         OnAssignDestination(_destination);
