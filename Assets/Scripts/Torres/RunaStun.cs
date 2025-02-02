@@ -1,10 +1,17 @@
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(StudioEventEmitter))]
+
+
 public class RunaStun : StaticTower
 {
+    private StudioEventEmitter emitter;
+
+
     private bool canAttack = true;
     [SerializeField] private float duration = 3f;
 
@@ -58,6 +65,8 @@ public class RunaStun : StaticTower
             canAttack = false;
             EnemyDetection();
             StartCoroutine(ResetCooldown());
+            emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.runeStun, this.gameObject);
+            emitter.Play();
         }
     }
 
