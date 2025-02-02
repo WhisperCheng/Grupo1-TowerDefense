@@ -131,6 +131,7 @@ public class PlaceManager : MonoBehaviour
             int pathBordersMask = 1 << GameManager.Instance.layerPathBordes; // Detecta obstáculos de decoración
             int towersMask = 1 << GameManager.Instance.layerTorres | 1 << GameManager.Instance.layerTrap; // Detecta las torres cercanas
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
+            //int bordersMask = 1 << GameManager.Instance.layerBordes;
 
             bool validCollision = false;
             bool colisionConRayo = false;
@@ -162,7 +163,8 @@ public class PlaceManager : MonoBehaviour
                     pathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathMask | areaDecoMask);
                 }
 
-                validCollision = colisionConRayo && pathCols != null && pathCols.Length == 0;
+                bool isNotlimitAngle = Vector3.Angle(golpeRayo.normal, Vector3.up) <= 60; // Ángulo límite de pendiente
+                validCollision = colisionConRayo && pathCols != null && pathCols.Length == 0 && isNotlimitAngle;
                 // Si el "tamaño" de la torre no registra ningún camino dentro de su área, se puede colocar
             }
 

@@ -21,9 +21,18 @@ public abstract class BasicEnemyAI : EnemyAI
     // Este método se encarga de atacar a todos los objetivos que estén dentro de la zona de ataque incluidos en el array de objetivos a atacar
     protected override void ManageCombat()
     {
-        int attackMasks = 1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados | 1 << GameManager.Instance.layerCorazon;
 
-        bool attackDone = attackBox.ManageAttack(gameObject.transform, attackMasks, animatorController, _canDamage, attackDamage);
+        // int attackMasks = 1 << GameManager.Instance.layerJugador | 1 << GameManager.Instance.layerAliados 
+        //| 1 << GameManager.Instance.layerCorazon;
+        int attackMasks = 0;
+        foreach (int layerNum in enemyToAttackLayers)
+        {
+            if (layerNum != GameManager.Instance.layerCorazon)
+                attackMasks |= 1 << layerNum;
+        }
+
+        bool attackDone = attackBox.ManageAttack(gameObject.transform, attackMasks | 1 << GameManager.Instance.layerCorazon,
+            animatorController, _canDamage, attackDamage);
         _attackMode = attackBox.AttackModeBool; // Se actualizan los booleanos que manejan el combate al valor correspondiente
         _canDamage = attackBox.CanAttackOrDamageBool; // actualizado por el attackBox
         if (attackDone)
