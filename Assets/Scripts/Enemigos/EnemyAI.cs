@@ -25,6 +25,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public float checkWaypointProximityDistance = 3;
     public float _onFocusAcceleration = 30;
     public float speed = 3.5f;
+    public List<int> enemyToAttackLayers;
 
     [Header("Tags de obstáculos a ignorar")]
     public string[] ignoreTagList;
@@ -143,7 +144,15 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     {
         // Esta lista almacenará el resultado de llamar a OverlapSphere y detectar al jugador
         Collider[] listaChoques;
-        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, (_playerMask | _allyMask));
+
+        int attackMasks = 0;
+        foreach (int layerNum in enemyToAttackLayers)
+        {
+            if (layerNum != GameManager.Instance.layerCorazon)
+                attackMasks |= 1 << layerNum;
+        }
+
+        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, attackMasks/*(_playerMask | _allyMask)*/);
 
         // Se obtiene al jugador más cercano
         Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(_agent, listaChoques, transform.position, null,
