@@ -51,7 +51,7 @@ public class AudioManager : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
 
         // Condicional según el nombre de la escena
-        if (currentScene == "LevelOne")
+        if (currentScene == "LevelOne" || currentScene == "TutorialScene")
         {
            InitializeMusic(FMODEvents.instance.music);
         }

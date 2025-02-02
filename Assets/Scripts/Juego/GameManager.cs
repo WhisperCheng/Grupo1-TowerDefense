@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         {
             // TODO: Perder partida
             GameUIManager.Instance.LoseLevel();
+            AudioManager.instance.musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.menuLose, this.transform.position);
             Time.timeScale = 0f;
             Debug.Log("Partida perdida");
             this.enabled = false;

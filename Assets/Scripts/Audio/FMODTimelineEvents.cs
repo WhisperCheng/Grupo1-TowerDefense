@@ -16,7 +16,7 @@ public class FMODTimelineMusic : MonoBehaviour
     {
         // Crea la instancia de la música, pero no la reproduzcas todavía.
         musicInstance = RuntimeManager.CreateInstance(musicEvent);
-
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
     }
 
     public void PlayMusic()

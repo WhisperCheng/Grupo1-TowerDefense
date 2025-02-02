@@ -80,6 +80,8 @@ public class RoundManager : MonoBehaviour
         {
             Debug.Log("Fin");
             GameUIManager.Instance.WinLevel();
+            AudioManager.instance.musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
             this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
         }
 
