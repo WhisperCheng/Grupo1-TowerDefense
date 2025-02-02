@@ -11,12 +11,10 @@ public class FMODTimelineMusic : MonoBehaviour
 
     private EventInstance musicInstance;
 
-    public string Fragor = "Fragor";
     private void Start()
     {
         // Crea la instancia de la música, pero no la reproduzcas todavía.
         musicInstance = RuntimeManager.CreateInstance(musicEvent);
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
     }
 
     public void PlayMusic()
@@ -29,12 +27,6 @@ public class FMODTimelineMusic : MonoBehaviour
         {
             musicInstance.start();
         }
-    }
-
-    public void SetMusicParameter(float value)
-    {
-        // Modifica el parámetro de FMOD
-        musicInstance.setParameterByName(Fragor, value);
     }
 
 
