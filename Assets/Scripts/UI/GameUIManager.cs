@@ -196,11 +196,13 @@ public class GameUIManager : MonoBehaviour
     public void WinLevel()
     {
         panelWin.SetActive(true);
+        GameMenuDesactivate();
         AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
     }
     public void LoseLevel()
     {
         panelLose.SetActive(true);
+        GameMenuDesactivate();
         AudioManager.instance.PlayOneShot(FMODEvents.instance.menuLose, this.transform.position);
     }
 }
