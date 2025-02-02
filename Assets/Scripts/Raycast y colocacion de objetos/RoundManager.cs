@@ -22,6 +22,8 @@ public class RoundManager : MonoBehaviour
     public bool tutorialMode = false;
 
     private float countdown = 3f;
+    public float Countdown { get { return countdown; } set { countdown = value; } } // Property del countdown
+
     public float transitionBetweenInfiniteRounds = 0.5f;
 
     public TextMeshProUGUI waveCountdownText;

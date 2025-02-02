@@ -21,11 +21,17 @@ public class YewTower : RangedTower
             // Para apuntar hacia el centro del enemigo
             float offsetYTargetPosition = currentTarget.GetComponent<NavMeshAgent>() != null ?
                 currentTarget.GetComponent<NavMeshAgent>().height / 2 : 0;
+            Vector3 offsetY = Vector3.up * offsetYTargetPosition;
 
-            Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
+            // Trayectora sin predicción de movimiento
+            //Vector3 targetPosition = currentTarget.transform.position + offsetY;
 
-            proyectile.transform.position = shooterSource.position;
-            ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
+            proyectile.transform.position = shooterSource.position; 
+            proyectile.transform.rotation = Quaternion.Euler(shooterSource.forward); 
+            Vector3 predictivePosition =                           // Trayectoria predictiva
+                ProyectileUtils.ShootingInterception
+                .CalculateInterceptionPoint(shootingSpeed, shooterSource.transform, currentTarget.transform, offsetY);
+            ProyectileUtils.ThrowProyectileAtLocation(shooterSource.transform, proyectile, predictivePosition, shootingSpeed);
         }
     }
     public override GameObject GetFromPool()

@@ -31,12 +31,18 @@ public class RoseTower : RangedTower
 
             // Para apuntar hacia el centro del enemigo
             NavMeshAgent agent = currentTarget.GetComponent<NavMeshAgent>();
-            float offsetYTargetPosition = (agent != null ? agent.height / 2 : 0);
+            float offsetYTargetPosition = (agent != null ? agent.height/* / 2 */: 0);
+            Vector3 offsetY = Vector3.up * offsetYTargetPosition;
 
-            Vector3 targetPosition = currentTarget.transform.position + new Vector3(0, offsetYTargetPosition, 0);
+            // Trayectora sin predicción de movimiento
+            //Vector3 targetPosition = currentTarget.transform.position + offsetY;
 
             proyectile.transform.position = shooterSource.position;
-            ProyectileUtils.ThrowProyectileAtTargetLocation(shooterSource.transform, proyectile, targetPosition, shootingSpeed);
+            proyectile.transform.rotation = shooterSource.rotation;
+            Vector3 predictivePosition =                           // Trayectoria predictiva
+                ProyectileUtils.ShootingInterception
+                .CalculateInterceptionPoint(shootingSpeed, shooterSource.transform, currentTarget.transform, offsetY);
+            ProyectileUtils.ThrowProyectileAtLocation(shooterSource.transform, proyectile, predictivePosition, shootingSpeed);
         }
     }
 
@@ -44,7 +50,6 @@ public class RoseTower : RangedTower
     {
         return ThornRosePool.Instance.GetThornRose();
     }
-
 
     public override void Die()
     {
