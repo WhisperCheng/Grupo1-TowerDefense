@@ -10,7 +10,7 @@ public class SwitchController : MonoBehaviour
     [SerializeField] private float delay = 0.6f;           
 
 
-    public void Switch()
+    public void  Switch()
     {
            StartCoroutine(SwitchAfterAnimation(delay));
 

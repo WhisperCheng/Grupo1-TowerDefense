@@ -9,6 +9,8 @@ public class AnimaticController : MonoBehaviour
 {
     [SerializeField] private TMP_Text textToFade; 
     [SerializeField] private float fadeSpeed = 0.15f;
+    [SerializeField] private GameObject parentObject;
+    [SerializeField] private GameObject nextCanvas; 
 
     private bool isFading = true;
 
@@ -43,14 +45,14 @@ public class AnimaticController : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-
-                if (timeline != null)
-                {
-                    timeline.Stop(); 
-                }
-                LevelChanges.OpenMainMenu();
+                
+              timeline.Stop(); 
+              parentObject.SetActive(false);
+              nextCanvas.SetActive(true);
+            
         }
     }
 }
+        
 
 
