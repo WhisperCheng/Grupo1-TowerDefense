@@ -23,6 +23,8 @@ public class SwitchController : MonoBehaviour
             yield return new WaitForSeconds(delay);   
             targetSwitchable.SetActive(true);
             currentSwitchable.SetActive(false);
+
+       // AudioManager.instance.InitializeMusic(FMODEvents.instance.musicMenu);
     }
 }
 

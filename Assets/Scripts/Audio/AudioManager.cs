@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         }
         else if (currentScene == "MainMenu")
         {
-           InitializeMusic(FMODEvents.instance.musicMenu);
+           
         }
 
     }
@@ -91,7 +91,7 @@ public class AudioManager : MonoBehaviour
    
 
 
-    private void InitializeMusic(EventReference musicEventReference)
+    public void InitializeMusic(EventReference musicEventReference)
     {
         musicEventInstance = CreateInstance(musicEventReference);
         musicEventInstance.start();
