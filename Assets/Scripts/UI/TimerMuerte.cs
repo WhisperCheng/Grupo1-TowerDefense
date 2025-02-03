@@ -12,7 +12,7 @@ public class TimerMuerte : MonoBehaviour
     //GAMEOBJECTS
     public GameObject panelDied;
     public Image cooldown;
-    public bool coolingDown;
+    [SerializeField] protected bool _coolingDown;
     [SerializeField] float timer = 20f;
     // Start is called before the first frame update
     void Start()
@@ -23,21 +23,21 @@ public class TimerMuerte : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (coolingDown == true)
+        if (_coolingDown == true)
         {
             cooldown.fillAmount -= 1f / timer * Time.deltaTime;
             GameUIManager.Instance.otherPanelActive = true;
         }
         if (cooldown.fillAmount <= 0)
         {
-            coolingDown = false;
+            _coolingDown = false;
             GameUIManager.Instance.otherPanelActive = false;
         }
     }
     public void ActivateRespawnTimer()
     {
         panelDied.SetActive(true);
-        coolingDown = true;
+        _coolingDown = true;
         cooldown.fillAmount = 1; // Reset del relleno de la imagen
         StartCoroutine(ReespawnPlayerAfterWaiting());
         Player.playerModel.SetActive(false);

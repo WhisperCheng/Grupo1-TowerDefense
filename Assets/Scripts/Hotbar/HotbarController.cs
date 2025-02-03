@@ -104,6 +104,21 @@ public class HotbarController : MonoBehaviour
         GameManager.Instance.playerControls.actions["RightClick"].performed += OnRightClick;
     }
 
+    protected void DisableHotbar()
+    {
+        GameManager.Instance.playerControls.actions["Button1"].performed -= Hotbar1;
+        GameManager.Instance.playerControls.actions["Button2"].performed -= Hotbar2;
+        GameManager.Instance.playerControls.actions["Button3"].performed -= Hotbar3;
+        GameManager.Instance.playerControls.actions["Button4"].performed -= Hotbar4;
+        GameManager.Instance.playerControls.actions["Button5"].performed -= Hotbar5;
+        GameManager.Instance.playerControls.actions["Button6"].performed -= Hotbar6;
+        GameManager.Instance.playerControls.actions["Button7"].performed -= Hotbar7;
+        GameManager.Instance.playerControls.actions["Button8"].performed -= Hotbar8;
+        GameManager.Instance.playerControls.actions["Button9"].performed -= Hotbar9;
+        GameManager.Instance.playerControls.actions["Click"].performed -= OnClick;
+        GameManager.Instance.playerControls.actions["RightClick"].performed -= OnRightClick;
+    }
+
     protected void Hotbar1(InputAction.CallbackContext ctx) { SetIndex(0); }
     protected void Hotbar2(InputAction.CallbackContext ctx) { SetIndex(1); }
     protected void Hotbar3(InputAction.CallbackContext ctx) { SetIndex(2); }
