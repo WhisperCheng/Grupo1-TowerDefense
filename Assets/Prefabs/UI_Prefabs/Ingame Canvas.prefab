@@ -1255,7 +1255,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1265,6 +1265,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8194672900605143594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1594,7 +1597,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1604,6 +1607,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8745362133604510752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3677,7 +3683,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3687,6 +3693,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7799474696818113938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4053,7 +4062,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4063,6 +4072,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &9066094928675451435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4297,7 +4309,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4307,6 +4319,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5187764068100202510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4928,7 +4943,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4938,6 +4953,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6016229991533216227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5290,6 +5308,33 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8988079640507358267}
+        m_TargetAssemblyTypeName: BastonButton, Assembly-CSharp
+        m_MethodName: ShowCrosier
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8988079640507358267}
+        m_TargetAssemblyTypeName: BastonButton, Assembly-CSharp
+        m_MethodName: HideCrosier
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: Player, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6252,7 +6297,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6262,6 +6307,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1624723661589673957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6783,7 +6831,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3056156123153297432}
         m_TargetAssemblyTypeName: HotbarController, Assembly-CSharp
-        m_MethodName: SelectNextTower
+        m_MethodName: SelectCurrentButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6793,6 +6841,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnSlotDeselected:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7074332750146331065
 MonoBehaviour:
   m_ObjectHideFlags: 0

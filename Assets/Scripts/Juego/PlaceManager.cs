@@ -120,6 +120,7 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
+    // ==== Colocación y manejo de torres ====
     private void ManageTowerPlacement()
     {
         if (objetoSiendoArrastrado)
@@ -204,6 +205,7 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
+    // ==== Manejo de los botones de las torres ====
     public void DiscardCurrentTower()
     {
         if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
@@ -212,7 +214,7 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
-    public void PreviewNewTower()
+    public void InvokeCurrentButton()
     {
         if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
         {
@@ -225,7 +227,7 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
-    public void OnClickButton2()
+    /*public void OnClickButton2()
     {
         if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
         {
@@ -236,35 +238,14 @@ public class PlaceManager : MonoBehaviour
             currentButton.Select();
             currentButton.onClick.Invoke();
 
-            /*if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
+            if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
             {
                 GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
-            }*/
-        }
-    }
-
-    public void OnClickButton(Button btn) { currentButton = btn; }
-
-    public void OnClickButtons(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed)
-        {
-            if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
-            {
-                ReturnInstanceCopy();
-            }
-            else
-            {
-                currentButton.Select();
-                currentButton.onClick.Invoke();
-
-                /*if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
-                {
-                    GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
-                }*/
             }
         }
-    }
+    }*/
+
+    public void OnTriggerButton(Button btn) { currentButton = btn; }
 
     private void ToggleTowerCollisions(Tower tower, bool boolValue)
     {

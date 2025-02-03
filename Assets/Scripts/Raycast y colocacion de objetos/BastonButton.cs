@@ -15,9 +15,9 @@ public class BastonButton : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
-    
+
     public void SetHoldingCrosier(Player player)
     {
         //if (EventSystem.current.currentSelectedGameObject == gameObject)
@@ -31,5 +31,17 @@ public class BastonButton : MonoBehaviour
             button.Select();
             player.ShowCrosier();
         }
+    }
+
+    public void HideCrosier(Player player)
+    {
+        EventSystem.current.SetSelectedGameObject(null); // Deseleccionar botón
+        player.HideCrosier();
+    }
+
+    public void ShowCrosier(Player player)
+    {
+        button.Select();
+        player.ShowCrosier();
     }
 }

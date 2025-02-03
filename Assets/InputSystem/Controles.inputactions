@@ -424,8 +424,17 @@
                     "id": "f97cfafc-5239-419e-a469-cf17c9f19c35",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "RightClick",
+                    "type": "PassThrough",
+                    "id": "7fbf456e-35d7-4665-83e4-5812b518bd68",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "ScrollWheel",
@@ -440,15 +449,6 @@
                     "name": "MiddleClick",
                     "type": "PassThrough",
                     "id": "3636741f-17a4-4350-b534-0eb2ec57b166",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "RightClick",
-                    "type": "PassThrough",
-                    "id": "7fbf456e-35d7-4665-83e4-5812b518bd68",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -960,17 +960,6 @@
                 },
                 {
                     "name": "",
-                    "id": "4c191405-5738-4d4b-a523-c6a301dbf754",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RightClick",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7236c0d9-6ca3-47cf-a6ee-a97f5b59ea77",
                     "path": "<XRController>/devicePosition",
                     "interactions": "",
@@ -1109,6 +1098,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Button8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c191405-5738-4d4b-a523-c6a301dbf754",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

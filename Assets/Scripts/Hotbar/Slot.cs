@@ -10,6 +10,7 @@ public class Slot : MonoBehaviour
 {
     public Color colorOnSelectedButton;
     public UnityEvent OnSlotSelected;
+    public UnityEvent OnSlotDeselected;
     private Color _normalButtonColor;
     private Button _currentButton;
     private Image _buttonImage;
@@ -36,21 +37,26 @@ public class Slot : MonoBehaviour
     {
         LeanTween.cancel(_buttonImage.rectTransform);
         Selected = !Selected;
+        AnimateButton();
 
+        //SelectButton();
+        //GetComponent<Image>().color = colorOnSelectedButton;
+        if (Selected)  SelectButton(); 
+        if (!Selected) { OnSlotDeselected.Invoke(); }
+    }
+
+    private void AnimateButton()
+    {
         Color currentColor = Selected ? colorOnSelectedButton : _normalButtonColor;
         float currentScale = Selected ? OnSelectedScale : 1;
 
         LeanTween.scale(_buttonImage.rectTransform, Vector3.one * currentScale, TransitionTime).setEase(AnimationType);
         LeanTween.color(_buttonImage.rectTransform, currentColor, TransitionTime).setEase(AnimationType);
-
-        if (Selected) SelectButton();
-        //GetComponent<Image>().color = colorOnSelectedButton;
     }
 
-    private void SelectButton()
+    public void SelectButton()
     {
-        OnSlotSelected.Invoke();
-        //PlaceManager.Instance.OnClickButtons();
-        //_currentButton.onClick.Invoke();
+        if(Selected)
+            OnSlotSelected.Invoke();
     }
 }
