@@ -20,10 +20,23 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     [SerializeField] private Vector2 buttonsLocalFinalPosition;
     [SerializeField] private LeanTweenType animationType;
     [SerializeField] private List<Button> buttons;
+    private Dictionary<Button,Vector3> initialButtonsPos = new Dictionary<Button, Vector3>();
 
     [Header("Animations")]
     public bool hadInitialAnimation = false;
     public bool finalAnimation = false;
+
+    private void Start()
+    {
+        foreach (Button btn in buttons)
+        {
+            if (btn != null)
+            {
+                btn.onClick.AddListener(() => OnButtonClick());
+                initialButtonsPos.Add(btn, btn.GetComponent<RectTransform>().position);
+            }
+        }
+    }
 
     private void OnEnable()
     {
@@ -33,13 +46,15 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
         if (hadInitialAnimation)
             StartCoroutine(DelayedInitialAnimation(buttonsDelay));
+    }
 
+    private void OnDisable()
+    {
         foreach (Button btn in buttons)
         {
-            if (btn != null)
-            {
-                btn.onClick.AddListener(() => OnButtonClick());
-            }
+            RectTransform rect = btn.GetComponent<RectTransform>();
+            LeanTween.cancel(rect);
+            rect.position = initialButtonsPos[btn];
         }
     }
 
@@ -49,6 +64,15 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
             rect.position = new Vector3(rect.position.x + buttonsInitialPosition.x, rect.position.y, rect.position.z);
+        }
+    }
+
+    private void PositionButtonsOnDisable()
+    {
+        foreach (Button btn in buttons)
+        {
+            RectTransform rect = btn.GetComponent<RectTransform>();
+            rect.position = new Vector3(rect.position.x - buttonsInitialPosition.x, rect.position.y, rect.position.z);
         }
     }
 
