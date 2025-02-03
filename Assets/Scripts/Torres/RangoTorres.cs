@@ -57,11 +57,14 @@ public class RangoTorres : MonoBehaviour
                 {
                     rangeIndicator.gameObject.SetActive(true);
                     GameObject gameObjTorre = golpeRayo.collider.gameObject;
-                    boostPrice = gameObjTorre.GetComponent<LivingTower>().NextBoostMoney();
-                    boostPriceText.text = boostPrice.ToString();
-                    sellPrice = gameObjTorre.GetComponent<Tower>().Money * (TowerInteractionManager.Instance.sellingPercentageAmount / 100f);
+                    Tower tower = gameObjTorre.GetComponent<Tower>();
+                    boostPrice = tower is LivingTower ? ((LivingTower)tower).NextBoostMoney() : 0;
+                    boostPriceText.text = tower ? boostPrice.ToString() : "No se puede boostear";
+                    // TODO, Hacer desaparecer la opción de boostear si no se puede boostear
+
+                    sellPrice = tower.Money * (TowerInteractionManager.Instance.sellingPercentageAmount / 100f);
                     sellPriceText.text = sellPrice.ToString();
-                    rangoTorre = 2 * gameObjTorre.GetComponent<Tower>().GetRange();
+                    rangoTorre = 2 * tower.GetRange();
                     rangeIndicator.transform.position = gameObjTorre.transform.position;
                     rangeIndicator.transform.localScale = new Vector3(rangoTorre, rangoTorre, rangoTorre);
                     ventaPanel.gameObject.SetActive(true);

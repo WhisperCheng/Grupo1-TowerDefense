@@ -101,7 +101,7 @@ public class PlaceManager : MonoBehaviour
         ColorUtils.ChangeObjectMaterialColors(torre.gameObject, m_SeleccionPropertyBlock, previewMode);
 
         if (!previewMode && torre.placed) // Finalmente, si deja de estar en modo preview, se desbloquea la torre,
-        { torre.UnlockTower();} // lo que permite atacar y rotar hacia los enemigos
+        { torre.UnlockTower(); } // lo que permite atacar y rotar hacia los enemigos
     }
 
     private void UpdateCurrentMode(MaterialPropertyBlock m_propertyBlock, bool updateCanBePlacedStatus)
@@ -150,7 +150,7 @@ public class PlaceManager : MonoBehaviour
                         outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathBordersMask);
                 }
 
-               // Debug.Log(colisionConRayo + "-" + outsidePathCols + "-" + outsidePathCols?.Length);
+                // Debug.Log(colisionConRayo + "-" + outsidePathCols + "-" + outsidePathCols?.Length);
                 validCollision = colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
             }
@@ -185,7 +185,7 @@ public class PlaceManager : MonoBehaviour
             }
             else // Si la torre no se puede colocar entonces se pone en color rojo
             {
-                
+
                 if (colisionConRayo)
                 {
                     if (!torre.gameObject.activeSelf)
@@ -204,6 +204,45 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
+    public void DiscardCurrentTower()
+    {
+        if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
+        {
+            ReturnInstanceCopy();
+        }
+    }
+
+    public void PreviewNewTower()
+    {
+        if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
+        {
+            ReturnInstanceCopy();
+        }
+        else
+        {
+            currentButton.Select();
+            currentButton.onClick.Invoke();
+        }
+    }
+
+    public void OnClickButton2()
+    {
+        if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
+        {
+            ReturnInstanceCopy();
+        }
+        else
+        {
+            currentButton.Select();
+            currentButton.onClick.Invoke();
+
+            /*if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
+            {
+                GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
+            }*/
+        }
+    }
+
     public void OnClickButton(Button btn) { currentButton = btn; }
 
     public void OnClickButtons(InputAction.CallbackContext ctx)
@@ -219,10 +258,10 @@ public class PlaceManager : MonoBehaviour
                 currentButton.Select();
                 currentButton.onClick.Invoke();
 
-                if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
+                /*if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
                 {
                     GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
-                }
+                }*/
             }
         }
     }
@@ -322,12 +361,13 @@ public class PlaceManager : MonoBehaviour
 
     private void ReturnInstanceCopy()
     {
-        
+        torre.placed = false;
         SetPreviewMode(false);
         ToggleTowerCollisions(torre, true);
         objetoSiendoArrastrado = false;
         StartCoroutine(DesbloquearDisparo());
         torre.GetComponent<IPoolable>().ReturnToPool();
+        torre = null;
     }
 
     public void DesignMainTower(Tower tower) { torre = tower; }

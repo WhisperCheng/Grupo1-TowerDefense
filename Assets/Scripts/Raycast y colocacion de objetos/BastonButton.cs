@@ -8,10 +8,14 @@ using UnityEngine.UI;
 public class BastonButton : MonoBehaviour
 {
     private Button button;
+    private void Awake()
+    {
+        button = GetComponent<Button>();
+    }
 
     private void Start()
     {
-        button = GetComponent<Button>();
+        
     }
     
     public void SetHoldingCrosier(Player player)

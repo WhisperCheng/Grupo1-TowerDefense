@@ -7,6 +7,12 @@ public class TowerButton : MonoBehaviour
 {
     public Tower towerPrefab;
     protected Button thisButton;
+
+    private void Awake()
+    {
+        thisButton = GetComponent<Button>();
+    }
+
     public void StartButton()
     {
         PlaceManager.Instance.DesignMainTower(towerPrefab);
@@ -14,7 +20,7 @@ public class TowerButton : MonoBehaviour
     }
     private void Start()
     {
-        thisButton = GetComponent<Button>();
+        
     }
 
     private void Update()
