@@ -222,28 +222,10 @@ public class PlaceManager : MonoBehaviour
         }
         else
         {
-            currentButton.Select();
+            //currentButton.Select();
             currentButton.onClick.Invoke();
         }
     }
-
-    /*public void OnClickButton2()
-    {
-        if (objetoSiendoArrastrado) // si ya se está arrastrando se cancela la colocación
-        {
-            ReturnInstanceCopy();
-        }
-        else
-        {
-            currentButton.Select();
-            currentButton.onClick.Invoke();
-
-            if (!GameUIManager.Instance.activeBuildUI) // si el menú está escondido, mostrarlo
-            {
-                GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
-            }
-        }
-    }*/
 
     public void OnTriggerButton(Button btn) { currentButton = btn; }
 

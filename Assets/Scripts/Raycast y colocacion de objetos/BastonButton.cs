@@ -28,7 +28,7 @@ public class BastonButton : MonoBehaviour
         }
         else // Si lo está escondiendo lo sube
         {
-            button.Select();
+            //button.Select();
             player.ShowCrosier();
         }
     }
@@ -41,7 +41,7 @@ public class BastonButton : MonoBehaviour
 
     public void ShowCrosier(Player player)
     {
-        button.Select();
+        //button.Select();
         player.ShowCrosier();
     }
 }

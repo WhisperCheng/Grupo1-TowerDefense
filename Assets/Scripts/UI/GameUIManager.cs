@@ -130,7 +130,7 @@ public class GameUIManager : MonoBehaviour
         LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
-    void OpenGameMenu()
+    private void OpenGameMenu()
     {
         //añadir leAntween y esa vaina loquísima
         activeMenuPause = true;
@@ -140,7 +140,7 @@ public class GameUIManager : MonoBehaviour
         PostProcessingControl.Instance.PostProcessingVolumeOn();
         Time.timeScale = 0f;
     }
-    void CloseGameMenu()
+    private void CloseGameMenu()
     {
         //añadir leAntween y esa vaina loca
         activeMenuPause = false;
@@ -150,7 +150,7 @@ public class GameUIManager : MonoBehaviour
         PostProcessingControl.Instance.PostProcessingVolumeOff();
         Time.timeScale = 1f;
     }
-    void GameMenuDesactivate()
+    private void GameMenuDesactivate()
     {
         Time.timeScale = 0f;
         otherPanelActive = true;
