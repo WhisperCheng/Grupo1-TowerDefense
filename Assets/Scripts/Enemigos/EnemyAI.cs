@@ -24,6 +24,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public float actionRadio;
     public float checkWaypointProximityDistance = 3;
     public float _onFocusAcceleration = 30;
+    public float _onFocusStoppingDistance = 0.39f;
     public float speed = 3.5f;
     public List<int> enemyToAttackLayers;
 
@@ -44,6 +45,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
 
     protected Vector3 _destination;
     protected float _defaultAcceleration;
+    protected float _defaultOnStoppingDistance;
     protected float _currentHealth;
     protected float _maxHealth;
     protected float _currentCooldown = 0f;
@@ -101,6 +103,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         _currentCooldown = 0f;
         animatorController = GetComponent<Animator>();
         _defaultAcceleration = _agent.acceleration;
+        _defaultOnStoppingDistance = _agent.stoppingDistance;
     }
     protected virtual void UpdateCurrentCooldown()
     {
@@ -159,12 +162,14 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         {                       // y atacarle
             _destination = nearestRival.position;
             _agent.acceleration = _onFocusAcceleration; // Cambiar la aceleración de rotación del enemigo
+            _agent.stoppingDistance = _onFocusStoppingDistance; // Cambiar la stoppingDistance del enemigo
             var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
         }
         else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el waypoint correspondiente
         {
             _agent.acceleration = _defaultAcceleration; // Cambiar la aceleración de rotación del enemigo a la original
+            _agent.stoppingDistance = _defaultOnStoppingDistance; // Cambiar la stoppingDistance del enemigo a la original
             if (_finishedWaypoints)
             { // Si ya ha recorrido todo los waypoints, ir hacia el corazón del bosque más cercano
                 Transform hearth = EntityUtils.GetNearestForestHearthPos(transform.position, null);
