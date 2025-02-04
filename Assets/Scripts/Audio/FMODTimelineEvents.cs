@@ -3,14 +3,26 @@ using UnityEngine.Playables;
 using FMOD.Studio;
 using FMODUnity;
 using static UnityEngine.Rendering.DebugUI;
+using Unity.VisualScripting;
 
 public class FMODTimelineMusic : MonoBehaviour
 {
     public PlayableDirector director;
-    public EventReference musicEvent; 
+    public EventReference musicEvent;
 
     private EventInstance musicInstance;
 
+    public static FMODTimelineMusic Instance { get; private set; }
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+    }
     private void Start()
     {
         // Crea la instancia de la música, pero no la reproduzcas todavía.

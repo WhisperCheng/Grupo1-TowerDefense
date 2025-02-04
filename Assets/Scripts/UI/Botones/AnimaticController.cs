@@ -43,13 +43,22 @@ public class AnimaticController : MonoBehaviour
 
             textToFade.color = textColor;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+  
+    }
+
+
+
+    public void EndCutscene()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-                
-              timeline.Stop(); 
-              parentObject.SetActive(false);
-              nextCanvas.SetActive(true);
-            
+            timeline.Stop();
+            parentObject.SetActive(false);
+            nextCanvas.SetActive(true);
+
+            FMODTimelineMusic.Instance.StopMusic();
+            AudioManager.instance.InitializeMusic(FMODEvents.instance.musicMenu);
         }
     }
+
 }

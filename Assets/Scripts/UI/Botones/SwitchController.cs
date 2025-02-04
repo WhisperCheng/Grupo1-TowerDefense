@@ -24,7 +24,6 @@ public class SwitchController : MonoBehaviour
             targetSwitchable.SetActive(true);
             currentSwitchable.SetActive(false);
 
-       // AudioManager.instance.InitializeMusic(FMODEvents.instance.musicMenu);
     }
 }
 
