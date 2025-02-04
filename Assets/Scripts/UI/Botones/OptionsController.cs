@@ -16,11 +16,10 @@ public class OptionsController : MonoBehaviour
     private enum VolumeType
     {
         MASTER,
-
         MUSIC,
-
         SFX,
     }
+
     [SerializeField]
     private VolumeType volumeType;
     private Slider volumeSlider;
@@ -31,7 +30,6 @@ public class OptionsController : MonoBehaviour
 
     private void Awake()
     {
-        
         if (instance != this && instance != null)
         {
             Destroy(this);
@@ -41,23 +39,28 @@ public class OptionsController : MonoBehaviour
             instance = this;
         }
 
-       
         volumeSlider = GetComponent<Slider>();
     }
 
     void Start()
     {
-         brightness.value = PlayerPrefs.GetFloat("brightness", 0.7f);
+        
+        brightness.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+        volumeSlider.value = PlayerPrefs.GetFloat("volume", 0.5f);
+        sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
+
+       
         UpdateBrightnessPanel(brightness.value);
         brightness.onValueChanged.AddListener(ChangeBrightness);
+        volumeSlider.onValueChanged.AddListener(ChangeVolume);
+        sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
     }
 
     private void Update()
     {
-       
-        //switch (volumeType)
-        //{
-           /* case VolumeType.MASTER:
+        switch (volumeType)
+        {
+            case VolumeType.MASTER:
                 volumeSlider.value = AudioManager.instance.masterVolume;
                 break;
             case VolumeType.MUSIC:
@@ -68,15 +71,16 @@ public class OptionsController : MonoBehaviour
                 break;
             default:
                 Debug.LogWarning("Volume type no supported" + volumeType);
-                break;*/
-        //}
+                break;
+        }
     }
+
     public void ChangeBrightness(float value)
     {
-
         PlayerPrefs.SetFloat("brightness", value);
         UpdateBrightnessPanel(value);
     }
+
     public void ChangeVolume(float volume)
     {
         switch (volumeType)
@@ -96,12 +100,13 @@ public class OptionsController : MonoBehaviour
         }
         PlayerPrefs.SetFloat("volume", volume);
     }
+
     public void ChangeSensitive(float sensitive)
     {
-
         sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
         PlayerPrefs.SetFloat("sensitive", sensitive);
     }
+
     private void UpdateBrightnessPanel(float value)
     {
         float alpha = 1f - value;
@@ -109,4 +114,3 @@ public class OptionsController : MonoBehaviour
         panelBrightness.color = new Color(panelBrightness.color.r, panelBrightness.color.g, panelBrightness.color.b, alpha);
     }
 }
-
