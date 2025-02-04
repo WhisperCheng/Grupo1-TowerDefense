@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class UIButtonsController : MonoBehaviour
 {
-    /*public List<Image> uiElements;
+    public List<Image> uiElements;  //Lista de imagenes de los botones
 
     public void FadeInButton(float duration)
     {
@@ -26,16 +26,16 @@ public class UIButtonsController : MonoBehaviour
     private IEnumerator FadeImage(Image image, float startAlpha, float endAlpha, float duration)
     {
         float elapsedTime = 0f;
-        Color color = image.color;
+        Color imageColor = image.color;
 
         while (elapsedTime < duration)
         {
-            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime/duration);
+            imageColor.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime/duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        color.a = endAlpha; // Asegurar el valor final
-        image.color = color;
-    }*/
+        imageColor.a = endAlpha; // Asegurar el valor final
+        image.color = imageColor;
+    }
 }
