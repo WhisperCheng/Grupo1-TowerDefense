@@ -9787,6 +9787,7 @@ GameObject:
   - component: {fileID: 793224776247547043}
   - component: {fileID: 1820240296261846428}
   - component: {fileID: 6043288603457156899}
+  - component: {fileID: 8491070075471120608}
   m_Layer: 0
   m_Name: Spit  Particle System
   m_TagString: Untagged
@@ -9821,7 +9822,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 1
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -9894,7 +9895,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 3
+      scalar: 10
       minScalar: 0.5
       maxCurve:
         serializedVersion: 2
@@ -13628,7 +13629,7 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 24919
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
@@ -14666,3 +14667,30 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8491070075471120608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7942100547735512454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94a8fe6832270c4f8ef0af1fb94ea26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisableParticle:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8491070075471120608}
+        m_TargetAssemblyTypeName: OnDisableParticles, Assembly-CSharp
+        m_MethodName: ReturnRoseSpitParticles
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

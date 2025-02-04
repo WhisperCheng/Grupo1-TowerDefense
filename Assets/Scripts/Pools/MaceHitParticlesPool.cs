@@ -47,7 +47,7 @@ public class MaceHitParticlesPool : MonoBehaviour
         }
     }
 
-    public GameObject GetEnemyDeathParticles()
+    public GameObject GetMaceHitParticles()
     {
         if (pool.Count == 0)
         {
@@ -62,7 +62,7 @@ public class MaceHitParticlesPool : MonoBehaviour
         return particles;
     }
 
-    public void ReturnEnemyDeathParticles(GameObject returnedParticles)
+    public void ReturntMaceHitParticles(GameObject returnedParticles)
     {
         // Desactivar y devolver a la pool
         returnedParticles.SetActive(false);

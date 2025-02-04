@@ -43,6 +43,13 @@ public class RoseTower : RangedTower
                 ProyectileUtils.ShootingInterception
                 .CalculateInterceptionPoint(shootingSpeed, shooterSource.transform, currentTarget.transform, offsetY);
             ProyectileUtils.ThrowProyectileAtLocation(shooterSource.transform, proyectile, predictivePosition, shootingSpeed);
+
+            //Partículas de escupir
+            ParticleSystem particleSpit = RoseSpitParticlePool.Instance.GetRoseSpitParticles().GetComponent<ParticleSystem>();
+            particleSpit.transform.position = shooterSource.position + shooterSource.forward * 1.1f;
+            particleSpit.transform.rotation = shooterSource.rotation;
+            particleSpit.transform.Rotate(Vector3.up * 180 + Vector3.right * -90);
+            particleSpit.Play();
         }
     }
 

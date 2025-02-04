@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5005634523615958833}
   - component: {fileID: 6818755485929957845}
   - component: {fileID: 5487370425843986174}
+  - component: {fileID: -2888095370659844492}
   m_Layer: 0
   m_Name: ParticulasGolpeTanques
   m_TagString: Untagged
@@ -4889,6 +4890,33 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-2888095370659844492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3466994675111787721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94a8fe6832270c4f8ef0af1fb94ea26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDisableParticle:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -2888095370659844492}
+        m_TargetAssemblyTypeName: OnDisableParticles, Assembly-CSharp
+        m_MethodName: ReturnMaceHitParticle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7039921278767061432
 GameObject:
   m_ObjectHideFlags: 0

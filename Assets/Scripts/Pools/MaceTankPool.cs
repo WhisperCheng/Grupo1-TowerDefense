@@ -51,7 +51,6 @@ public class MaceTankPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            Debug.Log("Pool de tanques con maza vacía.");
             GameObject newTank = Instantiate(maceTankPrefab);
             newTank.transform.parent = parent.transform;
             return newTank;

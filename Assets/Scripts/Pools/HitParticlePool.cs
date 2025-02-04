@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoseSpitParticlePool : MonoBehaviour
+public class HitParticlePool : MonoBehaviour
 {
     public GameObject particlesPrefab; // Prefab de las partículas de muerte de enemigos
     public int poolSize = 20;
@@ -12,7 +12,7 @@ public class RoseSpitParticlePool : MonoBehaviour
     public string grandParentName = "ObjectPoolsObjects";
 
     private Stack<GameObject> pool;
-    public static RoseSpitParticlePool Instance;
+    public static HitParticlePool Instance;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class RoseSpitParticlePool : MonoBehaviour
         }
     }
 
-    public GameObject GetRoseSpitParticles()
+    public GameObject GetParticles()
     {
         if (pool.Count == 0)
         { // Crear nuevas partículas si la pool está vacía
@@ -61,7 +61,7 @@ public class RoseSpitParticlePool : MonoBehaviour
         return particles;
     }
 
-    public void ReturnRoseSpitParticles(GameObject returnedParticles)
+    public void ReturnParticles(GameObject returnedParticles)
     {
         // Desactivar y devolver a la pool
         returnedParticles.SetActive(false);

@@ -81,7 +81,7 @@ public class Player : MonoBehaviour, IDamageable
     private ParticleSystem InstantiateParticlesOnPlayer(ParticleSystem pSys)
     {
         ParticleSystem pSysAction =
-       PlaceManager.Instance.StartParticleGameObjEffect(pSys, gameObject.transform.position);
+       PlaceManager.Instance.StartParticleGameObjEffect(pSys, gameObject.transform.position, false);
         pSysAction.gameObject.transform.parent = particlesParent.transform; // Asignando padre
        
         return pSysAction;

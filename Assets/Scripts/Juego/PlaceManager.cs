@@ -252,18 +252,26 @@ public class PlaceManager : MonoBehaviour
             }
         }
     }
-    public ParticleSystem StartParticleGameObjEffect(ParticleSystem pSys, Vector3 position)
+    public ParticleSystem StartParticleGameObjEffect(ParticleSystem pSys, Vector3 position, bool destroyParticles)
     {
         GameObject particulasCopia = Instantiate(pSys.gameObject);
         particulasCopia.transform.position = position;
         ParticleSystem pConstruccion = particulasCopia.GetComponent<ParticleSystem>();
         pConstruccion.Play();
-        float destroyTime = pConstruccion.main.duration + pConstruccion.main.startLifetime.constant;
-        Destroy(particulasCopia, destroyTime);
+        if(destroyParticles)
+        {
+            float destroyTime = pConstruccion.main.duration + pConstruccion.main.startLifetime.constant;
+            Destroy(particulasCopia, destroyTime);
+        }
         return pConstruccion;
     }
 
-    public Vector3 GetGameObjectCenter(GameObject gObj)
+    public ParticleSystem StartParticleGameObjEffect(ParticleSystem pSys, Vector3 position)
+    {
+        return StartParticleGameObjEffect(pSys, position, false);
+    }
+
+        public Vector3 GetGameObjectCenter(GameObject gObj)
     {
         float lowestChild = 0;
         float highestChild = 0;

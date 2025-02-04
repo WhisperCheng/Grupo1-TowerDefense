@@ -49,9 +49,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected float _currentCooldown = 0f;
     protected float _maxSpeed;
     public float MaxSpeed { get { return _maxSpeed; } }
-    //protected float _originalSpeed;
-
-    //protected List<Collider> attackingList;
 
     protected bool _attackMode = false;
     protected bool _canDamage = false;

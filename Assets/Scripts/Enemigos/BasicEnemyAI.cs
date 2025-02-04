@@ -100,10 +100,12 @@ public abstract class BasicEnemyAI : EnemyAI
         return this.gameObject;
     }
 
+#if UNITY_EDITOR
     protected override void OnDrawGizmosSelected()
     {
         base.OnDrawGizmosSelected();
         Gizmos.color = Color.red;
         attackBox.DrawGizmos(transform);
     }
+#endif
 }
