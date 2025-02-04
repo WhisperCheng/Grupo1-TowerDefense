@@ -7,16 +7,25 @@ public class TutorialTrigger : MonoBehaviour
 {
     //Asegura que el trigger se activa solo una vez
     private bool hasActivated = false;
-    public UnityEvent pachamamaEvent, enemiesEvent;
+    public UnityEvent pachamamaEvent, enemiesEvent, tutorialEvent;
+
+    public UIButtonsController fadeController;
+    public float fadeDuration = 1f;
     
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasActivated)
         {
-            Debug.Log("Estas reconociendo el contacto" + gameObject.name);
             hasActivated = true;
             TutorialController.Instance.ActivateModule();
             pachamamaEvent.Invoke();
+            tutorialEvent.Invoke();
+
+            if (fadeController != null)
+            {
+                //fadeController.FadeInButton(fadeDuration);
+            }
+
             Destroy(gameObject);
         }
         if (other.CompareTag("Enemy"))
