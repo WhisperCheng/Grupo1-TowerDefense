@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Playables;
+using UnityEngine.Timeline;
 
 public class AnimaticController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class AnimaticController : MonoBehaviour
 
     private bool isFading = true;
 
+    public bool acabarCutscene = false;
 
     public PlayableDirector timeline;
     private void Start()
@@ -43,14 +45,18 @@ public class AnimaticController : MonoBehaviour
 
             textToFade.color = textColor;
         }
-  
+        
+        EndCutscene();
     }
 
-
+    public void CutsceneHasEnded()
+    {
+        acabarCutscene = true;
+    }
 
     public void EndCutscene()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || acabarCutscene)
         {
             timeline.Stop();
             parentObject.SetActive(false);
