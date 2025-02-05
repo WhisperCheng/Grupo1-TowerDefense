@@ -24,17 +24,27 @@ public class ProyectilFabric : MonoBehaviour
 
     public void LanzarProyectil()
     {
-        //FMOD
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.magicAttack, this.transform.position);
+        PlayProyectileShootSound();
 
         Vector3 destino = GetClosestImpactPoint();
 
         // Crea el proyectil 
         //GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
-        GameObject proyectil = MagicProjectilePool.Instance.GetMagicProjectile(puntoDisparo.position, Quaternion.identity);
+        GameObject proyectil = GetProyectileFromPool();
         proyectil.transform.position = puntoDisparo.position;
         Vector3 direccion = (destino - puntoDisparo.position).normalized;
         proyectil.GetComponent<Rigidbody>().velocity = direccion * velocidadProyectil;
+    }
+
+    protected virtual GameObject GetProyectileFromPool()
+    {
+        return MagicProjectilePool.Instance.GetMagicProjectile(puntoDisparo.position, Quaternion.identity);
+    }
+
+    protected virtual void PlayProyectileShootSound()
+    {
+        //FMOD
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.magicAttack, this.transform.position);
     }
 
     private Vector3 GetClosestImpactPoint()

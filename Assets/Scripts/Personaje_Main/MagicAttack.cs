@@ -25,7 +25,6 @@ public class MagicAttack : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.tag == GameManager.Instance.tagEnemigos)
         {
             IDamageable damageableEntity = collision.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
@@ -34,6 +33,18 @@ public class MagicAttack : MonoBehaviour
                 Attack(damageableEntity);
             }
         }
+
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == GameManager.Instance.tagEnemigos)
+        {
+            IDamageable damageableEntity = other.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
+            if (damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
+            {
+                Attack(damageableEntity);
+            }
+        }
+    }
 }
