@@ -17,10 +17,9 @@ public class HealthBar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _image = GetComponentsInChildren<Image>().Length > 1 ?
-            GetComponentsInChildren<Image>()[GetComponentsInChildren<Image>().Length-1]
-            : GetComponentInChildren<Image>(); // En caso de haber una(s) imagen(es) de fondo, toma la otra imagen como la que
-                                                // funciona como la barra de vida
+        Image[] arrayImages = GetComponentsInChildren<Image>();
+        _image = arrayImages.Length > 1 ? arrayImages[arrayImages.Length-1 -1]: GetComponentInChildren<Image>();
+        // En caso de haber una(s) imagen(es) de fondo, toma la otra imagen como la que funciona como la barra de vida
         _image.color = _healthBarGradient.Evaluate(_targetAmount);
         _camera = Camera.main;
         CheckHealthBarGradient();
