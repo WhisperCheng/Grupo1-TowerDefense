@@ -6,6 +6,7 @@ using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using System.ComponentModel;
 using UnityEditor.VersionControl;
 
@@ -123,6 +124,8 @@ public class TutorialController : MonoBehaviour
         {
             arrowImage.gameObject.SetActive(false);
         }
+        // Invoca el evento específico de este mensaje si tiene suscriptores
+        message.onMessageDisplayed?.Invoke();
     }
 
     // Maneja la acción de "continuar" cuando el jugador presiona la tecla.
@@ -172,6 +175,8 @@ public class TutorialMessage
     public bool showArrow;                // Indica si la flecha debe mostrarse
     public Vector2 arrowPosition;         // Posición de la flecha en pantalla
     public float arrowRotation;           // Rotación de la flecha
+    public UnityEvent onMessageDisplayed;   //Eventos de unity que se activan con cada mensaje
+
 }
 
 [System.Serializable]
