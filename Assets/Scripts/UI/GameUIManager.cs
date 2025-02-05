@@ -54,16 +54,7 @@ public class GameUIManager : MonoBehaviour
     {
         canvasRT = mainCanvas.GetComponent<RectTransform>();
 
-        //activeObjectUI = true;
         textMoneyOriginal = textMoney.text;
-        if (activeBuildUI)
-        {
-            ShowBuildUI(0);
-        }
-        else
-        {
-            HideBuildUI(0);
-        }
     }
 
     // Update is called once per frame
