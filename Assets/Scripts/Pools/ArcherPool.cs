@@ -50,7 +50,6 @@ public class ArcherPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            Debug.Log("Pool de arqueros vacía.");
             GameObject newArcher = Instantiate(archerPrefab);
             newArcher.transform.parent = parent.transform;
             return newArcher;

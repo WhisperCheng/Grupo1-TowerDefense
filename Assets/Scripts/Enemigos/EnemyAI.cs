@@ -75,6 +75,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected abstract void ManageCombat();
     public abstract GameObject GetFromPool();
 
+    protected abstract void ReturnEnemyGameObjectToPool();
+
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
     {

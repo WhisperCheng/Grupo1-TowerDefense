@@ -8,8 +8,6 @@ public abstract class BasicEnemyAI : EnemyAI
 {
     public AttackBox attackBox;
 
-    protected abstract void ReturnEnemyGameObjectToPool();
-
     void Update()
     {
         WhileWalking();

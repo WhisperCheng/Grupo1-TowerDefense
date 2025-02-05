@@ -31,7 +31,7 @@ public class RoseTower : RangedTower
 
             // Para apuntar hacia el centro del enemigo
             NavMeshAgent agent = currentTarget.GetComponent<NavMeshAgent>();
-            float offsetYTargetPosition = (agent != null ? agent.height/* / 2 */: 0);
+            float offsetYTargetPosition = (agent != null ? agent.height / 2 : 0);
             Vector3 offsetY = Vector3.up * offsetYTargetPosition;
 
             // Trayectora sin predicción de movimiento
