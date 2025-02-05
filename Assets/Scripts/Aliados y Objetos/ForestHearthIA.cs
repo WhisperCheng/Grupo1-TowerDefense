@@ -6,7 +6,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
 {
     [Header("Vida")] // Vida
     public float health;
-    private HealthBar _healthBar;
+    public HealthBar _healthBar;
 
     private float _currentHealth;
     private float _maxHealth;
@@ -26,7 +26,7 @@ public class ForestHearthIA : LivingEntityAI, IDamageable
     {
         _currentHealth = health;
         _maxHealth = health;
-        _healthBar = GetComponentInChildren<HealthBar>();
+        //_healthBar = GetComponentInChildren<HealthBar>();
         GameManager.Instance.addForestHearth();
     }
 
