@@ -26,7 +26,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public bool hadInitialAnimation = false;
     public bool finalAnimation = false;
 
-    private void Start()
+    private void Awake()
     {
         foreach (Button btn in buttons)
         {
@@ -36,6 +36,11 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 initialButtonsPos.Add(btn, btn.GetComponent<RectTransform>().position);
             }
         }
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void OnEnable()
@@ -67,14 +72,14 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    private void PositionButtonsOnDisable()
+    /*private void PositionButtonsOnDisable()
     {
         foreach (Button btn in buttons)
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
             rect.position = new Vector3(rect.position.x - buttonsInitialPosition.x, rect.position.y, rect.position.z);
         }
-    }
+    }*/
 
     private IEnumerator DelayedInitialAnimation(float delay)
     {
