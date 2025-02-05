@@ -13,7 +13,7 @@ using UnityEngine.AI;
 public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisonable
 {
     //FMOD
-    private StudioEventEmitter emitter;
+    protected StudioEventEmitter emitter;
 
     protected float poisonedTime = 0;
     protected NavMeshAgent _agent;
@@ -27,6 +27,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public float _onFocusStoppingDistance = 0.39f;
     public float speed = 3.5f;
     public List<int> enemyToAttackLayers;
+    public bool hasRangedAttack;
 
     [Header("Tags de obstáculos a ignorar")]
     public string[] ignoreTagList;
@@ -167,6 +168,8 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             _agent.stoppingDistance = _onFocusStoppingDistance; // Cambiar la stoppingDistance del enemigo
             var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
+            if (hasRangedAttack) // Solo se pone en modo de animación de ataque si el enemigo tiene ataque a distancia activado
+                _attackMode = true;
         }
         else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el waypoint correspondiente
         {
@@ -199,7 +202,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                     bool isNextWaypoint = nearestWaypoint.position == GameManager.Instance.wayPoints[nearestWaypointIndex].transform.position;
                     if (isNextWaypoint && Vector3.Distance(transform.position, nearestWaypoint.position) < checkWaypointProximityDistance)
                     {
-                        //Debug.Log(_currentWaypointIndex + " - " + _destination);
                         UpdateWayPointDestination(++nearestWaypointIndex);
                     }
                 }

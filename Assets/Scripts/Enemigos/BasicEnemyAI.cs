@@ -78,8 +78,6 @@ public abstract class BasicEnemyAI : EnemyAI
         _healthBar.ResetHealthBar(); // Actualizamos la barra de salud
         ColorUtils.ChangeObjectMaterialColors(gameObject, null); // Volver a aplicar el color normal si ha sido envenenado
 
-        // Llamamos a la pool para devolver al caballero
-        //MiniKnightPool.Instance.ReturnMiniKnight(this.gameObject);
         ReturnEnemyGameObjectToPool();
     }
 
