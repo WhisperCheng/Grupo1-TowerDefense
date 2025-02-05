@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -10,22 +11,11 @@ public class OptionsController : MonoBehaviour
 {
     [Header("Options")]
    
-    [SerializeField] Slider brightness;
-    [SerializeField] Image panelBrightness;
+    [SerializeField] public Slider brightnessSlider;
+    [SerializeField] public Image panelBrightness;
 
-    private enum VolumeType
-    {
-        MASTER,
-        MUSIC,
-        SFX,
-    }
+    [SerializeField] public Slider sensitiveSlider;
 
-    [SerializeField]
-    private VolumeType volumeType;
-    private Slider volumeSlider;
-
-    [SerializeField] private Slider sensitiveSlider;
-    
     public static OptionsController instance { get; private set; }
 
     private void Awake()
@@ -38,72 +28,65 @@ public class OptionsController : MonoBehaviour
         {
             instance = this;
         }
-
-        volumeSlider = GetComponent<Slider>();
     }
 
     void Start()
     {
+        if (brightnessSlider != null)
+        {
+            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+            brightnessSlider.onValueChanged.AddListener(ChangeBrightness);
+        }
         
-        brightness.value = PlayerPrefs.GetFloat("brightness", 0.5f);
-        volumeSlider.value = PlayerPrefs.GetFloat("volume", 0.5f);
-        sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
-
-       
-        UpdateBrightnessPanel(brightness.value);
-        brightness.onValueChanged.AddListener(ChangeBrightness);
-        volumeSlider.onValueChanged.AddListener(ChangeVolume);
-        sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
+        if (sensitiveSlider != null)
+        {
+            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
+            sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
+        }
+        
+        //UpdateBrightnessPanel(brightness.value);
+        
+        
     }
 
     private void Update()
     {
-        switch (volumeType)
-        {
-            case VolumeType.MASTER:
-                volumeSlider.value = AudioManager.instance.masterVolume;
-                break;
-            case VolumeType.MUSIC:
-                volumeSlider.value = AudioManager.instance.musicVolume;
-                break;
-            case VolumeType.SFX:
-                volumeSlider.value = AudioManager.instance.SFXVolume;
-                break;
-            default:
-                Debug.LogWarning("Volume type no supported" + volumeType);
-                break;
-        }
+        
     }
 
-    public void ChangeBrightness(float value)
+    public void ChangeBrightness(float brightness)
     {
-        PlayerPrefs.SetFloat("brightness", value);
-        UpdateBrightnessPanel(value);
-    }
 
-    public void ChangeVolume(float volume)
-    {
-        switch (volumeType)
+        UpdateBrightnessPanel(brightness);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-            case VolumeType.MASTER:
-                AudioManager.instance.masterVolume = volumeSlider.value;
-                break;
-            case VolumeType.MUSIC:
-                AudioManager.instance.musicVolume = volumeSlider.value;
-                break;
-            case VolumeType.SFX:
-                AudioManager.instance.SFXVolume = volumeSlider.value;
-                break;
-            default:
-                Debug.LogWarning("Volume type no supported" + volumeType);
-                break;
+            
+            PlayerPrefs.SetFloat("brightness", brightnessSlider.value);
+            
         }
-        PlayerPrefs.SetFloat("volume", volume);
+        else
+        {
+            
+            brightnessSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
+            brightnessSlider.value = ThirdPersonCam.instance._turnSpeed;
+        }
+        PlayerPrefs.SetFloat("brightness", brightness);
     }
 
     public void ChangeSensitive(float sensitive)
     {
-        sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            
+            PlayerPrefs.SetFloat("sensitive", sensitiveSlider.value);
+           
+        }
+        else
+        {
+            
+            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
+            sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
+        }
         PlayerPrefs.SetFloat("sensitive", sensitive);
     }
 
