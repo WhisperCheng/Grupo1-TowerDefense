@@ -7,6 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private float _timeToDrain = 0.25f;
     [SerializeField] private Gradient _healthBarGradient;
+    [SerializeField] private bool _billboard;
     private Image _image;
     private Camera _camera;
 
@@ -28,10 +29,13 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _camera = Camera.main;
-        transform.rotation = Quaternion.LookRotation(transform.position - _camera.transform.position);
-        //Quaternion lookRotation = Camera.main.transform.rotation;
-        //transform.rotation = lookRotation;
+        if (_billboard)
+        {
+            _camera = Camera.main;
+            transform.rotation = Quaternion.LookRotation(transform.position - _camera.transform.position);
+            //Quaternion lookRotation = Camera.main.transform.rotation;
+            //transform.rotation = lookRotation;
+        }
     }
 
     public void UpdateHealthBar(float maxHealth, float currentHealth)
