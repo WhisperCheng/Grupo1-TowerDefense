@@ -1327,6 +1327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6909006181506847600}
   - component: {fileID: 8341257638976310040}
+  - component: {fileID: 3036025160117696846}
   m_Layer: 5
   m_Name: SFX Slider
   m_TagString: Untagged
@@ -1407,7 +1408,32 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3036025160117696846}
+        m_TargetAssemblyTypeName: SliderController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3036025160117696846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489304529164003560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ada3ec723e4a54d89c381230337093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeType: 2
 --- !u!1 &1507304057957393913
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +2058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 313064979259015332}
   - component: {fileID: 4653197472765312351}
+  - component: {fileID: 552148439487935535}
   m_Layer: 5
   m_Name: Music Slider
   m_TagString: Untagged
@@ -2112,7 +2139,32 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 552148439487935535}
+        m_TargetAssemblyTypeName: SliderController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &552148439487935535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2506337137824911033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ada3ec723e4a54d89c381230337093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeType: 1
 --- !u!1 &2685808810540188969
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,6 +2665,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7268732089625339748}
   - component: {fileID: 3959036048061795313}
+  - component: {fileID: 8864237636742807510}
   m_Layer: 5
   m_Name: Master Slider
   m_TagString: Untagged
@@ -2693,7 +2746,32 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8864237636742807510}
+        m_TargetAssemblyTypeName: SliderController, Assembly-CSharp
+        m_MethodName: ChangeVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8864237636742807510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643312134096040345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ada3ec723e4a54d89c381230337093, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeType: 0
 --- !u!1 &3796113268121347289
 GameObject:
   m_ObjectHideFlags: 0

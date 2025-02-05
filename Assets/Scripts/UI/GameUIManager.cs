@@ -123,7 +123,7 @@ public class GameUIManager : MonoBehaviour
         LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
-    private void OpenPauseMenu()
+    public void OpenPauseMenu()
     {
         //añadir leAntween y esa vaina loquísima
         activeMenuPause = true;
@@ -134,7 +134,7 @@ public class GameUIManager : MonoBehaviour
         Time.timeScale = 0f;
         hotBarController.DisableHotbar();
     }
-    private void ClosePauseMenu()
+    public void ClosePauseMenu()
     {
         //añadir leAntween y esa vaina loca
         activeMenuPause = false;
