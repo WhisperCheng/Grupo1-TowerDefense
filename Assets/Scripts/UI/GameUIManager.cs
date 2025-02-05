@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class GameUIManager : MonoBehaviour
 {
     public static GameUIManager Instance { get; private set; }
+    [Header("Paneles y componentes de la UI")]
     public RectTransform mainCanvas;
     public GameObject buildUI;
     public GameObject roundUI;
@@ -16,6 +17,7 @@ public class GameUIManager : MonoBehaviour
     public GameObject panelWin;
     public GameObject panelLose;
     public GameObject menuPause;
+    public HotbarController hotBarController;
     public GameObject[] panelsMenu;
     public TMP_Text textMoney;
 
@@ -97,12 +99,12 @@ public class GameUIManager : MonoBehaviour
         {
             if (activeMenuPause && !otherPanelActive)
             {
-                OpenGameMenu();
+                OpenPauseMenu();
                 Cursor.lockState = CursorLockMode.None;
             }
             else if (!otherPanelActive)
             {
-                CloseGameMenu();
+                ClosePauseMenu();
                 Cursor.lockState = CursorLockMode.Locked;
             }
         }
@@ -130,7 +132,7 @@ public class GameUIManager : MonoBehaviour
         LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
-    private void OpenGameMenu()
+    private void OpenPauseMenu()
     {
         //añadir leAntween y esa vaina loquísima
         activeMenuPause = true;
@@ -139,8 +141,9 @@ public class GameUIManager : MonoBehaviour
         roundUI.SetActive(false);
         PostProcessingControl.Instance.PostProcessingVolumeOn();
         Time.timeScale = 0f;
+        hotBarController.DisableHotbar();
     }
-    private void CloseGameMenu()
+    private void ClosePauseMenu()
     {
         //añadir leAntween y esa vaina loca
         activeMenuPause = false;
@@ -149,6 +152,7 @@ public class GameUIManager : MonoBehaviour
         roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
         Time.timeScale = 1f;
+        hotBarController.EnableHotbar();
     }
     private void GameMenuDesactivate()
     {
@@ -173,7 +177,7 @@ public class GameUIManager : MonoBehaviour
 
     public void StartGame()
     {
-        CloseGameMenu();
+        ClosePauseMenu();
     }
     public void ReLoadGame()
     {
@@ -190,7 +194,7 @@ public class GameUIManager : MonoBehaviour
         {
             panels.SetActive(false);
             otherPanelActive = false;
-            OpenGameMenu();
+            OpenPauseMenu();
         }
     }
     public void WinLevel()

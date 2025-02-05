@@ -292,39 +292,42 @@ public class PlaceManager : MonoBehaviour
 
     public void OnClickPlaceTower(InputAction.CallbackContext ctx)
     {
-        if (objetoSiendoArrastrado && ctx.performed)
+        if (Time.deltaTime != 0) // Si el juego no está pausado
         {
-            if (!_canPlaceTower)
+            if (objetoSiendoArrastrado && ctx.performed)
             {
-                ReturnInstanceCopy();
-                return;
+                if (!_canPlaceTower)
+                {
+                    ReturnInstanceCopy();
+                    return;
+                }
+                ManageTowerPlacement();
+                ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
+                pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
+
+                ToggleTowerCollisions(torre, true);
+                torre.placed = true;
+                SetPreviewMode(false);
+                objetoSiendoArrastrado = false;
+                torre = null; // se "elimina" la referencia del objeto para que al hacer click derecho
+                              // no se vuelva a eliminar
+                StartCoroutine(DesbloquearDisparo());
+
+                if (!GameUIManager.Instance.activeBuildUI)
+                {
+                    GameUIManager.Instance.crossHead.SetActive(false);
+                }
+                EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
+
+                //FMOD
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.buildPlant, this.transform.position);
             }
-            ManageTowerPlacement();
-            ParticleSystem pSysConstruccion = StartParticleGameObjEffect(particulasConstruccion, torre.transform.position);
-            pSysConstruccion.gameObject.transform.parent = particlesParent.transform; // Asignando padre
-
-            ToggleTowerCollisions(torre, true);
-            torre.placed = true;
-            SetPreviewMode(false);
-            objetoSiendoArrastrado = false;
-            torre = null; // se "elimina" la referencia del objeto para que al hacer click derecho
-                          // no se vuelva a eliminar
-            StartCoroutine(DesbloquearDisparo());
-
-            if (!GameUIManager.Instance.activeBuildUI)
-            {
-                GameUIManager.Instance.crossHead.SetActive(false);
-            }
-            EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
-
-            //FMOD
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.buildPlant, this.transform.position);
         }
     }
     public void OnRightClickPlaceTower(InputAction.CallbackContext ctx)
     {
-        if (objetoSiendoArrastrado && ctx.performed)
-        {
+        if (objetoSiendoArrastrado && ctx.performed && Time.deltaTime != 0) // Si el juego no está pausado
+            {
             EventSystem.current.SetSelectedGameObject(null); // deseleccionar boton
             ReturnInstanceCopy();
         }

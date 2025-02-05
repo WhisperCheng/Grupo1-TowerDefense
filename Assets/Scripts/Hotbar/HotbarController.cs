@@ -9,6 +9,8 @@ public class HotbarController : MonoBehaviour
     protected int _maxIndexSize = 8;
     protected int _currentIndex = 0;
 
+    protected bool _activeButton = false;
+
     public Slot[] slots;
     public float buttonsTransitionTime;
     public float buttonsOnSelectedScale;
@@ -57,7 +59,7 @@ public class HotbarController : MonoBehaviour
             // Si se puede interactuar con el botón, se procede a seleccionarlo
             if (slots[relativeIndex].Button.interactable) 
             {
-                
+                _activeButton = true;
                 // Se deselecciona el botón actualmente seleccionado
                 if (slots[_currentIndex].Selected) slots[_currentIndex].ToggleHighlight();
                 _currentIndex = relativeIndex;
@@ -81,6 +83,7 @@ public class HotbarController : MonoBehaviour
 
         if (slots[desiredIndex].Button.interactable) // Si se puede interactuar con ese botón
         {
+            _activeButton = true;
             // Se deselecciona el botón actualmente seleccionado
             if (slots[_currentIndex].Selected) slots[_currentIndex].ToggleHighlight();
             _currentIndex = newIndex;
@@ -89,8 +92,9 @@ public class HotbarController : MonoBehaviour
         // Si no no se puede hacer nada
     }
 
-    protected void EnableHotbar()
+    public void EnableHotbar()
     {
+        _activeButton = true;
         GameManager.Instance.playerControls.actions["Button1"].performed += Hotbar1;
         GameManager.Instance.playerControls.actions["Button2"].performed += Hotbar2;
         GameManager.Instance.playerControls.actions["Button3"].performed += Hotbar3;
@@ -104,8 +108,10 @@ public class HotbarController : MonoBehaviour
         GameManager.Instance.playerControls.actions["RightClick"].performed += OnRightClick;
     }
 
-    protected void DisableHotbar()
+    public void DisableHotbar()
     {
+        Debug.Log("dis");
+        _activeButton = false;
         GameManager.Instance.playerControls.actions["Button1"].performed -= Hotbar1;
         GameManager.Instance.playerControls.actions["Button2"].performed -= Hotbar2;
         GameManager.Instance.playerControls.actions["Button3"].performed -= Hotbar3;
@@ -131,7 +137,7 @@ public class HotbarController : MonoBehaviour
 
     protected void OnClick(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && _activeButton)
         {
             PlaceManager.Instance.OnClickPlaceTower(ctx); // Colocar torre
             if(_currentIndex != 0) // De hacer click con el primer botón se encarga otro evento
@@ -143,12 +149,12 @@ public class HotbarController : MonoBehaviour
 
     protected void OnRightClick(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed)
+        if (ctx.performed && _activeButton)
         {
             if (slots[_currentIndex].Selected)
             { // Se deselecciona el botón actualmente seleccionado
                 slots[_currentIndex].ToggleHighlight();
-                
+                _activeButton = false;
             }
             PlaceManager.Instance.OnRightClickPlaceTower(ctx); // Cancelar colocación de la torre
         }

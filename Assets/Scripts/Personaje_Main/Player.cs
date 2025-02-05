@@ -88,14 +88,17 @@ public class Player : MonoBehaviour, IDamageable
     }
     public void TryShootProyectile(InputAction.CallbackContext ctx)
     {
-        if (!UIUtils.IsPointerOverInteractableUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton 
+        if (Time.deltaTime != 0) // Si el juego no está pausado
+        { 
+            if (!UIUtils.IsPointerOverInteractableUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton
             && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
-        { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara
-            proyectilFabric.LanzarProyectil();
-            canShoot = false;
-            GameObject particles = ShootingMagicParticlesPool.Instance.GetMagicShootingParticle();
-            particles.transform.position = shootingSource.transform.position;
-            particles.GetComponent<ParticleSystem>().Play();
+            { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara
+                proyectilFabric.LanzarProyectil();
+                canShoot = false;
+                GameObject particles = ShootingMagicParticlesPool.Instance.GetMagicShootingParticle();
+                particles.transform.position = shootingSource.transform.position;
+                particles.GetComponent<ParticleSystem>().Play();
+            }
         }
     }
 
