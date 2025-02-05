@@ -110,7 +110,6 @@ public class HotbarController : MonoBehaviour
 
     public void DisableHotbar()
     {
-        Debug.Log("dis");
         _activeButton = false;
         GameManager.Instance.playerControls.actions["Button1"].performed -= Hotbar1;
         GameManager.Instance.playerControls.actions["Button2"].performed -= Hotbar2;
