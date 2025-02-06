@@ -19,7 +19,7 @@ public class TutorialTrigger : MonoBehaviour
             hasActivated = true;
             TutorialController.Instance.ActivateModule();
             pachamamaEvent.Invoke();
-            StartCoroutine(FadeInButtons());
+            //StartCoroutine(FadeInButtons());
             Destroy(gameObject);
         }
 
@@ -27,31 +27,5 @@ public class TutorialTrigger : MonoBehaviour
         {
             enemiesEvent.Invoke();
         }
-    }
-
-    private IEnumerator FadeInButtons()
-    {
-        foreach (Image button in elementsActivated)
-        {
-            StartCoroutine(FadeImage(button, button.color.a, 1, fadeDuration));
-        }
-        yield return null;
-    }
-
-    private IEnumerator FadeImage(Image image, float startAlpha, float endAlpha, float duration)
-    {
-        float elapsedTime = 0f;
-        Color color = image.color;
-
-        while (elapsedTime < duration)
-        {
-            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime/duration);
-            image.color = color;
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        color.a = endAlpha;
-        image.color = color;
     }
 }

@@ -31,7 +31,12 @@ public class Slot : MonoBehaviour
     }
     void Start()
     {
-
+        if (!buttonEnabled)
+        {
+            Color newColor = _buttonImage.color;
+            newColor.a = 0;
+            _buttonImage.color = newColor;
+        }
     }
 
     public void ToggleHighlight()
@@ -49,6 +54,7 @@ public class Slot : MonoBehaviour
     public void EnableButton()
     {
         buttonEnabled = true;
+        StartCoroutine(FadeImage(_buttonImage, 0, 1, 0.5f));
     }
 
     private void AnimateButton()
@@ -64,5 +70,22 @@ public class Slot : MonoBehaviour
     {
         if(Selected)
             OnSlotSelected.Invoke();
+    }
+
+    private IEnumerator FadeImage(Image image, float startAlpha, float endAlpha, float duration)
+    {
+        float elapsedTime = 0f;
+        Color color = image.color;
+
+        while (elapsedTime < duration)
+        {
+            color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
+            image.color = color;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        color.a = endAlpha;
+        image.color = color;
     }
 }

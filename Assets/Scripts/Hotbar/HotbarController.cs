@@ -57,7 +57,7 @@ public class HotbarController : MonoBehaviour
             if (relativeIndex < 0) relativeIndex = _maxIndexSize;
 
             // Si se puede interactuar con el botón, se procede a seleccionarlo
-            if (slots[relativeIndex].Button.interactable) 
+            if (slots[relativeIndex].Button.interactable && slots[relativeIndex].buttonEnabled) 
             {
                 _activeButton = true;
                 // Se deselecciona el botón actualmente seleccionado
@@ -81,7 +81,7 @@ public class HotbarController : MonoBehaviour
 
         int desiredIndex = newIndex;
 
-        if (slots[desiredIndex].Button.interactable) // Si se puede interactuar con ese botón
+        if (slots[desiredIndex].Button.interactable && slots[desiredIndex].buttonEnabled) // Si se puede interactuar con ese botón
         {
             _activeButton = true;
             // Se deselecciona el botón actualmente seleccionado
@@ -180,4 +180,12 @@ public class HotbarController : MonoBehaviour
         Right = 1
     };
 
+    /*private IEnumerator FadeInButtons()
+    {
+        foreach (Image button in elementsActivated)
+        {
+            StartCoroutine(FadeImage(button, button.color.a, 1, fadeDuration));
+        }
+        yield return null;
+    }*/
 }
