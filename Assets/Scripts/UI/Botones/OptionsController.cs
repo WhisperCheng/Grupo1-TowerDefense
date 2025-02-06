@@ -43,10 +43,9 @@ public class OptionsController : MonoBehaviour
             sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
             sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
         }
-        
         //UpdateBrightnessPanel(brightness.value);
-        
-        
+
+
     }
 
     private void Update()
@@ -67,8 +66,7 @@ public class OptionsController : MonoBehaviour
         else
         {
             
-            brightnessSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
-            brightnessSlider.value = ThirdPersonCam.instance._turnSpeed;
+            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
         }
         PlayerPrefs.SetFloat("brightness", brightness);
     }
@@ -84,8 +82,8 @@ public class OptionsController : MonoBehaviour
         else
         {
             
-            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
-            sensitiveSlider.value = ThirdPersonCam.instance._turnSpeed;
+            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 40f);
+            ThirdPersonCam.instance._turnSpeed = sensitiveSlider.value * 80f;
         }
         PlayerPrefs.SetFloat("sensitive", sensitive);
     }
