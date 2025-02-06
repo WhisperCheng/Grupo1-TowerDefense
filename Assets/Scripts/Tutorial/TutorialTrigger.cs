@@ -8,9 +8,20 @@ public class TutorialTrigger : MonoBehaviour
 {
     //Asegura que el trigger se activa solo una vez
     private bool hasActivated = false;
-    public UnityEvent pachamamaEvent, enemiesEvent;
+    public UnityEvent pachamamaEvent;
     public List<Image> elementsActivated;
-    public float fadeDuration = 1f;
+    /*public GameObject wavesActivator;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (wavesActivator != null)
+            {
+                wavesActivator.SetActive(true);
+            }
+        }
+    }*/
     
     private void OnTriggerEnter(Collider other)
     {
@@ -19,13 +30,7 @@ public class TutorialTrigger : MonoBehaviour
             hasActivated = true;
             TutorialController.Instance.ActivateModule();
             pachamamaEvent.Invoke();
-            //StartCoroutine(FadeInButtons());
             Destroy(gameObject);
-        }
-
-        if (other.CompareTag("Enemy"))
-        {
-            enemiesEvent.Invoke();
         }
     }
 }

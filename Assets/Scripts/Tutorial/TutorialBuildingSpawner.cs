@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TutorialBuildingSpawner : MonoBehaviour
 {
+    public RecolectorTorre recolector;
     private void OnEnable()
     {
+        recolector.AddGemsEvent();
         SpawnResourceTower();
     }
 
