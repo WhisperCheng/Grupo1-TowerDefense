@@ -190,11 +190,13 @@ public class GameUIManager : MonoBehaviour
     }
     public void WinLevel()
     {
+        Cursor.lockState = CursorLockMode.None;
         panelWin.SetActive(true);
         GameMenuDesactivate();
     }
     public void LoseLevel()
     {
+        Cursor.lockState = CursorLockMode.None;
         panelLose.SetActive(true);
         GameMenuDesactivate();
     }
