@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
-using System.ComponentModel;
-using UnityEditor.VersionControl;
 
 public class TutorialController : MonoBehaviour
 {
