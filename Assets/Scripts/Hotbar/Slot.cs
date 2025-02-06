@@ -18,6 +18,7 @@ public class Slot : MonoBehaviour
     public float TransitionTime { get; set; }
     public float OnSelectedScale { get; set; }
     public bool Selected { get; set; }
+    public bool buttonEnabled = true;
     public Button Button { get { return _currentButton; } }
     public LeanTweenType AnimationType { get; set; }
     // Start is called before the first frame update
@@ -43,6 +44,11 @@ public class Slot : MonoBehaviour
         //GetComponent<Image>().color = colorOnSelectedButton;
         if (Selected)  SelectButton(); 
         if (!Selected) { OnSlotDeselected.Invoke(); }
+    }
+
+    public void EnableButton()
+    {
+        buttonEnabled = true;
     }
 
     private void AnimateButton()
