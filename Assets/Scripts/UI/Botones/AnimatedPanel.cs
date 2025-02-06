@@ -32,8 +32,10 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             if (btn != null)
             {
+                RectTransform rt = btn.GetComponent<RectTransform>();
                 btn.onClick.AddListener(() => OnButtonClick());
-                initialButtonsPos.Add(btn, btn.GetComponent<RectTransform>().position);
+                initialButtonsPos.Add(btn, btn.GetComponent<RectTransform>().anchoredPosition3D);
+                // anchoredPosition3D importante usarlo en lugar del position o localposition
             }
         }
     }
@@ -59,7 +61,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
             LeanTween.cancel(rect);
-            rect.position = initialButtonsPos[btn];
+            rect.anchoredPosition3D = initialButtonsPos[btn];
         }
     }
 
@@ -68,7 +70,7 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         foreach (Button btn in buttons)
         {
             RectTransform rect = btn.GetComponent<RectTransform>();
-            rect.position = new Vector3(rect.position.x + buttonsInitialPosition.x, rect.position.y, rect.position.z);
+            rect.anchoredPosition3D = new Vector3(rect.anchoredPosition3D.x + buttonsInitialPosition.x, rect.anchoredPosition3D.y, rect.anchoredPosition3D.z);
         }
     }
 
