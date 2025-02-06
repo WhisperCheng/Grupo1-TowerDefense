@@ -79,5 +79,5 @@ public abstract class RangedTowerProyectile : MonoBehaviour, IProyectile
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(gameObject.transform.position, proyectileAttackRadius);
     }
-}
 #endif
+}
