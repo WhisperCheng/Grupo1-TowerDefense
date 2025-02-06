@@ -78,6 +78,10 @@ PrefabInstance:
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2727882764912656754, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2982751831873505322, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -89,6 +93,10 @@ PrefabInstance:
     - target: {fileID: 3965078468555309450, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4968640816252512704, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6681191054078173430, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Pivot.x
@@ -173,6 +181,10 @@ PrefabInstance:
     - target: {fileID: 7836015713328391787, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7884786786298160860, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
+      propertyPath: m_Material
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8012203226858134566, guid: d1ac063f730b4ec42afc4bc063a9e065, type: 3}
       propertyPath: m_Layer
@@ -893,7 +905,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7033b6911c48e94498faef3305e90739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 225
+  money: 250
   range: 14
   towerRadiusSize: 0.94
   rotationPart: {fileID: 7512152945389669069}
@@ -908,10 +920,10 @@ MonoBehaviour:
   animationType: 16
   rotationSpeed: 5
   boostPrices:
-  - price: 280
-    damageAddition: 5
+  - price: 400
+    damageAddition: 10
     cooldownReducer: 0.5
-  - price: 420
+  - price: 520
     damageAddition: 10
     cooldownReducer: 0.5
   health: 100
