@@ -29,15 +29,25 @@ public class Impacto : MonoBehaviour
         emitter.OverrideMinDistance = 1;
         emitter.OverrideMaxDistance = 100;
     }
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
+    {
+        Collide();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Collide();
+    }
+
+    private void Collide()
     {
         GameObject impacto = MagicImpactPool.Instance.GetMagicImpact();
         impacto.transform.position = transform.position;
-        
+
         // Retornar el proyectil a la pool
         MagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
 
-        
+
 
         // Limpiar los Trail Renderers
         if (TrailRenderer != null)

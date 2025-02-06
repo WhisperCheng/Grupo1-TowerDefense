@@ -81,7 +81,7 @@ public class Slot : MonoBehaviour
         {
             color.a = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
             image.color = color;
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
 

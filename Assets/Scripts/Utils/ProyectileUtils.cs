@@ -100,6 +100,7 @@ public static class ProyectileUtils
             //objects
             //Rigidbody shooterRb = thrower.GetComponent<Rigidbody>();
             NavMeshAgent targetNavm = target.GetComponent<NavMeshAgent>();
+            CharacterController charController = target.GetComponent<CharacterController>();
 
             // === derived variables ===
             //positions
@@ -109,7 +110,8 @@ public static class ProyectileUtils
             // Las torres van a estar siempre quietas, pero si se estuvieran moviendo entonces habría que coger su rigidbody
             // y tener en cuenta su velocidad -> shooterVelocity = shooterRb ? shooterRb.velocity : Vector3.zero; 
             Vector3 shooterVelocity = Vector3.zero; 
-            Vector3 targetVelocity = targetNavm ? targetNavm.velocity : Vector3.zero;
+            Vector3 targetVelocity = targetNavm ? targetNavm.velocity : Vector3.zero; // Si el objetivo es un NavMeshAgent
+            targetVelocity = charController ? charController.velocity : targetVelocity; // Si el objetivo es un CharacterController
 
             //calculate intercept
             return FirstOrderIntercept(shooterPosition, shooterVelocity, initialShotVelocity, targetPosition, targetVelocity);

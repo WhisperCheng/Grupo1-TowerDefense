@@ -11,6 +11,8 @@ public class MagicArcherAI : EnemyAI
     public float shootingSpeed;
     public EvilProyectilFabric evilProyectilFabric;
 
+    private Vector3 predictive = Vector3.zero;
+
     public override GameObject GetFromPool() { return ArcherPool.Instance.GetArcher(); }
 
     public override float GetHealth() { return _currentHealth; }
@@ -78,20 +80,16 @@ public class MagicArcherAI : EnemyAI
         if (_attackMode) // Si está en modo de ataque / detecta a un enemigo se para
         {
             _agent.speed = 0;
-
-            if (!_attackMode && _agent.speed != 0) // Si deja de estar en modo de ataque restaura su velocidad
-            {
-                _agent.speed = _maxSpeed;
-            }
+        }
+        if (!_attackMode && _agent.speed != 0) // Si deja de estar en modo de ataque restaura su velocidad
+        {
+            _agent.speed = _maxSpeed;
         }
     }
 
 
     public override void OnAttack()
     {
-       
-        
-
         //FMOD
         emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.roseShoot, this.gameObject);
         emitter.Play();
@@ -103,22 +101,19 @@ public class MagicArcherAI : EnemyAI
                 attackMasks |= 1 << layerNum;
         }
 
-        // Para apuntar hacia el centro del aliado (detectar el linecast ya que hace uso de una posición y no del gameobject)
-        Vector3 direction = _destination - gameObject.transform.position;
-        direction = direction.normalized;
-        bool enemyDetected = Physics.Linecast(shooterSource.transform.position, _destination + Vector3.up * 1.5f,
-            out RaycastHit hitInfo, attackMasks);
+        // Detección del enemigo dado el vector de su posición
+        bool enemyDetected = Physics.SphereCast(_destination, 0.1f, Vector3.up, out RaycastHit hit, 100f, attackMasks);
 
         if (enemyDetected)
         {
-            GameObject currentTarget = hitInfo.transform.gameObject;
-            Collider collider = hitInfo.transform.gameObject.GetComponent<Collider>();
-            NavMeshAgent agent = hitInfo.transform.gameObject.GetComponent<NavMeshAgent>();
-            CharacterController characterC = hitInfo.transform.gameObject.GetComponent<CharacterController>();
+            GameObject currentTarget = hit.transform.gameObject;
+            Collider collider = hit.transform.gameObject.GetComponent<Collider>();
+            NavMeshAgent agent = hit.transform.gameObject.GetComponent<NavMeshAgent>();
+            CharacterController characterC = hit.transform.gameObject.GetComponent<CharacterController>();
             float offsetYTargetPosition = 0;
             if (collider)
             {
-                offsetYTargetPosition = collider.bounds.max.y;
+                offsetYTargetPosition = collider.bounds.max.y / 2;
             }
             if (agent)
             {
@@ -126,22 +121,24 @@ public class MagicArcherAI : EnemyAI
             }
             if (characterC)
             {
-                offsetYTargetPosition = characterC.velocity.magnitude;
+                offsetYTargetPosition = characterC.height / 2;
             }
             Vector3 offsetY = Vector3.up * offsetYTargetPosition;
             Vector3 predictivePosition =                           // Trayectoria predictiva
                 ProyectileUtils.ShootingInterception
                 .CalculateInterceptionPoint(shootingSpeed, shooterSource.transform, currentTarget.transform, offsetY);
+            predictive = predictivePosition;
             evilProyectilFabric.LanzarEvilMagicProyectil(predictivePosition, shootingSpeed);
             _currentCooldown = cooldown;
         }
         _attackMode = false;
         animatorController.SetBool("AttackMode", false);
-
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(shooterSource.transform.position, _destination + Vector3.up * 1.5f);
+        Gizmos.DrawLine(shooterSource.transform.position, _destination + Vector3.up * 1.5f);
+        Gizmos.DrawLine(predictive, predictive + Vector3.up * 10.5f);
     }
 }
