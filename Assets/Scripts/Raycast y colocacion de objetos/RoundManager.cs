@@ -146,8 +146,6 @@ public class RoundManager : MonoBehaviour
                 string waitingForGText = LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table",
                 "_PresionarGNuevaOleada", lang);
                 newWaveInText.text = waitingForGText;
-                //waveCountdownText.fontSize = 20;
-                //newWaveInText.gameObject.SetActive(false);
                 waveCountdownText.text = "--:--";
             }
         }
@@ -155,8 +153,6 @@ public class RoundManager : MonoBehaviour
         {
             if (!hideCountdownText) // Se ejecutará solo una vez ya que con la misma waveInProgress se pasa a true
             {
-                //newWaveInText.gameObject.SetActive(false);
-                //waveCountdownText.fontSize = 28;
                 var lang = LocalizationSettings.SelectedLocale;
                 string activeWaveText =
                 LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
@@ -165,7 +161,6 @@ public class RoundManager : MonoBehaviour
                 LeanTween.cancel(waveCountdownContainer);
                 LeanTween.moveLocalY(waveCountdownContainer.gameObject, // Esconder panel
                     initialNewWaveContainerPos.y-12f, 2.5f).setEaseInOutCubic();
-                Debug.Log("a");
                 hideCountdownText = true;
                 showCountdownText = false;
             }

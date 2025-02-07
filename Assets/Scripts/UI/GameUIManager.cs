@@ -35,6 +35,8 @@ public class GameUIManager : MonoBehaviour
     private Vector3 bottomHotbarPos;
     private RectTransform canvasRT;
 
+    private float previousTimeScale = 1;
+
     private string textMoneyOriginal;
 
     public void Awake()
@@ -142,11 +144,13 @@ public class GameUIManager : MonoBehaviour
         buildUI.SetActive(true);
         roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
+        Time.timeScale = previousTimeScale;
         hotBarController.EnableHotbar();
     }
     private void GameMenuDesactivate()
     {
+        previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         otherPanelActive = true;
     }
