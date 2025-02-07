@@ -14,6 +14,9 @@ public class Player : MonoBehaviour, IDamageable
     public float cooldown;
     private float _currentCooldown;
 
+    [Header("Hotbar a controlar")]
+    public HotbarController hotbar;
+
     [Header("Barra de vida y Jugador")]
     public HealthBar _healthBar;
     public GameObject playerModel;
@@ -33,7 +36,7 @@ public class Player : MonoBehaviour, IDamageable
     private bool canShoot = false;
     private bool isShowingCrosier = false;
     private bool isHoveringOverAButton = false;
-   
+
     private float _currentHealth;
     private float _maxHealth;
 
@@ -47,6 +50,10 @@ public class Player : MonoBehaviour, IDamageable
         timer.ActivateRespawnTimer(); // Desaparecer temporalmente + mostrar UI espera de respawn
         ParticleSystem particulas = InstantiateParticlesOnPlayer(deathParticles);
         particulas.transform.position += Vector3.up * 0.1f; // Subir partículas ligeramente del suelo
+        PlaceManager.Instance.DiscardCurrentTower(); // Cancelar la colocación de la torre actual, si es que
+                                                     // se estaba colocando algo
+        hotbar.DeselectCurrentButton(); // Deseleccionar botón actual
+        hotbar.DisableHotbar(); // Deshabilitar hotbar
     }
 
     public float GetHealth() { return _currentHealth; }
@@ -77,19 +84,20 @@ public class Player : MonoBehaviour, IDamageable
         ParticleSystem particulas = InstantiateParticlesOnPlayer(respawnParticles);
         // Calcular el centro del jugador y cambiar la posición de las partículas a ese centro
         particulas.transform.position = PlaceManager.Instance.GetGameObjectCenter(gameObject);
+        hotbar.EnableHotbar(); // Habilitar hotbar
     }
     private ParticleSystem InstantiateParticlesOnPlayer(ParticleSystem pSys)
     {
         ParticleSystem pSysAction =
        PlaceManager.Instance.StartParticleGameObjEffect(pSys, gameObject.transform.position, false);
         pSysAction.gameObject.transform.parent = particlesParent.transform; // Asignando padre
-       
+
         return pSysAction;
     }
     public void TryShootProyectile(InputAction.CallbackContext ctx)
     {
         if (Time.deltaTime != 0 && _currentHealth > 0) // Si el juego no está pausado y el jugador está vivo
-        { 
+        {
             if (!UIUtils.IsPointerOverInteractableUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton
             && ctx.started && !PlaceManager.Instance.bloqueoDisparo)
             { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara

@@ -333,7 +333,7 @@ public class PlaceManager : MonoBehaviour
         }
     }
 
-    private void ReturnInstanceCopy()
+    private void ReturnInstanceCopy() // Cancelar colocación de la torre y devolverla a la pool
     {
         torre.placed = false;
         SetPreviewMode(false);

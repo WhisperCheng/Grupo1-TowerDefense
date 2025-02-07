@@ -63,7 +63,7 @@ public class RoundManager : MonoBehaviour
     private void Start()
     {
         countdown = countdownInicial;
-        Debug.Log("Empezando partida en " + countdownInicial + " seg");
+        //Debug.Log("Empezando partida en " + countdownInicial + " seg");
     }
 
     void Update()
@@ -80,7 +80,7 @@ public class RoundManager : MonoBehaviour
 
         if (finishedLastRoundSpawnings && enemiesAlive == 0)
         {
-            Debug.Log("Fin");
+            //Debug.Log("Fin");
             GameUIManager.Instance.WinLevel();
             AudioManager.instance.musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
@@ -91,7 +91,7 @@ public class RoundManager : MonoBehaviour
         if (waveIndex >= 0 && waveIndex < waves.Length - 1 && enemiesAlive == 0 && finishedCurrentWaveTrigger)
         {
             if (waveInProgress) waveInProgress = false; // Al terminar la oleada, se pone started a false para iniciar el proceso del countdown
-            Debug.Log("Iniciando siguiente oleada en " + countdown + " seg");
+            //Debug.Log("Iniciando siguiente oleada en " + countdown + " seg");
             finishedCurrentWaveTrigger = false; // Se vuelve false para no volver a entrar en la condición hasta
         }                                                           //  la siguiente vez que se vuelva a terminar la oleada
 
@@ -126,19 +126,26 @@ public class RoundManager : MonoBehaviour
             { // Se cambia el texto para indicar que hay que presionar la tecla G para continuar 
                 string waitingForGText = LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table",
                 "_PresionarGNuevaOleada", lang);
-                waveCountdownText.text = waitingForGText;
+                newWaveInText.text = waitingForGText;
                 //waveCountdownText.fontSize = 20;
-                newWaveInText.gameObject.SetActive(false);
+                //newWaveInText.gameObject.SetActive(false);
+                waveCountdownText.text = "--:--";
             }
         }
         else
         {
-            newWaveInText.gameObject.SetActive(false);
-            //waveCountdownText.fontSize = 28;
-            var lang = LocalizationSettings.SelectedLocale;
-            string activeWaveText =
-            LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
-            waveCountdownText.text = activeWaveText;
+            if (!waveInProgress) // Se ejecutará solo una vez ya que con la misma waveInProgress se pasa a true
+            {
+                //newWaveInText.gameObject.SetActive(false);
+                //waveCountdownText.fontSize = 28;
+                var lang = LocalizationSettings.SelectedLocale;
+                string activeWaveText =
+                LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
+                newWaveInText.text = activeWaveText;
+                waveCountdownText.text = "--:--";
+                LeanTween.moveLocalY(waveCountdownText.gameObject, 0, 1f).setEaseInOutCubic();
+                Debug.Log("a");
+            }
         }
     }
 
@@ -150,7 +157,7 @@ public class RoundManager : MonoBehaviour
     private void InitializeNewWave()
     {
         waveIndex++;
-        Debug.Log("Empezando oleada nº " + (waveIndex + 1));
+        //Debug.Log("Empezando oleada nº " + (waveIndex + 1));
         StartWave();
         waveInProgress = true;
     }

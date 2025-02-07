@@ -10,6 +10,7 @@ public class HotbarController : MonoBehaviour
     protected int _currentIndex = 0;
 
     protected bool _activeButton = false;
+    protected bool enabledHotbar = true;
 
     public Slot[] slots;
     public float buttonsTransitionTime;
@@ -46,9 +47,12 @@ public class HotbarController : MonoBehaviour
     {
         //ConfigureSlots(); // Activar solo con propósitos de debug
 
-        float inputScrollValue = GameManager.Instance.playerControls.actions["ScrollWheel"].ReadValue<Vector2>().y;
-        if (inputScrollValue > 0.1f) ChangeIndex(Direction.Left);
-        if (inputScrollValue < -0.1f) ChangeIndex(Direction.Right);
+        if (enabledHotbar)
+        {
+            float inputScrollValue = GameManager.Instance.playerControls.actions["ScrollWheel"].ReadValue<Vector2>().y;
+            if (inputScrollValue > 0.1f) ChangeIndex(Direction.Left);
+            if (inputScrollValue < -0.1f) ChangeIndex(Direction.Right);
+        }
     }
 
     protected void ChangeIndex(Direction direction)
@@ -98,7 +102,7 @@ public class HotbarController : MonoBehaviour
 
     public void EnableHotbar()
     {
-        _activeButton = true;
+        enabledHotbar = true;
         GameManager.Instance.playerControls.actions["Button1"].performed += Hotbar1;
         GameManager.Instance.playerControls.actions["Button2"].performed += Hotbar2;
         GameManager.Instance.playerControls.actions["Button3"].performed += Hotbar3;
@@ -114,7 +118,7 @@ public class HotbarController : MonoBehaviour
 
     public void DisableHotbar()
     {
-        _activeButton = false;
+        enabledHotbar = false;
         GameManager.Instance.playerControls.actions["Button1"].performed -= Hotbar1;
         GameManager.Instance.playerControls.actions["Button2"].performed -= Hotbar2;
         GameManager.Instance.playerControls.actions["Button3"].performed -= Hotbar3;
@@ -153,22 +157,28 @@ public class HotbarController : MonoBehaviour
     {
         if (ctx.performed && _activeButton)
         {
-            if (slots[_currentIndex].Selected)
-            { // Se deselecciona el botón actualmente seleccionado
-                slots[_currentIndex].ToggleHighlight();
-                _activeButton = false;
-            }
+            DeselectCurrentButton();
             PlaceManager.Instance.OnRightClickPlaceTower(ctx); // Cancelar colocación de la torre
         }
     }
-    public void SelectCurrentButton()
+
+    public void DeselectCurrentButton()
+    {
+        if (slots[_currentIndex].Selected)
+        { // Se deselecciona el botón actualmente seleccionado
+            slots[_currentIndex].ToggleHighlight();
+            _activeButton = false;
+        }
+    }
+
+    public void InvokeCurrentButton()
     {
         PlaceManager.Instance.DiscardCurrentTower();
         PlaceManager.Instance.OnTriggerButton(slots[_currentIndex].Button);
         PlaceManager.Instance.InvokeCurrentButton();
     }
 
-    public void SelectCurrentTowerButton()
+    public void InvokeCurrentTowerButton()
     {
         PlaceManager.Instance.DiscardCurrentTower();
         PlaceManager.Instance.OnTriggerButton(slots[_currentIndex].Button);
