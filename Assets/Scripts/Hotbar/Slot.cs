@@ -40,6 +40,7 @@ public class Slot : MonoBehaviour
             Color newColor = _buttonImage.color;
             newColor.a = 0;
             _buttonImage.color = newColor;
+            //if (_textMeshPro) _textMeshPro.alpha = 0;
         }
     }
 
@@ -59,6 +60,16 @@ public class Slot : MonoBehaviour
     {
         buttonEnabled = true;
         StartCoroutine(FadeImage(_buttonImage, 0, 1, 0.5f));
+        if (_textMeshPro) LeanTween.alpha(_textMeshPro.gameObject, 1, 0.5f).setIgnoreTimeScale(true);
+        /*
+          if (_textMeshPro) LeanTween.value(_textMeshPro.gameObject, 0, 1, 0.5f)
+                .setOnUpdate((float val) =>
+                {
+                    Color c = _textMeshPro.color;
+                    c.a = val;
+                    _textMeshPro.color = c;
+                }); ;
+         */
     }
 
     private void AnimateButton()
