@@ -94,30 +94,23 @@ public class MagicArcherAI : EnemyAI
         emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.roseShoot, this.gameObject);
         emitter.Play();
 
-        int attackMasks = 0; // Reconocer a qué enemigos/layers hay que atacar (player, aliados)
+        /*int attackMasks = 0; // Reconocer a qué enemigos/layers hay que atacar (player, aliados)
         foreach (int layerNum in enemyToAttackLayers)
         {
             if (layerNum != GameManager.Instance.layerCorazon)
                 attackMasks |= 1 << layerNum;
-        }
-
-        // Detección del enemigo dado el vector de su posición
-        bool enemyDetected = Physics.SphereCast(_destination, 0.1f, Vector3.up, out RaycastHit hit, 100f, attackMasks);
-
-        if (enemyDetected)
+        }*/
+        _attackMode = true;
+        if (_aimTarget != null)
         {
-            GameObject currentTarget = hit.transform.gameObject;
-            Collider collider = hit.transform.gameObject.GetComponent<Collider>();
-            NavMeshAgent agent = hit.transform.gameObject.GetComponent<NavMeshAgent>();
-            CharacterController characterC = hit.transform.gameObject.GetComponent<CharacterController>();
+            GameObject currentTarget = _aimTarget.gameObject;
+            Collider collider = currentTarget.GetComponent<Collider>();
+            // El enemigo tiene que llevar un collider para que pueda obtener adecuadamente el centro del altura del enemigo
+            CharacterController characterC = currentTarget.GetComponent<CharacterController>();
             float offsetYTargetPosition = 0;
             if (collider)
             {
                 offsetYTargetPosition = collider.bounds.max.y / 2;
-            }
-            if (agent)
-            {
-                offsetYTargetPosition = _agent.height / 2;
             }
             if (characterC)
             {
@@ -131,8 +124,27 @@ public class MagicArcherAI : EnemyAI
             evilProyectilFabric.LanzarEvilMagicProyectil(predictivePosition, shootingSpeed);
             _currentCooldown = cooldown;
         }
-        _attackMode = false;
+        //_attackMode = false;
         animatorController.SetBool("AttackMode", false);
+    }
+
+    private Collider GetClosestEnemyCollider(Vector3 originPos, Collider[] enemyColliders)
+    {
+        float bestDistance = 99999.0f;
+        Collider nearestCollider = null;
+
+        foreach (Collider enemy in enemyColliders)
+        {
+            float distance = Vector3.Distance(originPos, enemy.transform.position);
+
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                nearestCollider = enemy;
+            }
+        }
+
+        return nearestCollider;
     }
 
     private void OnDrawGizmos()

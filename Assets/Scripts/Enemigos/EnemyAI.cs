@@ -45,6 +45,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected Animator animatorController;
 
     protected Vector3 _destination;
+    protected Transform _aimTarget;
     protected float _defaultAcceleration;
     protected float _defaultOnStoppingDistance;
     protected float _currentHealth;
@@ -164,12 +165,16 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         // Si detecta a un rival (vivo) en el radio de acción, se pondrá a perseguirle
         {                       // y atacarle
             _destination = nearestRival.position;
+
             _agent.acceleration = _onFocusAcceleration; // Cambiar la aceleración de rotación del enemigo
             _agent.stoppingDistance = _onFocusStoppingDistance; // Cambiar la stoppingDistance del enemigo
             var targetRotation = Quaternion.LookRotation(_destination - transform.position); // Rotar suavemente
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _defaultAcceleration / 2 * Time.deltaTime);
-            if (hasRangedAttack) // Solo se pone en modo de animación de ataque si el enemigo tiene ataque a distancia activado
+            if (hasRangedAttack)
+            { // Solo se pone en modo de animación de ataque si el enemigo tiene ataque a distancia activado
                 _attackMode = true;
+                _aimTarget = nearestRival;
+            }
         }
         else // Si no hay un jugador dentro del radio de acción, pasa a ir hacia el waypoint correspondiente
         {
@@ -181,11 +186,17 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                 if (hearth != null && _destination != hearth.position)
                 {
                     _destination = hearth.position;
+                    if(hasRangedAttack)
+                        _aimTarget = hearth;
                 }
                 // Si el corazón existe y la posición es distinta, se actualiza el destino
+
+                if (hasRangedAttack) // Si el enemigo tiene disparo de proyectiles, empieza el modo de ataque de proyectiles
+                    _attackMode = true;
             }
             else // Si no, va yendo de waypoint en waypoint hasta llegar al final
             {
+                _aimTarget = null;
                 if (_attackMode)
                 {
                     _attackMode = false;
@@ -226,6 +237,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         // y se activa el booleano finishedWaypoints
         if (_currentWaypointIndex >= GameManager.Instance.wayPoints.Length)
         {
+            
             _finishedWaypoints = true;
         }
         else
@@ -233,16 +245,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
             _finishedWaypoints = false;
         }
     }
-
-    /*protected void ManageCooldown() // No
-    {
-        _currentCooldown -= Time.deltaTime;
-        if (!_canDamage && _currentCooldown <= 0)
-        {
-            //_canDamage = true;
-            _currentCooldown = 0;
-        }
-    }*/
 
     public void AttackEvent()
     {

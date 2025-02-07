@@ -1258,10 +1258,10 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.11792451, g: 1, b: 0.15961923, a: 1}
-        key1: {r: 0.622508, g: 1, b: 0.495283, a: 0}
-        key2: {r: 0.88670486, g: 1, b: 0.7877358, a: 0.039215688}
-        key3: {r: 0.04472331, g: 0.5647059, b: 0, a: 0.039215688}
+        key0: {r: 0.11764705, g: 0.28906778, b: 1, a: 1}
+        key1: {r: 0.49411762, g: 0.8482557, b: 1, a: 0}
+        key2: {r: 0.7882353, g: 1, b: 0.98817635, a: 0.039215688}
+        key3: {r: 0, g: 0.13151336, b: 0.5647059, a: 0.039215688}
         key4: {r: 0, g: 0.24578038, b: 0.5660378, a: 0.039215688}
         key5: {r: 1, g: 1, b: 1, a: 0.039215688}
         key6: {r: 1, g: 1, b: 1, a: 0}
@@ -4807,7 +4807,7 @@ GameObject:
   - component: {fileID: 1295563044750588326}
   - component: {fileID: -5834382702541781703}
   m_Layer: 0
-  m_Name: MagicAttackImpact
+  m_Name: EvilMagicAttackImpact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6095,10 +6095,10 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.540521, g: 1, b: 0.41176474, a: 1}
-        key1: {r: 0.7154343, g: 1, b: 0.5803922, a: 0}
-        key2: {r: 0.84301674, g: 1, b: 0.8066038, a: 0.039215688}
-        key3: {r: 0.053009506, g: 0.5647059, b: 0, a: 0.039215688}
+        key0: {r: 0.41176474, g: 0.8090869, b: 1, a: 1}
+        key1: {r: 0.5803922, g: 0.84829664, b: 1, a: 0}
+        key2: {r: 0.56078434, g: 0.90406597, b: 1, a: 0.039215688}
+        key3: {r: 0.0990566, g: 0.347186, b: 1, a: 0.039215688}
         key4: {r: 1, g: 0.017601715, b: 0, a: 0.039215688}
         key5: {r: 1, g: 1, b: 1, a: 0.039215688}
         key6: {r: 1, g: 1, b: 1, a: 0}
@@ -9611,7 +9611,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1295563044750588326}
         m_TargetAssemblyTypeName: PostImpacto, Assembly-CSharp
-        m_MethodName: SetToMagicImpactPool
+        m_MethodName: SetToEvilMagicImpactPool
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9875,7 +9875,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.74708164, g: 1, b: 0.6839622, a: 1}
+      maxColor: {r: 0.68235296, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11019,8 +11019,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 0.6249448, g: 1, b: 0.5803922, a: 0}
-        key2: {r: 0.41176474, g: 1, b: 0.48019788, a: 0.039215688}
+        key1: {r: 0.5803922, g: 0.9796774, b: 1, a: 0}
+        key2: {r: 0.41176474, g: 0.7333171, b: 1, a: 0.039215688}
         key3: {r: 0.41037738, g: 0.5668078, b: 1, a: 0.039215688}
         key4: {r: 1, g: 0.017601715, b: 0, a: 0.039215688}
         key5: {r: 1, g: 1, b: 1, a: 0.039215688}
@@ -14775,7 +14775,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.5996976, g: 1, b: 0.48627448, a: 1}
+      maxColor: {r: 0.4481132, g: 0.92120945, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19689,7 +19689,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.7627399, g: 1, b: 0.7137255, a: 1}
+      maxColor: {r: 0.7137255, g: 1, b: 0.98385894, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -20832,8 +20832,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 0.865593, g: 1, b: 0.8066038, a: 1}
-        key1: {r: 0, g: 1, b: 0.07667947, a: 0}
+        key0: {r: 0.4138483, g: 0.8503795, b: 0.9433962, a: 1}
+        key1: {r: 0, g: 0.3955245, b: 1, a: 0}
         key2: {r: 0.4772013, g: 1, b: 0.37264156, a: 0.039215688}
         key3: {r: 0.16666667, g: 1, b: 0, a: 0.039215688}
         key4: {r: 0.16666667, g: 1, b: 0, a: 0.039215688}

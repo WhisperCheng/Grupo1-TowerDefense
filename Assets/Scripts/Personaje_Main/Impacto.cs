@@ -2,6 +2,7 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(StudioEventEmitter))] 
 
@@ -13,6 +14,8 @@ public class Impacto : MonoBehaviour
     [SerializeField] private GameObject trail2;
     private TrailRenderer TrailRenderer;
     private TrailRenderer TrailRenderer2;
+
+    public UnityEvent OnDefineImpactType;
 
     //FMOD
     private StudioEventEmitter emitter;
@@ -41,13 +44,7 @@ public class Impacto : MonoBehaviour
 
     private void Collide()
     {
-        GameObject impacto = MagicImpactPool.Instance.GetMagicImpact();
-        impacto.transform.position = transform.position;
-
-        // Retornar el proyectil a la pool
-        MagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
-
-
+        OnDefineImpactType?.Invoke();
 
         // Limpiar los Trail Renderers
         if (TrailRenderer != null)
@@ -66,6 +63,23 @@ public class Impacto : MonoBehaviour
 
         //FMOD
         emitter.Play();
+    }
+
+    public void SetMagicImpact()
+    {
+        GameObject impacto = MagicImpactPool.Instance.GetMagicImpact();
+        impacto.transform.position = transform.position;
+        // Retornar el proyectil a la pool
+        MagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
+    }
+
+    public void SetEvilMagicImpact()
+    {
+        GameObject impacto = EvilMagicImpactPool.Instance.GetEvilMagicImpact();
+        impacto.transform.position = transform.position;
+
+        // Retornar el proyectil a la pool
+        EvilMagicProjectilePool.Instance.ReturnMagicProjectile(this.gameObject);
     }
 
 }

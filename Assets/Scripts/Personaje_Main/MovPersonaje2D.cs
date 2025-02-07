@@ -85,22 +85,6 @@ public class MovPersonaje2D : MonoBehaviour
     private void MoveCharacter()
     {
         _moveDirection = playerInput.actions["Move"].ReadValue<Vector2>();
-        //_lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
-        /*
-        // TODO (opcional/si da tiempo):
-        /// Si el jugador no está tocando el suelo, se deshabilita temporalmente el control
-        ///del movimiento horizontal
-        
-        RaycastHit hit;
-        float radius = _characterController.radius / 2;_smoothTurnSpeed
-        // Desde que el personaje en cierta medida se despegue del suelo, será considerado como que está en el aire
-        //bool onAir = !Physics.Raycast(transform.position, -transform.up, 1);
-        bool onAir = Physics.OverlapSphere(transform.position, _characterController.radius, sueloMask).Length == 0;
-        if (onAir)
-        {
-            Debug.Log("sd " + transform.up);
-            _moveDirection = Vector2.zero;
-        }*/
 
         /// MOVIMIENTO
         // Suavizar el movimiento del vector moveDirection
@@ -193,10 +177,6 @@ public class MovPersonaje2D : MonoBehaviour
     // Detectar si el jugador está en un terreno inclinado
     private bool OnSlope()
     {
-        // TODO ?
-        /*if (isJumping)
-            return false;*/
-
         RaycastHit hit = new RaycastHit();
 
         /// Usa la posición del personaje partiendo desde su base para hacer un raycast y detectar hasta

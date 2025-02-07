@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3525519300292106498}
   - component: {fileID: 2654683699015171312}
   m_Layer: 1
-  m_Name: EvilAttack
+  m_Name: EvilMagicAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4785,7 +4785,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2b46c3687feae445812940dac77bf36, type: 2}
+  - {fileID: 2100000, guid: bd9ed920e54181042b8296f324a17141, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4901,6 +4901,21 @@ MonoBehaviour:
   particulasImpacto: {fileID: 4315008008740801804, guid: d866cb095268ca84ca07e609e2968fb6, type: 3}
   trail: {fileID: 2518193931575777834}
   trail2: {fileID: 1137772126107176053}
+  OnDefineImpactType:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1949254399742667345}
+        m_TargetAssemblyTypeName: Impacto, Assembly-CSharp
+        m_MethodName: SetEvilMagicImpact
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3525519300292106498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4914,7 +4929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 35
-  layersToDamage: 07000000090000000c000000
+  layersToDamage: 07000000090000000c0000000d000000
 --- !u!114 &2654683699015171312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9723,7 +9738,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2eff207ae86a694b82d57cebdca46e2, type: 2}
+  - {fileID: 2100000, guid: 54b044ee5e2e19d45abdb3cd8e815742, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9829,7 +9844,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1c8a8c6aed0944146877745ec466185d, type: 2}
+  - {fileID: 2100000, guid: d646c1e52dc6c124faa3b37fb6020aa3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9983,7 +9998,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8cb596c6fd7c6964a98503dddad39f77, type: 2}
+  - {fileID: 2100000, guid: 36ac6e7d56c522043bb318c077a64eec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

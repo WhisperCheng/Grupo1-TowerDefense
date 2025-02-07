@@ -88,7 +88,7 @@ public class Player : MonoBehaviour, IDamageable
     }
     public void TryShootProyectile(InputAction.CallbackContext ctx)
     {
-        if (Time.deltaTime != 0) // Si el juego no está pausado
+        if (Time.deltaTime != 0 && _currentHealth > 0) // Si el juego no está pausado y el jugador está vivo
         { 
             if (!UIUtils.IsPointerOverInteractableUIElement() && isShowingCrosier && canShoot && !isHoveringOverAButton
             && ctx.started && !PlaceManager.Instance.bloqueoDisparo)

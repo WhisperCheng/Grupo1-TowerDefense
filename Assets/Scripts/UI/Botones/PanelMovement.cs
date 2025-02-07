@@ -23,12 +23,13 @@ public class PanelMovement : MonoBehaviour
     private void OnEnable()
     {
         
-        originalPosition = panelToMove.anchoredPosition;
+        originalPosition = panelToMove.anchoredPosition3D;
         MovePanelToTargetPosition();
         foreach (Button button in buttons)
         {
                 button.onClick.AddListener(OnButtonClick); 
         }
+        Debug.Log(panelToMove.rect.center);
     }
 
     private void OnDisable()

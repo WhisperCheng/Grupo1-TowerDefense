@@ -23,7 +23,7 @@ public class MagicAttack : MonoBehaviour
 
     protected void Attack(IDamageable damageableEntity)
     {
-        damageableEntity.TakeDamage(damage); 
+        damageableEntity.TakeDamage(damage);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -34,7 +34,7 @@ public class MagicAttack : MonoBehaviour
         if (checkLayer)
         {
             IDamageable damageableEntity = collision.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-            if (damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
+            if (damageableEntity != null && damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
             {
                 Attack(damageableEntity);
             }
@@ -48,7 +48,7 @@ public class MagicAttack : MonoBehaviour
         if (checkLayer)
         {
             IDamageable damageableEntity = other.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica
-            if (damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
+            if (damageableEntity != null && damageableEntity.GetHealth() > 0) // Si no ha muerto, se sigue atacando
             {
                 Attack(damageableEntity);
             }
