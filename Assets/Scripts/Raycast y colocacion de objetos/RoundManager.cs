@@ -31,6 +31,9 @@ public class RoundManager : MonoBehaviour
     public RectTransform newWaveContainer;
     public TextMeshProUGUI newWaveInText;
 
+    private Vector3 initialNewWaveContainerPos;
+    private Vector3 initialCountdownContainerPos;
+
     private int waveIndex = -1; // Para valor de inicio, el waveindex será -1
 
     private bool waveInProgress = false;
@@ -47,8 +50,6 @@ public class RoundManager : MonoBehaviour
     public float maxFragorValue = 79f;
     public float musicTransitionTime = 2;
     private float fragorValue = 0f;
-
-    private Vector3 initialCountdownContainerPos;
 
     //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
     private bool fragorRoundMax = false;
@@ -71,7 +72,8 @@ public class RoundManager : MonoBehaviour
         countdown = countdownInicial;
         //Debug.Log("Empezando partida en " + countdownInicial + " seg");
 
-        initialCountdownContainerPos = newWaveContainer.anchoredPosition3D;
+        initialNewWaveContainerPos = newWaveContainer.anchoredPosition3D;
+        initialCountdownContainerPos = waveCountdownContainer.anchoredPosition3D;
     }
 
     void Update()
@@ -120,7 +122,7 @@ public class RoundManager : MonoBehaviour
             {
                 LeanTween.cancel(waveCountdownContainer); 
                 LeanTween.moveLocalY(waveCountdownContainer.gameObject, // Regresara posición inicial / mostrar
-                            initialCountdownContainerPos.y-8.5f, 2.5f).setEaseInOutCubic();
+                            initialCountdownContainerPos.y, 1f).setEaseOutElastic();
                 showCountdownText = true;
             }
             var lang = LocalizationSettings.SelectedLocale;
@@ -136,7 +138,7 @@ public class RoundManager : MonoBehaviour
                 string comingWaveText = LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table",
                 "_NuevaOleada", lang);
                 newWaveInText.text = comingWaveText;
-                waveCountdownText.text = string.Format("{0:00.00}", countdown) + " s";
+                waveCountdownText.text = string.Format("{0:00:00}", countdown) + " s";
                 //waveCountdownText.fontSize = 36;
             } // Si es infinito entonces al presionar la G se llamará al evento , que automáticamente reseteará el contador
             else                                                                                    // a 0 e iniciará la ronda
@@ -162,7 +164,7 @@ public class RoundManager : MonoBehaviour
                 waveCountdownText.text = "--:--";
                 LeanTween.cancel(waveCountdownContainer);
                 LeanTween.moveLocalY(waveCountdownContainer.gameObject, // Esconder panel
-                    initialCountdownContainerPos.y, 2.5f).setEaseInOutCubic();
+                    initialNewWaveContainerPos.y-12f, 2.5f).setEaseInOutCubic();
                 Debug.Log("a");
                 hideCountdownText = true;
                 showCountdownText = false;
