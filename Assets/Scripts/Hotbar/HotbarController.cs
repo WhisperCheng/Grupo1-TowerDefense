@@ -24,6 +24,11 @@ public class HotbarController : MonoBehaviour
         EnableHotbar();
         slots[_currentIndex].ToggleHighlight();
         slots[_currentIndex].SelectButton();
+
+        foreach (Slot slot in slots) // Si se ejecutase en el update podría consumir más recursos de los necesarios
+        {
+            slot.UpdateSlotPrice();
+        }
     }
 
     protected void ConfigureSlots()
@@ -39,7 +44,7 @@ public class HotbarController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        ConfigureSlots();
+        //ConfigureSlots(); // Activar solo con propósitos de debug
 
         float inputScrollValue = GameManager.Instance.playerControls.actions["ScrollWheel"].ReadValue<Vector2>().y;
         if (inputScrollValue > 0.1f) ChangeIndex(Direction.Left);
@@ -73,7 +78,6 @@ public class HotbarController : MonoBehaviour
             GameUIManager.Instance.ShowBuildUI(GameUIManager.Instance.menusTransitionTime);
         }
     }
-
     protected void SetIndex(int newIndex)
     {
         if (newIndex < 0) newIndex = 0;
@@ -145,7 +149,6 @@ public class HotbarController : MonoBehaviour
             // Si se está con el bastón, disparar
         }
     }
-
     protected void OnRightClick(InputAction.CallbackContext ctx)
     {
         if (ctx.performed && _activeButton)
@@ -158,7 +161,6 @@ public class HotbarController : MonoBehaviour
             PlaceManager.Instance.OnRightClickPlaceTower(ctx); // Cancelar colocación de la torre
         }
     }
-
     public void SelectCurrentButton()
     {
         PlaceManager.Instance.DiscardCurrentTower();
@@ -172,20 +174,9 @@ public class HotbarController : MonoBehaviour
         PlaceManager.Instance.OnTriggerButton(slots[_currentIndex].Button);
         PlaceManager.Instance.InvokeCurrentButton();
     }
-
-    //private enum HotBarDirection { Up, Down, Left, Right }; // Solo se va a usar lefy y right
     protected enum Direction
     {
         Left = -1,
         Right = 1
     };
-
-    /*private IEnumerator FadeInButtons()
-    {
-        foreach (Image button in elementsActivated)
-        {
-            StartCoroutine(FadeImage(button, button.color.a, 1, fadeDuration));
-        }
-        yield return null;
-    }*/
 }

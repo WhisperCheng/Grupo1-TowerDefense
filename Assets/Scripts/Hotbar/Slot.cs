@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,12 +9,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class Slot : MonoBehaviour
 {
+    public GameObject instancePrefab;
     public Color colorOnSelectedButton;
     public UnityEvent OnSlotSelected;
     public UnityEvent OnSlotDeselected;
     private Color _normalButtonColor;
     private Button _currentButton;
     private Image _buttonImage;
+    private TextMeshProUGUI _textMeshPro;
 
     public float TransitionTime { get; set; }
     public float OnSelectedScale { get; set; }
@@ -28,6 +31,7 @@ public class Slot : MonoBehaviour
         _currentButton = GetComponent<Button>();
         _normalButtonColor = _currentButton.colors.normalColor;
         _buttonImage = GetComponent<Image>();
+        _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
     }
     void Start()
     {
@@ -47,7 +51,7 @@ public class Slot : MonoBehaviour
 
         //SelectButton();
         //GetComponent<Image>().color = colorOnSelectedButton;
-        if (Selected)  SelectButton(); 
+        if (Selected) SelectButton();
         if (!Selected) { OnSlotDeselected.Invoke(); }
     }
 
@@ -68,7 +72,7 @@ public class Slot : MonoBehaviour
 
     public void SelectButton()
     {
-        if(Selected)
+        if (Selected)
             OnSlotSelected.Invoke();
     }
 
@@ -87,5 +91,15 @@ public class Slot : MonoBehaviour
 
         color.a = endAlpha;
         image.color = color;
+    }
+
+    public void UpdateSlotPrice()
+    {
+        if (instancePrefab)
+        {
+            Tower tower = instancePrefab.GetComponent<Tower>(); // Habría realmente que implementar una nueva interfaz
+            // si alguno de los objetos con precio no fueran torres, pero como todos son torres en este caso no es necesario
+            if (_textMeshPro && tower) _textMeshPro.text = "" + tower.Money;
+        }
     }
 }

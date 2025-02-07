@@ -120,21 +120,21 @@ public class RoundManager : MonoBehaviour
                 "_NuevaOleada", lang);
                 newWaveInText.text = comingWaveText;
                 waveCountdownText.text = string.Format("{0:00.00}", countdown) + " s";
-                waveCountdownText.fontSize = 36;
+                //waveCountdownText.fontSize = 36;
             } // Si es infinito entonces al presionar la G se llamará al evento , que automáticamente reseteará el contador
             else                                                                                    // a 0 e iniciará la ronda
             { // Se cambia el texto para indicar que hay que presionar la tecla G para continuar 
                 string waitingForGText = LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table",
                 "_PresionarGNuevaOleada", lang);
                 waveCountdownText.text = waitingForGText;
-                waveCountdownText.fontSize = 20;
+                //waveCountdownText.fontSize = 20;
                 newWaveInText.gameObject.SetActive(false);
             }
         }
         else
         {
             newWaveInText.gameObject.SetActive(false);
-            waveCountdownText.fontSize = 28;
+            //waveCountdownText.fontSize = 28;
             var lang = LocalizationSettings.SelectedLocale;
             string activeWaveText =
             LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
