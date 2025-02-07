@@ -27,11 +27,15 @@ public class RoundManager : MonoBehaviour
     public float transitionBetweenInfiniteRounds = 0.5f;
 
     public TextMeshProUGUI waveCountdownText;
+    public RectTransform waveCountdownContainer;
+    public RectTransform newWaveContainer;
     public TextMeshProUGUI newWaveInText;
 
     private int waveIndex = -1; // Para valor de inicio, el waveindex será -1
 
     private bool waveInProgress = false;
+    private bool hideCountdownText = false;
+    private bool showCountdownText = true;
     private bool finishedLastRoundSpawnings = false;
     private bool finishedCurrentWaveTrigger = false;
 
@@ -43,6 +47,8 @@ public class RoundManager : MonoBehaviour
     public float maxFragorValue = 79f;
     public float musicTransitionTime = 2;
     private float fragorValue = 0f;
+
+    private Vector3 initialCountdownContainerPos;
 
     //FMOD, es el booleano que activa la música en mitad de la ronda en la función "MusicOnWave"
     private bool fragorRoundMax = false;
@@ -64,6 +70,8 @@ public class RoundManager : MonoBehaviour
     {
         countdown = countdownInicial;
         //Debug.Log("Empezando partida en " + countdownInicial + " seg");
+
+        initialCountdownContainerPos = newWaveContainer.anchoredPosition3D;
     }
 
     void Update()
@@ -87,11 +95,13 @@ public class RoundManager : MonoBehaviour
             this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
         }
 
-        //Debug
+        // Cuando se termina la oleada
         if (waveIndex >= 0 && waveIndex < waves.Length - 1 && enemiesAlive == 0 && finishedCurrentWaveTrigger)
         {
             if (waveInProgress) waveInProgress = false; // Al terminar la oleada, se pone started a false para iniciar el proceso del countdown
             //Debug.Log("Iniciando siguiente oleada en " + countdown + " seg");
+            hideCountdownText = false;
+            //showCountdownText = true;
             finishedCurrentWaveTrigger = false; // Se vuelve false para no volver a entrar en la condición hasta
         }                                                           //  la siguiente vez que se vuelva a terminar la oleada
 
@@ -106,6 +116,13 @@ public class RoundManager : MonoBehaviour
     {
         if (enemiesAlive == 0 && !waveInProgress) // Si se han muerto todos los enemigos de la oleada y no hay rondas activas
         {
+            if (!showCountdownText) // Si el panel de cuenta atrás está escondido, se posiciona en su nueva posición
+            {
+                LeanTween.cancel(waveCountdownContainer); 
+                LeanTween.moveLocalY(waveCountdownContainer.gameObject, // Regresara posición inicial / mostrar
+                            initialCountdownContainerPos.y-8.5f, 2.5f).setEaseInOutCubic();
+                showCountdownText = true;
+            }
             var lang = LocalizationSettings.SelectedLocale;
             if (!float.IsInfinity(countdown)) // Si el tiempo de espera no es infinito se resta tiempo
             {
@@ -134,7 +151,7 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            if (!waveInProgress) // Se ejecutará solo una vez ya que con la misma waveInProgress se pasa a true
+            if (!hideCountdownText) // Se ejecutará solo una vez ya que con la misma waveInProgress se pasa a true
             {
                 //newWaveInText.gameObject.SetActive(false);
                 //waveCountdownText.fontSize = 28;
@@ -143,8 +160,12 @@ public class RoundManager : MonoBehaviour
                 LocalizationSettings.StringDatabase.GetLocalizedString("Localization Table", "_RondaActiva", lang);
                 newWaveInText.text = activeWaveText;
                 waveCountdownText.text = "--:--";
-                LeanTween.moveLocalY(waveCountdownText.gameObject, 0, 1f).setEaseInOutCubic();
+                LeanTween.cancel(waveCountdownContainer);
+                LeanTween.moveLocalY(waveCountdownContainer.gameObject, // Esconder panel
+                    initialCountdownContainerPos.y, 2.5f).setEaseInOutCubic();
                 Debug.Log("a");
+                hideCountdownText = true;
+                showCountdownText = false;
             }
         }
     }
