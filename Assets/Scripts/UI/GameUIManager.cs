@@ -144,13 +144,13 @@ public class GameUIManager : MonoBehaviour
         buildUI.SetActive(true);
         roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
-        //Time.timeScale = 1f;
-        Time.timeScale = previousTimeScale;
+        Time.timeScale = 1f;
+        //Time.timeScale = previousTimeScale;
         hotBarController.EnableHotbar();
     }
     private void GameMenuDesactivate()
     {
-        previousTimeScale = Time.timeScale;
+        //previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         otherPanelActive = true;
     }
