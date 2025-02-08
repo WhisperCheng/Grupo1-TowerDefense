@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Cinemachine;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour, IDamageable
     public HealthBar _healthBar;
     public GameObject playerModel;
     public GameObject shootingSource;
+    public Image spriteTowerReloadTime;
 
     [Header("Cámara")]
     public CinemachineFreeLook virtualCamera;
@@ -138,10 +140,20 @@ public class Player : MonoBehaviour, IDamageable
             { // Si tiene el bastón alzado y no hay cooldown y no se está haciendo click encima de un botón, se dispara
                 _proyectilFabric.LanzarProyectil();
                 _canShoot = false;
+                ResetRealoadImageFillAmount();
                 GameObject particles = ShootingMagicParticlesPool.Instance.GetMagicShootingParticle();
                 particles.transform.position = shootingSource.transform.position;
                 particles.GetComponent<ParticleSystem>().Play();
             }
+        }
+    }
+
+    private void ResetRealoadImageFillAmount()
+    {
+        if (spriteTowerReloadTime)
+        {
+            spriteTowerReloadTime.enabled = true;
+            spriteTowerReloadTime.fillAmount = 0;
         }
     }
 
@@ -165,11 +177,18 @@ public class Player : MonoBehaviour, IDamageable
         if (!_canShoot)
         {
             _currentCooldown -= Time.deltaTime;
+            if (spriteTowerReloadTime)
+                spriteTowerReloadTime.fillAmount += Time.deltaTime / cooldown; // Ir aumentando el sprite de recarga
 
             if (_currentCooldown <= 0)
             {
                 _canShoot = true;
                 _currentCooldown = cooldown;
+                if (spriteTowerReloadTime)
+                {
+                    spriteTowerReloadTime.fillAmount = 0; // Reset del progreso del sprite de recarga
+                    spriteTowerReloadTime.enabled = false;
+                }
             }
         }
     }
