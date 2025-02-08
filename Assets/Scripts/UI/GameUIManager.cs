@@ -86,19 +86,23 @@ public class GameUIManager : MonoBehaviour
         }
         activeBuildUI = !activeBuildUI;
     }
-    public void OnClickGameMenu(InputAction.CallbackContext ctx)
+    public void OnClickGameMenu(InputAction.CallbackContext ctx) // Al presionar Esc
     {
         if (ctx.performed)
         {
             if (activeMenuPause && !otherPanelActive)
             {
+                previousTimeScale = Time.timeScale; // Este tiene que ir aquí
                 OpenPauseMenu();
                 Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
             }
             else if (!otherPanelActive)
             {
                 ClosePauseMenu();
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                //Time.timeScale = previousTimeScale;
             }
         }
         activeMenuPause = !activeMenuPause;
@@ -133,6 +137,7 @@ public class GameUIManager : MonoBehaviour
         buildUI.SetActive(false);
         roundUI.SetActive(false);
         PostProcessingControl.Instance.PostProcessingVolumeOn();
+        //previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         hotBarController.DisableHotbar();
     }
@@ -144,14 +149,14 @@ public class GameUIManager : MonoBehaviour
         buildUI.SetActive(true);
         roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
-        Time.timeScale = 1f;
-        //Time.timeScale = previousTimeScale;
+        //Time.timeScale = 1f;
+        Time.timeScale = previousTimeScale;
         hotBarController.EnableHotbar();
     }
     private void GameMenuDesactivate()
     {
         //previousTimeScale = Time.timeScale;
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         otherPanelActive = true;
     }
     public void ControlButton()
