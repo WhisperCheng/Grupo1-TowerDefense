@@ -94,12 +94,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &406292171348686541
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,13 +177,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &1042538406122721335
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5cda1887c6a314d89986b90715ddca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recolector: {fileID: 3048053029042072592, guid: decc539d3fd8196449848daa9bf5f5e5, type: 3}
 --- !u!1 &1665354677479154214
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,14 +293,7 @@ MonoBehaviour:
   pachamamaEvent:
     m_PersistentCalls:
       m_Calls: []
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &3862513888658448178
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,18 +364,6 @@ MonoBehaviour:
   pachamamaEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CloudBehaviour, Assembly-CSharp
-        m_MethodName: MoveClouds
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 7664009434150879676}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -417,7 +388,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7299110812927471856}
+      - m_Target: {fileID: 8091502230982778991}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -429,14 +400,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &6163887055483327825
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,6 +434,7 @@ Transform:
   - {fileID: 1852099246449523172}
   - {fileID: 3822611210304884218}
   - {fileID: 3908557875636018654}
+  - {fileID: 5671437220623530670}
   - {fileID: 447796495083718055}
   - {fileID: 3877396616409199435}
   - {fileID: 3175902848111033197}
@@ -494,6 +459,7 @@ MonoBehaviour:
   tutorialMessageText: {fileID: 0}
   instructionText: {fileID: 0}
   arrowImage: {fileID: 0}
+  hotbarController: {fileID: 0}
   tutorialModules:
   - moduleName: Intro
     messages:
@@ -509,6 +475,9 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -521,6 +490,36 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 20856037948522496
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 1
+      arrowPosition: {x: -590, y: -255}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -531,8 +530,11 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 125, y: 150}
-      arrowRotation: -90
+      arrowPosition: {x: 330, y: 385}
+      arrowRotation: -125
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
   - moduleName: EnemyPath
     messages:
     - messageText:
@@ -547,6 +549,9 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -557,8 +562,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 25, y: 130}
+      arrowPosition: {x: 0, y: 334}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -571,6 +591,9 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
   - moduleName: Defenses
     messages:
     - messageText:
@@ -585,6 +608,9 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -595,8 +621,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: -180, y: -125}
+      arrowPosition: {x: -435, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -607,8 +648,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: -120, y: -125}
+      arrowPosition: {x: -295, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -619,22 +675,69 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: -60, y: -125}
+      arrowPosition: {x: -130, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+  - moduleName: Storm
+    messages:
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 20862241668071424
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 0
+      arrowPosition: {x: 145, y: -275}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
   - moduleName: Lore
     messages:
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
         m_TableEntryReference:
-          m_KeyId: 52074532909056
+          m_KeyId: 20863949404110848
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: -190, y: 165}
-      arrowRotation: 0
+      arrowPosition: {x: -685, y: 235}
+      arrowRotation: 35
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -645,27 +748,57 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: -190, y: 140}
+      arrowPosition: {x: -795, y: 220}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
         m_TableEntryReference:
-          m_KeyId: 44537427341312
+          m_KeyId: 52074532909056
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 245, y: -125}
-      arrowRotation: 180
+      arrowPosition: {x: -865, y: 285}
+      arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
   - moduleName: Upgrades
     messages:
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
         m_TableEntryReference:
-          m_KeyId: 38498560716800
+          m_KeyId: 20865095430569984
           m_Key: 
         m_FallbackState: 0
         m_WaitForCompletion: 0
@@ -673,6 +806,9 @@ MonoBehaviour:
       showArrow: 0
       arrowPosition: {x: 0, y: 0}
       arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -683,10 +819,109 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 1.5, y: -125}
+      arrowPosition: {x: 0, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 44537427341312
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 1
+      arrowPosition: {x: 595, y: -275}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 38498560716800
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 0
+      arrowPosition: {x: 0, y: -275}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 21373256432353280
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 0
+      arrowPosition: {x: 0, y: 0}
+      arrowRotation: 0
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
   - moduleName: Traps
     messages:
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 20867901877125120
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 0
+      arrowPosition: {x: 145, y: -275}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -697,8 +932,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 60, y: -125}
+      arrowPosition: {x: 150, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -709,8 +959,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 120, y: -125}
+      arrowPosition: {x: 300, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -721,8 +986,23 @@ MonoBehaviour:
         m_WaitForCompletion: 0
         m_LocalVariables: []
       showArrow: 1
-      arrowPosition: {x: 185, y: -125}
+      arrowPosition: {x: 460, y: -275}
       arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: Slot, Assembly-CSharp
+            m_MethodName: EnableButton
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   continueAction: {fileID: -3099924797964272326, guid: 6a19240f3582b0943afc703ee10f055f, type: 3}
   references:
     version: 2
@@ -845,14 +1125,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &7408609990517158961
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,12 +1207,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-  enemiesEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  elementsActivated:
-  - {fileID: 0}
-  fadeDuration: 2
+  elementsActivated: []
 --- !u!1 &7664009434150879676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1314,101 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.7381505}
   m_Center: {x: 0, y: 0, z: 0.016832186}
+--- !u!1 &8091502230982778991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5671437220623530670}
+  - component: {fileID: 2526020118749459708}
+  - component: {fileID: 5233282793576627593}
+  m_Layer: 0
+  m_Name: Storm
+  m_TagString: Tutorial
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5671437220623530670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091502230982778991}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.08, y: 2.32, z: -66.61}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 8646246414207171965}
+  m_Father: {fileID: 2550016879540690453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2526020118749459708
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091502230982778991}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5233282793576627593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8091502230982778991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3129054847afbf7429be07f605934cfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pachamamaEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CloudBehaviour, Assembly-CSharp
+        m_MethodName: MoveClouds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7299110812927471856}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  elementsActivated: []
 --- !u!1001 &2539934516409125202
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1131,6 +1494,76 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
   m_PrefabInstance: {fileID: 2539934516409125202}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2867058060089556233
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5671437220623530670}
+    m_Modifications:
+    - target: {fileID: 957555496987645723, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.428
+      objectReference: {fileID: 0}
+    - target: {fileID: 3023538079965028609, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_Name
+      value: Checkpoint Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5981996153766558654, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.428
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+--- !u!4 &8646246414207171965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
+  m_PrefabInstance: {fileID: 2867058060089556233}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4004007144753557058
 PrefabInstance:
