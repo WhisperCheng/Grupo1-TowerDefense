@@ -57,6 +57,8 @@ public class VineTrapPool : MonoBehaviour
         }
 
         GameObject trap = pool.Pop();
+        IPoolable poolableTrap = trap.GetComponent<IPoolable>();
+        poolableTrap.RestoreToDefault();
         trap.SetActive(true);
 
         return trap;

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Pinchos : StaticTower
 {
+    [Header("Parámetros Pinchos")]
     [SerializeField] private float life;
     [SerializeField] private float damage;
     [SerializeField] private float damageOnUsed;
@@ -34,15 +35,20 @@ public class Pinchos : StaticTower
         {
             IDamageable damageableEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
             damageableEntity.TakeDamage(damage);
-            life -= damageOnUsed; // Quitar vida a la trampa
-            if (life <= 0)
-            {
-                ReturnToPool();
-            } else
-            {
-                _healthBar.UpdateHealthBar(_maxLife, life);
-            }
-            
+            RemoveLife();
+        }
+    }
+
+    private void RemoveLife()
+    {
+        life -= damageOnUsed; // Quitar vida a la trampa
+        if (life <= 0)
+        {
+            ReturnToPool();
+        }
+        else
+        {
+            _healthBar.UpdateHealthBar(_maxLife, life);
         }
     }
 
