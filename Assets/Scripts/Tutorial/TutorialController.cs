@@ -17,6 +17,7 @@ public class TutorialController : MonoBehaviour
     public TextMeshProUGUI tutorialMessageText; // Texto del mensaje del tutorial
     public TextMeshProUGUI instructionText;     // Texto fijo: "Presiona Enter para continuar"
     public RectTransform arrowImage;
+    public HotbarController hotbarController;
 
     [Header("Tutorial Data")]
     public List<TutorialModule> tutorialModules; // Lista de módulos en el Inspector
@@ -156,6 +157,7 @@ public class TutorialController : MonoBehaviour
     //Pausar juego mientras se muestran mensajes de tutorial
     private void PauseGame()
     {
+        hotbarController.DisableHotbar();
         Time.timeScale = 0f;
     }
 
@@ -163,6 +165,7 @@ public class TutorialController : MonoBehaviour
     private void ResumeGame()
     {
         Time.timeScale = 1f;
+        hotbarController.EnableHotbar();
     }
 }
 [System.Serializable]
