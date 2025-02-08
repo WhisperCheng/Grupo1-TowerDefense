@@ -49,15 +49,15 @@ public class Impacto : MonoBehaviour
         // Limpiar los Trail Renderers
         if (TrailRenderer != null)
         {
-            TrailRenderer.Clear();
             TrailRenderer.enabled = false;
+            TrailRenderer.Clear();
             TrailRenderer.enabled = true;
         }
 
         if (TrailRenderer2 != null)
         {
-            TrailRenderer2.Clear();
             TrailRenderer2.enabled = false;
+            TrailRenderer2.Clear();
             TrailRenderer2.enabled = true;
         }
 
