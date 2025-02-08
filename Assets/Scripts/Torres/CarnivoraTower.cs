@@ -33,7 +33,7 @@ public class CarnivoraTower : LivingTower, IDamageable
     protected float _maxSpeed;
 
     protected bool _attackMode = false;
-    protected bool _canAttack = true;
+    protected bool _canAttack = false;
     
     protected override void Start()
     {
