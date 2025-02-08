@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pinchos : StaticTower
+public class Pinchos : StaticTower, IDamageable
 {
     [Header("Parámetros Pinchos")]
     [SerializeField] private float life;
@@ -35,24 +35,12 @@ public class Pinchos : StaticTower
         {
             IDamageable damageableEntity = collision.GetComponent(typeof(IDamageable)) as IDamageable;
             damageableEntity.TakeDamage(damage);
-            RemoveLife();
+            TakeDamage(damageOnUsed);
         }
     }
 
-    private void RemoveLife()
+    public override void ReturnToPool()
     {
-        life -= damageOnUsed; // Quitar vida a la trampa
-        if (life <= 0)
-        {
-            ReturnToPool();
-        }
-        else
-        {
-            _healthBar.UpdateHealthBar(_maxLife, life);
-        }
-    }
-
-    public override void ReturnToPool() {
         if (_initialized && _loaded)
         {
             life = _maxLife;
@@ -61,7 +49,8 @@ public class Pinchos : StaticTower
         }
     }
 
-    public override GameObject RestoreToDefault() {
+    public override GameObject RestoreToDefault()
+    {
         if (!locked)
         {
             Init();
@@ -70,4 +59,23 @@ public class Pinchos : StaticTower
     }
 
     public override GameObject GetFromPool() { return SpikeTrapPool.Instance.GetSpikeTrap(); }
+
+    public void Die() { ReturnToPool(); }
+
+    public void TakeDamage(float damageAmount)
+    {
+        life -= damageAmount; // Quitar vida a la trampa
+        if (life <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            _healthBar.UpdateHealthBar(_maxLife, life);
+        }
+    }
+
+    public float GetHealth() { return life; }
+
+    public float GetMaxHealth() { return _maxLife; }
 }

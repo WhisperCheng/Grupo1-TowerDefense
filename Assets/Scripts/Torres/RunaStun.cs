@@ -8,7 +8,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(StudioEventEmitter))]
 
 
-public class RunaStun : StaticTower
+public class RunaStun : StaticTower, IDamageable
 {
     private StudioEventEmitter emitter;
     private HealthBar _healthBar;
@@ -38,10 +38,6 @@ public class RunaStun : StaticTower
     {
 
     }
-    private void RemoveLife()
-    {
-        life -= damageOnUsed; // Quitar vida a la trampa
-    }
     private void CheckIfLifeIsZero() // Si la vida es cero se devuelve a la pool
     {
         if (life <= 0)
@@ -59,7 +55,7 @@ public class RunaStun : StaticTower
             if (enemyNavMesh != null && enemy != null && !stunnedEnemies.ContainsKey(enemyNavMesh))
             {
                 StartCoroutine(StunCoroutine(enemyNavMesh, enemy));
-                RemoveLife();
+                TakeDamage(damageOnUsed);
                 _healthBar.UpdateHealthBar(_maxLife, life);
             }
         }
@@ -73,7 +69,6 @@ public class RunaStun : StaticTower
         }
 
         enemy.speed = 0; // Aplicar el stun
-        Debug.Log("a");
         //Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
 
         yield return new WaitForSeconds(duration);
@@ -102,7 +97,7 @@ public class RunaStun : StaticTower
     private IEnumerator ResetCooldown()
     {
         yield return new WaitForSeconds(cooldown);
-        if (lifeIsZero) ReturnToPool();
+        if (lifeIsZero) Die();
         if (!lifeIsZero) canAttack = true;
         //yield return new WaitForSeconds(0.01f);
     }
@@ -128,4 +123,15 @@ public class RunaStun : StaticTower
         return gameObject;
     }
     public override GameObject GetFromPool() { return RuneTrapPool.Instance.GetRuneTrap(); }
+
+    public void Die() { ReturnToPool(); }
+
+    public void TakeDamage(float damageAmount)
+    {
+        life -= damageAmount; // Quitar vida a la trampa
+    }
+
+    public float GetHealth() { return life; }
+
+    public float GetMaxHealth() { return _maxLife; }
 }

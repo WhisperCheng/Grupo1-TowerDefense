@@ -152,7 +152,6 @@ public class TowerInteractionManager : MonoBehaviour
         }
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
-        Debug.Log(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida) + " - " + torre.Money);
         // Efecto partículas venta
         PerformParticleAction(sellParticles, torre.gameObject);
 

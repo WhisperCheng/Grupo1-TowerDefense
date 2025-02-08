@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enredaderas : StaticTower
+public class Enredaderas : StaticTower, IDamageable
 {
     // Variables
     [SerializeField] private float speedPercentage;
@@ -101,7 +101,7 @@ public class Enredaderas : StaticTower
     // a la siguiente haría que la velocidad del enemigo volviera a ser la máxima en lugar de la realentizada
     private IEnumerator CheckForDelayedSpeedChange(Collider col)
     {
-        for(int i = 0; i < 7; i++)
+        for (int i = 0; i < 7; i++)
         {
             yield return new WaitForSeconds(0.1f);
             if (damageTimers.ContainsKey(col)) // Solo entra si el enemigo está contenido en el diccionario/lista
@@ -133,16 +133,7 @@ public class Enredaderas : StaticTower
                 {
                     damageableEntity.TakeDamage(damage); // Hacer daño
                     damageTimers[other] = cooldown;
-
-                    life -= damageOnUsed; // Quitar vida a la trampa
-                    if (life <= 0)
-                    {
-                        ReturnToPool();
-                    }
-                    else
-                    {
-                        _healthBar.UpdateHealthBar(_maxLife, life);
-                    }
+                    TakeDamage(damageOnUsed);
                 }
             }
         }
@@ -167,4 +158,23 @@ public class Enredaderas : StaticTower
             enemy.speed = enemy.MaxSpeed; // Restaurar a velocidad original
         damageTimers.Remove(col); // Eliminar los enemigos de los diccionarios
     }
+
+    public void Die() { ReturnToPool(); }
+
+    public void TakeDamage(float damageAmount)
+    {
+        life -= damageAmount; // Quitar vida a la trampa
+        if (life <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            _healthBar.UpdateHealthBar(_maxLife, life);
+        }
+    }
+
+    public float GetHealth() { return life; }
+
+    public float GetMaxHealth() { return _maxLife; }
 }
