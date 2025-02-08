@@ -161,6 +161,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         _isShowingCrosier = true;
         _currentCooldown = cooldown;
+        ResetRealoadImageFillAmount();
     }
 
     public void HideCrosier()
