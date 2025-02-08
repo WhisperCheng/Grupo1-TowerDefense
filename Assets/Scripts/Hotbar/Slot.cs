@@ -32,6 +32,7 @@ public class Slot : MonoBehaviour
         _normalButtonColor = _currentButton.colors.normalColor;
         _buttonImage = GetComponent<Image>();
         _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
+        if (_textMeshPro) _textMeshPro.text = ""; // Texto vacío por defecto
     }
     void Start()
     {
@@ -110,7 +111,7 @@ public class Slot : MonoBehaviour
         {
             Tower tower = instancePrefab.GetComponent<Tower>(); // Habría realmente que implementar una nueva interfaz
             // si alguno de los objetos con precio no fueran torres, pero como todos son torres en este caso no es necesario
-            if (_textMeshPro && tower) _textMeshPro.text = "" + tower.Money;
+            if (_textMeshPro && tower && !MoneyManager.Instance.infiniteMoney) _textMeshPro.text = "" + tower.Money;
         }
     }
 }
