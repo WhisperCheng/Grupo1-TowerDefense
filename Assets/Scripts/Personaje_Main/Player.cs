@@ -77,7 +77,16 @@ public class Player : MonoBehaviour, IDamageable
                                                      // se estaba colocando algo
         hotbar.DeselectCurrentButton(); // Deseleccionar botón actual
         hotbar.DisableHotbar(); // Deshabilitar hotbar
+        ToggleLayerCollisions(false); // Desactivar colisiones de proyectiles y demás mientras el jugador está quieto esperando
         if (_navMeshObstacle) _navMeshObstacle.enabled = false; // Desactivar el hueco del jugador para que los 
+    }                                                           // enemigos sigan pasando
+
+    private void ToggleLayerCollisions(bool value)
+    {
+        //if (_characterController) Physics2D.IgnoreLayerCollision(7, 10, value); // Enemigos
+        if (_characterController) Physics2D.IgnoreLayerCollision(7, 11, value); // Proyectiles
+        //if (_characterController) Physics2D.IgnoreLayerCollision(7, 9, value); // Aliados
+        if (_characterController) Physics2D.IgnoreLayerCollision(7, 12, value); // Torres
     }
 
     public float GetHealth() { return _currentHealth; }
@@ -109,6 +118,7 @@ public class Player : MonoBehaviour, IDamageable
         // Calcular el centro del jugador y cambiar la posición de las partículas a ese centro
         particulas.transform.position = PlaceManager.Instance.GetGameObjectCenter(gameObject);
         hotbar.EnableHotbar(); // Habilitar hotbar
+        ToggleLayerCollisions(true); // Volver a activar colisiones de proyectiles y demás
         if (_navMeshObstacle) _navMeshObstacle.enabled = true; // Reactivar el hueco del jugador para simular un espacio
     }
     private ParticleSystem InstantiateParticlesOnPlayer(ParticleSystem pSys)
