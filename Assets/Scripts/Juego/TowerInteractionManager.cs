@@ -122,10 +122,10 @@ public class TowerInteractionManager : MonoBehaviour
             Ray rayo = Camera.main.ScreenPointToRay(GameUIManager.Instance.crossHead.transform.position);
 
             bool collidingWithTower = Physics.Raycast(rayo, out RaycastHit golpeRayo, PlaceManager.Instance.maxPlaceDistance,
-                1 << GameManager.Instance.layerTorres);
+                1 << GameManager.Instance.layerTorres | 1 << GameManager.Instance.layerTrap);
 
-            if (collidingWithTower && golpeRayo.collider.CompareTag("Tower")) // Si el raycast choca con una torre
-            {
+            if (collidingWithTower && (golpeRayo.collider.CompareTag("Tower") || golpeRayo.collider.CompareTag("PathTower")))
+            { // Si el raycast choca con una torre
                 fillingImage.fillAmount += Time.deltaTime / actionTime; // Añadir tiempo
                 if (fillingImage.fillAmount >= 1) // Si llega al final del tiempo, se vende la torre añadiendo dinero
                 {
@@ -152,7 +152,7 @@ public class TowerInteractionManager : MonoBehaviour
         }
         float divisorPrecio = sellingPercentageAmount / 100;
         MoneyManager.Instance.AddMoney(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida));
-
+        Debug.Log(Mathf.RoundToInt((torre.Money * divisorPrecio) * proporcionDineroVida) + " - " + torre.Money);
         // Efecto partículas venta
         PerformParticleAction(sellParticles, torre.gameObject);
 
