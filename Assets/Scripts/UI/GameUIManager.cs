@@ -186,7 +186,7 @@ public class GameUIManager : MonoBehaviour
     }
     public void BackToPrincipalMenu()
     {
-        SceneManager.LoadScene("MainTutorial");
+        SceneManager.LoadScene("MainMenu");
     }
     public void AcceptButton()
     {
