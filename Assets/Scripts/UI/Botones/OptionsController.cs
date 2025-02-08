@@ -44,8 +44,6 @@ public class OptionsController : MonoBehaviour
             sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
         }
         //UpdateBrightnessPanel(brightness.value);
-
-
     }
 
     private void Update()

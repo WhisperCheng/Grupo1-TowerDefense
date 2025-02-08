@@ -47,17 +47,19 @@ public class SliderController : MonoBehaviour
         {
             case VolumeType.MASTER:
                 AudioManager.instance.masterVolume = volumeSlider.value;
+                PlayerPrefs.SetFloat("masterVolume", volume);
                 break;
             case VolumeType.MUSIC:
                 AudioManager.instance.musicVolume = volumeSlider.value;
+                PlayerPrefs.SetFloat("musicVolume", volume);
                 break;
             case VolumeType.SFX:
                 AudioManager.instance.SFXVolume = volumeSlider.value;
+                PlayerPrefs.SetFloat("SFXVolume", volume);
                 break;
             default:
                 Debug.LogWarning("Volume type no supported" + volumeType);
                 break;
         }
-        PlayerPrefs.SetFloat("volume", volume);
     }
 }
