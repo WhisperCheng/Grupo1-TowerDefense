@@ -181,11 +181,12 @@ public class GameUIManager : MonoBehaviour
     }
     public void ReLoadGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void BackToPrincipalMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
     public void AcceptButton()
