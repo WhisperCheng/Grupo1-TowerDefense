@@ -29,7 +29,6 @@ public class PanelMovement : MonoBehaviour
         {
                 button.onClick.AddListener(OnButtonClick); 
         }
-        Debug.Log(panelToMove.rect.center);
     }
 
     private void OnDisable()
