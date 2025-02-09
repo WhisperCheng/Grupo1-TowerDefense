@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 
 
 public class OptionsController : MonoBehaviour

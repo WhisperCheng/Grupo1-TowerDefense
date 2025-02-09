@@ -41,6 +41,7 @@ public class PlaceManager : MonoBehaviour
         else
         {
             Instance = this;
+            torre = null;
         }
     }
 

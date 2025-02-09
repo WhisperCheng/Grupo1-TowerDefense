@@ -64,6 +64,7 @@ public class RoundManager : MonoBehaviour
         else
         {
             Instance = this;
+            enemiesAlive = 0;
         }
     }
 
