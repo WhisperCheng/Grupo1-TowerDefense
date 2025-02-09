@@ -34,7 +34,7 @@ public class OptionsController : MonoBehaviour
     {
         if (brightnessSlider != null)
         {
-            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 1f);
             brightnessSlider.onValueChanged.AddListener(ChangeBrightness);
         }
         
