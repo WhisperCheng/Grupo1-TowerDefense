@@ -14,7 +14,7 @@ public class LevelChanges : MonoBehaviour
     public static void OpenLevel()
     {
         
-        SceneManager.LoadScene("LevelOneScene");
+        SceneManager.LoadScene("LevelOne");
     }
 
     public static void OpenAnimatic()
