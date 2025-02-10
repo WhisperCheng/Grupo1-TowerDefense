@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -32,9 +29,6 @@ public class GameUIManager : MonoBehaviour
 
     public Vector3 CanvasProportion { get; private set; }
 
-    private Vector3 bottomHotbarPos;
-    private RectTransform canvasRT;
-
     private float previousTimeScale = 1;
 
     private string textMoneyOriginal;
@@ -51,15 +45,14 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        canvasRT = mainCanvas.GetComponent<RectTransform>();
-
         textMoneyOriginal = textMoney.text;
+
+        Cursor.visible = false; // Ocultar cursor y lockearlo al centro
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         CanvasProportion = mainCanvas.localScale; // Proporción de la escala del canvas
@@ -74,7 +67,6 @@ public class GameUIManager : MonoBehaviour
     {
         if (ctx.performed)
         {
-            //float transitionTime = 1f;
             if (activeBuildUI)
             {
                 ShowBuildUI(menusTransitionTime);
@@ -94,19 +86,15 @@ public class GameUIManager : MonoBehaviour
             {
                 previousTimeScale = Time.timeScale; // Este tiene que ir aquí
                 OpenPauseMenu();
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
             }
             else if (!otherPanelActive)
             {
                 ClosePauseMenu();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                //Time.timeScale = previousTimeScale;
             }
         }
         activeMenuPause = !activeMenuPause;
     }
+
     public void HideBuildUI(float time)
     {
         ToggleBuildUI(false, hideToolbarCoordinates, time);
@@ -122,41 +110,37 @@ public class GameUIManager : MonoBehaviour
         LeanTween.cancel(buildUI); // Reset de las animaciones
 
         // Esconder/Mostrar menú de botones con movimiento relativo a la escala del canvas
-
-        //bottomHotbarPos = canvasRT.TransformDirection(new Vector2(0, canvasRT.rect.yMin));
-        //LeanTween.moveLocalY(buildUI, bottomHotbarPos.y + verticalMovement, time).setEaseInOutSine();
-        // Se puede de esta otra manera, pero la segunda da menos problemas
         LeanTween.moveY(buildUI, verticalMovement * CanvasProportion.y, time).setEaseInOutSine();
     }
 
     public void OpenPauseMenu()
     {
-        //añadir leAntween y esa vaina loquísima
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         activeMenuPause = true;
         menuPause.SetActive(true);
         buildUI.SetActive(false);
         roundUI.SetActive(false);
         PostProcessingControl.Instance.PostProcessingVolumeOn();
-        //previousTimeScale = Time.timeScale;
         Time.timeScale = 0f;
         hotBarController.DisableHotbar();
     }
     public void ClosePauseMenu()
     {
-        //añadir leAntween y esa vaina loca
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        
         activeMenuPause = false;
         menuPause.SetActive(false);
         buildUI.SetActive(true);
         roundUI.SetActive(true);
         PostProcessingControl.Instance.PostProcessingVolumeOff();
-        //Time.timeScale = 1f;
         Time.timeScale = previousTimeScale;
         hotBarController.EnableHotbar();
     }
     private void GameMenuDesactivate()
     {
-        //previousTimeScale = Time.timeScale;
-        //Time.timeScale = 0f;
         otherPanelActive = true;
     }
     public void ControlButton()
@@ -201,12 +185,14 @@ public class GameUIManager : MonoBehaviour
     public void WinLevel()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         panelWin.SetActive(true);
         GameMenuDesactivate();
     }
     public void LoseLevel()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         panelLose.SetActive(true);
         GameMenuDesactivate();
     }
