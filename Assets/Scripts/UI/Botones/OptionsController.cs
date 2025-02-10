@@ -39,7 +39,7 @@ public class OptionsController : MonoBehaviour
         
         if (sensitiveSlider != null)
         {
-            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 0.5f);
+            sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 40f);
             sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
         }
         //UpdateBrightnessPanel(brightness.value);
@@ -63,7 +63,7 @@ public class OptionsController : MonoBehaviour
         else
         {
             
-            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 0.5f);
+            brightnessSlider.value = PlayerPrefs.GetFloat("brightness", 1f);
         }
         PlayerPrefs.SetFloat("brightness", brightness);
     }
