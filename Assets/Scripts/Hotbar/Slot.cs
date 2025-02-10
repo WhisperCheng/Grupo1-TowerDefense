@@ -31,8 +31,18 @@ public class Slot : MonoBehaviour
         _currentButton = GetComponent<Button>();
         _normalButtonColor = _currentButton.colors.normalColor;
         _buttonImage = GetComponent<Image>();
-        _textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
-        if (_textMeshPro) _textMeshPro.text = ""; // Texto vacío por defecto
+        //_textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
+        if (texts.Length > 0)
+            foreach (TextMeshProUGUI text in texts)
+            {
+                if (text.tag != "SlotNumber")
+                {
+                    text.text = ""; // Texto vacío por defecto
+                    _textMeshPro = text;
+                }
+            }
+        //if (_textMeshPro && _textMeshPro.tag != "SlotNumer") _textMeshPro.text = ""; // Texto vacío por defecto
     }
     void Start()
     {
@@ -51,8 +61,6 @@ public class Slot : MonoBehaviour
         Selected = !Selected;
         AnimateButton();
 
-        //SelectButton();
-        //GetComponent<Image>().color = colorOnSelectedButton;
         if (Selected) SelectButton();
         if (!Selected) { OnSlotDeselected.Invoke(); }
     }
@@ -62,15 +70,6 @@ public class Slot : MonoBehaviour
         buttonEnabled = true;
         StartCoroutine(FadeImage(_buttonImage, 0, 1, 0.5f));
         if (_textMeshPro) LeanTween.alpha(_textMeshPro.gameObject, 1, 0.5f).setIgnoreTimeScale(true);
-        /*
-          if (_textMeshPro) LeanTween.value(_textMeshPro.gameObject, 0, 1, 0.5f)
-                .setOnUpdate((float val) =>
-                {
-                    Color c = _textMeshPro.color;
-                    c.a = val;
-                    _textMeshPro.color = c;
-                }); ;
-         */
     }
 
     private void AnimateButton()
