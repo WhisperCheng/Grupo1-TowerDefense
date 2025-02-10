@@ -82,18 +82,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   elementsActivated: []
 --- !u!1 &406292171348686541
 GameObject:
@@ -579,6 +567,18 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 1
             m_CallState: 2
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_MethodName: SetActive
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 1
+            m_CallState: 2
     - messageText:
         m_TableReference:
           m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
@@ -593,7 +593,19 @@ MonoBehaviour:
       arrowRotation: 0
       onMessageDisplayed:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_TargetAssemblyTypeName: RoundManager, Assembly-CSharp
+            m_MethodName: SetTutorialMode
+            m_Mode: 6
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
   - moduleName: Defenses
     messages:
     - messageText:
@@ -888,7 +900,7 @@ MonoBehaviour:
               m_IntArgument: 0
               m_FloatArgument: 0
               m_StringArgument: 
-              m_BoolArgument: 1
+              m_BoolArgument: 0
             m_CallState: 2
     - messageText:
         m_TableReference:
@@ -1003,6 +1015,21 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+    - messageText:
+        m_TableReference:
+          m_TableCollectionName: GUID:9360031c33febd94d91ba987462a6ca6
+        m_TableEntryReference:
+          m_KeyId: 22238981153882112
+          m_Key: 
+        m_FallbackState: 0
+        m_WaitForCompletion: 0
+        m_LocalVariables: []
+      showArrow: 0
+      arrowPosition: {x: 460, y: -275}
+      arrowRotation: 180
+      onMessageDisplayed:
+        m_PersistentCalls:
+          m_Calls: []
   continueAction: {fileID: -3099924797964272326, guid: 6a19240f3582b0943afc703ee10f055f, type: 3}
   references:
     version: 2
@@ -1034,7 +1061,7 @@ Transform:
   m_GameObject: {fileID: 7299110812927471856}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.39602643, z: -0, w: 0.9182391}
-  m_LocalPosition: {x: -0.22, y: 2.81, z: -123.62}
+  m_LocalPosition: {x: -2.25, y: 2.81, z: -124.62}
   m_LocalScale: {x: 15.25, y: 5, z: 7.11}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1090,30 +1117,6 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 1042538406122721335}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1763,7 +1766,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.001
+      value: -0.085
       objectReference: {fileID: 0}
     - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1771,7 +1774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.578
+      value: 0.352
       objectReference: {fileID: 0}
     - target: {fileID: 5779373209511968884, guid: fc8dbb3ef6080464385c535645498b4c, type: 3}
       propertyPath: m_LocalRotation.w

@@ -20,6 +20,8 @@ public class RoundManager : MonoBehaviour
     public float countdownInicial = 3f;
 
     public bool tutorialMode = false;
+    public bool CurrentTutorialMode { get; set; } = false;
+    public bool HasEndedTutorial { get; set; } = false;
 
     private float countdown = 3f;
     public float Countdown { get { return countdown; } set { countdown = value; } } // Property del countdown
@@ -70,8 +72,8 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+        if (tutorialMode) CurrentTutorialMode = true;
         countdown = countdownInicial;
-        //Debug.Log("Empezando partida en " + countdownInicial + " seg");
 
         initialNewWaveContainerPos = newWaveContainer.anchoredPosition3D;
         initialCountdownContainerPos = waveCountdownContainer.anchoredPosition3D;
@@ -81,7 +83,7 @@ public class RoundManager : MonoBehaviour
     {
         UpdateCountdown();
         //FMOD
-        MusicOnWave();//Función que se llama para activar la música caotica en mitad de la ronda
+        MusicOnWave(); //Función que se llama para activar la música caotica en mitad de la ronda
         AudioManager.instance.musicEventInstance.setParameterByName("Fragor", fragorValue);//se coge el parametro de FMOD llamado "fragor"
                                                                                            //y hacemos que unity lo reconozca
         if (enemiesAlive > 0)
@@ -91,20 +93,26 @@ public class RoundManager : MonoBehaviour
 
         if (finishedLastRoundSpawnings && enemiesAlive == 0)
         {
-            //Debug.Log("Fin");
-            GameUIManager.Instance.WinLevel();
-            AudioManager.instance.musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
-            this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
+            bool value = true;
+            if (tutorialMode)
+            {
+                if (!CurrentTutorialMode && HasEndedTutorial) value = true;
+                else value = false;
+            }
+            if (value) // Si está en modo tutorial y lo completa todo entra aquí, si no entra siempre
+            {
+                GameUIManager.Instance.WinLevel();
+                AudioManager.instance.musicEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                AudioManager.instance.PlayOneShot(FMODEvents.instance.menuWin, this.transform.position);
+                this.enabled = false; // <-- Si llega aquí todo lo siguiente no se ejecutará y la partida habrá terminado
+            }
         }
 
         // Cuando se termina la oleada
         if (waveIndex >= 0 && waveIndex < waves.Length - 1 && enemiesAlive == 0 && finishedCurrentWaveTrigger)
         {
             if (waveInProgress) waveInProgress = false; // Al terminar la oleada, se pone started a false para iniciar el proceso del countdown
-            //Debug.Log("Iniciando siguiente oleada en " + countdown + " seg");
             hideCountdownText = false;
-            //showCountdownText = true;
             finishedCurrentWaveTrigger = false; // Se vuelve false para no volver a entrar en la condición hasta
         }                                                           //  la siguiente vez que se vuelva a terminar la oleada
 
@@ -140,7 +148,6 @@ public class RoundManager : MonoBehaviour
                 "_NuevaOleada", lang);
                 newWaveInText.text = comingWaveText;
                 waveCountdownText.text = string.Format("{0:00:00}", countdown) + " s";
-                //waveCountdownText.fontSize = 36;
             } // Si es infinito entonces al presionar la G se llamará al evento , que automáticamente reseteará el contador
             else                                                                                    // a 0 e iniciará la ronda
             { // Se cambia el texto para indicar que hay que presionar la tecla G para continuar 
@@ -168,22 +175,16 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    /*private void ManageNormalRounds()
-    {
-
-    }*/ // TODO
-
     private void InitializeNewWave()
     {
         waveIndex++;
-        //Debug.Log("Empezando oleada nº " + (waveIndex + 1));
         StartWave();
         waveInProgress = true;
     }
 
     public void StartRoundAfterInfiniteRest(InputAction.CallbackContext ctx)
     {
-        if (!waveInProgress && enemiesAlive == 0 && ctx.performed && float.IsInfinity(countdown))
+        if (!CurrentTutorialMode && !waveInProgress && enemiesAlive == 0 && ctx.performed && float.IsInfinity(countdown))
         {
             countdown = transitionBetweenInfiniteRounds; // 0.5 segundos de espera para no comenzar la ronda muy de golpe
         }
@@ -233,7 +234,6 @@ public class RoundManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(info.ActualSpawnRate);
 
-                //info.ActualSpawnRate = info.spawnRate * (info.spawnRateMultiplierAtEnd * ( current / (float) totalEnemiesAmount));
                 info.ActualSpawnRate = info.ActualSpawnRate * info.spawnRateMultiplier;
             }
             // Luego se le asigna el nuevo valor del actualSpawnRate, que se corresponde con una operación progresiva de acorde al
@@ -328,5 +328,15 @@ public class RoundManager : MonoBehaviour
             }
             //Debug.Log("fragor " + fragorValue);//Debug para chequeos
         }
+    }
+
+    public void SetTutorialMode(bool value)
+    {
+        CurrentTutorialMode = value;
+    }
+
+    public void SetIfEndedTutorial(bool value)
+    {
+        HasEndedTutorial = value;
     }
 }
