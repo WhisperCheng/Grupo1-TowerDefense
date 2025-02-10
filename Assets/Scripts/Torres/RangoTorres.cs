@@ -57,7 +57,7 @@ public class RangoTorres : MonoBehaviour
                     GameObject gameObjTorre = golpeRayo.collider.gameObject;
                     Tower tower = gameObjTorre.GetComponent<Tower>();
                     boostPrice = tower is LivingTower ? ((LivingTower)tower).NextBoostMoney() : 0; // Boost
-                    boostPriceText.text = tower ? (boostPrice == 0 ? "-" : boostPrice.ToString()) : "-";
+                    boostPriceText.text = tower ? (boostPrice <= 0 ? "-" : boostPrice.ToString()) : "-";
 
                     IDamageable torreDamageable = tower.GetComponent<IDamageable>();
                     float proporcionDineroVida = 1;
