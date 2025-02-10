@@ -36,7 +36,7 @@ public class Slot : MonoBehaviour
         if (texts.Length > 0)
             foreach (TextMeshProUGUI text in texts)
             {
-                if (text.tag != "SlotNumer")
+                if (text.tag != "SlotNumber")
                 {
                     text.text = ""; // Texto vacío por defecto
                     _textMeshPro = text;
