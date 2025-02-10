@@ -10,7 +10,6 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
     [SerializeField] protected ParticleSystem _particulasMuerte;
     [SerializeField] protected ParticleSystem _particulasGolpe;
 
-    //[Header("Animaciones")]
     protected Animator animator;
 
     [Header("Proyectil")]
@@ -130,8 +129,6 @@ public abstract class RangedTower : LivingTower, IDamageable, IBoosteable
             _canAttack = true;
             OnAttack();
         }
-        //if(!_canAttack)
-        //animator.ResetTrigger("Attack");
 
         animator.SetBool("AttackMode", _attackMode);
     }

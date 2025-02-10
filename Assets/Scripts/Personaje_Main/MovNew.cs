@@ -8,7 +8,6 @@ public class MovNew : MonoBehaviour
     float velocityZ = 0.0f;
     float velocityX = 0.0f;
     public float acceleration = 2.0f;
-    //public float deceleration = 2.0f;
     public float maximumWalkVelocity = 0.5f;
     public float maximumRunVelocity = 2.0f;
 

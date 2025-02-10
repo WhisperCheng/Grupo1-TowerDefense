@@ -13,8 +13,6 @@ public class ThornRoseProjectilePool : MonoBehaviour
     public string grandParentName = "ObjectPoolsObjects";
 
     private Stack<GameObject> pool; 
-    //private Stack pool; 
-    // https://learn.microsoft.com/en-us/dotnet/api/system.collections.stack.synchronized?view=net-9.0
     public static ThornRoseProjectilePool Instance;
 
     private void Awake()
@@ -38,7 +36,6 @@ public class ThornRoseProjectilePool : MonoBehaviour
     void SetupPool()
     {
         pool = new Stack<GameObject>();
-        //pool = Stack.Synchronized(new Stack());
         parent = new GameObject("ThornRoseProjectile_PC");
         parent.transform.parent = grandParent.transform;
         for (int i = 0; i < poolSize; i++)

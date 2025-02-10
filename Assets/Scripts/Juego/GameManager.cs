@@ -59,9 +59,6 @@ public class GameManager : MonoBehaviour
     public Color colorVeneno;
     public MaterialPropertyBlock materialPropertyVeneno;
 
-    //[Header("Tags de enemigos")]
-    //public List<string> listaTagEnemigos;
-
     public int ForestHearthAmount { get; set; }
     // Start is called before the first frame update
     void Start()
@@ -93,9 +90,4 @@ public class GameManager : MonoBehaviour
     {
         ForestHearthAmount++;
     }
-
-    /*public int getForestHearthAmount()
-    {
-        return forestHearthAmount;
-    }*/
 }

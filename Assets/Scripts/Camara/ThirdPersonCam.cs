@@ -11,7 +11,6 @@ public class ThirdPersonCam : MonoBehaviour
     public Transform player;
     public Transform playerObj;
     public CinemachineFreeLook freelookCamera;
-    //[SerializeField] private float rotationSpeed = 40.0f; // La velocidad de giro
 
     [Header("Giro de cámara")]
     [Range(0f, 80f)]
@@ -26,7 +25,6 @@ public class ThirdPersonCam : MonoBehaviour
     private Vector2 _oldLookDirection;
 
     public static ThirdPersonCam instance;
-    //private Vector2 _smoothedMoveSpeed; // sin uso, funciona como ref
 
     // Start is called before the first frame update
     void Awake()
@@ -42,7 +40,7 @@ public class ThirdPersonCam : MonoBehaviour
     }
     void Start()
     {
-        //freelookCamera.ForceCameraPosition(Vector3.zero, Quaternion.Euler(Vector3.zero));
+        
     }
 
     // Update is called once per frame
@@ -50,15 +48,10 @@ public class ThirdPersonCam : MonoBehaviour
     {
         RotateOrientation();
         RotatePlayerObj();
-        //orientation = GameObject.Find("Orientation").transform;
     }
 
     private void RotateOrientation()
     {
-        // Apuntar hacia delante
-        //Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        //orientation.forward = viewDir.normalized; // Esto hacía que el personaje diera vueltas en círculos al ir hacia los lados
-
         // Leer input para luego apuntar a la dirección deseada
         PlayerInput playerInput = GameManager.Instance.playerControls;
         _lookDirection = playerInput.actions["Look"].ReadValue<Vector2>();
@@ -72,8 +65,6 @@ public class ThirdPersonCam : MonoBehaviour
             orientation.transform.Rotate(0, addRotation, 0); // rotación con suavizado
             _oldLookDirection.x = _lookDirection.x;
         }
-        //orientation.rotation = Quaternion.Euler(orientation.rotation.x, freelookCamera.m_XAxis.Value, orientation.rotation.z);
-       // orientation.transform.Rotate(0, freelookCamera.m_XAxis.ax, 0); // rotación con suavizado
     }
 
     private void RotatePlayerObj()

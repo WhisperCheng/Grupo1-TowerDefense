@@ -6,12 +6,6 @@ using UnityEngine.AI;
 
 public static class ProyectileUtils
 {
-    // Para hacer la trayerctoria dada una velocidad inicial (Este es el caso que se va a usar):
-    //https://stackoverflow.com/questions/30290262/how-to-throw-a-ball-to-a-specific-point-on-plane
-    //https://discussions.unity.com/t/input-force-is-nan-nan-nan/190950
-    // Para hacer la trayectoria dada una altura máxima (lo dejo como apunte por si lo necesito
-    // yo en el futuro, no lo voy a usar):
-    //https://youtu.be/IvT8hjy6q4o
     public static bool ThrowProyectileAtLocation(Transform thrower, GameObject ballGameObject, Vector3 targetLocation, float initialShotSpeed)
     {
         bool result = true;
@@ -22,7 +16,6 @@ public static class ProyectileUtils
         Vector3 centroPos = thrower.position;
         Vector3 directionA = Vector3.Normalize(centroPos - anguloSueloPos);
         Vector3 directionB = Vector3.Normalize(centroPos - targetLocation);
-        // https://stackoverflow.com/questions/49383884/find-angle-between-two-objects-while-taking-another-object-as-center-in-unity-us
 
         float angulo = Vector3.Angle(directionA, directionB) * (thrower.position.y > targetLocation.y ? -1 : 1);
 
@@ -44,13 +37,6 @@ public static class ProyectileUtils
 
         return result;
     }
-
-    /*public static bool test(Transform thrower, GameObject ballGameObject, Vector3 targetLocation, float initialShotSpeed)
-    {
-        ballGameObject.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.VelocityChange);
-        return true;
-    }*/
-
     // Helper method to find angle between two points (v1 & v2) with respect to axis n
     private static float AngleBetweenAboutAxis(Vector3 v1, Vector3 v2, Vector3 n)
     {
@@ -91,7 +77,7 @@ public static class ProyectileUtils
     }
 
     public class ShootingInterception
-    { // Referencia:  http://wiki.unity3d.com/index.php/Calculating_Lead_For_Projectiles
+    {
         public static Vector3 CalculateInterceptionPoint(float initialShotVelocity, Transform shooter, Transform target,
             Vector3 offsetTargetPosition)
         {

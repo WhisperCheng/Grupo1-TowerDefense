@@ -31,7 +31,6 @@ public class Slot : MonoBehaviour
         _currentButton = GetComponent<Button>();
         _normalButtonColor = _currentButton.colors.normalColor;
         _buttonImage = GetComponent<Image>();
-        //_textMeshPro = GetComponentInChildren<TextMeshProUGUI>();
         TextMeshProUGUI[] texts = GetComponentsInChildren<TextMeshProUGUI>();
         if (texts.Length > 0)
             foreach (TextMeshProUGUI text in texts)
@@ -42,7 +41,6 @@ public class Slot : MonoBehaviour
                     _textMeshPro = text;
                 }
             }
-        //if (_textMeshPro && _textMeshPro.tag != "SlotNumer") _textMeshPro.text = ""; // Texto vacío por defecto
     }
     void Start()
     {
@@ -51,7 +49,6 @@ public class Slot : MonoBehaviour
             Color newColor = _buttonImage.color;
             newColor.a = 0;
             _buttonImage.color = newColor;
-            //if (_textMeshPro) _textMeshPro.alpha = 0;
         }
     }
 

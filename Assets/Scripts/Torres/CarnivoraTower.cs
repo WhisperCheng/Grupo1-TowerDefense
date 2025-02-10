@@ -22,7 +22,6 @@ public class CarnivoraTower : LivingTower, IDamageable
     public AttackBox attackBox;
     public Transform attackBoxHolder;
 
-    //[Header("Animaciones")]
     protected Animator animator;
 
     [Header("Partículas de construcción")]
@@ -190,7 +189,6 @@ public class CarnivoraTower : LivingTower, IDamageable
         {// Si ya ha sido enviado previamente a la pool, se resetean los valores por defecto
             Init();
             locked = true;
-            //enabled = true;
             _attackMode = false;
             _canAttack = false;
             animator.SetBool("AttackMode", false); // Dejar de reproducir animación de atacar

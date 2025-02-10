@@ -69,7 +69,6 @@ public class RunaStun : StaticTower, IDamageable
         }
 
         enemy.speed = 0; // Aplicar el stun
-        //Debug.Log($"Enemigo {enemyNavMesh.name} stunneado");
 
         yield return new WaitForSeconds(duration);
 
@@ -78,7 +77,6 @@ public class RunaStun : StaticTower, IDamageable
         {
             enemy.speed = stunnedEnemies[enemyNavMesh];
             stunnedEnemies.Remove(enemyNavMesh);
-            //Debug.Log($"Enemigo {enemyNavMesh.name} destunneado");
         }
         CheckIfLifeIsZero();
     }
@@ -99,7 +97,6 @@ public class RunaStun : StaticTower, IDamageable
         yield return new WaitForSeconds(cooldown);
         if (lifeIsZero) Die();
         if (!lifeIsZero) canAttack = true;
-        //yield return new WaitForSeconds(0.01f);
     }
     protected override void OnDrawGizmosSelected()
     {

@@ -20,7 +20,6 @@ public class BastonButton : MonoBehaviour
 
     public void SetHoldingCrosier(Player player)
     {
-        //if (EventSystem.current.currentSelectedGameObject == gameObject)
         if (player.CheckIfIsShowingCrosier()) // Si no está mostrando el bastón lo baja
         {
             EventSystem.current.SetSelectedGameObject(null); // Deseleccionar botón
@@ -28,7 +27,6 @@ public class BastonButton : MonoBehaviour
         }
         else // Si lo está escondiendo lo sube
         {
-            //button.Select();
             player.ShowCrosier();
         }
     }
@@ -41,7 +39,6 @@ public class BastonButton : MonoBehaviour
 
     public void ShowCrosier(Player player)
     {
-        //button.Select();
         player.ShowCrosier();
     }
 }

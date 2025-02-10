@@ -25,7 +25,6 @@ public class Credits : MonoBehaviour
         transform.Translate(Vector2.up * Time.deltaTime * speed);
         if (transform.position.y > finalPosY)
         {
-            //transform.position = startPos;
             float padreX = transform.position.x;
             float nuevaPosX = padreX + startPos.x;
             transform.position = new Vector3(nuevaPosX,startPos.y + posRect, globalStartPos.z);

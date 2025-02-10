@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class MovPersonaje2D : MonoBehaviour
 {
-    /*[Header("Giro")]
-    [SerializeField] private float _turnSpeed = 40.0f; // La velocidad de giro
-    [Range(0f, 60f)]
-    [SerializeField] private float _smoothTurnSpeed = 4f;*/
 
     [Header("Animaciones")]
     private CharacterController _characterController;
@@ -29,7 +25,6 @@ public class MovPersonaje2D : MonoBehaviour
 
     [Header("Movimiento")]
     [SerializeField] private float _acceleration = 2.0f;
-    //public float deceleration = 2.0f;
     [SerializeField] private float _maximumWalkVelocity = 4f;
     [SerializeField] private float _maximumRunVelocity = 10f;
     private float _currentMaxVelocity = 0;
@@ -53,22 +48,16 @@ public class MovPersonaje2D : MonoBehaviour
 
     private Vector2 _moveDirection;
     private Vector2 _smoothedMoveDirection;
-    //private Vector2 _lookDirection;
-    //private float _oldLookDirection = 0f;
     private Vector2 _smoothedMoveSpeed;
     
-    //float rotateYAngle = 0f;
 
     void Start()
     {
-        // Get the Character Controller on the player
         _characterController = GetComponent<CharacterController>();
         _velocityZHash = Animator.StringToHash("VelZ");
         _velocityXHash = Animator.StringToHash("VelX");
         _velocityMHash = Animator.StringToHash("VelM");
         _currentMaxVelocity = _maximumWalkVelocity;
-
-        //playerInput = GetComponent<PlayerInput>();
     }
     void FixedUpdate()
     {
@@ -182,8 +171,8 @@ public class MovPersonaje2D : MonoBehaviour
         /// Usa la posición del personaje partiendo desde su base para hacer un raycast y detectar hasta
         /// cierta distancia si hay suelo debajo del personaje. Si no lo hay es porque el personaje o está
         /// cayendo / saltando o porque la pendiente donde esté el personaje es demasiado inclinada
-        if (OnGround(hit)) {
-            //if (hit.normal != Vector3.up) {
+        if (OnGround(hit))
+        {
             float slopeNormalLimit = (86f / 90); // Si la perpendicular de la pendiente es
             if (hit.normal.y <= slopeNormalLimit) { // menor a 86 grados se retorna true
                 return true;

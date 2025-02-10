@@ -116,7 +116,7 @@ public class RoundManager : MonoBehaviour
             finishedCurrentWaveTrigger = false; // Se vuelve false para no volver a entrar en la condición hasta
         }                                                           //  la siguiente vez que se vuelva a terminar la oleada
 
-        if (countdown <= 0f && enemiesAlive == 0 /*&& !HasSpawningEnded()*/ && waveIndex < waves.Length - 1)
+        if (countdown <= 0f && enemiesAlive == 0 && waveIndex < waves.Length - 1)
         {
             InitializeNewWave();
             return;
@@ -326,7 +326,6 @@ public class RoundManager : MonoBehaviour
                 //FMOD,Como no hay timer no se puede ajustar de manera progresiva, así que esto está bien así
                 fragorValue = minFragorValueOnRests;
             }
-            //Debug.Log("fragor " + fragorValue);//Debug para chequeos
         }
     }
 

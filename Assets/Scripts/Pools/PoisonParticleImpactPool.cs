@@ -51,7 +51,6 @@ public class PoisonParticleImpactPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            //Debug.LogWarning("Pool de partículas de muerte de enemigos vacía. Creando nuevo objeto de partículas.");
             GameObject newParticles = Instantiate(poisonYewImpactParticlesPrefab);
             newParticles.transform.parent = parent.transform;
             return newParticles;

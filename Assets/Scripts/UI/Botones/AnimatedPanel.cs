@@ -74,15 +74,6 @@ public class AnimatedPanel : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         }
     }
 
-    /*private void PositionButtonsOnDisable()
-    {
-        foreach (Button btn in buttons)
-        {
-            RectTransform rect = btn.GetComponent<RectTransform>();
-            rect.position = new Vector3(rect.position.x - buttonsInitialPosition.x, rect.position.y, rect.position.z);
-        }
-    }*/
-
     private IEnumerator DelayedInitialAnimation(float delay)
     {
         foreach (Button btn in buttons)

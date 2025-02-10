@@ -173,12 +173,7 @@ public static class EntityUtils
         {
             RaycastHit hit;
             if (Physics.Linecast(pos, nearestObjetive.position, out hit))
-            {/*
-                if (hit.transform.tag != "Proyectil" && hit.collider.gameObject.tag != "Enemigo"
-                    && hit.transform.tag != "Gnomo")
-                {
-                    noObstacles = false;
-                }*/
+            {
                 if (ignoreTagList != null)
                 {
                     foreach (string name in ignoreTagList)

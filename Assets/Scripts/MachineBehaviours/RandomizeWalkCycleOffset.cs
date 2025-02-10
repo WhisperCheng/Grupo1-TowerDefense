@@ -11,7 +11,6 @@ public class RandomizeWalkCycleOffset : StateMachineBehaviour
         if (!_hasRandomized)
         {
             float offset = Random.Range(0f, 1);
-            //animator.Play(stateInfo.fullPathHash, layerIndex, offset);
             animator.SetFloat("WalkingOffset", offset);
             _hasRandomized = true;
         }

@@ -39,7 +39,6 @@ public static class ColorUtils
         // Sombras
         materialProperty.SetColor("_1st_ShadeColor", color);
         materialProperty.SetColor("_2nd_ShadeColor", color);
-        // https://discussions.unity.com/t/materialpropertyblock-can-not-set-texture-null/847479/3
         return materialProperty;
     }
 

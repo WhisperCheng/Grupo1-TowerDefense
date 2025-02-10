@@ -10,18 +10,6 @@ public class TutorialTrigger : MonoBehaviour
     private bool hasActivated = false;
     public UnityEvent pachamamaEvent;
     public List<Image> elementsActivated;
-    /*public GameObject wavesActivator;
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (wavesActivator != null)
-            {
-                wavesActivator.SetActive(true);
-            }
-        }
-    }*/
     
     private void OnTriggerEnter(Collider other)
     {

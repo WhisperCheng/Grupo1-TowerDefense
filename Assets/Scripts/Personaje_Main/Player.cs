@@ -32,7 +32,6 @@ public class Player : MonoBehaviour, IDamageable
     public ParticleSystem respawnParticles;
     public ParticleSystem deathParticles;
     public ParticleSystem hitParticles;
-    //public ParticleSystem shootProyectileParticles;
     public GameObject particlesParent;
 
     private ProyectilFabric _proyectilFabric;
@@ -52,7 +51,6 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        //_healthBar = GetComponentInChildren<HealthBar>();
         _currentHealth = health;
         _maxHealth = health;
         _proyectilFabric = GetComponent<ProyectilFabric>();
@@ -71,7 +69,6 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Die()
     {
-        //throw new System.NotImplementedException();
         _timer.ActivateRespawnTimer(); // Desaparecer temporalmente + mostrar UI espera de respawn
         ParticleSystem particulas = InstantiateParticlesOnPlayer(deathParticles);
         particulas.transform.position += Vector3.up * 0.1f; // Subir partículas ligeramente del suelo
@@ -85,9 +82,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void ToggleLayerCollisions(bool value)
     {
-        //if (_characterController) Physics2D.IgnoreLayerCollision(7, 10, value); // Enemigos
         if (_characterController) Physics2D.IgnoreLayerCollision(7, 11, value); // Proyectiles
-        //if (_characterController) Physics2D.IgnoreLayerCollision(7, 9, value); // Aliados
         if (_characterController) Physics2D.IgnoreLayerCollision(7, 12, value); // Torres
     }
 
@@ -98,7 +93,6 @@ public class Player : MonoBehaviour, IDamageable
     {
         // Daño
         _currentHealth -= damageAmount;
-        //OnDamageTaken();
         ParticleSystem hit = InstantiateParticlesOnPlayer(hitParticles);
         hit.transform.position += Vector3.up * 1.1f;
         // Actualizar barra de vida
@@ -113,7 +107,6 @@ public class Player : MonoBehaviour, IDamageable
         var delta = destination.position - gameObject.transform.position;
 
         gameObject.transform.position = destination.transform.position;
-        //virtualCamera.PreviousStateIsValid = false;
         virtualCamera.OnTargetObjectWarped(transform, delta);
         _healthBar.UpdateHealthBar(_maxHealth, _currentHealth = _maxHealth);
         ParticleSystem particulas = InstantiateParticlesOnPlayer(respawnParticles);

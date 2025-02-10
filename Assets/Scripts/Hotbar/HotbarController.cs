@@ -45,7 +45,6 @@ public class HotbarController : MonoBehaviour
     // Update is called once per frame
     protected void Update()
     {
-        //ConfigureSlots(); // Activar solo con propósitos de debug
 
         if (enabledHotbar)
         {

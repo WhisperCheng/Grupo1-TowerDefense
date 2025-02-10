@@ -51,7 +51,6 @@ public class MiniKnightPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            //Debug.Log("Pool de mini caballeros vacía.");
             GameObject newKnight = Instantiate(miniKnightPrefab);
             newKnight.transform.parent = parent.transform;
             newKnight.SetActive(true);

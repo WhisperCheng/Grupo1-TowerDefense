@@ -51,7 +51,6 @@ public class PoisonYewPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            //Debug.Log("Pool de tejos venenosos vacía.");
             GameObject newYew = Instantiate(poisonYewPrefab);
             newYew.transform.parent = parent.transform;
             newYew.SetActive(true);

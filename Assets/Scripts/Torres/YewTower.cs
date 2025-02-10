@@ -23,9 +23,6 @@ public class YewTower : RangedTower
                 currentTarget.GetComponent<NavMeshAgent>().height / 2 : 0;
             Vector3 offsetY = Vector3.up * offsetYTargetPosition;
 
-            // Trayectora sin predicción de movimiento
-            //Vector3 targetPosition = currentTarget.transform.position + offsetY;
-
             proyectile.transform.position = shooterSource.position; 
             proyectile.transform.rotation = Quaternion.Euler(shooterSource.forward); 
             Vector3 predictivePosition =                           // Trayectoria predictiva

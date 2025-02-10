@@ -94,12 +94,6 @@ public class MagicArcherAI : EnemyAI
         emitter = AudioManager.instance.InitializeEventEmitter(FMODEvents.instance.roseShoot, this.gameObject);
         emitter.Play();
 
-        /*int attackMasks = 0; // Reconocer a qué enemigos/layers hay que atacar (player, aliados)
-        foreach (int layerNum in enemyToAttackLayers)
-        {
-            if (layerNum != GameManager.Instance.layerCorazon)
-                attackMasks |= 1 << layerNum;
-        }*/
         _attackMode = true;
         if (_aimTarget != null)
         {
@@ -124,7 +118,6 @@ public class MagicArcherAI : EnemyAI
             evilProyectilFabric.LanzarEvilMagicProyectil(predictivePosition, shootingSpeed);
             _currentCooldown = cooldown;
         }
-        //_attackMode = false;
         animatorController.SetBool("AttackMode", false);
     }
 

@@ -21,7 +21,6 @@ public abstract class Tower : LivingEntityAI, IPoolable
     protected float _originalCooldown;
     protected float _currentCooldown;
 
-    //protected List<GameObject> currentTargets = new List<GameObject>();
     protected GameObject currentTarget;
 
     public int Money { get { return money; } private set { } }
@@ -40,7 +39,6 @@ public abstract class Tower : LivingEntityAI, IPoolable
 
     protected virtual void OnDamageTaken() { } // Efectos de partículas y efectos visuales al recibir daño
 
-    //public abstract void OnAttack(); // Disparar proyectiles, efectos de partículas al golpear, cambiar animación, etc
     public abstract void ReturnToPool();
     public abstract GameObject RestoreToDefault();
     public abstract GameObject GetFromPool();
@@ -87,12 +85,8 @@ public abstract class Tower : LivingEntityAI, IPoolable
 
     protected virtual void OnDrawGizmosSelected()
     {
-        //Gizmos.color = Color.green;
-        //Gizmos.DrawWireSphere(transform.position, range);
         if (currentTarget != null)
             Gizmos.DrawLine(currentTarget.transform.position, currentTarget.transform.position + Vector3.up * 7);
         Gizmos.DrawWireSphere(transform.position, towerRadiusSize);
-        //Gizmos.color = Color.gray;
-        //Gizmos.DrawWireSphere(transform.position, towerRadiusSize);
     }
 }

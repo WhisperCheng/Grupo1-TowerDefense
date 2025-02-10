@@ -42,7 +42,6 @@ public class OptionsController : MonoBehaviour
             sensitiveSlider.value = PlayerPrefs.GetFloat("sensitive", 40f);
             sensitiveSlider.onValueChanged.AddListener(ChangeSensitive);
         }
-        //UpdateBrightnessPanel(brightness.value);
     }
 
     private void Update()

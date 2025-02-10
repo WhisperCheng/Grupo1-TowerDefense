@@ -59,8 +59,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected bool _dropMoney = true;
     protected bool _finishedWaypoints = false;
     protected bool _initialized = false;
-    //protected bool _attackingForestHeart = false; // Se usa para saber en un momento determinado si está atacando al corazón del bosque
-    // para luego hacer que el enemigo al golpearlo se muera
+
     protected Transform _nearestRival;
     protected int _currentWaypointIndex = 0;
 
@@ -82,7 +81,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     // Invoca automáticamente la implementación del método abstracto Init() para las clases herederas
     void Start()
     {
-        //_originalSpeed = speed;
         _maxSpeed = speed;
         Init();
 
@@ -99,7 +97,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         _healthBar = GetComponentInChildren<HealthBar>();
         _agent = GetComponent<NavMeshAgent>();
         speed = _maxSpeed;
-        //_maxSpeed = _originalSpeed;
         _agent.speed = _maxSpeed;
         _currentWaypointIndex = 0;
         _destination = GameManager.Instance.wayPoints[_currentWaypointIndex].transform.position;
@@ -156,7 +153,7 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
                 attackMasks |= 1 << layerNum;
         }
 
-        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, attackMasks/*(_playerMask | _allyMask)*/);
+        listaChoques = Physics.OverlapSphere(transform.position, actionRadio, attackMasks);
 
         // Se obtiene al jugador más cercano
         Transform nearestRival = EntityUtils.NearestRivalOnNavMesh(_agent, listaChoques, transform.position, null,
@@ -232,7 +229,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     protected void UpdateWayPointDestination(int index)
     {
         _currentWaypointIndex = index;
-        //_destination = waypoint.position;
         // Hasta que no llegue al final se actualizan los waypoints, pero si llega al final dejan de actualizarse
         // y se activa el booleano finishedWaypoints
         if (_currentWaypointIndex >= GameManager.Instance.wayPoints.Length)
@@ -292,10 +288,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
     public virtual void AnimateWalking()
     {
         _agent.speed = speed;
-        if (animatorController != null)
-        {
-            //animatorController.SetFloat("Velocidad", (agent.velocity.magnitude / _maxSpeed));
-        }
     }
 
     public void PoisonEntity(float time, float poisonInterval, float poisonDamage)
@@ -330,7 +322,6 @@ public abstract class EnemyAI : LivingEntityAI, IDamageable, IPoolable, IPoisona
         Gizmos.DrawWireSphere(transform.position, reachAttackRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, checkWaypointProximityDistance);
-        //Gizmos.DrawRay(transform.position, transform.forward);
     }
 #endif
 }

@@ -30,7 +30,6 @@ public class MagicAttack : MonoBehaviour
     {
         // Se comprueba si el layer de la colisión está contenida en la máscara de layers a dañar
         bool checkLayer = (damageLayers & (1 << collision.gameObject.layer)) != 0;
-        //if (collision.gameObject.tag == GameManager.Instance.tagEnemigos)
         if (checkLayer)
         {
             IDamageable damageableEntity = collision.gameObject.GetComponent(typeof(IDamageable)) as IDamageable; // versión no genérica

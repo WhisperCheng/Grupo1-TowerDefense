@@ -27,8 +27,6 @@ public class PlaceManager : MonoBehaviour
     protected float _currentSellTime;
     protected bool _canPlaceTower = false;
 
-    //GameObject particulasCopia;
-
     MaterialPropertyBlock m_SeleccionPropertyBlock;
     MaterialPropertyBlock m_SeleccionInvalidaPropertyBlock;
 
@@ -50,9 +48,7 @@ public class PlaceManager : MonoBehaviour
     {
         GameManager.Instance.playerControls.actions.FindActionMap("Player").Enable();
         GameManager.Instance.playerControls.actions.FindActionMap("UI").Enable(); // por defecto está desactivado ya que solo
-        // se puede por defecto tener un action map activado a la vez, pero se puede bypasear
-        // haciendo esto
-        //https://youtu.be/NZBAr_V7r0M?t=153
+        // se puede por defecto tener un action map activado a la vez
         Cursor.lockState = CursorLockMode.Locked;
 
         // Materiales Seleccionados
@@ -75,7 +71,6 @@ public class PlaceManager : MonoBehaviour
 
     public void GenerateTower() // Genera el tipo de torre designada
     {
-        //Debug.Log(MoneyManager.Instance.gems);
         if (MoneyManager.Instance.gems >= torre.Money)
         {
             if (!objetoSiendoArrastrado) // Para que solo se pueda generar un objeto al mismo tiempo
@@ -116,7 +111,6 @@ public class PlaceManager : MonoBehaviour
         if (context.performed && objetoSiendoArrastrado && torre != null && torre.isActiveAndEnabled
             && !LeanTween.isTweening(torre.gameObject)) // Solo se activa si se está arrastrando el objeto activo y no
         {                                                                   // se está reproduciendo animación de rotar
-            //torre.transform.LeanRotateY(torre.transform.eulerAngles.y + 90,0.25f);
             LeanTween.rotateY(torre.gameObject, torre.transform.eulerAngles.y + 90, 0.25f);
         }
     }
@@ -133,7 +127,6 @@ public class PlaceManager : MonoBehaviour
             int pathBordersMask = 1 << GameManager.Instance.layerPathBordes; // Detecta obstáculos de decoración
             int towersMask = 1 << GameManager.Instance.layerTorres | 1 << GameManager.Instance.layerTrap; // Detecta las torres cercanas
             int pathMask = 1 << GameManager.Instance.layerPath; // Detecta solo los caminos por donde pasan los enemigos
-            //int bordersMask = 1 << GameManager.Instance.layerBordes;
 
             bool validCollision = false;
             bool colisionConRayo = false;
@@ -152,7 +145,6 @@ public class PlaceManager : MonoBehaviour
                         outsidePathCols = Physics.OverlapSphere(golpeRayo.point, torre.GetTowerRadiusSize(), pathBordersMask);
                 }
 
-                // Debug.Log(colisionConRayo + "-" + outsidePathCols + "-" + outsidePathCols?.Length);
                 validCollision = colisionConRayo && outsidePathCols != null && outsidePathCols.Length == 0;
                 // Si el "tamaño" de la torre no registra ningún borde exterior de camino dentro de su área, se puede colocar
             }
@@ -223,7 +215,6 @@ public class PlaceManager : MonoBehaviour
         }
         else
         {
-            //currentButton.Select();
             currentButton.onClick.Invoke();
         }
     }

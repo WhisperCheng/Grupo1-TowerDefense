@@ -20,7 +20,6 @@ public class EvilProyectilFabric : MonoBehaviour
         PlayProyectileShootSound();
 
         // Crea el proyectil 
-        //GameObject proyectil = Instantiate(proyectilPrefab, puntoDisparo.position, Quaternion.identity);
         GameObject proyectil = GetProyectileFromPool();
         proyectil.transform.position = puntoDisparo.position;
         Vector3 direccion = (destino - puntoDisparo.position).normalized;

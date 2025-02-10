@@ -50,7 +50,6 @@ public class AxeTankPool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            //Debug.Log("Pool de tanques con hacha vacía.");
             GameObject newTank = Instantiate(axeTankPrefab);
             newTank.transform.parent = parent.transform;
             return newTank;

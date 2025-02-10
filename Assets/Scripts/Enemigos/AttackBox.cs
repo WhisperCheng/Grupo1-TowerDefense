@@ -49,7 +49,6 @@ public class AttackBox
                         AttackedEntity = col.gameObject;
                         CanAttackOrDamageBool = false;
                         AttackModeBool = false; // Reset del bool para hacer daño y del de modo de ataque
-                        //CurrentCooldown = cooldown; // Reset del cooldown
                         result = true;
                     }
                 }

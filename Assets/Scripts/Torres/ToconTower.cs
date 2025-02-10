@@ -11,9 +11,6 @@ public class ToconTower : StaticTower
     [Header("Cantidad Setas Aliadas")]
     [SerializeField] private int maximaCantidadSetas;
 
-    //[Header("Cooldown de spawn")]
-    //[SerializeField] private float spawnCooldown;
-
     private ToconBrain brain;
 
     // Start is called before the first frame update
@@ -61,15 +58,12 @@ public class ToconTower : StaticTower
             {
                 currentTarget = lastEnemy.gameObject;
                 _hasEnemyAssigned = true;
-                //_attackMode = true;
             }
             else
             { // Si tiene un enemigo asignado pero este es desactivado o enviado a la pool o pasa a estar fuera de rango, entonces
                 if (!insideRange) // se descarta como objetivo para pasar posteriormente a buscar uno nuevo que sí esté dentro de rango
                 {
                     currentTarget = null;
-                    //_hasEnemyAssigned = false;
-                    //_attackMode = false;
                 }
             }
         }
@@ -80,7 +74,6 @@ public class ToconTower : StaticTower
                 currentTarget = null;
             }
             _hasEnemyAssigned = false;
-            //_attackMode = false;
         }
 
         if (currentTarget == null) // Si no tiene un enemigo asignado entonces las setas se irán a su casa
@@ -96,7 +89,6 @@ public class ToconTower : StaticTower
         brain = GetComponent<ToconBrain>();
         brain.ResetValues(spawn.transform.position, cooldown, maximaCantidadSetas); // Reset cerebro e iniciar a partir del momento del desbloqueo el spawn de aliados
         brain.ActivarSpawn();
-        //brain.SpawnCooldown = spawnCooldown;
     }
 
     public override void ReturnToPool()

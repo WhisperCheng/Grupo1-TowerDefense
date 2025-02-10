@@ -50,7 +50,6 @@ public class ThornRosePool : MonoBehaviour
     {
         if (pool.Count == 0)
         {
-            //Debug.Log("Pool de rosas lanzaespinas vacía.");
             GameObject newThornRose = Instantiate(thornRosePrefab);
             newThornRose.transform.parent = parent.transform;
             newThornRose.SetActive(true);

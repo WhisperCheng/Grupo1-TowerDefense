@@ -17,11 +17,6 @@ public class SpawnEnemigosTest : MonoBehaviour
         while (true)
         {
             GameObject miniKnight = MiniKnightPool.Instance.GetMiniKnight();
-            if (miniKnight != null)
-            {
-                //miniKnight.transform.position = transform.position;
-                //miniKnight.transform.rotation = transform.rotation;
-            }
             yield return new WaitForSeconds(spawnInterval);
         }
     }
